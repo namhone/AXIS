@@ -1,0 +1,501 @@
+﻿<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Há»“ sÆ¡ nÄƒng lá»±c â€” FuturePath</title>
+    <link rel="stylesheet" href="../css/global.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      
+
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="brand-copy"><span>FuturePath</span><small>Äá»“ng hÃ nh cÃ¹ng cuá»™c Ä‘á»i</small></div>
+              </div>
+            </a>
+          </div>
+
+          <nav class="header-nav" role="navigation" aria-label="ChÃ­nh">
+            <a class="nav-item active" href="profile.html"><span class="nav-ico">â˜°</span><span>Há»“ sÆ¡ nÄƒng lá»±c</span></a>
+            <a class="nav-item" href="assessment.html"><span class="nav-ico">â—Ž</span><span>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">â–£</span><span>PhÃ¡t triá»ƒn báº£n thÃ¢n</span></a>
+            <a class="nav-item" href="careers.html"><span class="nav-ico">â–¤</span><span>ThÆ° viá»‡n nghá» nghiá»‡p</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">â“˜</span><span>Vá» dá»± Ã¡n</span></a>
+          </nav>
+
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">ÄÄƒng nháº­p</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">ÄÄƒng kÃ½</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-column">
+          <section class="page-hero">
+            <span class="eyebrow">Há»“ sÆ¡ nÄƒng lá»±c</span>
+            <h1>XÃ¢y dá»±ng há»“ sÆ¡ cá»§a báº¡n.</h1>
+            <p class="lead">Táº£i lÃªn CV/PDF, chá»‰nh sá»­a trá»±c tiáº¿p, dÃ¹ng AI Ä‘á»ƒ chuáº©n hÃ³a vÃ  xuáº¥t báº£n há»“ sÆ¡ chuyÃªn nghiá»‡p.</p>
+          </section>
+
+          <section class="content-panel profile-workspace">
+            <div>
+                      <h2>01 Â· Trang bÃ¬a &amp; Giá»›i thiá»‡u báº£n thÃ¢n</h2>
+                      <div class="profile-header">
+                <div class="field">
+                  <label>Há» vÃ  tÃªn</label>
+                  <input type="text" placeholder="Nguyá»…n Minh Anh" />
+                </div>
+                        <div class="portrait-upload">
+                          <label>áº¢nh chÃ¢n dung</label>
+                          <div class="portrait-preview" id="portraitPreview">A</div>
+                          <input type="file" id="portraitUpload" accept="image/*" />
+                          <label for="portraitUpload" class="primary-btn upload-btn">Táº£i áº£nh lÃªn</label>
+                        </div>
+                      </div>
+
+                      <div class="form-grid">
+                        <div class="field">
+                          <label>Email</label>
+                          <input type="email" placeholder="nguyenminhanh@gmail.com" />
+                        </div>
+                        <div class="field">
+                          <label>Sá»‘ Ä‘iá»‡n thoáº¡i</label>
+                          <input type="tel" placeholder="+84 912 345 678" />
+                        </div>
+                        <div class="field">
+                          <label>LinkedIn</label>
+                          <input type="url" placeholder="linkedin.com/in/nguyenminhanh" />
+                        </div>
+                        <div class="field">
+                          <label>Má»¥c tiÃªu du há»c / ngÃ nh há»c</label>
+                          <input type="text" placeholder="VÃ­ dá»¥: Khoa há»c dá»¯ liá»‡u, ngÃ nh CÃ´ng nghá»‡ thÃ´ng tin" />
+                        </div>
+                        <div class="field wide">
+                          <label>Giá»›i thiá»‡u cÃ¡ nhÃ¢n</label>
+                          <textarea rows="5" placeholder="MÃ´ táº£ ngáº¯n gá»n vá» báº£n thÃ¢n, Ä‘am mÃª, Ä‘iá»ƒm máº¡nh vÃ  má»¥c tiÃªu há»c táº­p cá»§a báº¡n..."></textarea>
+                        </div>
+                      </div>
+
+                      <div class="subsection-stack">
+                        <div class="mini-form">
+                          <h3>02 Â· ThÃ nh tÃ­ch há»c táº­p xuáº¥t sáº¯c</h3>
+                          <div class="mini-grid">
+                            <div class="field"><label>GPA cáº£ nÄƒm 10</label><input type="text" placeholder="8.5/10" /></div>
+                            <div class="field"><label>GPA cáº£ nÄƒm 11</label><input type="text" placeholder="8.9/10" /></div>
+                            <div class="field"><label>GPA cáº£ nÄƒm 12</label><input type="text" placeholder="9.2/10" /></div>
+                            <div class="field"><label>IELTS</label><input type="text" placeholder="7.5" /></div>
+                            <div class="field"><label>TOEFL</label><input type="text" placeholder="95" /></div>
+                            <div class="field"><label>SAT / ACT</label><input type="text" placeholder="1350 / 31" /></div>
+                          </div>
+                        </div>
+
+                        <div class="mini-form">
+                          <h3>Chá»©ng chá»‰ ngoáº¡i ngá»¯ &amp; há»c thuáº­t</h3>
+                          <div class="mini-grid">
+                            <div class="field"><label>Chá»©ng chá»‰</label><input type="text" placeholder="IELTS, TOEIC, JLPT..." /></div>
+                            <div class="field"><label>Äiá»ƒm sá»‘</label><input type="text" placeholder="7.5 / 950" /></div>
+                            <div class="field"><label>NÄƒm</label><input type="text" placeholder="2026" /></div>
+                          </div>
+                        </div>
+
+                        <div class="mini-form">
+                          <h3>Danh sÃ¡ch thÃ nh tÃ­ch thi</h3>
+                          <div class="mini-grid">
+                            <div class="field">
+                              <label>Loáº¡i ká»³ thi</label>
+                              <select id="examType">
+                                <option value="">Chá»n loáº¡i ká»³ thi</option>
+                                <option>Ká»³ thi chá»n Há»c sinh giá»i Quá»‘c gia (HSGQG)</option>
+                                <option>Ká»³ thi chá»n Há»c sinh giá»i cáº¥p Tá»‰nh/ThÃ nh phá»‘</option>
+                                <option>Cuá»™c thi Khoa há»c ká»¹ thuáº­t (VISEF) cÃ¡c cáº¥p</option>
+                                <option>Olympic Báº­c THPT</option>
+                                <option>Cuá»™c thi IOE (Olympic tiáº¿ng Anh trÃªn Internet)</option>
+                                <option>Violympic [1.3 Pap]</option>
+                                <option>Ká»³ thi ToÃ¡n Quá»‘c táº¿ Kangaroo (IKMC)</option>
+                                <option>ToÃ¡n Má»¹ (AMC)</option>
+                                <option>KhÃ¡c</option>
+                              </select>
+                            </div>
+                            <div class="field">
+                              <label>Giáº£i</label>
+                              <select id="awardRank">
+                                <option>Giáº£i nháº¥t</option>
+                                <option>Giáº£i nhÃ¬</option>
+                                <option>Giáº£i ba</option>
+                                <option>Giáº£i khuyáº¿n khÃ­ch</option>
+                                <option>Top 10</option>
+                                <option>Äáº¡t giáº£i / CÃ³ tham gia</option>
+                                <option>KhÃ¡c</option>
+                              </select>
+                            </div>
+                            <div class="field hidden" id="provinceField">
+                              <label>Tá»‰nh / ThÃ nh phá»‘</label>
+                              <input type="text" placeholder="VÃ­ dá»¥: HÃ  Ná»™i, ÄÃ  Náºµng..." />
+                            </div>
+                            <div class="field"><label>NÄƒm</label><input type="text" placeholder="2025" /></div>
+                            <div class="field wide"><label>MÃ´ táº£ thÃªm</label><input type="text" placeholder="VÃ­ dá»¥: Äáº¡t giáº£i NhÃ¬ Tá»‰nh mÃ´n ToÃ¡n, dá»± Ã¡n STEM cáº¥p trÆ°á»ng..." /></div>
+                          </div>
+                        </div>
+
+                        <div class="mini-form">
+                          <h3>03 Â· Hoáº¡t Ä‘á»™ng ngoáº¡i khÃ³a &amp; Tá»‘ cháº¥t lÃ£nh Ä‘áº¡o</h3>
+                          <div class="mini-grid">
+                            <div class="field"><label>TÃªn hoáº¡t Ä‘á»™ng</label><input type="text" placeholder="CLB Khoa há»c - TÆ° duy pháº£n biá»‡n" /></div>
+                            <div class="field"><label>Vai trÃ²</label><input type="text" placeholder="TrÆ°á»Ÿng ban ná»™i dung / ThÃ nh viÃªn" /></div>
+                            <div class="field"><label>Káº¿t quáº£ / TÃ¡c Ä‘á»™ng</label><input type="text" placeholder="Tá»• chá»©c 3 sá»± kiá»‡n, 200 há»c sinh tham gia" /></div>
+                            <div class="field wide"><label>Minh chá»©ng / LiÃªn káº¿t</label><input type="text" placeholder="link bÃ i viáº¿t, hÃ¬nh áº£nh, chá»©ng nháº­n, sá»± kiá»‡n..." /></div>
+                          </div>
+                        </div>
+
+                        <div class="mini-form">
+                          <h3>04 Â· Dá»± Ã¡n cÃ¡ nhÃ¢n &amp; Ká»¹ nÄƒng</h3>
+                          <div class="mini-grid">
+                            <div class="field"><label>TÃªn dá»± Ã¡n</label><input type="text" placeholder="Website quáº£n lÃ½ thá»i gian / BÃ i nghiÃªn cá»©u khoa há»c" /></div>
+                            <div class="field"><label>Loáº¡i dá»± Ã¡n</label><input type="text" placeholder="NghiÃªn cá»©u, láº­p trÃ¬nh, design, nghá»‡ thuáº­t..." /></div>
+                            <div class="field"><label>Ká»¹ nÄƒng bá»• trá»£</label><input type="text" placeholder="Power BI, Python, Photoshop, Debate..." /></div>
+                            <div class="field wide"><label>MÃ´ táº£ dá»± Ã¡n &amp; káº¿t quáº£</label><textarea rows="4" placeholder="MÃ´ táº£ má»¥c tiÃªu, quÃ¡ trÃ¬nh thá»±c hiá»‡n, cÃ´ng cá»¥ sá»­ dá»¥ng vÃ  tÃ¡c Ä‘á»™ng thá»±c táº¿..."></textarea></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="upload-box" style="margin-top: 18px;">
+                        <h3 style="margin: 0; color: var(--purple-deep);">Táº£i lÃªn tÃ i liá»‡u PDF</h3>
+                        <label for="pdfUpload">Chá»n file PDF</label>
+                        <input id="pdfUpload" type="file" accept="application/pdf" />
+                        <div class="action-row">
+                          <button class="primary-btn" type="button">Cáº­p nháº­t tÃ i liá»‡u</button>
+                          <button class="ghost-btn" type="button">XÃ³a file</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <aside class="ai-summary">
+                      <h3>AI chuáº©n hÃ³a há»“ sÆ¡</h3>
+                      <div class="pdf-preview-shell" id="pdfPreviewShell">
+                        <div class="pdf-empty-state" id="pdfEmptyState">ChÆ°a cÃ³ tÃ i liá»‡u PDF nÃ o Ä‘á»ƒ xem trÆ°á»›c.</div>
+                        <iframe id="pdfPreview" title="Xem trÆ°á»›c PDF há»“ sÆ¡"></iframe>
+                      </div>
+                      <div class="action-row">
+                        <button class="primary-btn" type="button" id="aiNormalizeBtn">AI chuáº©n hÃ³a</button>
+                        <button class="ghost-btn" type="button" id="exportBtn">Xuáº¥t PDF</button>
+                      </div>
+                    </aside>
+          </section>
+
+          <section class="content-panel">
+            <h2>02 Â· Chi tiáº¿t há»“ sÆ¡</h2>
+            <div class="profile-detail-grid">
+              <div class="field">
+                <label>Sá»Ÿ thÃ­ch</label>
+                <textarea rows="5" placeholder="VÃ­ dá»¥: Ä‘á»c sÃ¡ch, du lá»‹ch, nghiÃªn cá»©u khoa há»c, há»c há»i cÃ´ng nghá»‡ má»›i..."></textarea>
+              </div>
+              <div class="field">
+                <label>TÃ­nh cÃ¡ch</label>
+                <textarea rows="5" placeholder="VÃ­ dá»¥: chá»§ Ä‘á»™ng, cáº©n tháº­n, thÃ­ch há»£p tÃ¡c, kiÃªn trÃ¬ trong há»c táº­p vÃ  lÃ m viá»‡c..."></textarea>
+              </div>
+              <div class="field">
+                <label>Ká»¹ nÄƒng</label>
+                <textarea rows="5" placeholder="VÃ­ dá»¥: giao tiáº¿p, lÃ m viá»‡c nhÃ³m, nghiÃªn cá»©u, phÃ¢n tÃ­ch, Excel, PowerPoint, Python, design..."></textarea>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h4>LiÃªn há»‡</h4>
+          <p>FuturePath â€” Há»— trá»£ Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p vÃ  phÃ¡t triá»ƒn ká»¹ nÄƒng cho há»c sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p><strong>Äiá»‡n thoáº¡i:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+        </div>
+
+        <div class="footer-form">
+          <h4>Nháº­n thÃ´ng tin &amp; tÆ° váº¥n</h4>
+          <form id="contactForm" action="#" onsubmit="event.preventDefault(); alert('Cáº£m Æ¡n! ChÃºng tÃ´i sáº½ liÃªn há»‡ sá»›m.');">
+            <div class="field-row">
+              <input type="email" name="email" placeholder="Email cá»§a báº¡n" required />
+              <input type="tel" name="phone" placeholder="Sá»‘ Ä‘iá»‡n thoáº¡i (tÃ¹y chá»n)" />
+            </div>
+            <div class="field-row">
+              <button type="submit" class="primary-btn">Gá»­i</button>
+              <button type="reset" class="ghost-btn">XÃ³a</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">Â© 2026 FuturePath â€” All rights reserved.</div>
+    </footer>
+
+    <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
+      <div class="settings-modal-backdrop" data-close-settings="true"></div>
+      <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-header">
+          <h3 id="settingsTitle">CÃ i Ä‘áº·t tÃ i khoáº£n</h3>
+          <button type="button" class="settings-close" id="closeSettingsModal" aria-label="ÄÃ³ng cÃ i Ä‘áº·t">Ã—</button>
+        </div>
+        <div class="settings-list">
+          <label class="setting-item"><span>ThÃ´ng bÃ¡o email</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Gá»£i Ã½ nghá» nghiá»‡p tá»± Ä‘á»™ng</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Báº£o máº­t 2 lá»›p</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Cháº¿ Ä‘á»™ tá»‘i</span><input type="checkbox" /></label>
+        </div>
+        <div class="settings-actions">
+          <button type="button" class="ghost-btn" data-close-settings="true">Há»§y</button>
+          <button type="button" class="primary-btn" id="saveSettings">LÆ°u thay Ä‘á»•i</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      (function(){
+        const authArea = document.getElementById('authArea');
+        const userPanel = document.getElementById('userPanel');
+        const userChip = document.getElementById('userChip');
+        const userMenu = document.getElementById('userMenu');
+        const menuButtons = document.querySelectorAll('[data-menu-action]');
+        const authButtons = document.querySelectorAll('[data-auth-action]');
+        const AUTH_KEY = 'futurepath.signed_in';
+
+        const setSignedIn = (opts) => {
+          // persist
+          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+          if (authArea) authArea.classList.add('hidden');
+          if (userPanel) userPanel.classList.remove('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          if (!opts || !opts.silent) {
+            // small visual cue could be added here; keep minimal for demo
+          }
+        };
+
+        const setSignedOut = (opts) => {
+          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
+          if (authArea) authArea.classList.remove('hidden');
+          if (userPanel) userPanel.classList.add('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        // wire demo auth buttons to persist state across pages
+        authButtons.forEach(function (button) {
+          button.addEventListener('click', function () { setSignedIn(); });
+        });
+
+        // apply persisted state on load
+        try {
+          if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true });
+        } catch (e) {}
+
+
+        if (userChip) {
+          userChip.addEventListener('click', function () {
+            if (!userMenu) return;
+            const isHidden = userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden', !isHidden);
+            userChip.setAttribute('aria-expanded', String(isHidden));
+          });
+        }
+
+        menuButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const action = button.getAttribute('data-menu-action');
+            if (action === 'settings') {
+              const modal = document.getElementById('settingsModal');
+              if (modal) modal.classList.remove('hidden');
+            } else if (action === 'logout') {
+              setSignedOut();
+            } else {
+              alert('TÃ­nh nÄƒng chÆ°a Ä‘Æ°á»£c triá»ƒn khai trong phiÃªn báº£n demo.');
+            }
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        const modal = document.getElementById('settingsModal');
+        const closeModal = document.getElementById('closeSettingsModal');
+        const saveSettings = document.getElementById('saveSettings');
+        const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+
+        closeModal && closeModal.addEventListener('click', function () { modal && modal.classList.add('hidden'); });
+        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', function () { modal && modal.classList.add('hidden'); }); });
+        saveSettings && saveSettings.addEventListener('click', function () { alert('CÃ i Ä‘áº·t Ä‘Ã£ Ä‘Æ°á»£c lÆ°u thÃ nh cÃ´ng.'); modal && modal.classList.add('hidden'); });
+
+        document.addEventListener('click', function (event) {
+          if (!userMenu || !userChip) return;
+          if (!userMenu.contains(event.target) && !userChip.contains(event.target)) {
+            userMenu.classList.add('hidden');
+            userChip.setAttribute('aria-expanded', 'false');
+          }
+        });
+      })();
+
+      (function(){
+        // Header-nav is now the single source of truth. Attach safe click handlers to header nav items.
+        const headerNav = document.querySelector('.header-nav');
+        if (!headerNav) return;
+        const navLinks = headerNav.querySelectorAll('.nav-item');
+
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            // Toggle active state
+            navLinks.forEach(function (l){ l.classList.remove('active'); });
+            link.classList.add('active');
+
+            // Close user menu if open
+            const userMenu = document.getElementById('userMenu');
+            const userChip = document.getElementById('userChip');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded','false');
+
+          });
+        });
+
+        headerNav.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.nav-item');
+            if (item) { item.click(); e.preventDefault(); }
+          }
+        });
+      })();
+
+      const pdfUpload = document.getElementById('pdfUpload');
+      const portraitUpload = document.getElementById('portraitUpload');
+      const pdfPreview = document.getElementById('pdfPreview');
+      const pdfEmptyState = document.getElementById('pdfEmptyState');
+      const normalizeBtn = document.getElementById('aiNormalizeBtn');
+      const exportBtn = document.getElementById('exportBtn');
+      const examType = document.getElementById('examType');
+      const provinceField = document.getElementById('provinceField');
+
+      let currentPdfUrl = '';
+      let normalizedPdfBlob = null;
+
+      if (portraitUpload) {
+        portraitUpload.addEventListener('change', function (event) {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const preview = document.getElementById('portraitPreview');
+            if (!preview) return;
+            preview.innerHTML = '<img src="' + e.target.result + '" alt="áº¢nh chÃ¢n dung" />';
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      if (examType) {
+        examType.addEventListener('change', function () {
+          const value = examType.value || '';
+          const requiresProvince = value.includes('Tá»‰nh') || value.includes('ThÃ nh phá»‘') || value.includes('cáº¥p');
+          if (provinceField) {
+            provinceField.classList.toggle('hidden', !requiresProvince);
+          }
+        });
+      }
+
+      function showPdfPreview(url) {
+        if (!url) return;
+        currentPdfUrl = url;
+        pdfPreview.src = url;
+        pdfPreview.style.display = 'block';
+        pdfEmptyState.style.display = 'none';
+      }
+
+      if (pdfUpload) {
+        pdfUpload.addEventListener('change', function (event) {
+          const file = event.target.files && event.target.files[0];
+          if (!file) return;
+          if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+            alert('Vui lÃ²ng chá»n file PDF há»£p lá»‡.');
+            return;
+          }
+          if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
+          showPdfPreview(URL.createObjectURL(file));
+        });
+      }
+
+      if (normalizeBtn) {
+        normalizeBtn.addEventListener('click', function () {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+          const pageWidth = doc.internal.pageSize.getWidth();
+
+          doc.setFillColor(245, 241, 255);
+          doc.rect(0, 0, pageWidth, 842, 'F');
+          doc.setTextColor(58, 43, 96);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(20);
+          doc.text('FuturePath â€” Há»“ sÆ¡ nÄƒng lá»±c Ä‘Ã£ chuáº©n hÃ³a', 40, 60);
+
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(73, 67, 109);
+          const lines = [
+            'TÃªn: Nguyá»…n Minh Anh',
+            'Lá»›p: 10',
+            'Má»¥c tiÃªu nghá» nghiá»‡p: KhÃ¡m phÃ¡ nhÃ³m ngÃ nh CÃ´ng nghá»‡, táº­p trung vÃ o phÃ¡t triá»ƒn ká»¹ nÄƒng phÃ¢n tÃ­ch vÃ  giáº£i quyáº¿t váº¥n Ä‘á».',
+            'Äiá»ƒm máº¡nh: tÆ° duy logic, sÃ¡ng táº¡o, kháº£ nÄƒng há»c táº­p nhanh, tinh tháº§n ham há»c há»i.',
+            'Ká»¹ nÄƒng: ká»¹ nÄƒng trÃ¬nh bÃ y, tá»• chá»©c thá»i gian, lÃ m viá»‡c nhÃ³m vÃ  sá»­ dá»¥ng cÃ´ng cá»¥ cÃ´ng nghá»‡ cÆ¡ báº£n.',
+            'Khuyáº¿n nghá»‹: tiáº¿p tá»¥c phÃ¡t triá»ƒn ká»¹ nÄƒng tiáº¿ng Anh, láº­p trÃ¬nh cÆ¡ báº£n vÃ  ká»¹ nÄƒng thuyáº¿t trÃ¬nh Ä‘á»ƒ tÄƒng cÆ¡ há»™i phÃ¹ há»£p vá»›i cÃ¡c ngÃ nh nhÆ° Khoa há»c dá»¯ liá»‡u, Ká»¹ thuáº­t pháº§n má»m, UI/UX.',
+            'TÃ³m táº¯t: Há»“ sÆ¡ nÃ y Ä‘Ã£ Ä‘Æ°á»£c sáº¯p xáº¿p theo hÆ°á»›ng chuyÃªn nghiá»‡p, rÃµ má»¥c tiÃªu, dá»… Ä‘á»c vÃ  phÃ¹ há»£p vá»›i Ä‘Ã¡nh giÃ¡ nghá» nghiá»‡p trong tÆ°Æ¡ng lai.'
+          ];
+
+          let y = 100;
+          lines.forEach((line) => {
+            const wrapped = doc.splitTextToSize(line, pageWidth - 80);
+            doc.text(wrapped, 40, y);
+            y += wrapped.length * 18 + 10;
+            if (y > 760) {
+              doc.addPage();
+              y = 50;
+            }
+          });
+
+          normalizedPdfBlob = doc.output('blob');
+          if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
+          showPdfPreview(URL.createObjectURL(normalizedPdfBlob));
+        });
+      }
+
+      if (exportBtn) {
+        exportBtn.addEventListener('click', function () {
+          const blobToDownload = normalizedPdfBlob || (pdfUpload && pdfUpload.files && pdfUpload.files[0] ? new Blob([pdfUpload.files[0]], { type: 'application/pdf' }) : null);
+          if (!blobToDownload) {
+            alert('Báº¡n cáº§n chá»n hoáº·c táº¡o file PDF trÆ°á»›c khi xuáº¥t.');
+            return;
+          }
+
+          const link = document.createElement('a');
+          const url = URL.createObjectURL(blobToDownload);
+          link.href = url;
+          link.download = 'futurepath-profile.pdf';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          alert('File PDF Ä‘Ã£ Ä‘Æ°á»£c xuáº¥t thÃ nh cÃ´ng.');
+        });
+      }
+    </script>
+  </body>
+</html>
+
+

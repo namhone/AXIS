@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vá» dá»± Ã¡n â€” FuturePath</title>
+    <link rel="stylesheet" href="../css/global.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      
+
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="brand-copy"><span>FuturePath</span><small>Äá»“ng hÃ nh cÃ¹ng cuá»™c Ä‘á»i</small></div>
+              </div>
+            </a>
+          </div>
+
+          <nav class="header-nav" role="navigation" aria-label="ChÃ­nh">
+            <a class="nav-item" href="profile.html"><span class="nav-ico">â˜°</span><span>Há»“ sÆ¡ nÄƒng lá»±c</span></a>
+            <a class="nav-item" href="assessment.html"><span class="nav-ico">â—Ž</span><span>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">â–£</span><span>PhÃ¡t triá»ƒn báº£n thÃ¢n</span></a>
+            <a class="nav-item" href="careers.html"><span class="nav-ico">â–¤</span><span>ThÆ° viá»‡n nghá» nghiá»‡p</span></a>
+            <a class="nav-item active" href="about.html"><span class="nav-ico">â“˜</span><span>Vá» dá»± Ã¡n</span></a>
+          </nav>
+
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">ÄÄƒng nháº­p</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">ÄÄƒng kÃ½</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-column">
+          <section class="page-hero">
+            <span class="eyebrow">Vá» dá»± Ã¡n</span>
+            <h1>FuturePath â€” Ná»n táº£ng Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p</h1>
+            <p class="lead">FuturePath giÃºp há»c sinh vÃ  ngÆ°á»i tráº» khÃ¡m phÃ¡ nÄƒng lá»±c, xÃ¢y dá»±ng lá»™ trÃ¬nh nghá» nghiá»‡p vÃ  káº¿t ná»‘i tÃ i nguyÃªn thá»±c hÃ nh â€” theo phong cÃ¡ch cÃ¡ nhÃ¢n hoÃ¡ vÃ  dá»… tiáº¿p cáº­n.</p>
+          </section>
+
+          <section class="mini-panel">
+            <h3>Váº¥n Ä‘á»</h3>
+            <p class="summary-body">Nhiá»u há»c sinh thiáº¿u thÃ´ng tin cÃ³ cáº¥u trÃºc vá» nghá» nghiá»‡p, khÃ´ng biáº¿t cÃ¡ch liÃªn káº¿t ká»¹ nÄƒng hiá»‡n cÃ³ vá»›i con Ä‘Æ°á»ng nghá» vÃ  thiáº¿u cÃ´ng cá»¥ láº­p káº¿ hoáº¡ch thá»±c táº¿ Ä‘á»ƒ phÃ¡t triá»ƒn nÄƒng lá»±c.</p>
+          </section>
+
+          <section class="mini-panel">
+            <h3>Giáº£i phÃ¡p</h3>
+            <p class="summary-body">Káº¿t há»£p Ä‘Ã¡nh giÃ¡ nÄƒng lá»±c tá»± Ä‘á»™ng, thÆ° viá»‡n nghá» nghiá»‡p gá»£i Ã½ theo há»“ sÆ¡, cÃ´ng cá»¥ quáº£n lÃ½ má»¥c tiÃªu vÃ  lá»™ trÃ¬nh phÃ¡t triá»ƒn. Giao diá»‡n giáº£n lÆ°á»£c, editorial vÃ  táº­p trung ná»™i dung giÃºp viá»‡c ra quyáº¿t Ä‘á»‹nh dá»… dÃ ng hÆ¡n.</p>
+          </section>
+
+          <section class="mini-panel">
+            <h3>Má»¥c tiÃªu</h3>
+            <ul class="checklist">
+              <li>GiÃºp ngÆ°á»i dÃ¹ng nháº­n diá»‡n nÄƒng lá»±c cá»‘t lÃµi</li>
+              <li>Cung cáº¥p lá»™ trÃ¬nh thá»±c hÃ nh cÃ³ thá»ƒ Ä‘o lÆ°á»ng</li>
+              <li>Há»— trá»£ káº¿t ná»‘i tá»›i tÃ i nguyÃªn há»c táº­p vÃ  mentor</li>
+            </ul>
+          </section>
+
+          <section class="mini-panel">
+            <h3>NgÆ°á»i lÃ m dá»± Ã¡n</h3>
+            <div class="team-grid">
+              <div class="team-card"><h3>Nam â€” Product & Design</h3><p>Äá»‹nh hÆ°á»›ng sáº£n pháº©m, thiáº¿t káº¿ UI/UX vÃ  Ä‘áº¡o diá»…n visual.</p></div>
+              <div class="team-card"><h3>Äá»™i Dev â€” Engineering</h3><p>Triá»ƒn khai frontend, logic vÃ  tÃ­ch há»£p.</p></div>
+              <div class="team-card"><h3>Mentor & Advisors</h3><p>Há»— trá»£ ná»™i dung chuyÃªn mÃ´n vÃ  kiá»ƒm chá»©ng lá»™ trÃ¬nh nghá».</p></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h4>LiÃªn há»‡</h4>
+          <p>FuturePath â€” Há»— trá»£ Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p vÃ  phÃ¡t triá»ƒn ká»¹ nÄƒng cho há»c sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p><strong>Äiá»‡n thoáº¡i:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+        </div>
+
+        <div class="footer-form">
+          <h4>Nháº­n thÃ´ng tin &amp; tÆ° váº¥n</h4>
+          <form id="contactForm" action="#" onsubmit="event.preventDefault(); alert('Cáº£m Æ¡n! ChÃºng tÃ´i sáº½ liÃªn há»‡ sá»›m.');">
+            <div class="field-row">
+              <input type="email" name="email" placeholder="Email cá»§a báº¡n" required />
+              <input type="tel" name="phone" placeholder="Sá»‘ Ä‘iá»‡n thoáº¡i (tÃ¹y chá»n)" />
+            </div>
+            <div class="field-row">
+              <button type="submit" class="primary-btn">Gá»­i</button>
+              <button type="reset" class="ghost-btn">XÃ³a</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">Â© 2026 FuturePath â€” All rights reserved.</div>
+    </footer>
+
+    <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
+      <div class="settings-modal-backdrop" data-close-settings="true"></div>
+      <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-header">
+          <h3 id="settingsTitle">CÃ i Ä‘áº·t tÃ i khoáº£n</h3>
+          <button type="button" class="settings-close" id="closeSettingsModal" aria-label="ÄÃ³ng cÃ i Ä‘áº·t">Ã—</button>
+        </div>
+        <div class="settings-list">
+          <label class="setting-item"><span>ThÃ´ng bÃ¡o email</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Gá»£i Ã½ nghá» nghiá»‡p tá»± Ä‘á»™ng</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Báº£o máº­t 2 lá»›p</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Cháº¿ Ä‘á»™ tá»‘i</span><input type="checkbox" /></label>
+        </div>
+        <div class="settings-actions">
+          <button type="button" class="ghost-btn" data-close-settings="true">Há»§y</button>
+          <button type="button" class="primary-btn" id="saveSettings">LÆ°u thay Ä‘á»•i</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const authArea = document.getElementById('authArea');
+        const userPanel = document.getElementById('userPanel');
+        const userChip = document.getElementById('userChip');
+        const userMenu = document.getElementById('userMenu');
+        const menuButtons = document.querySelectorAll('[data-menu-action]');
+        const authButtons = document.querySelectorAll('[data-auth-action]');
+        const AUTH_KEY = 'futurepath.signed_in';
+
+        const setSignedIn = (opts) => {
+          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+          if (authArea) authArea.classList.add('hidden');
+          if (userPanel) userPanel.classList.remove('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        const setSignedOut = (opts) => {
+          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
+          if (authArea) authArea.classList.remove('hidden');
+          if (userPanel) userPanel.classList.add('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        authButtons.forEach(function (button) {
+          button.addEventListener('click', function () { setSignedIn(); });
+        });
+
+        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
+
+        if (userChip) {
+          userChip.addEventListener('click', function () {
+            if (!userMenu) return;
+            const isHidden = userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden', !isHidden);
+            userChip.setAttribute('aria-expanded', String(isHidden));
+          });
+        }
+
+        menuButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const action = button.getAttribute('data-menu-action');
+            if (action === 'settings') {
+              const modal = document.getElementById('settingsModal');
+              if (modal) modal.classList.remove('hidden');
+            } else if (action === 'logout') {
+              setSignedOut();
+            } else {
+              alert('TÃ­nh nÄƒng chÆ°a Ä‘Æ°á»£c triá»ƒn khai trong phiÃªn báº£n demo.');
+            }
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        const modal = document.getElementById('settingsModal');
+        const closeModal = document.getElementById('closeSettingsModal');
+        const saveSettings = document.getElementById('saveSettings');
+        const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+
+        closeModal && closeModal.addEventListener('click', function () { modal && modal.classList.add('hidden'); });
+        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', function () { modal && modal.classList.add('hidden'); }); });
+        saveSettings && saveSettings.addEventListener('click', function () { alert('CÃ i Ä‘áº·t Ä‘Ã£ Ä‘Æ°á»£c lÆ°u thÃ nh cÃ´ng.'); modal && modal.classList.add('hidden'); });
+
+        document.addEventListener('click', function (event) {
+          if (!userMenu || !userChip) return;
+          if (!userMenu.contains(event.target) && !userChip.contains(event.target)) {
+            userMenu.classList.add('hidden');
+            userChip.setAttribute('aria-expanded', 'false');
+          }
+        });
+      })();
+
+            (function(){
+        // Header-nav is the single source of truth now. Attach handlers safely.
+        const headerNav = document.querySelector('.header-nav');
+        if (!headerNav) return;
+        const navLinks = headerNav.querySelectorAll('.nav-item');
+
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function () {
+            navLinks.forEach(function (l){ l.classList.remove('active'); });
+            link.classList.add('active');
+            const userMenu = document.getElementById('userMenu');
+            const userChip = document.getElementById('userChip');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded','false');
+          });
+        });
+
+        headerNav.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.nav-item');
+            if (item) { item.click(); e.preventDefault(); }
+          }
+        });
+      })();;
+    </script>
+  </body>
+</html>
+
+

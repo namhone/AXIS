@@ -1,0 +1,451 @@
+﻿<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½ â€” FuturePath</title>
+    <link rel="stylesheet" href="../css/global.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      
+
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="brand-copy"><span>FuturePath</span><small>Äá»“ng hÃ nh cÃ¹ng cuá»™c Ä‘á»i</small></div>
+              </div>
+            </a>
+          </div>
+
+          <nav class="header-nav" role="navigation" aria-label="ChÃ­nh">
+            <a class="nav-item" href="profile.html"><span class="nav-ico">â˜°</span><span>Há»“ sÆ¡ nÄƒng lá»±c</span></a>
+            <a class="nav-item active" href="assessment.html"><span class="nav-ico">â—Ž</span><span>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">â–£</span><span>PhÃ¡t triá»ƒn báº£n thÃ¢n</span></a>
+            <a class="nav-item" href="careers.html"><span class="nav-ico">â–¤</span><span>ThÆ° viá»‡n nghá» nghiá»‡p</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">â“˜</span><span>Vá» dá»± Ã¡n</span></a>
+          </nav>
+
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">ÄÄƒng nháº­p</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">ÄÄƒng kÃ½</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-column">
+          <section class="page-hero">
+            <span class="eyebrow">ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½</span>
+            <h1>Báº¡n Ä‘ang á»Ÿ Ä‘Ã¢u?</h1>
+            <p class="lead">Káº¿t quáº£ giÃºp báº¡n hiá»ƒu nÄƒng lá»±c hiá»‡n táº¡i trÆ°á»›c khi xem cÃ¡c hÆ°á»›ng nghá» nghiá»‡p.</p>
+          </section>
+
+          <section class="assessment-controls content-panel">
+            <div class="controls-row">
+              <button class="primary-btn" id="runAssessment">Cháº¡y Ä‘Ã¡nh giÃ¡ láº¡i</button>
+              <button class="ghost-btn" id="saveSuggestions">LÆ°u gá»£i Ã½ vÃ o há»“ sÆ¡</button>
+              <button class="ghost-btn" id="exportReport">Xuáº¥t bÃ¡o cÃ¡o (PDF)</button>
+            </div>
+
+            <div class="assessment-visual">
+              <canvas id="skillChart" width="600" height="240" aria-hidden="true"></canvas>
+              <div class="assessment-note">Biá»ƒu Ä‘á»“ hiá»ƒn thá»‹ Ä‘iá»ƒm ká»¹ nÄƒng Æ°á»›c tÃ­nh. Cháº¡y Ä‘Ã¡nh giÃ¡ Ä‘á»ƒ cáº­p nháº­t dá»¯ liá»‡u.</div>
+            </div>
+          </section>
+
+          <section class="stats-grid">
+            <article class="stat-card">
+              <h3>Má»©c Ä‘á»™ hoÃ n thiá»‡n há»“ sÆ¡</h3>
+              <div class="score-pill">78%</div>
+              <div class="progress-row">
+                <div class="label"><span>Tiáº¿n Ä‘á»™</span><strong>78%</strong></div>
+                <div class="progress-bar"><span class="progress-fill" data-progress="78"></span></div>
+              </div>
+              <p>CÃ²n 3 pháº§n cáº§n hoÃ n thiá»‡n Ä‘á»ƒ cÃ³ báº£n há»“ sÆ¡ tá»‘t hÆ¡n.</p>
+            </article>
+
+            <article class="stat-card">
+              <h3>Äiá»ƒm máº¡nh</h3>
+              <p>â€¢ TÆ° duy logic</p>
+              <p>â€¢ Giáº£i quyáº¿t váº¥n Ä‘á»</p>
+              <p>â€¢ SÃ¡ng táº¡o</p>
+            </article>
+
+            <article class="stat-card">
+              <h3>Äiá»ƒm cáº§n cáº£i thiá»‡n</h3>
+              <p>â€¢ Tiáº¿ng Anh</p>
+              <p>â€¢ Giao tiáº¿p</p>
+              <p>â€¢ Thuyáº¿t trÃ¬nh</p>
+            </article>
+          </section>
+
+          <section class="content-panel">
+            <h2>NgÃ nh nghá» Ä‘á» xuáº¥t</h2>
+            <div class="career-grid">
+              <article class="career-card">
+                <div class="career-icon">âŒ˜</div>
+                <h3>Khoa há»c dá»¯ liá»‡u</h3>
+                <p>PhÃ¹ há»£p vá»›i tÆ° duy logic, kháº£ nÄƒng phÃ¢n tÃ­ch vÃ  xá»­ lÃ½ thÃ´ng tin.</p>
+                <span class="score-pill">86% phÃ¹ há»£p</span>
+              </article>
+              <article class="career-card">
+                <div class="career-icon">â—«</div>
+                <h3>Ká»¹ thuáº­t pháº§n má»m</h3>
+                <p>Ná»n táº£ng tá»‘t vá» logic, cÃ´ng nghá»‡ vÃ  giáº£i quyáº¿t bÃ i toÃ¡n.</p>
+                <span class="score-pill">82% phÃ¹ há»£p</span>
+              </article>
+              <article class="career-card">
+                <div class="career-icon">âœ¦</div>
+                <h3>Thiáº¿t káº¿ UI/UX</h3>
+                <p>SÃ¡ng táº¡o tá»‘t, cáº§n nÃ¢ng cáº¥p thÃªm ká»¹ nÄƒng giao tiáº¿p vÃ  thuyáº¿t trÃ¬nh.</p>
+                <span class="score-pill">74% phÃ¹ há»£p</span>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h4>LiÃªn há»‡</h4>
+          <p>FuturePath â€” Há»— trá»£ Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p vÃ  phÃ¡t triá»ƒn ká»¹ nÄƒng cho há»c sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p><strong>Äiá»‡n thoáº¡i:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+        </div>
+
+        <div class="footer-form">
+          <h4>Nháº­n thÃ´ng tin &amp; tÆ° váº¥n</h4>
+          <form id="contactForm" action="#" onsubmit="event.preventDefault(); alert('Cáº£m Æ¡n! ChÃºng tÃ´i sáº½ liÃªn há»‡ sá»›m.');">
+            <div class="field-row">
+              <input type="email" name="email" placeholder="Email cá»§a báº¡n" required />
+              <input type="tel" name="phone" placeholder="Sá»‘ Ä‘iá»‡n thoáº¡i (tÃ¹y chá»n)" />
+            </div>
+            <div class="field-row">
+              <button type="submit" class="primary-btn">Gá»­i</button>
+              <button type="reset" class="ghost-btn">XÃ³a</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">Â© 2026 FuturePath â€” All rights reserved.</div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+            (function(){
+        // Header-nav is the single source of truth now. Attach handlers safely.
+        const headerNav = document.querySelector('.header-nav');
+        if (!headerNav) return;
+        const navLinks = headerNav.querySelectorAll('.nav-item');
+
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function () {
+            navLinks.forEach(function (l){ l.classList.remove('active'); });
+            link.classList.add('active');
+            const userMenu = document.getElementById('userMenu');
+            const userChip = document.getElementById('userChip');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded','false');
+          });
+        });
+
+        headerNav.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.nav-item');
+            if (item) { item.click(); e.preventDefault(); }
+          }
+        });
+      })();;
+
+      // set progress fills from data-progress attributes
+      (function(){
+        document.querySelectorAll('.progress-fill').forEach(function(el){
+          let v = el.getAttribute('data-progress') || el.dataset.progress || '';
+          if (!v) return;
+          v = String(v).trim(); if (v.endsWith('%')) v = v.slice(0, -1);
+          if (v && !isNaN(Number(v))) el.style.setProperty('--progress', v + '%');
+        });
+      })();
+
+      // Assessment logic: quick client-side demo to produce scores, update UI and export
+      (function(){
+        const runBtn = document.getElementById('runAssessment');
+        const saveBtn = document.getElementById('saveSuggestions');
+        const exportBtn = document.getElementById('exportReport');
+        const skillChart = document.getElementById('skillChart');
+        const AUTH_KEY = 'futurepath.signed_in';
+
+        const careers = [
+          { id:'data', name:'Khoa há»c dá»¯ liá»‡u', reason:'TÆ° duy logic, kháº£ nÄƒng phÃ¢n tÃ­ch', score:86 },
+          { id:'sw', name:'Ká»¹ thuáº­t pháº§n má»m', reason:'Logic & cÃ´ng nghá»‡', score:82 },
+          { id:'ux', name:'Thiáº¿t káº¿ UI/UX', reason:'SÃ¡ng táº¡o, cáº§n giao tiáº¿p', score:74 }
+        ];
+
+        function seedRandom(seed) {
+          // simple seeded RNG
+          let s = 0;
+          for (let i=0;i<seed.length;i++) s = (s<<5) - s + seed.charCodeAt(i);
+          return function () { s = Math.imul(48271, s) | 0; return (s >>> 0) / 4294967295; };
+        }
+
+        function computeScores() {
+          // get a seed from stored profile name if any
+          let seed = '';
+          try { seed = localStorage.getItem('futurepath.profile_name') || ''; } catch (e) {}
+          const rand = seed ? seedRandom(seed) : Math.random;
+
+          const scores = {
+            logic: Math.round(60 + rand()*40),
+            communication: Math.round(40 + rand()*50),
+            creativity: Math.round(50 + rand()*40),
+            english: Math.round(30 + rand()*60),
+            presentation: Math.round(30 + rand()*55)
+          };
+          return scores;
+        }
+
+        function updateStats(scores) {
+          // update progress card
+          const progressSpan = document.querySelector('.stats-grid .stat-card .score-pill');
+          if (progressSpan) {
+            const value = Math.round((scores.logic + scores.communication + scores.creativity + scores.english + scores.presentation)/5);
+            progressSpan.textContent = value + '%';
+            const bar = document.querySelector('.stats-grid .stat-card .progress-bar span');
+            if (bar) bar.style.width = value + '%';
+            const strongText = document.querySelectorAll('.stats-grid .stat-card')[1];
+          }
+
+          // strengths/weaknesses
+          const strengths = [];
+          const weaknesses = [];
+          Object.keys(scores).forEach(k=>{
+            if (scores[k] >= 70) strengths.push(k);
+            if (scores[k] <= 55) weaknesses.push(k);
+          });
+          const mapName = {logic:'TÆ° duy logic', communication:'Giao tiáº¿p', creativity:'SÃ¡ng táº¡o', english:'Tiáº¿ng Anh', presentation:'Thuyáº¿t trÃ¬nh'};
+          const strengthsCard = document.querySelectorAll('.stats-grid .stat-card')[1];
+          const weakCard = document.querySelectorAll('.stats-grid .stat-card')[2];
+          if (strengthsCard) strengthsCard.innerHTML = '<h3>Äiá»ƒm máº¡nh</h3>' + strengths.map(s=>'<p>â€¢ '+mapName[s]+'</p>').join('');
+          if (weakCard) weakCard.innerHTML = '<h3>Äiá»ƒm cáº§n cáº£i thiá»‡n</h3>' + weaknesses.map(s=>'<p>â€¢ '+mapName[s]+'</p>').join('');
+
+          // update career scores
+          const careerEls = document.querySelectorAll('.career-grid .career-card');
+          careerEls.forEach(function (el, idx) {
+            const pill = el.querySelector('.score-pill');
+            const base = careers[idx] ? careers[idx].score : 60;
+            // simple influence: logic & english & creativity
+            const influence = Math.round((scores.logic*0.45 + scores.english*0.25 + scores.creativity*0.15 + scores.communication*0.15)/1);
+            if (pill) pill.textContent = influence + '% phÃ¹ há»£p';
+          });
+        }
+
+        function drawChart(scores) {
+          if (!skillChart) return;
+          const ctx = skillChart.getContext('2d');
+          const w = skillChart.width; const h = skillChart.height;
+          ctx.clearRect(0,0,w,h);
+          const labels = ['Logic','Giao tiáº¿p','SÃ¡ng táº¡o','Tiáº¿ng Anh','Thuyáº¿t trÃ¬nh'];
+          const vals = [scores.logic, scores.communication, scores.creativity, scores.english, scores.presentation];
+          const max = 100;
+          const barW = Math.floor(w / (vals.length*1.6));
+          vals.forEach(function (v,i) {
+            const x = 20 + i*(barW+30);
+            const barH = Math.round((v/max) * (h-60));
+            ctx.fillStyle = '#7b5cff';
+            ctx.fillRect(x, h-40-barH, barW, barH);
+            ctx.fillStyle = '#3a2b60';
+            ctx.font = '12px sans-serif';
+            ctx.fillText(labels[i], x, h-18);
+            ctx.fillText(v+'', x, h-46-barH);
+          });
+        }
+
+        function runAssessment() {
+          const scores = computeScores();
+          updateStats(scores);
+          drawChart(scores);
+          // persist small summary
+          try { localStorage.setItem('futurepath.last_assessment', JSON.stringify({scores: scores, timestamp: Date.now()})); } catch (e) {}
+          return scores;
+        }
+
+        if (runBtn) runBtn.addEventListener('click', function () { runAssessment(); });
+
+        if (saveBtn) saveBtn.addEventListener('click', function () {
+          // save suggested top careers into profile area in localStorage
+          const assRaw = localStorage.getItem('futurepath.last_assessment');
+          if (!assRaw) { alert('ChÆ°a cÃ³ káº¿t quáº£ Ä‘Ã¡nh giÃ¡. Vui lÃ²ng cháº¡y Ä‘Ã¡nh giÃ¡ trÆ°á»›c.'); return; }
+          const ass = JSON.parse(assRaw);
+          // naive top 3 from career grid
+          const saved = { saved_at: Date.now(), recommendations: [ {id:'data', name:'Khoa há»c dá»¯ liá»‡u'}, {id:'sw', name:'Ká»¹ thuáº­t pháº§n má»m' }, {id:'ux', name:'Thiáº¿t káº¿ UI/UX'} ] };
+          try { localStorage.setItem('futurepath.saved_recommendations', JSON.stringify(saved)); alert('Gá»£i Ã½ Ä‘Ã£ Ä‘Æ°á»£c lÆ°u vÃ o há»“ sÆ¡ (demo).'); } catch (e) { alert('LÆ°u tháº¥t báº¡i.'); }
+        });
+
+        if (exportBtn) exportBtn.addEventListener('click', function () {
+          const last = localStorage.getItem('futurepath.last_assessment');
+          const data = last ? JSON.parse(last) : {scores:{}, timestamp:Date.now()};
+          const { jsPDF } = window.jspdf || {};
+          if (jsPDF) {
+            const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+            doc.setFontSize(18);
+            doc.text('FuturePath â€” BÃ¡o cÃ¡o Ä‘Ã¡nh giÃ¡ nhanh', 40, 60);
+            doc.setFontSize(12);
+            doc.text('Thá»i gian: ' + new Date(data.timestamp).toLocaleString(), 40, 90);
+            doc.text('Äiá»ƒm ká»¹ nÄƒng:', 40, 120);
+            let y = 140;
+            for (const k in data.scores) {
+              doc.text('- ' + k + ': ' + data.scores[k], 60, y);
+              y += 18;
+            }
+            doc.save('futurepath-assessment.pdf');
+          } else {
+            // fallback: download JSON
+            const blob = new Blob([last || '{}'], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'futurepath-assessment.json';
+            document.body.appendChild(a); a.click(); a.remove();
+          }
+        });
+
+        // run once on load to show something
+        try { runAssessment(); } catch (e) {}
+      })();
+    </script>
+    <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
+      <div class="settings-modal-backdrop" data-close-settings="true"></div>
+      <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-header">
+          <h3 id="settingsTitle">CÃ i Ä‘áº·t tÃ i khoáº£n</h3>
+          <button type="button" class="settings-close" id="closeSettingsModal" aria-label="ÄÃ³ng cÃ i Ä‘áº·t">Ã—</button>
+        </div>
+        <div class="settings-list">
+          <label class="setting-item"><span>ThÃ´ng bÃ¡o email</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Gá»£i Ã½ nghá» nghiá»‡p tá»± Ä‘á»™ng</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Báº£o máº­t 2 lá»›p</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Cháº¿ Ä‘á»™ tá»‘i</span><input type="checkbox" /></label>
+        </div>
+        <div class="settings-actions">
+          <button type="button" class="ghost-btn" data-close-settings="true">Há»§y</button>
+          <button type="button" class="primary-btn" id="saveSettings">LÆ°u thay Ä‘á»•i</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const authArea = document.getElementById('authArea');
+        const userPanel = document.getElementById('userPanel');
+        const userChip = document.getElementById('userChip');
+        const userMenu = document.getElementById('userMenu');
+        const menuButtons = document.querySelectorAll('[data-menu-action]');
+        const authButtons = document.querySelectorAll('[data-auth-action]');
+        const AUTH_KEY = 'futurepath.signed_in';
+
+        const setSignedIn = (opts) => {
+          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+          if (authArea) authArea.classList.add('hidden');
+          if (userPanel) userPanel.classList.remove('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        const setSignedOut = (opts) => {
+          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
+          if (authArea) authArea.classList.remove('hidden');
+          if (userPanel) userPanel.classList.add('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        authButtons.forEach(function (button) {
+          button.addEventListener('click', function () { setSignedIn(); });
+        });
+
+        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
+
+        if (userChip) {
+          userChip.addEventListener('click', function () {
+            if (!userMenu) return;
+            const isHidden = userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden', !isHidden);
+            userChip.setAttribute('aria-expanded', String(isHidden));
+          });
+        }
+
+        menuButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const action = button.getAttribute('data-menu-action');
+            if (action === 'settings') {
+              const modal = document.getElementById('settingsModal');
+              if (modal) modal.classList.remove('hidden');
+            } else if (action === 'logout') {
+              setSignedOut();
+            } else {
+              alert('TÃ­nh nÄƒng chÆ°a Ä‘Æ°á»£c triá»ƒn khai trong phiÃªn báº£n demo.');
+            }
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        const modal = document.getElementById('settingsModal');
+        const closeModal = document.getElementById('closeSettingsModal');
+        const saveSettings = document.getElementById('saveSettings');
+        const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+
+        closeModal && closeModal.addEventListener('click', function () { modal && modal.classList.add('hidden'); });
+        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', function () { modal && modal.classList.add('hidden'); }); });
+        saveSettings && saveSettings.addEventListener('click', function () { alert('CÃ i Ä‘áº·t Ä‘Ã£ Ä‘Æ°á»£c lÆ°u thÃ nh cÃ´ng.'); modal && modal.classList.add('hidden'); });
+
+        document.addEventListener('click', function (event) {
+          if (!userMenu || !userChip) return;
+          if (!userMenu.contains(event.target) && !userChip.contains(event.target)) {
+            userMenu.classList.add('hidden');
+            userChip.setAttribute('aria-expanded', 'false');
+          }
+        });
+      })();
+
+            (function(){
+        // Header-nav is the single source of truth now. Attach handlers safely.
+        const headerNav = document.querySelector('.header-nav');
+        if (!headerNav) return;
+        const navLinks = headerNav.querySelectorAll('.nav-item');
+
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function () {
+            navLinks.forEach(function (l){ l.classList.remove('active'); });
+            link.classList.add('active');
+            const userMenu = document.getElementById('userMenu');
+            const userChip = document.getElementById('userChip');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded','false');
+          });
+        });
+
+        headerNav.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.nav-item');
+            if (item) { item.click(); e.preventDefault(); }
+          }
+        });
+      })();;
+    </script>
+  </body>
+</html>
+
+
+
+

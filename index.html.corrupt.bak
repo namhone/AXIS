@@ -1,0 +1,484 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FuturePath</title>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body>
+  <div class="page-shell">
+    
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="header-brand">
+          <a class="brand-link" href="index.html">
+            <div class="brand">
+              <div class="brand-mark" aria-hidden="true">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                  <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                  <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="brand-copy"><span>FuturePath</span><small>Äá»“ng hÃ nh cÃ¹ng cuá»™c Ä‘á»i</small></div>
+            </div>
+          </a>
+        </div>
+
+        <nav class="header-nav" role="navigation" aria-label="ChÃ­nh">
+          <a class="nav-item" href="pages/profile.html"><span class="nav-ico">â˜°</span><span>Há»“ sÆ¡ nÄƒng lá»±c</span></a>
+          <a class="nav-item" href="pages/assessment.html"><span class="nav-ico">â—Ž</span><span>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½</span></a>
+          <a class="nav-item" href="pages/development.html"><span class="nav-ico">â–£</span><span>PhÃ¡t triá»ƒn báº£n thÃ¢n</span></a>
+          <a class="nav-item" href="pages/careers.html"><span class="nav-ico">â–¤</span><span>ThÆ° viá»‡n nghá» nghiá»‡p</span></a>
+          <a class="nav-item" href="pages/about.html"><span class="nav-ico">â“˜</span><span>Vá» dá»± Ã¡n</span></a>
+        </nav>
+
+        <div class="header-auth">
+          <div class="auth-area" id="authArea">
+            <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">ÄÄƒng nháº­p</button>
+            <button class="auth-btn primary-btn" type="button" data-auth-action="signup">ÄÄƒng kÃ½</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <main class="main-column">
+          <section class="hero-card">
+            <div class="hero-copy">
+              <h1>
+                KhÃ¡m phÃ¡ nÄƒng lá»±c cá»§a báº¡n<br />
+                Äá»‹nh hÆ°á»›ng tÆ°Æ¡ng lai<br />
+                <span>láº¡i vá»¯ng vÃ ng hÆ¡n!</span>
+              </h1>
+              <p>
+                Ná»n táº£ng há»— trá»£ há»c sinh THPT xÃ¢y dá»±ng há»“ sÆ¡ nÄƒng lá»±c, Ä‘Ã¡nh giÃ¡ báº£n thÃ¢n
+                vÃ  gá»£i Ã½ ngÃ nh nghá» phÃ¹ há»£p báº±ng AI.
+              </p>
+              <div class="hero-actions">
+                <a class="primary-btn" href="pages/profile.html">Báº¯t Ä‘áº§u ngay</a>
+                <a class="ghost-btn" href="pages/about.html">Xem hÆ°á»›ng dáº«n</a>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <img
+                class="hero-illustration"
+                src="assets/hero-2.png"
+                alt="Há»c sinh Ä‘ang Ä‘á»c sÃ¡ch â€” hero"
+              />
+            </div>
+          </section>
+
+          <section class="tools-section">
+            <h2>CÃ¡c cÃ´ng cá»¥ chá»§ chÃ­nh</h2>
+            <div class="tool-grid">
+              <article class="tool-card accent-1">
+                <div class="tool-icon">âœŽ</div>
+                <h3>Táº¡o há»“ sÆ¡ nÄƒng lá»±c</h3>
+                <p>XÃ¢y dá»±ng vÃ  lÆ°u trá»¯ há»“ sÆ¡ nÄƒng lá»±c cÃ¡ nhÃ¢n</p>
+                <span class="tool-arrow">â†’</span>
+              </article>
+
+              <article class="tool-card accent-2">
+                <div class="tool-icon">â—Œ</div>
+                <h3>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½ ngÃ nh nghá»</h3>
+                <p>PhÃ¢n tÃ­ch nÄƒng lá»±c vÃ  Ä‘á» xuáº¥t nghá» phÃ¹ há»£p</p>
+                <span class="tool-arrow">â†’</span>
+              </article>
+
+              <article class="tool-card accent-3">
+                <div class="tool-icon">â–¤</div>
+                <h3>Lá»™ trÃ¬nh phÃ¡t triá»ƒn</h3>
+                <p>XÃ¡c Ä‘á»‹nh ká»¹ nÄƒng cáº§n há»c vÃ  theo dÃµi tiáº¿n Ä‘á»™</p>
+                <span class="tool-arrow">â†’</span>
+              </article>
+
+              <article class="tool-card accent-4">
+                <div class="tool-icon">ðŸ“–</div>
+                <h3>ThÆ° viá»‡n nghá» nghiá»‡p</h3>
+                <p>KhÃ¡m phÃ¡ thÃ´ng tin ngÃ nh nghá» vÃ  Ä‘á»‹nh hÆ°á»›ng há»c táº­p</p>
+                <span class="tool-arrow">â†’</span>
+              </article>
+            </div>
+          </section>
+
+          <section class="radar-panel">
+            <h2>Biá»ƒu Ä‘á»“ nÄƒng lá»±c tá»•ng quan</h2>
+
+            <div class="radar-layout">
+              <div class="radar-wrap">
+                <img
+                  class="radar-image"
+                  src="assets/hero-5.png"
+                  alt="Biá»ƒu Ä‘á»“ (áº£nh) â€” nÄƒng lá»±c tá»•ng quan"
+                />
+              </div>
+
+              <div class="chart-summary">
+                <div class="score-box">
+                  <div class="score-row">
+                    <div class="score-tag">TÆ° duy logic</div>
+                    <div class="score-value">85</div>
+                  </div>
+                  <div class="score-row">
+                    <div class="score-tag">TÆ° duy logic</div>
+                    <div class="score-value">82</div>
+                  </div>
+                  <div class="score-row">
+                    <div class="score-tag">Giao tiáº¿p</div>
+                    <div class="score-value">80</div>
+                  </div>
+                </div>
+
+                <div class="summary-list">
+                  <div class="summary-item active">
+                    <span class="check">âœ“</span>
+                    <span>Äiá»ƒm máº¡nh cá»§a báº¡n</span>
+                  </div>
+                  <div class="summary-item active">
+                    <span class="check">âœ“</span>
+                    <span>TÆ° duy logic tá»‘t</span>
+                  </div>
+                  <div class="summary-item active">
+                    <span class="check">âœ“</span>
+                    <span>Kháº£ nÄƒng tÆ° duy pháº£n biá»‡n</span>
+                  </div>
+                  <div class="summary-item active">
+                    <span class="check">âœ“</span>
+                    <span>Giáº£i quyáº¿t váº¥n Ä‘á» linh hoáº¡t</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <aside class="side-column">
+          <section class="mini-panel profile-panel">
+            <div class="panel-heading">
+              <h3>Há»“ sÆ¡ cá»§a tÃ´i</h3>
+              <a href="pages/profile.html">Xem chi tiáº¿t</a>
+            </div>
+
+            <div class="score-circular">
+              <div class="ring">
+                <div class="ring-inner">
+                  <strong>78%</strong>
+                  <span>HoÃ n thiá»‡n HSNC</span>
+                </div>
+              </div>
+            </div>
+
+            <ul class="checklist">
+              <li class="done">ThÃ´ng tin cÃ¡ nhÃ¢n</li>
+              <li class="done">Káº¿t quáº£ há»c táº­p</li>
+              <li class="done">Sá»Ÿ thÃ­ch &amp; TÃ­nh cÃ¡ch</li>
+              <li class="done">Ká»¹ nÄƒng</li>
+              <li class="done">Hoáº¡t Ä‘á»™ng &amp; ThÃ nh tÃ­ch</li>
+            </ul>
+
+            <button class="primary-btn full">Tiáº¿p tá»¥c hoÃ n thiá»‡n há»“ sÆ¡</button>
+          </section>
+
+          <section class="mini-panel suggest-panel">
+            <div class="panel-heading">
+              <h3>NgÃ nh nghá» gá»£i Ã½ cho báº¡n</h3>
+              <a href="pages/careers.html">Xem táº¥t cáº£</a>
+            </div>
+
+            <div class="career-item">
+              <div class="career-topline">
+                <div class="career-icon icon-lavender">â—«</div>
+                <span>CÃ´ng nghá»‡ thÃ´ng tin</span>
+              </div>
+             <div class="progress-track"><span class="progress-fill" data-progress="87"></span></div>
+              <small>PhÃ¹ há»£p: 87%</small>
+            </div>
+
+            <div class="career-item">
+              <div class="career-topline">
+                <div class="career-icon icon-teal">âš—</div>
+                <span>Khoa há»c dá»¯ liá»‡u</span>
+              </div>
+              <div class="progress-track"><span class="progress-fill" data-progress="82"></span></div>
+              <small>PhÃ¹ há»£p: 82%</small>
+            </div>
+
+            <div class="career-item">
+              <div class="career-topline">
+                <div class="career-icon icon-soft">âœ¦</div>
+                <span>TrÃ­ tuá»‡ nhÃ¢n táº¡o</span>
+              </div>
+              <div class="progress-track"><span class="progress-fill" data-progress="78"></span></div>
+              <small>PhÃ¹ há»£p: 78%</small>
+            </div>
+          </section>
+
+          <section class="mini-panel roadmap-panel">
+            <div class="panel-heading">
+              <h3>Lá»™ trÃ¬nh tuáº§n nÃ y</h3>
+              <a href="pages/development.html">Xem chi tiáº¿t</a>
+            </div>
+
+            <ul class="roadmap-list">
+              <li class="done">TÃ¬m hiá»ƒu vá» ngÃ nh CÃ´ng nghá»‡ thÃ´ng tin</li>
+              <li class="done">HoÃ n thÃ nh bÃ i tráº¯c nghiá»‡m tÃ­nh cÃ¡ch</li>
+              <li class="pending">Há»c ká»¹ nÄƒng láº­p trÃ¬nh cÆ¡ báº£n</li>
+              <li class="pending">Äá»c tÃ i liá»‡u: Ká»¹ nÄƒng lÃ m viá»‡c nhÃ³m</li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+
+      <section class="content-panel team-panel">
+        <div class="panel-heading">
+          <h3>Vá» Ä‘á»™i ngÅ© &amp; cÃ¡ch sá»­ dá»¥ng</h3>
+          <a href="pages/about.html">Xem thÃªm</a>
+        </div>
+
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>Team Báº£o Nam</h3>
+            <p>Äá»™i ngÅ© xÃ¢y dá»±ng ná»n táº£ng há»— trá»£ há»c sinh Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p báº±ng dá»¯ liá»‡u, tráº£i nghiá»‡m thá»±c táº¿ vÃ  tÆ° váº¥n gá»n, dá»… hiá»ƒu.</p>
+          </article>
+          <article class="guide-card">
+            <h3>HÆ°á»›ng dáº«n nhanh</h3>
+            <p>1) Táº¡o há»“ sÆ¡ â€¢ 2) ÄÃ¡nh giÃ¡ nÄƒng lá»±c â€¢ 3) Tiáº¿p cáº­n lá»™ trÃ¬nh vÃ  ngÃ nh nghá» phÃ¹ há»£p.</p>
+          </article>
+          <article class="guide-card">
+            <h3>CÃ¡c cÃ´ng cá»¥ tÃ­ch há»£p</h3>
+            <p>Há»“ sÆ¡ dá»± Ã¡n, Ä‘áº·t má»¥c tiÃªu, Ä‘Ã¡nh giÃ¡ cÃ¡ nhÃ¢n vÃ  thÆ° viá»‡n nghá» nghiá»‡p Ä‘Æ°á»£c tÃ­ch há»£p trong há»‡ thá»‘ng kÃ©o dÃ i.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-container">
+          <div class="footer-contact">
+            <h4>LiÃªn há»‡</h4>
+            <p>FuturePath â€” Há»— trá»£ Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p vÃ  phÃ¡t triá»ƒn ká»¹ nÄƒng cho há»c sinh.</p>
+            <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+            <p><strong>Äiá»‡n thoáº¡i:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+          </div>
+
+          <div class="footer-form">
+            <h4>Nháº­n thÃ´ng tin &amp; tÆ° váº¥n</h4>
+            <form id="contactForm" action="#" onsubmit="event.preventDefault();alert('Cáº£m Æ¡n! ChÃºng tÃ´i sáº½ liÃªn há»‡ sá»›m.');">
+              <div class="field-row">
+                <input type="email" name="email" placeholder="Email cá»§a báº¡n" required />
+                <input type="tel" name="phone" placeholder="Sá»‘ Ä‘iá»‡n thoáº¡i (tÃ¹y chá»n)" />
+              </div>
+              <div class="field-row">
+                <button type="submit" class="primary-btn">Gá»­i</button>
+                <button type="reset" class="ghost-btn">XÃ³a</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">Â© 2026 FuturePath â€” All rights reserved.</div>
+      </footer>
+
+      <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
+        <div class="settings-modal-backdrop" data-close-settings="true"></div>
+        <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+          <div class="settings-header">
+            <h3 id="settingsTitle">CÃ i Ä‘áº·t tÃ i khoáº£n</h3>
+            <button type="button" class="settings-close" id="closeSettingsModal" aria-label="ÄÃ³ng cÃ i Ä‘áº·t">Ã—</button>
+          </div>
+
+          <div class="settings-list">
+            <label class="setting-item">
+              <span>ThÃ´ng bÃ¡o email</span>
+              <input type="checkbox" checked />
+            </label>
+            <label class="setting-item">
+              <span>Gá»£i Ã½ nghá» nghiá»‡p tá»± Ä‘á»™ng</span>
+              <input type="checkbox" checked />
+            </label>
+            <label class="setting-item">
+              <span>Báº£o máº­t 2 lá»›p</span>
+              <input type="checkbox" />
+            </label>
+            <label class="setting-item">
+              <span>Cháº¿ Ä‘á»™ tá»‘i</span>
+              <input type="checkbox" />
+            </label>
+          </div>
+
+          <div class="settings-actions">
+            <button type="button" class="ghost-btn" data-close-settings="true">Há»§y</button>
+            <button type="button" class="primary-btn" id="saveSettings">LÆ°u thay Ä‘á»•i</button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Contact form submit: POST to local demo server and show result
+        (function(){
+          const form = document.getElementById('contactForm');
+          if (!form) return;
+          form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = form.querySelector('input[name="email"]').value;
+            const phone = form.querySelector('input[name="phone"]').value;
+            const payload = { email, phone };
+            try {
+              const res = await fetch('http://127.0.0.1:5000/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              if (!res.ok) throw new Error('Network response was not ok');
+              const data = await res.json();
+              // show confirmation inline
+              alert('Cáº£m Æ¡n! ChÃºng tÃ´i Ä‘Ã£ nháº­n thÃ´ng tin.');
+              form.reset();
+            } catch (err) {
+              console.error(err);
+              alert('KhÃ´ng thá»ƒ gá»­i thÃ´ng tin ngay bÃ¢y giá». Vui lÃ²ng thá»­ láº¡i sau.');
+            }
+          });
+        })();
+
+        (function(){
+          const authArea = document.getElementById('authArea');
+          const userPanel = document.getElementById('userPanel');
+          const userChip = document.getElementById('userChip');
+          const userMenu = document.getElementById('userMenu');
+          const menuButtons = document.querySelectorAll('[data-menu-action]');
+          const authButtons = document.querySelectorAll('[data-auth-action]');
+          const AUTH_KEY = 'futurepath.signed_in';
+
+          const openMenu = () => {
+            if (!userMenu || !userChip) return;
+            const isHidden = userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden', !isHidden);
+            userChip.setAttribute('aria-expanded', String(isHidden));
+          };
+
+          const setSignedIn = (opts) => {
+            try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+            if (authArea) authArea.classList.add('hidden');
+            if (userPanel) userPanel.classList.remove('hidden');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          };
+
+          const setSignedOut = (opts) => {
+            try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
+            if (authArea) authArea.classList.remove('hidden');
+            if (userPanel) userPanel.classList.add('hidden');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          };
+
+          authButtons.forEach(function (button) {
+            button.addEventListener('click', function () { setSignedIn(); });
+          });
+
+          try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
+
+          if (userChip) {
+            userChip.addEventListener('click', function () {
+              openMenu();
+            });
+          }
+
+          menuButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+              const action = button.getAttribute('data-menu-action');
+              if (action === 'settings') {
+                const modal = document.getElementById('settingsModal');
+                if (modal) modal.classList.remove('hidden');
+              } else if (action === 'logout') {
+                setSignedOut();
+              } else {
+                alert('TÃ­nh nÄƒng chÆ°a Ä‘Æ°á»£c triá»ƒn khai trong phiÃªn báº£n demo.');
+              }
+              if (userMenu) userMenu.classList.add('hidden');
+              if (userChip) userChip.setAttribute('aria-expanded', 'false');
+            });
+          });
+
+          const modal = document.getElementById('settingsModal');
+          const closeModal = document.getElementById('closeSettingsModal');
+          const saveSettings = document.getElementById('saveSettings');
+          const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+
+          if (closeModal) {
+            closeModal.addEventListener('click', function () {
+              if (modal) modal.classList.add('hidden');
+            });
+          }
+
+          closeTriggers.forEach(function (trigger) {
+            trigger.addEventListener('click', function () {
+              if (modal) modal.classList.add('hidden');
+            });
+          });
+
+          if (saveSettings) {
+            saveSettings.addEventListener('click', function () {
+              alert('CÃ i Ä‘áº·t Ä‘Ã£ Ä‘Æ°á»£c lÆ°u thÃ nh cÃ´ng.');
+              if (modal) modal.classList.add('hidden');
+            });
+          }
+
+          document.addEventListener('click', function (event) {
+            if (!userMenu || !userChip) return;
+            if (!userMenu.contains(event.target) && !userChip.contains(event.target)) {
+              userMenu.classList.add('hidden');
+              userChip.setAttribute('aria-expanded', 'false');
+            }
+          });
+        })();
+
+        (function(){
+          // Header-nav is now the single source of truth. Attach safe click handlers to header nav items.
+          const headerNav = document.querySelector('.header-nav');
+          if (!headerNav) return;
+          const navLinks = headerNav.querySelectorAll('.nav-item');
+
+          navLinks.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+              // Toggle active state
+              navLinks.forEach(function (l){ l.classList.remove('active'); });
+              link.classList.add('active');
+
+              // Close user menu if open
+              const userMenu = document.getElementById('userMenu');
+              const userChip = document.getElementById('userChip');
+              if (userMenu) userMenu.classList.add('hidden');
+              if (userChip) userChip.setAttribute('aria-expanded','false');
+
+              // On small screens keep header compact â€” no aside sidebar toggling needed
+            });
+          });
+
+          // Keyboard activation for accessibility
+          headerNav.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              const item = e.target.closest('.nav-item');
+              if (item) { item.click(); e.preventDefault(); }
+            }
+          });
+        })();
+
+        // set progress fills from data-progress attributes
+        (function(){
+          document.querySelectorAll('.progress-fill').forEach(function(el){
+            let v = el.getAttribute('data-progress') || el.dataset.progress || '';
+            if (!v) return;
+            v = String(v).trim(); if (v.endsWith('%')) v = v.slice(0, -1);
+            if (v && !isNaN(Number(v))) el.style.setProperty('--progress', v + '%');
+          });
+        })();
+      </script>
+
+    </div>
+  </div>
+</body>
+</html>
+
+

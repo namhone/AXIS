@@ -1,0 +1,325 @@
+﻿<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ThÆ° viá»‡n nghá» nghiá»‡p â€” FuturePath</title>
+    <link rel="stylesheet" href="../css/global.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      
+
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="brand-copy"><span>FuturePath</span><small>Äá»“ng hÃ nh cÃ¹ng cuá»™c Ä‘á»i</small></div>
+              </div>
+            </a>
+          </div>
+
+          <nav class="header-nav" role="navigation" aria-label="ChÃ­nh">
+            <a class="nav-item" href="profile.html"><span class="nav-ico">â˜°</span><span>Há»“ sÆ¡ nÄƒng lá»±c</span></a>
+            <a class="nav-item" href="assessment.html"><span class="nav-ico">â—Ž</span><span>ÄÃ¡nh giÃ¡ &amp; Gá»£i Ã½</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">â–£</span><span>PhÃ¡t triá»ƒn báº£n thÃ¢n</span></a>
+            <a class="nav-item active" href="careers.html"><span class="nav-ico">â–¤</span><span>ThÆ° viá»‡n nghá» nghiá»‡p</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">â“˜</span><span>Vá» dá»± Ã¡n</span></a>
+          </nav>
+
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">ÄÄƒng nháº­p</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">ÄÄƒng kÃ½</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-column">
+          <section class="page-hero">
+            <span class="eyebrow">ThÆ° viá»‡n nghá» nghiá»‡p</span>
+            <h1>KhÃ¡m phÃ¡ tháº¿ giá»›i nghá» nghiá»‡p.</h1>
+            <p class="lead">TÃ¬m hiá»ƒu nghá», ká»¹ nÄƒng cáº§n cÃ³ vÃ  so sÃ¡nh cÃ¡c lá»±a chá»n.</p>
+          </section>
+
+          <div class="filter-row">
+            <input type="text" placeholder="âŒ• TÃ¬m kiáº¿m ngÃ nh nghá»..." />
+            <button class="primary-btn" type="button">KhÃ¡m phÃ¡</button>
+          </div>
+
+          <section class="career-grid">
+            <article class="career-card" data-skills="Python,Statistics,Machine Learning">
+              <div class="career-icon">âŒ˜</div>
+              <h3>Khoa há»c dá»¯ liá»‡u</h3>
+              <p>PhÃ¢n tÃ­ch dá»¯ liá»‡u, mÃ´ hÃ¬nh hÃ³a vÃ  há»— trá»£ ra quyáº¿t Ä‘á»‹nh.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-indigo">Python</small>
+                <small class="skill-pill pill-light">ML</small>
+                <span class="career-score">86% phÃ¹ há»£p</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">ThÃªm vÃ o lá»™ trÃ¬nh</button>
+                <a href="#" class="ghost-btn">Xem chi tiáº¿t</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Algorithms,Data Structures,Collaboration">
+              <div class="career-icon">â—«</div>
+              <h3>Ká»¹ thuáº­t pháº§n má»m</h3>
+              <p>Thiáº¿t káº¿, xÃ¢y dá»±ng vÃ  duy trÃ¬ cÃ¡c sáº£n pháº©m pháº§n má»m.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-amber">Algorithms</small>
+                <small class="skill-pill pill-indigo">Git</small>
+                <span class="career-score">82% phÃ¹ há»£p</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">ThÃªm vÃ o lá»™ trÃ¬nh</button>
+                <a href="#" class="ghost-btn">Xem chi tiáº¿t</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="User Research,Wireframing,Prototyping">
+              <div class="career-icon">âœ¦</div>
+              <h3>UI/UX Designer</h3>
+              <p>NghiÃªn cá»©u ngÆ°á»i dÃ¹ng vÃ  thiáº¿t káº¿ tráº£i nghiá»‡m sá»‘.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-teal">Research</small>
+                <small class="skill-pill pill-indigo">Figma</small>
+                <span class="career-score">74% phÃ¹ há»£p</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">ThÃªm vÃ o lá»™ trÃ¬nh</button>
+                <a href="#" class="ghost-btn">Xem chi tiáº¿t</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Market Research,Branding,Copywriting">
+              <div class="career-icon">â—Ž</div>
+              <h3>Marketing</h3>
+              <p>NghiÃªn cá»©u thá»‹ trÆ°á»ng, thÆ°Æ¡ng hiá»‡u vÃ  truyá»n thÃ´ng.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-amber">Brand</small>
+                <small class="skill-pill pill-indigo">SEO</small>
+                <span class="career-score">69% phÃ¹ há»£p</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">ThÃªm vÃ o lá»™ trÃ¬nh</button>
+                <a href="#" class="ghost-btn">Xem chi tiáº¿t</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Healthcare,Patient Care,Nutrition">
+              <div class="career-icon">âš—</div>
+              <h3>Y táº¿ &amp; Dinh dÆ°á»¡ng</h3>
+              <p>Há»— trá»£ chÄƒm sÃ³c sá»©c khá»e vÃ  ngÆ°á»i bá»‡nh trong thá»±c táº¿.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-teal">Care</small>
+                <small class="skill-pill pill-indigo">Science</small>
+                <span class="career-score">66% phÃ¹ há»£p</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">ThÃªm vÃ o lá»™ trÃ¬nh</button>
+                <a href="#" class="ghost-btn">Xem chi tiáº¿t</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Pattern Making,Sewing,Trend Forecasting">
+              <div class="career-icon">âœŽ</div>
+              <h3>Thiáº¿t káº¿ thá»i trang</h3>
+              <p>PhÃ¡t triá»ƒn phong cÃ¡ch, cáº£m há»©ng vÃ  sáº£n pháº©m truyá»n thÃ´ng.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-amber">Design</small>
+                <small class="skill-pill pill-indigo">Sketch</small>
+                <span class="career-score">71% phÃ¹ há»£p</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">ThÃªm vÃ o lá»™ trÃ¬nh</button>
+                <a href="#" class="ghost-btn">Xem chi tiáº¿t</a>
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h4>LiÃªn há»‡</h4>
+          <p>FuturePath â€” Há»— trá»£ Ä‘á»‹nh hÆ°á»›ng nghá» nghiá»‡p vÃ  phÃ¡t triá»ƒn ká»¹ nÄƒng cho há»c sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p><strong>Äiá»‡n thoáº¡i:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+        </div>
+
+        <div class="footer-form">
+          <h4>Nháº­n thÃ´ng tin &amp; tÆ° váº¥n</h4>
+          <form id="contactForm" action="#" onsubmit="event.preventDefault(); alert('Cáº£m Æ¡n! ChÃºng tÃ´i sáº½ liÃªn há»‡ sá»›m.');">
+            <div class="field-row">
+              <input type="email" name="email" placeholder="Email cá»§a báº¡n" required />
+              <input type="tel" name="phone" placeholder="Sá»‘ Ä‘iá»‡n thoáº¡i (tÃ¹y chá»n)" />
+            </div>
+            <div class="field-row">
+              <button type="submit" class="primary-btn">Gá»­i</button>
+              <button type="reset" class="ghost-btn">XÃ³a</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">Â© 2026 FuturePath â€” All rights reserved.</div>
+    </footer>
+
+    <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
+      <div class="settings-modal-backdrop" data-close-settings="true"></div>
+      <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-header">
+          <h3 id="settingsTitle">CÃ i Ä‘áº·t tÃ i khoáº£n</h3>
+          <button type="button" class="settings-close" id="closeSettingsModal" aria-label="ÄÃ³ng cÃ i Ä‘áº·t">Ã—</button>
+        </div>
+        <div class="settings-list">
+          <label class="setting-item"><span>ThÃ´ng bÃ¡o email</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Gá»£i Ã½ nghá» nghiá»‡p tá»± Ä‘á»™ng</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Báº£o máº­t 2 lá»›p</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Cháº¿ Ä‘á»™ tá»‘i</span><input type="checkbox" /></label>
+        </div>
+        <div class="settings-actions">
+          <button type="button" class="ghost-btn" data-close-settings="true">Há»§y</button>
+          <button type="button" class="primary-btn" id="saveSettings">LÆ°u thay Ä‘á»•i</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const authArea = document.getElementById('authArea');
+        const userPanel = document.getElementById('userPanel');
+        const userChip = document.getElementById('userChip');
+        const userMenu = document.getElementById('userMenu');
+        const menuButtons = document.querySelectorAll('[data-menu-action]');
+        const authButtons = document.querySelectorAll('[data-auth-action]');
+        const AUTH_KEY = 'futurepath.signed_in';
+
+        const setSignedIn = (opts) => {
+          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+          if (authArea) authArea.classList.add('hidden');
+          if (userPanel) userPanel.classList.remove('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        const setSignedOut = (opts) => {
+          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
+          if (authArea) authArea.classList.remove('hidden');
+          if (userPanel) userPanel.classList.add('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        authButtons.forEach(function (button) {
+          button.addEventListener('click', function () { setSignedIn(); });
+        });
+
+        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
+
+        if (userChip) {
+          userChip.addEventListener('click', function () {
+            if (!userMenu) return;
+            const isHidden = userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden', !isHidden);
+            userChip.setAttribute('aria-expanded', String(isHidden));
+          });
+        }
+
+        menuButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const action = button.getAttribute('data-menu-action');
+            if (action === 'settings') {
+              const modal = document.getElementById('settingsModal');
+              if (modal) modal.classList.remove('hidden');
+            } else if (action === 'logout') {
+              setSignedOut();
+            } else {
+              alert('TÃ­nh nÄƒng chÆ°a Ä‘Æ°á»£c triá»ƒn khai trong phiÃªn báº£n demo.');
+            }
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        const modal = document.getElementById('settingsModal');
+        const closeModal = document.getElementById('closeSettingsModal');
+        const saveSettings = document.getElementById('saveSettings');
+        const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+
+        closeModal && closeModal.addEventListener('click', function () { modal && modal.classList.add('hidden'); });
+        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', function () { modal && modal.classList.add('hidden'); }); });
+        saveSettings && saveSettings.addEventListener('click', function () { alert('CÃ i Ä‘áº·t Ä‘Ã£ Ä‘Æ°á»£c lÆ°u thÃ nh cÃ´ng.'); modal && modal.classList.add('hidden'); });
+
+        document.addEventListener('click', function (event) {
+          if (!userMenu || !userChip) return;
+          if (!userMenu.contains(event.target) && !userChip.contains(event.target)) {
+            userMenu.classList.add('hidden');
+            userChip.setAttribute('aria-expanded', 'false');
+          }
+        });
+      })();
+
+      (function(){
+        // Header-nav is now the single source of truth. Attach safe click handlers to header nav items.
+        const headerNav = document.querySelector('.header-nav');
+        if (!headerNav) return;
+        const navLinks = headerNav.querySelectorAll('.nav-item');
+
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            // Toggle active state
+            navLinks.forEach(function (l){ l.classList.remove('active'); });
+            link.classList.add('active');
+
+            // Close user menu if open
+            const userMenu = document.getElementById('userMenu');
+            const userChip = document.getElementById('userChip');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded','false');
+          });
+        });
+
+        headerNav.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.nav-item');
+            if (item) { item.click(); e.preventDefault(); }
+          }
+        });
+      })();
+
+      // Careers -> add-to-plan integration with development goals (localStorage)
+      (function(){
+        const careerCards = document.querySelectorAll('.career-card');
+        const goalsKey = 'futurepath.goals';
+        function loadGoals(){ try { return JSON.parse(localStorage.getItem(goalsKey)||'[]'); } catch(e){ return []; } }
+        function saveGoals(g){ try{ localStorage.setItem(goalsKey, JSON.stringify(g)); }catch(e){ console.error(e);} }
+
+        function addCareerToPlan(title, skills){
+          const goals = loadGoals();
+          const goalTitle = `TÃ¬m hiá»ƒu nghá»: ${title}`;
+          const note = skills ? `Ká»¹ nÄƒng gá»£i Ã½: ${skills}` : '';
+          goals.push({ title: goalTitle, when: '', note: note, category: 'career', done: false, created: Date.now() });
+          saveGoals(goals);
+          alert('ÄÃ£ thÃªm vÃ o lá»™ trÃ¬nh cá»§a báº¡n â€” vÃ o trang PhÃ¡t triá»ƒn báº£n thÃ¢n Ä‘á»ƒ xem vÃ  chá»‰nh sá»­a.');
+        }
+
+        careerCards.forEach(function(c){
+          const btn = c.querySelector('.add-to-plan');
+          if (!btn) return;
+          btn.addEventListener('click', function(){
+            const title = c.querySelector('h3') ? c.querySelector('h3').textContent.trim() : 'NgÃ nh nghá»';
+            const skills = c.getAttribute('data-skills') || '';
+            addCareerToPlan(title, skills);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
+

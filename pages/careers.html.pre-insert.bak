@@ -1,0 +1,327 @@
+﻿<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thư viện nghề nghiệp — FuturePath</title>
+    <link rel="stylesheet" href="../css/global.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      
+
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+              </div>
+            </a>
+          </div>
+
+          <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
+            <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
+            <a class="nav-item active" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+          </nav>
+
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">Đăng nhập</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">Đăng ký</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-column">
+          <section class="page-hero">
+            <span class="eyebrow">Thư viện nghề nghiệp</span>
+            <h1>Khám phá thế giới nghề nghiệp.</h1>
+            <p class="lead">Tìm hiểu nghề, kỹ năng cần có và so sánh các lựa chọn.</p>
+          </section>
+
+          <div class="filter-row">
+            <input type="text" placeholder="⌕ Tìm kiếm ngành nghề..." />
+            <button class="primary-btn" type="button">Khám phá</button>
+          </div>
+
+          <section class="career-grid">
+            <article class="career-card" data-skills="Python,Statistics,Machine Learning">
+              <div class="career-icon">⌘</div>
+              <h3>Khoa học dữ liệu</h3>
+              <p>Phân tích dữ liệu, mô hình hóa và hỗ trợ ra quyết định.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-indigo">Python</small>
+                <small class="skill-pill pill-light">ML</small>
+                <span class="career-score">86% phù hợp</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
+                <a href="#" class="ghost-btn">Xem chi tiết</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Algorithms,Data Structures,Collaboration">
+              <div class="career-icon">◫</div>
+              <h3>Kỹ thuật phần mềm</h3>
+              <p>Thiết kế, xây dựng và duy trì các sản phẩm phần mềm.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-amber">Algorithms</small>
+                <small class="skill-pill pill-indigo">Git</small>
+                <span class="career-score">82% phù hợp</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
+                <a href="#" class="ghost-btn">Xem chi tiết</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="User Research,Wireframing,Prototyping">
+              <div class="career-icon">✦</div>
+              <h3>UI/UX Designer</h3>
+              <p>Nghiên cứu người dùng và thiết kế trải nghiệm số.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-teal">Research</small>
+                <small class="skill-pill pill-indigo">Figma</small>
+                <span class="career-score">74% phù hợp</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
+                <a href="#" class="ghost-btn">Xem chi tiết</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Market Research,Branding,Copywriting">
+              <div class="career-icon">◎</div>
+              <h3>Marketing</h3>
+              <p>Nghiên cứu thị trường, thương hiệu và truyền thông.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-amber">Brand</small>
+                <small class="skill-pill pill-indigo">SEO</small>
+                <span class="career-score">69% phù hợp</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
+                <a href="#" class="ghost-btn">Xem chi tiết</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Healthcare,Patient Care,Nutrition">
+              <div class="career-icon">⚗</div>
+              <h3>Y tế &amp; Dinh dưỡng</h3>
+              <p>Hỗ trợ chăm sóc sức khỏe và người bệnh trong thực tế.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-teal">Care</small>
+                <small class="skill-pill pill-indigo">Science</small>
+                <span class="career-score">66% phù hợp</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
+                <a href="#" class="ghost-btn">Xem chi tiết</a>
+              </div>
+            </article>
+            <article class="career-card" data-skills="Pattern Making,Sewing,Trend Forecasting">
+              <div class="career-icon">✎</div>
+              <h3>Thiết kế thời trang</h3>
+              <p>Phát triển phong cách, cảm hứng và sản phẩm truyền thông.</p>
+              <div class="skill-row">
+                <small class="skill-pill pill-amber">Design</small>
+                <small class="skill-pill pill-indigo">Sketch</small>
+                <span class="career-score">71% phù hợp</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
+                <a href="#" class="ghost-btn">Xem chi tiết</a>
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+        </div>
+
+        <div class="footer-form">
+          <h4>Nhận thông tin &amp; tư vấn</h4>
+          <form id="contactForm" action="#" onsubmit="event.preventDefault(); alert('Cảm ơn! Chúng tôi sẽ liên hệ sớm.');">
+            <div class="field-row">
+              <input type="email" name="email" placeholder="Email của bạn" required />
+              <input type="tel" name="phone" placeholder="Số điện thoại (tùy chọn)" />
+            </div>
+            <div class="field-row">
+              <button type="submit" class="primary-btn">Gửi</button>
+              <button type="reset" class="ghost-btn">Xóa</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+    </footer>
+
+    <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
+      <div class="settings-modal-backdrop" data-close-settings="true"></div>
+      <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-header">
+          <h3 id="settingsTitle">Cài đặt tài khoản</h3>
+          <button type="button" class="settings-close" id="closeSettingsModal" aria-label="Đóng cài đặt">×</button>
+        </div>
+        <div class="settings-list">
+          <label class="setting-item"><span>Thông báo email</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Gợi ý nghề nghiệp tự động</span><input type="checkbox" checked /></label>
+          <label class="setting-item"><span>Bảo mật 2 lớp</span><input type="checkbox" /></label>
+          <label class="setting-item"><span>Chế độ tối</span><input type="checkbox" /></label>
+        </div>
+        <div class="settings-actions">
+          <button type="button" class="ghost-btn" data-close-settings="true">Hủy</button>
+          <button type="button" class="primary-btn" id="saveSettings">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const authArea = document.getElementById('authArea');
+        const userPanel = document.getElementById('userPanel');
+        const userChip = document.getElementById('userChip');
+        const userMenu = document.getElementById('userMenu');
+        const menuButtons = document.querySelectorAll('[data-menu-action]');
+        const authButtons = document.querySelectorAll('[data-auth-action]');
+        const AUTH_KEY = 'futurepath.signed_in';
+
+        const setSignedIn = (opts) => {
+          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
+          if (authArea) authArea.classList.add('hidden');
+          if (userPanel) userPanel.classList.remove('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        const setSignedOut = (opts) => {
+          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
+          if (authArea) authArea.classList.remove('hidden');
+          if (userPanel) userPanel.classList.add('hidden');
+          if (userMenu) userMenu.classList.add('hidden');
+          if (userChip) userChip.setAttribute('aria-expanded', 'false');
+        };
+
+        authButtons.forEach(function (button) {
+          button.addEventListener('click', function () { setSignedIn(); });
+        });
+
+        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
+
+        if (userChip) {
+          userChip.addEventListener('click', function () {
+            if (!userMenu) return;
+            const isHidden = userMenu.classList.contains('hidden');
+            userMenu.classList.toggle('hidden', !isHidden);
+            userChip.setAttribute('aria-expanded', String(isHidden));
+          });
+        }
+
+        menuButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const action = button.getAttribute('data-menu-action');
+            if (action === 'settings') {
+              const modal = document.getElementById('settingsModal');
+              if (modal) modal.classList.remove('hidden');
+            } else if (action === 'logout') {
+              setSignedOut();
+            } else {
+              alert('Tính năng chưa được triển khai trong phiên bản demo.');
+            }
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        const modal = document.getElementById('settingsModal');
+        const closeModal = document.getElementById('closeSettingsModal');
+        const saveSettings = document.getElementById('saveSettings');
+        const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+
+        closeModal && closeModal.addEventListener('click', function () { modal && modal.classList.add('hidden'); });
+        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', function () { modal && modal.classList.add('hidden'); }); });
+        saveSettings && saveSettings.addEventListener('click', function () { alert('Cài đặt đã được lưu thành công.'); modal && modal.classList.add('hidden'); });
+
+        document.addEventListener('click', function (event) {
+          if (!userMenu || !userChip) return;
+          if (!userMenu.contains(event.target) && !userChip.contains(event.target)) {
+            userMenu.classList.add('hidden');
+            userChip.setAttribute('aria-expanded', 'false');
+          }
+        });
+      })();
+
+      (function(){
+        // Header-nav is now the single source of truth. Attach safe click handlers to header nav items.
+        const headerNav = document.querySelector('.header-nav');
+        if (!headerNav) return;
+        const navLinks = headerNav.querySelectorAll('.nav-item');
+
+        navLinks.forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            // Toggle active state
+            navLinks.forEach(function (l){ l.classList.remove('active'); });
+            link.classList.add('active');
+
+            // Close user menu if open
+            const userMenu = document.getElementById('userMenu');
+            const userChip = document.getElementById('userChip');
+            if (userMenu) userMenu.classList.add('hidden');
+            if (userChip) userChip.setAttribute('aria-expanded','false');
+          });
+        });
+
+        headerNav.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const item = e.target.closest('.nav-item');
+            if (item) { item.click(); e.preventDefault(); }
+          }
+        });
+      })();
+
+      // Careers -> add-to-plan integration with development goals (localStorage)
+      (function(){
+        const careerCards = document.querySelectorAll('.career-card');
+        const goalsKey = 'futurepath.goals';
+        function loadGoals(){ try { return JSON.parse(localStorage.getItem(goalsKey)||'[]'); } catch(e){ return []; } }
+        function saveGoals(g){ try{ localStorage.setItem(goalsKey, JSON.stringify(g)); }catch(e){ console.error(e);} }
+
+        function addCareerToPlan(title, skills){
+          const goals = loadGoals();
+          const goalTitle = `Tìm hiểu nghề: ${title}`;
+          const note = skills ? `Kỹ năng gợi ý: ${skills}` : '';
+          goals.push({ title: goalTitle, when: '', note: note, category: 'career', done: false, created: Date.now() });
+          saveGoals(goals);
+          alert('Đã thêm vào lộ trình của bạn — vào trang Phát triển bản thân để xem và chỉnh sửa.');
+        }
+
+        careerCards.forEach(function(c){
+          const btn = c.querySelector('.add-to-plan');
+          if (!btn) return;
+          btn.addEventListener('click', function(){
+            const title = c.querySelector('h3') ? c.querySelector('h3').textContent.trim() : 'Ngành nghề';
+            const skills = c.getAttribute('data-skills') || '';
+            addCareerToPlan(title, skills);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+
+
