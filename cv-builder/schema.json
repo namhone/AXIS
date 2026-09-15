@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AXIS CV normalized profile",
+  "type": "object",
+  "required": ["personalInfo", "experience", "education", "skills", "awards", "activities", "certificates"],
+  "properties": {
+    "personalInfo": {
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string" },
+        "headline": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "summary": { "type": "string" },
+        "avatar": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "experience": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+    "education": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+    "skills": { "type": "array", "items": { "type": "string" } },
+    "awards": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+    "activities": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+    "certificates": { "type": "array", "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "organization": { "type": "string" },
+        "period": { "type": "string" },
+        "description": { "type": "string" },
+        "highlights": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

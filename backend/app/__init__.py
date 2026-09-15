@@ -1,0 +1,1 @@
+"""FuturePath backend application package."""

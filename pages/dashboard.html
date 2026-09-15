@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AXIS Dashboard — Đánh giá năng lực</title>
+    <link rel="stylesheet" href="../css/global.css?v=axis-dashboard">
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/certificates.js"></script>
+    <script defer src="../js/dashboard.js?v=axis-catalog"></script>
+  </head>
+  <body class="axis-dashboard-page">
+    <div class="page-shell">
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
+                    <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
+              </div>
+            </a>
+          </div>
+          <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item active" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
+            <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
+            <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
+            <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+            <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
+          </nav>
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">Đăng nhập</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">Đăng ký</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="main-column">
+          <section class="page-hero axis-hero">
+            <span class="eyebrow">AXIS · Hybrid AHP-SAW-ROC</span>
+            <h1>Đánh giá năng lực theo dữ liệu, không theo cảm tính.</h1>
+            <p class="lead">Điều chỉnh 5 trụ cột đầu vào để xem mức tương thích với các nhóm ngành và khoảng trống cần cải thiện trong thời gian thực.</p>
+          </section>
+          <section class="visual-welcome-banner" aria-label="Chào mừng đến AXIS">
+            <div>
+              <span class="eyebrow">Your next step, made clearer</span>
+              <h2>Bắt đầu từ dữ liệu của chính bạn.</h2>
+              <p>Mỗi lần cập nhật hồ sơ là một bước nhỏ giúp AXIS đưa ra gợi ý sát hơn với năng lực và mục tiêu của bạn.</p>
+            </div>
+            <button class="primary-btn" id="dashboardTourButton" type="button">Xem cách sử dụng</button>
+          </section>
+
+          <section class="axis-dashboard-grid">
+            <article class="content-panel axis-input-panel">
+              <div class="panel-heading">
+                <div><span class="eyebrow">Input vector</span><h2>5 biến năng lực</h2></div>
+                <span class="axis-live-dot">LIVE</span>
+              </div>
+              <div class="axis-input-section">
+                <div class="axis-section-heading"><strong>S1 · Học thuật</strong><span>GPA tự tính từ các môn đã nhập</span></div>
+                <div id="axisAcademicInputs" class="axis-input-grid"></div>
+                <div class="axis-readonly-score"><span>GPA học thuật</span><output id="axisAcademicOutput">0.0/10</output></div>
+              </div>
+              <div class="axis-input-section">
+                <div class="axis-section-heading"><strong>S2 · Ngoại ngữ</strong><span>Chọn chứng chỉ và nhập đúng thang điểm</span></div>
+                <div id="axisLanguageInputs" class="axis-input-grid"></div>
+              </div>
+              <div class="axis-input-section">
+                <div class="axis-section-heading"><strong>S3 · Thành tích</strong><span>Có thể chọn nhiều minh chứng</span></div>
+                <fieldset id="axisAchievementSelect" class="axis-achievement-list" aria-label="Thành tích học thuật">
+                  <legend class="sr-only">Thành tích học thuật</legend>
+                  <label class="axis-achievement-option"><input type="checkbox" value="school"><span>Thành tích cấp trường</span></label>
+                  <label class="axis-achievement-option"><input type="checkbox" value="province"><span>Giải cấp tỉnh/thành phố</span></label>
+                  <label class="axis-achievement-option"><input type="checkbox" value="national"><span>Giải cấp quốc gia</span></label>
+                  <label class="axis-achievement-option"><input type="checkbox" value="research"><span>Dự án nghiên cứu khoa học</span></label>
+                  <label class="axis-achievement-option"><input type="checkbox" value="competition"><span>Cuộc thi học thuật</span></label>
+                </fieldset>
+              </div>
+              <div id="axisReadonlyInputs" class="axis-readonly-grid"></div>
+              <div class="axis-method-note">
+                <strong>Hybrid AHP-SAW-ROC</strong>
+                <span>Trọng số mặc định được kiểm tra CR ≤ 0.10 trước khi tổng hợp.</span>
+              </div>
+            </article>
+
+            <article class="content-panel axis-summary-panel">
+              <div class="panel-heading"><div><span class="eyebrow">Current profile</span><h2>Chỉ số hiện tại</h2></div></div>
+              <div class="axis-score-ring"><strong id="axisOverallScore">0%</strong><span>Tương thích<br>trung bình</span></div>
+              <div class="axis-summary-list" id="axisSummaryList"></div>
+              <a class="ghost-btn axis-action" href="/pages/profile.html">Cập nhật hồ sơ</a>
+            </article>
+          </section>
+
+          <section class="content-panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">Career matrix</span><h2>Ngành nghề tương thích</h2></div>
+            </div>
+            <div id="axisCareerResults" class="axis-career-results"></div>
+          </section>
+
+          <section class="content-panel axis-gap-panel">
+            <div class="panel-heading"><div><span class="eyebrow">Gap analysis</span><h2>Khoảng trống năng lực</h2></div></div>
+            <div id="axisGapResults" class="axis-gap-grid"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
+          <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+        </div>
+        <div class="footer-form">
+          <h4>Nhận thông tin &amp; tư vấn</h4>
+          <form action="#" onsubmit="event.preventDefault(); alert('Cảm ơn! Chúng tôi sẽ liên hệ sớm.');">
+            <div class="field-row"><input type="email" placeholder="Email của bạn" required /><input type="tel" placeholder="Số điện thoại (tùy chọn)" /></div>
+            <div class="field-row"><button type="submit" class="primary-btn">Gửi</button><button type="reset" class="ghost-btn">Xóa</button></div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
+    </footer>
+    <div class="dashboard-tour hidden" id="dashboardTour" role="dialog" aria-live="polite">
+      <div class="dashboard-tour-card">
+        <span class="eyebrow" id="dashboardTourStep">Hướng dẫn 1/5</span>
+        <strong id="dashboardTourTitle"></strong>
+        <p id="dashboardTourText"></p>
+        <div><button class="ghost-btn" id="dashboardTourSkip" type="button">Đóng</button><button class="primary-btn" id="dashboardTourNext" type="button">Tiếp theo</button></div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var header = document.querySelector('.topbar');
+        var headerNav = header && header.querySelector('.header-nav');
+        if (!header || !headerNav || document.querySelector('.mobile-menu-button')) return;
+
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'mobile-menu-button';
+        button.setAttribute('aria-label', 'Mở menu');
+        button.setAttribute('aria-expanded', 'false');
+        button.textContent = '☰';
+        header.appendChild(button);
+
+        var overlay = document.createElement('div');
+        overlay.className = 'mobile-nav-overlay hidden';
+        var menu = document.createElement('nav');
+        menu.className = 'mobile-nav';
+        menu.setAttribute('aria-label', 'Điều hướng mobile');
+        headerNav.querySelectorAll('.nav-item').forEach(function (item) {
+          var clone = item.cloneNode(true);
+          clone.addEventListener('click', closeMenu);
+          menu.appendChild(clone);
+        });
+        var authArea = header.querySelector('.header-auth .auth-area');
+        if (authArea) {
+          var mobileAuth = document.createElement('div');
+          mobileAuth.className = 'mobile-auth';
+          authArea.querySelectorAll('[data-auth-action]').forEach(function (item) {
+            var clone = item.cloneNode(true);
+            clone.removeAttribute('id');
+            mobileAuth.appendChild(clone);
+          });
+          mobileAuth.querySelectorAll('[data-auth-action]').forEach(function (item) {
+            item.addEventListener('click', closeMenu);
+          });
+          menu.appendChild(mobileAuth);
+        }
+        overlay.appendChild(menu);
+        document.body.appendChild(overlay);
+
+        function closeMenu() {
+          overlay.classList.add('hidden');
+          document.body.classList.remove('mobile-nav-open');
+          button.setAttribute('aria-expanded', 'false');
+        }
+        button.addEventListener('click', function () {
+          var opening = overlay.classList.contains('hidden');
+          if (opening) {
+            overlay.classList.remove('hidden');
+            document.body.classList.add('mobile-nav-open');
+            button.setAttribute('aria-expanded', 'true');
+          } else {
+            closeMenu();
+          }
+        });
+        overlay.addEventListener('click', function (event) {
+          if (event.target === overlay) closeMenu();
+        });
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape') closeMenu();
+        });
+      })();
+      (function () {
+        var button = document.getElementById('dashboardTourButton');
+        var tour = document.getElementById('dashboardTour');
+        if (!button || !tour) return;
+        var steps = [
+          ['S1 · Học thuật', 'Nhập điểm từng môn. GPA sẽ tự tính từ các môn bạn đã điền.', '#axisAcademicInputs'],
+          ['S2 · Ngoại ngữ', 'Chọn ngôn ngữ, kỳ thi và nhập điểm đúng theo thang điểm của chứng chỉ.', '#axisLanguageInputs'],
+          ['S3 · Thành tích', 'Chọn nhiều thành tích để AXIS ước tính trụ cột hoạt động và minh chứng.', '#axisAchievementSelect'],
+          ['S4 · S5', 'Hai trụ cột này được đồng bộ từ hồ sơ và chỉ hiển thị để bạn theo dõi.', '#axisReadonlyInputs'],
+          ['Kết quả AXIS', 'Theo dõi ngành tương thích và khoảng trống cần cải thiện để đặt mục tiêu dài hạn.', '#axisCareerResults']
+        ];
+        var index = 0;
+        var title = document.getElementById('dashboardTourTitle');
+        var text = document.getElementById('dashboardTourText');
+        var step = document.getElementById('dashboardTourStep');
+        var next = document.getElementById('dashboardTourNext');
+        function closeTour() {
+          tour.classList.add('hidden');
+          document.querySelectorAll('.dashboard-tour-target').forEach(function (node) { node.classList.remove('dashboard-tour-target'); });
+        }
+        function render() {
+          var item = steps[index];
+          document.querySelectorAll('.dashboard-tour-target').forEach(function (node) { node.classList.remove('dashboard-tour-target'); });
+          var target = document.querySelector(item[2]);
+          if (target) {
+            target.classList.add('dashboard-tour-target');
+            target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          step.textContent = 'Hướng dẫn ' + (index + 1) + '/' + steps.length;
+          title.textContent = item[0];
+          text.textContent = item[1];
+          next.textContent = index === steps.length - 1 ? 'Hoàn tất' : 'Tiếp theo';
+        }
+        button.addEventListener('click', function () { index = 0; tour.classList.remove('hidden'); render(); });
+        document.getElementById('dashboardTourSkip').addEventListener('click', closeTour);
+        next.addEventListener('click', function () { if (index === steps.length - 1) closeTour(); else { index += 1; render(); } });
+      })();
+    </script>
+  </body>
+</html>
+

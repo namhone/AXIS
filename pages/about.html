@@ -1,11 +1,12 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Về dự án — FuturePath</title>
+    <title>Về AXIS — Academic &amp; X-Career Intelligent System</title>
     <link rel="stylesheet" href="../css/global.css" />
     <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -22,17 +23,18 @@
                     <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
               </div>
             </a>
           </div>
 
           <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
             <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
             <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
             <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
             <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-            <a class="nav-item active" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+            <a class="nav-item active" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
           </nav>
 
           <div class="header-auth">
@@ -45,36 +47,63 @@
 
         <main class="main-column">
           <section class="page-hero">
-            <span class="eyebrow">Về dự án</span>
-            <h1>FuturePath — Nền tảng định hướng nghề nghiệp</h1>
-            <p class="lead">FuturePath giúp học sinh và người trẻ khám phá năng lực, xây dựng lộ trình nghề nghiệp và kết nối tài nguyên thực hành — theo phong cách cá nhân hoá và dễ tiếp cận.</p>
+            <span class="eyebrow">Academic &amp; X-Career Intelligent System</span>
+            <h1>AXIS — Quy hoạch tương lai bằng dữ liệu.</h1>
+            <p class="lead">AXIS là nền tảng hỗ trợ ra quyết định hướng nghiệp cho học sinh THPT, kết hợp dữ liệu học tập, Holland RIASEC và Hybrid AHP-SAW-ROC để giảm thiểu bất định nghề nghiệp.</p>
+          </section>
+
+          <section class="mini-panel axis-about-grid">
+            <article><span class="eyebrow">Problem</span><h3>Bất định nghề nghiệp</h3><p class="summary-body">Học sinh thường chọn ngành theo cảm tính, thiếu dữ liệu để so sánh năng lực hiện tại với yêu cầu thật của ngành.</p></article>
+            <article><span class="eyebrow">Solution</span><h3>Ra quyết định có căn cứ</h3><p class="summary-body">AXIS chuẩn hóa 5 trụ cột năng lực và biến kết quả thành phần trăm tương thích, khoảng trống và hành động tiếp theo.</p></article>
+            <article><span class="eyebrow">Method</span><h3>Hybrid AHP-SAW-ROC</h3><p class="summary-body">Kết hợp trọng số AHP, thứ bậc ROC và tổng hợp SAW để tạo ra kết quả có thể giải thích.</p></article>
           </section>
 
           <section class="mini-panel">
-            <h3>Vấn đề</h3>
-            <p class="summary-body">Nhiều học sinh thiếu thông tin có cấu trúc về nghề nghiệp, không biết cách liên kết kỹ năng hiện có với con đường nghề và thiếu công cụ lập kế hoạch thực tế để phát triển năng lực.</p>
-          </section>
-
-          <section class="mini-panel">
-            <h3>Giải pháp</h3>
-            <p class="summary-body">Kết hợp đánh giá năng lực tự động, thư viện nghề nghiệp gợi ý theo hồ sơ, công cụ quản lý mục tiêu và lộ trình phát triển. Giao diện giản lược, editorial và tập trung nội dung giúp việc ra quyết định dễ dàng hơn.</p>
-          </section>
-
-          <section class="mini-panel">
-            <h3>Mục tiêu</h3>
-            <ul class="checklist">
-              <li>Giúp người dùng nhận diện năng lực cốt lõi</li>
-              <li>Cung cấp lộ trình thực hành có thể đo lường</li>
-              <li>Hỗ trợ kết nối tới tài nguyên học tập và mentor</li>
-            </ul>
-          </section>
-
-          <section class="mini-panel">
-            <h3>Người làm dự án</h3>
+            <span class="eyebrow">Scientific foundation</span>
+            <h2>5 biến năng lực đầu vào</h2>
             <div class="team-grid">
-              <div class="team-card"><h3>Nam — Product & Design</h3><p>Định hướng sản phẩm, thiết kế UI/UX và đạo diễn visual.</p></div>
-              <div class="team-card"><h3>Đội Dev — Engineering</h3><p>Triển khai frontend, logic và tích hợp.</p></div>
-              <div class="team-card"><h3>Mentor & Advisors</h3><p>Hỗ trợ nội dung chuyên môn và kiểm chứng lộ trình nghề.</p></div>
+              <div class="team-card"><h3>S1 · Học thuật</h3><p>GPA và điểm các môn cốt lõi theo tổ hợp.</p></div>
+              <div class="team-card"><h3>S2 · Ngoại ngữ</h3><p>Chứng chỉ được quy đổi về thang 0–10.</p></div>
+              <div class="team-card"><h3>S3 · Thành tích</h3><p>Giải thưởng từ cấp trường đến quốc gia.</p></div>
+              <div class="team-card"><h3>S4 · Holland</h3><p>Mức tương thích theo mã RIASEC.</p></div>
+              <div class="team-card"><h3>S5 · Ngoại khóa</h3><p>Hoạt động xã hội và vai trò lãnh đạo.</p></div>
+            </div>
+          </section>
+
+          <section class="mini-panel">
+            <span class="eyebrow">Team &amp; advisor</span>
+            <h2>Đội ngũ thực hiện</h2>
+            <div class="team-grid">
+              <div class="team-card"><h3>Hồ Ngọc Bảo Nam</h3><p><strong>Trưởng nhóm Kỹ thuật &amp; Kiến trúc hệ thống</strong><br>Phụ trách Web UI/UX, dữ liệu và bộ máy tính toán thời gian thực.</p></div>
+              <div class="team-card"><h3>Trương Nguyễn Hà Nhi</h3><p><strong>Trưởng nhóm Nghiên cứu &amp; Thuật toán</strong><br>Chuẩn hóa công thức, ma trận ngành và báo cáo khoa học.</p></div>
+              <div class="team-card"><h3>Đặng Văn Phương</h3><p><strong>Cố vấn chuyên môn</strong><br>Giáo viên Tin học THPT, hướng dẫn kiến trúc và phương pháp luận.</p></div>
+            </div>
+          </section>
+
+          <section class="content-panel axis-about-cta">
+            <div class="axis-about-cta__intro">
+              <span class="eyebrow">Explore the model</span>
+              <h2>AXIS biến dữ liệu hồ sơ thành một lộ trình có thể hành động.</h2>
+              <p class="summary-body">Không đưa ra một đáp án nghề nghiệp cố định. AXIS cho bạn thấy mức độ phù hợp hiện tại, lý do phía sau kết quả và bước cải thiện tiếp theo.</p>
+              <a class="primary-btn" href="dashboard.html">Mở bảng điều khiển</a>
+            </div>
+            <div class="axis-model-flow" aria-label="Quy trình phân tích của AXIS">
+              <article class="axis-model-step">
+                <span class="axis-model-step__number">01</span>
+                <div><strong>Thu thập</strong><p>Điểm học tập, ngoại ngữ, thành tích, Holland và hoạt động.</p></div>
+              </article>
+              <article class="axis-model-step">
+                <span class="axis-model-step__number">02</span>
+                <div><strong>Chuẩn hóa</strong><p>Đưa các loại dữ liệu khác nhau về cùng thang đo để so sánh công bằng.</p></div>
+              </article>
+              <article class="axis-model-step">
+                <span class="axis-model-step__number">03</span>
+                <div><strong>Đối chiếu</strong><p>So sánh hồ sơ với yêu cầu của từng nhóm ngành và xếp hạng theo tỷ lệ phù hợp.</p></div>
+              </article>
+              <article class="axis-model-step">
+                <span class="axis-model-step__number">04</span>
+                <div><strong>Hành động</strong><p>Hiển thị khoảng trống năng lực và mục tiêu phát triển cụ thể trong 4 tuần.</p></div>
+              </article>
             </div>
           </section>
         </main>
@@ -85,8 +114,8 @@
       <div class="footer-container">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
-          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p>AXIS — Academic &amp; X-Career Intelligent System.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
           <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
         </div>
 
@@ -104,7 +133,7 @@
           </form>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+      <div class="footer-bottom">© 2026 AXIS — Nghiên cứu Khoa học Kỹ thuật Học sinh THPT.</div>
     </footer>
 
     <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
@@ -134,11 +163,8 @@
         const userChip = document.getElementById('userChip');
         const userMenu = document.getElementById('userMenu');
         const menuButtons = document.querySelectorAll('[data-menu-action]');
-        const authButtons = document.querySelectorAll('[data-auth-action]');
-        const AUTH_KEY = 'futurepath.signed_in';
 
         const setSignedIn = (opts) => {
-          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
           if (authArea) authArea.classList.add('hidden');
           if (userPanel) userPanel.classList.remove('hidden');
           if (userMenu) userMenu.classList.add('hidden');
@@ -146,18 +172,12 @@
         };
 
         const setSignedOut = (opts) => {
-          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
           if (authArea) authArea.classList.remove('hidden');
           if (userPanel) userPanel.classList.add('hidden');
           if (userMenu) userMenu.classList.add('hidden');
           if (userChip) userChip.setAttribute('aria-expanded', 'false');
         };
 
-        authButtons.forEach(function (button) {
-          button.addEventListener('click', function () { setSignedIn(); });
-        });
-
-        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
 
         if (userChip) {
           userChip.addEventListener('click', function () {
@@ -268,7 +288,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về dự án','/pages/about.html'] ];
+    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 
@@ -314,8 +334,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-

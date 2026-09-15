@@ -1,11 +1,14 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hồ sơ năng lực — FuturePath</title>
+    <title>Hồ sơ năng lực — AXIS</title>
     <link rel="stylesheet" href="../css/global.css" />
+    <script src="../js/axis-brand.js"></script>
+    <script src="../js/certificates.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -22,17 +25,19 @@
                     <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
               </div>
             </a>
           </div>
 
           <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
             <a class="nav-item active" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
             <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
             <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
             <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+            <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
           </nav>
 
           <div class="header-auth">
@@ -49,22 +54,35 @@
             <h1>Xây dựng hồ sơ của bạn.</h1>
             <p class="lead">Tải lên CV/PDF, chỉnh sửa trực tiếp, dùng AI để chuẩn hóa và xuất bản hồ sơ chuyên nghiệp.</p>
           </section>
+          <section class="visual-welcome-banner profile-welcome-banner" aria-label="Hoàn thiện hồ sơ">
+            <div>
+              <span class="eyebrow">Profile workspace</span>
+              <h2>Biến trải nghiệm thành câu chuyện có định hướng.</h2>
+              <p>Điền từng phần theo nhịp của bạn. AXIS sẽ dùng dữ liệu này để đồng bộ điểm năng lực và gợi ý ngành phù hợp.</p>
+            </div>
+            <a class="ghost-btn" href="/pages/guide.html#profile">Xem hướng dẫn</a>
+          </section>
 
           <section class="content-panel profile-workspace">
             <div>
-                      <h2>01 · Trang bìa &amp; Giới thiệu bản thân</h2>
+                      <h2>Trang bìa &amp; Giới thiệu bản thân</h2>
                       <div class="profile-header">
                 <div class="field">
                   <label>Họ và tên</label>
-                  <input type="text" placeholder="Nguyễn Minh Anh" data-profile-field="name" />
+                  <input type="text" placeholder="Tên tài khoản" data-profile-field="name" readonly aria-readonly="true" />
                   <div class="profile-meta">
                     <div class="meta-field">
                       <label class="meta-label">Năm sinh</label>
                       <input type="text" placeholder="2006" class="meta-input" data-profile-field="birthYear" />
                     </div>
                     <div class="meta-field">
-                      <label class="meta-label">Lớp</label>
-                      <input type="text" placeholder="Lớp 12" class="meta-input" data-profile-field="className" />
+                      <label class="meta-label">Khối lớp</label>
+                      <select class="meta-input" data-profile-field="className">
+                        <option value="">Chọn lớp</option>
+                        <option value="Lớp 10">Lớp 10</option>
+                        <option value="Lớp 11">Lớp 11</option>
+                        <option value="Lớp 12" selected>Lớp 12</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -79,7 +97,7 @@
                       <div class="form-grid">
                         <div class="field">
                           <label>Email</label>
-                          <input type="email" placeholder="nguyenminhanh@gmail.com" data-profile-field="email" />
+                          <input type="email" placeholder="nguyenminhanh@gmail.com" data-profile-field="email" readonly aria-readonly="true" />
                         </div>
                         <div class="field">
                           <label>Số điện thoại</label>
@@ -101,47 +119,129 @@
 
                       <div class="subsection-stack">
                         <div class="mini-form">
-                          <h3>02 · Thành tích học tập xuất sắc</h3>
+                          <h3>Thành tích học tập xuất sắc</h3>
                           <div class="mini-grid">
-                            <div class="field"><label>GPA cả năm 10</label><input type="text" placeholder="8.5/10" /></div>
-                            <div class="field"><label>GPA cả năm 11</label><input type="text" placeholder="8.9/10" /></div>
-                            <div class="field"><label>GPA cả năm 12</label><input type="text" placeholder="9.2/10" /></div>
-                            <div class="field"><label>IELTS</label><input type="text" placeholder="7.5" /></div>
-                            <div class="field"><label>TOEFL</label><input type="text" placeholder="95" /></div>
-                            <div class="field"><label>SAT / ACT</label><input type="text" placeholder="1350 / 31" /></div>
+                            <div class="field grade-detail-field" data-grade-field="entranceScore"><label>Điểm tuyển sinh</label><input type="number" data-profile-field="entranceScore" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="entranceCombination"><label>Tổ hợp xét tuyển</label><select data-profile-field="entranceCombination"><option value="">Chọn tổ hợp</option><option value="A00">A00 · Toán, Lý, Hóa</option><option value="A01">A01 · Toán, Lý, Anh</option><option value="B00">B00 · Toán, Hóa, Sinh</option><option value="C00">C00 · Văn, Sử, Địa</option><option value="D01">D01 · Toán, Văn, Anh</option></select></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa9"><label>GPA năm lớp 9</label><input type="number" data-profile-field="gpa9" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa10"><label>GPA cả năm 10</label><input type="number" data-profile-field="gpa10" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa11"><label>GPA cả năm 11</label><input type="number" data-profile-field="gpa11" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa12"><label>GPA cả năm 12</label><input type="number" data-profile-field="gpa12" placeholder="Tự tính" readonly /></div>
+                          </div>
+                          <div class="subject-score-panel">
+                            <h4>Điểm từng môn theo năm</h4>
+                            <p class="form-help">Chọn khối lớp để hiển thị các năm học cần nhập. Bạn có thể bổ sung từng môn để hệ thống đối chiếu ngành phù hợp hơn.</p>
+                            <div class="subject-score-grid">
+                              <div class="subject-score-row subject-score-row--header">
+                                <span>Năm học</span><span>Toán</span><span>Ngữ văn</span><span>Tiếng Anh</span><span>Vật lí</span><span>Hóa học</span><span>Sinh học</span><span>Tin học</span><span>Lịch sử</span><span>Địa lý</span><span>GDKT&amp;PL</span>
+                              </div>
+                              <div class="subject-score-row" data-grade-year="9">
+                                <strong>Lớp 9</strong>
+                                <input aria-label="Toán lớp 9" data-profile-field="score9Math" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Ngữ văn lớp 9" data-profile-field="score9Literature" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tiếng Anh lớp 9" data-profile-field="score9English" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Vật lí lớp 9" data-profile-field="score9Physics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Hóa học lớp 9" data-profile-field="score9Chemistry" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Sinh học lớp 9" data-profile-field="score9Biology" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tin học lớp 9" data-profile-field="score9Informatics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Lịch sử lớp 9" data-profile-field="score9History" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Địa lý lớp 9" data-profile-field="score9Geography" inputmode="decimal" placeholder="-" />
+                                <input aria-label="GDKT&PL lớp 9" data-profile-field="score9Civics" inputmode="decimal" placeholder="-" />
+                              </div>
+                              <div class="subject-score-row" data-grade-year="10">
+                                <strong>Lớp 10</strong>
+                                <input aria-label="Toán lớp 10" data-profile-field="score10Math" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Ngữ văn lớp 10" data-profile-field="score10Literature" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tiếng Anh lớp 10" data-profile-field="score10English" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Vật lí lớp 10" data-profile-field="score10Physics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Hóa học lớp 10" data-profile-field="score10Chemistry" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Sinh học lớp 10" data-profile-field="score10Biology" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tin học lớp 10" data-profile-field="score10Informatics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Lịch sử lớp 10" data-profile-field="score10History" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Địa lý lớp 10" data-profile-field="score10Geography" inputmode="decimal" placeholder="-" />
+                                <input aria-label="GDKT&PL lớp 10" data-profile-field="score10Civics" inputmode="decimal" placeholder="-" />
+                              </div>
+                              <div class="subject-score-row" data-grade-year="11">
+                                <strong>Lớp 11</strong>
+                                <input aria-label="Toán lớp 11" data-profile-field="score11Math" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Ngữ văn lớp 11" data-profile-field="score11Literature" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tiếng Anh lớp 11" data-profile-field="score11English" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Vật lí lớp 11" data-profile-field="score11Physics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Hóa học lớp 11" data-profile-field="score11Chemistry" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Sinh học lớp 11" data-profile-field="score11Biology" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tin học lớp 11" data-profile-field="score11Informatics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Lịch sử lớp 11" data-profile-field="score11History" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Địa lý lớp 11" data-profile-field="score11Geography" inputmode="decimal" placeholder="-" />
+                                <input aria-label="GDKT&PL lớp 11" data-profile-field="score11Civics" inputmode="decimal" placeholder="-" />
+                              </div>
+                              <div class="subject-score-row" data-grade-year="12">
+                                <strong>Lớp 12</strong>
+                                <input aria-label="Toán lớp 12" data-profile-field="score12Math" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Ngữ văn lớp 12" data-profile-field="score12Literature" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tiếng Anh lớp 12" data-profile-field="score12English" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Vật lí lớp 12" data-profile-field="score12Physics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Hóa học lớp 12" data-profile-field="score12Chemistry" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Sinh học lớp 12" data-profile-field="score12Biology" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Tin học lớp 12" data-profile-field="score12Informatics" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Lịch sử lớp 12" data-profile-field="score12History" inputmode="decimal" placeholder="-" />
+                                <input aria-label="Địa lý lớp 12" data-profile-field="score12Geography" inputmode="decimal" placeholder="-" />
+                                <input aria-label="GDKT&PL lớp 12" data-profile-field="score12Civics" inputmode="decimal" placeholder="-" />
+                              </div>
+                            </div>
                           </div>
                         </div>
 
                         <div class="mini-form">
                           <h3>Chứng chỉ ngoại ngữ &amp; học thuật</h3>
                           <div class="mini-grid">
-                            <div class="field"><label>Chứng chỉ</label><input type="text" placeholder="IELTS, TOEIC, JLPT..." /></div>
-                            <div class="field"><label>Điểm số</label><input type="text" placeholder="7.5 / 950" /></div>
-                            <div class="field"><label>Năm</label><input type="text" placeholder="2026" /></div>
+                            <div class="field"><label for="certificateLanguage">Ngôn ngữ</label><select id="certificateLanguage" data-profile-field="certificateLanguage"><option value="">Chọn ngôn ngữ</option></select></div>
+                            <div class="field"><label for="certificateName">Chứng chỉ</label><select id="certificateName" data-profile-field="certificateName"><option value="">Chọn ngôn ngữ trước</option></select></div>
+                            <div class="field"><label for="certificateScore">Điểm / cấp độ</label><input id="certificateScore" type="number" data-profile-field="certificateScore" placeholder="Chọn chứng chỉ trước" disabled /></div>
                           </div>
+                          <div class="field certificate-issue-date"><label for="certificateIssueDate">Ngày cấp chứng chỉ</label><input id="certificateIssueDate" type="date" data-profile-field="certificateIssueDate" /></div>
+                          <div class="certificate-actions"><button class="ghost-btn" type="button" id="addCertificateBtn">Thêm chứng chỉ</button></div>
+                          <div id="certificateList" class="certificate-list" aria-live="polite"></div>
+                          <div class="certificate-fallback">
+                            <label class="checkbox-field"><input id="certificateUseHighSchool" type="checkbox" data-profile-field="certificateUseHighSchool" /> Không có chứng chỉ quốc tế</label>
+                            <div class="field"><label for="highSchoolLanguageScore">Điểm Tiếng Anh THPT (tự lấy)</label><input id="highSchoolLanguageScore" type="number" min="0" max="10" step="0.1" data-profile-field="highSchoolLanguageScore" placeholder="Tự lấy từ bảng điểm" readonly /></div>
+                            <p class="form-help">Dùng điểm môn Ngoại ngữ trong học bạ thay cho chứng chỉ quốc tế.</p>
+                          </div>
+                          <p class="form-help" id="certificateHelp">Chọn chứng chỉ để áp dụng đúng thang điểm.</p>
+                          <p class="form-help certificate-warning hidden" id="certificateExpiryWarning">⚠️ Lưu ý: Chứng chỉ đã hết hạn 2 năm tính đến thời điểm xét tuyển đại học.</p>
                         </div>
 
-                        <div class="mini-form">
-                          <h3>Danh sách thành tích thi</h3>
+                        <div class="mini-form achievement-form">
+                          <h3 id="achievementHeading">Danh sách thành tích thi</h3>
+                          <p class="form-help" id="achievementHelp">Chọn kỳ thi để hiển thị đúng môn thi hoặc lĩnh vực tương ứng.</p>
                           <div class="mini-grid">
                             <div class="field">
-                              <label>Loại kỳ thi</label>
-                              <select id="examType">
+                              <label for="examType">Kỳ thi / cuộc thi</label>
+                              <select id="examType" data-profile-field="examType" aria-describedby="achievementHelp examSelectionStatus">
                                 <option value="">Chọn loại kỳ thi</option>
                                 <option>Kỳ thi chọn Học sinh giỏi Quốc gia (HSGQG)</option>
                                 <option>Kỳ thi chọn Học sinh giỏi cấp Tỉnh/Thành phố</option>
-                                <option>Cuộc thi Khoa học kỹ thuật (VISEF) các cấp</option>
+                                <option>Cuộc thi Khoa học kỹ thuật (ViSEF) các cấp</option>
                                 <option>Olympic Bậc THPT</option>
                                 <option>Cuộc thi IOE (Olympic tiếng Anh trên Internet)</option>
-                                <option>Violympic [1.3 Pap]</option>
+                                <option>Violympic</option>
                                 <option>Kỳ thi Toán Quốc tế Kangaroo (IKMC)</option>
-                                <option>Toán Mỹ (AMC)</option>
+                                <option>Toán Mỹ (AMC 8/10/12)</option>
                                 <option>Khác</option>
                               </select>
                             </div>
                             <div class="field">
-                              <label>Giải</label>
-                              <select id="awardRank">
+                              <label for="examSubject">Môn thi / lĩnh vực <span class="field-optional">(nếu có)</span></label>
+                              <select id="examSubject" class="input-compact" data-profile-field="examSubject" aria-describedby="examSubjectHint" style="flex: 1;">
+                                <option value="">Chọn môn thi / lĩnh vực</option>
+                              </select>
+                            </div>
+                            <div class="field hidden" id="customExamField">
+                              <label for="customExamName">Tên kỳ thi / cuộc thi</label>
+                              <input type="text" id="customExamName" data-profile-field="customExamName" placeholder="Ví dụ: Cuộc thi sáng tạo trẻ..." />
+                            </div>
+                            <div class="field">
+                              <label for="awardRank">Giải / kết quả</label>
+                              <select id="awardRank" data-profile-field="awardRank">
                                 <option>Giải nhất</option>
                                 <option>Giải nhì</option>
                                 <option>Giải ba</option>
@@ -151,74 +251,67 @@
                                 <option>Khác</option>
                               </select>
                             </div>
-                            <div class="field hidden" id="provinceField">
-                              <label>Tỉnh / Thành phố</label>
-                              <input type="text" placeholder="Ví dụ: Hà Nội, Đà Nẵng..." />
+                            <div class="field hidden" id="customAwardField">
+                              <label for="customAwardName">Tên giải / kết quả khác</label>
+                              <input type="text" id="customAwardName" data-profile-field="customAwardName" placeholder="Ví dụ: Giải triển vọng, vòng chung kết..." />
                             </div>
-                            <div class="field"><label>Năm</label><input type="text" placeholder="2025" /></div>
-                            <div class="field wide"><label>Mô tả thêm</label><input type="text" placeholder="Ví dụ: Đạt giải Nhì Tỉnh môn Toán, dự án STEM cấp trường..." /></div>
+                            <div class="field hidden" id="provinceField">
+                              <label for="examProvince">Tỉnh / Thành phố</label>
+                              <input type="text" id="examProvince" data-profile-field="examProvince" placeholder="Ví dụ: Hà Nội, Đà Nẵng..." />
+                            </div>
+                            <div class="field"><label for="examYear">Năm đạt thành tích</label><input type="text" id="examYear" data-profile-field="examYear" placeholder="2025" inputmode="numeric" /></div>
+                            <div class="field wide"><label for="examDescription">Mô tả thêm <span class="field-optional">(không bắt buộc)</span></label><input type="text" id="examDescription" data-profile-field="examDescription" placeholder="Ví dụ: Đạt giải Nhì Tỉnh môn Toán, dự án STEM cấp trường..." /></div>
+                          </div>
+                          <p class="achievement-status" id="examSelectionStatus" role="status" aria-live="polite"></p>
+                        </div>
+
+                        <div class="mini-form">
+                          <h3>Hoạt động ngoại khóa &amp; Tố chất lãnh đạo</h3>
+                          <div class="mini-grid">
+                            <div class="field"><label>Tên hoạt động</label><input type="text" data-profile-field="activityName" placeholder="CLB Khoa học - Tư duy phản biện" /></div>
+                            <div class="field"><label>Vai trò</label><input type="text" data-profile-field="activityRole" placeholder="Trưởng ban nội dung / Thành viên" /></div>
+                            <div class="field"><label>Kết quả / Tác động</label><input type="text" data-profile-field="activityImpact" placeholder="Tổ chức 3 sự kiện, 200 học sinh tham gia" /></div>
+                            <div class="field wide"><label>Minh chứng / Liên kết</label><input type="text" data-profile-field="activityEvidence" placeholder="link bài viết, hình ảnh, chứng nhận, sự kiện..." /></div>
                           </div>
                         </div>
 
                         <div class="mini-form">
-                          <h3>03 · Hoạt động ngoại khóa &amp; Tố chất lãnh đạo</h3>
+                          <h3>Dự án cá nhân &amp; Kỹ năng</h3>
                           <div class="mini-grid">
-                            <div class="field"><label>Tên hoạt động</label><input type="text" placeholder="CLB Khoa học - Tư duy phản biện" /></div>
-                            <div class="field"><label>Vai trò</label><input type="text" placeholder="Trưởng ban nội dung / Thành viên" /></div>
-                            <div class="field"><label>Kết quả / Tác động</label><input type="text" placeholder="Tổ chức 3 sự kiện, 200 học sinh tham gia" /></div>
-                            <div class="field wide"><label>Minh chứng / Liên kết</label><input type="text" placeholder="link bài viết, hình ảnh, chứng nhận, sự kiện..." /></div>
-                          </div>
-                        </div>
-
-                        <div class="mini-form">
-                          <h3>04 · Dự án cá nhân &amp; Kỹ năng</h3>
-                          <div class="mini-grid">
-                            <div class="field"><label>Tên dự án</label><input type="text" placeholder="Website quản lý thời gian / Bài nghiên cứu khoa học" /></div>
-                            <div class="field"><label>Loại dự án</label><input type="text" placeholder="Nghiên cứu, lập trình, design, nghệ thuật..." /></div>
-                            <div class="field"><label>Kỹ năng bổ trợ</label><input type="text" placeholder="Power BI, Python, Photoshop, Debate..." /></div>
-                            <div class="field wide"><label>Mô tả dự án &amp; kết quả</label><textarea rows="4" placeholder="Mô tả mục tiêu, quá trình thực hiện, công cụ sử dụng và tác động thực tế..."></textarea></div>
+                            <div class="field"><label>Tên dự án</label><input type="text" data-profile-field="projectName" placeholder="Website quản lý thời gian / Bài nghiên cứu khoa học" /></div>
+                            <div class="field"><label>Loại dự án</label><input type="text" data-profile-field="projectType" placeholder="Nghiên cứu, lập trình, design, nghệ thuật..." /></div>
+                            <div class="field"><label>Kỹ năng bổ trợ</label><input type="text" data-profile-field="supportingSkills" placeholder="Power BI, Python, Photoshop, Debate..." /></div>
+                            <div class="field wide"><label>Mô tả dự án &amp; kết quả</label><textarea rows="4" data-profile-field="projectDescription" placeholder="Mô tả mục tiêu, quá trình thực hiện, công cụ sử dụng và tác động thực tế..."></textarea></div>
                           </div>
                         </div>
                       </div>
 
-                      <div class="upload-box" style="margin-top: 18px;">
-                        <h3 style="margin: 0; color: var(--purple-deep);">Tải lên tài liệu PDF</h3>
-                        <label for="pdfUpload">Chọn file PDF</label>
-                        <input id="pdfUpload" type="file" accept="application/pdf" />
-                        <div class="action-row">
-                          <button class="primary-btn" type="button">Cập nhật tài liệu</button>
-                          <button class="ghost-btn" type="button">Xóa file</button>
+                      <div class="upload-box profile-completion-actions" style="margin-top: 18px;">
+                        <h3 style="margin: 0; color: var(--purple-deep);">Hoàn tất hồ sơ</h3>
+                        <p class="form-help">Lưu thông tin hiện tại hoặc chuyển sang trang chuẩn hóa để thiết kế hồ sơ chuyên nghiệp.</p>
+                        <div class="profile-save-actions action-row">
+                          <button class="primary-btn" type="button" id="saveProfileBtn">Lưu thông tin hồ sơ</button>
+                          <span id="profileSaveStatus" role="status" aria-live="polite"></span>
+                          <a class="primary-btn" href="cv-builder-editor.html">✦ Chuẩn hóa hồ sơ →</a>
                         </div>
                       </div>
                     </div>
-
-                    <aside class="ai-summary">
-                      <h3>AI chuẩn hóa hồ sơ</h3>
-                      <div class="pdf-preview-shell" id="pdfPreviewShell">
-                        <div class="pdf-empty-state" id="pdfEmptyState">Chưa có tài liệu PDF nào để xem trước.</div>
-                        <iframe id="pdfPreview" title="Xem trước PDF hồ sơ"></iframe>
-                      </div>
-                      <div class="action-row">
-                        <button class="primary-btn" type="button" id="aiNormalizeBtn">AI chuẩn hóa</button>
-                        <button class="ghost-btn" type="button" id="exportBtn">Xuất PDF</button>
-                      </div>
-                    </aside>
           </section>
 
           <section class="content-panel">
-            <h2>02 · Chi tiết hồ sơ</h2>
+            <h2>Chi tiết hồ sơ</h2>
             <div class="profile-detail-grid">
               <div class="field">
                 <label>Sở thích</label>
-                <textarea rows="5" placeholder="Ví dụ: đọc sách, du lịch, nghiên cứu khoa học, học hỏi công nghệ mới..."></textarea>
+                <textarea rows="5" data-profile-field="interests" placeholder="Ví dụ: đọc sách, du lịch, nghiên cứu khoa học, học hỏi công nghệ mới..."></textarea>
               </div>
               <div class="field">
                 <label>Tính cách</label>
-                <textarea rows="5" placeholder="Ví dụ: chủ động, cẩn thận, thích hợp tác, kiên trì trong học tập và làm việc..."></textarea>
+                <textarea rows="5" data-profile-field="personality" placeholder="Ví dụ: chủ động, cẩn thận, thích hợp tác, kiên trì trong học tập và làm việc..."></textarea>
               </div>
               <div class="field">
                 <label>Kỹ năng</label>
-                <textarea rows="5" placeholder="Ví dụ: giao tiếp, làm việc nhóm, nghiên cứu, phân tích, Excel, PowerPoint, Python, design..."></textarea>
+                <textarea rows="5" data-profile-field="skills" placeholder="Ví dụ: giao tiếp, làm việc nhóm, nghiên cứu, phân tích, Excel, PowerPoint, Python, design..."></textarea>
               </div>
             </div>
           </section>
@@ -230,8 +323,8 @@
       <div class="footer-container">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
-          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
           <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
         </div>
 
@@ -249,7 +342,7 @@
           </form>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+      <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
     </footer>
 
     <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
@@ -280,12 +373,9 @@
         const userChip = document.getElementById('userChip');
         const userMenu = document.getElementById('userMenu');
         const menuButtons = document.querySelectorAll('[data-menu-action]');
-        const authButtons = document.querySelectorAll('[data-auth-action]');
-        const AUTH_KEY = 'futurepath.signed_in';
 
         const setSignedIn = (opts) => {
           // persist
-          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
           if (authArea) authArea.classList.add('hidden');
           if (userPanel) userPanel.classList.remove('hidden');
           if (userMenu) userMenu.classList.add('hidden');
@@ -296,7 +386,6 @@
         };
 
         const setSignedOut = (opts) => {
-          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
           if (authArea) authArea.classList.remove('hidden');
           if (userPanel) userPanel.classList.add('hidden');
           if (userMenu) userMenu.classList.add('hidden');
@@ -304,16 +393,6 @@
         };
 
         // wire demo auth buttons to persist state across pages
-        authButtons.forEach(function (button) {
-          button.addEventListener('click', function () { setSignedIn(); });
-        });
-
-        // apply persisted state on load
-        try {
-          if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true });
-        } catch (e) {}
-
-
         if (userChip) {
           userChip.addEventListener('click', function () {
             if (!userMenu) return;
@@ -390,13 +469,371 @@
       const portraitUpload = document.getElementById('portraitUpload');
       const pdfPreview = document.getElementById('pdfPreview');
       const pdfEmptyState = document.getElementById('pdfEmptyState');
+      const clearPdfBtn = document.getElementById('clearPdfBtn');
       const normalizeBtn = document.getElementById('aiNormalizeBtn');
       const exportBtn = document.getElementById('exportBtn');
+      const saveProfileBtn = document.getElementById('saveProfileBtn');
       const examType = document.getElementById('examType');
+      const examSubject = document.getElementById('examSubject');
+      const awardRank = document.getElementById('awardRank');
+      const customExamField = document.getElementById('customExamField');
+      const customAwardField = document.getElementById('customAwardField');
       const provinceField = document.getElementById('provinceField');
+      const examSelectionStatus = document.getElementById('examSelectionStatus');
+      const gradeSelect = document.querySelector('[data-profile-field="className"]');
+      const gradeFields = document.querySelectorAll('.grade-detail-field');
+      const subjectScoreRows = document.querySelectorAll('[data-grade-year]');
+      const portfolioTemplate = document.getElementById('portfolioTemplate');
+      const certificateLanguage = document.getElementById('certificateLanguage');
+      const certificateName = document.getElementById('certificateName');
+      let certificateScore = document.getElementById('certificateScore');
+      const certificateHelp = document.getElementById('certificateHelp');
+      const certificateIssueDate = document.getElementById('certificateIssueDate');
+      const certificateExpiryWarning = document.getElementById('certificateExpiryWarning');
+      const certificateUseHighSchool = document.getElementById('certificateUseHighSchool');
+      const highSchoolLanguageScore = document.getElementById('highSchoolLanguageScore');
+      const addCertificateBtn = document.getElementById('addCertificateBtn');
+      const certificateList = document.getElementById('certificateList');
+      let certificateRecords = [];
+      function syncHighSchoolEnglishScore() {
+        if (!highSchoolLanguageScore || !window.AXISData || !window.AXISData.getProfile) return;
+        const currentProfile = window.AXISData.getProfile();
+        const grade = currentProfile.className || (gradeSelect && gradeSelect.value) || 'Lớp 12';
+        const year = grade === 'Lớp 10' ? '10' : grade === 'Lớp 11' ? '11' : '12';
+        const value = currentProfile['score' + year + 'English'];
+        highSchoolLanguageScore.value = value == null ? '' : value;
+      }
+      function fillCertificateLanguages() {
+        if (!certificateLanguage || !window.AxisCertificates) return;
+        certificateLanguage.innerHTML = '<option value="">Chọn ngôn ngữ</option>' + window.AxisCertificates.LANGUAGES.map(function (item) {
+          return '<option value="' + item.value + '">' + item.label + '</option>';
+        }).join('');
+      }
+      function fillCertificateTypes() {
+        if (!certificateName || !window.AxisCertificates) return;
+        const language = window.AxisCertificates.LANGUAGES.find(function (item) { return item.value === certificateLanguage.value; });
+        certificateName.innerHTML = '<option value="">Chọn chứng chỉ</option>' + (language ? language.certificates.map(function (item) {
+          return '<option value="' + item[1] + '" data-input-type="' + item[2] + '">' + item[0] + '</option>';
+        }).join('') : '');
+        certificateName.disabled = !language;
+        certificateScore.value = '';
+        updateCertificateValidation();
+      }
+      function updateCertificateValidation() {
+        if (!certificateName || !certificateScore || !window.AxisCertificates) return;
+        const option = certificateName.options[certificateName.selectedIndex];
+        const type = option && option.value;
+        const numeric = window.AxisCertificates.NUMERIC[type];
+        if (numeric && certificateScore.tagName === 'SELECT') {
+          certificateScore.outerHTML = '<input id="certificateScore" type="text" inputmode="decimal" data-profile-field="certificateScore">';
+          certificateScore = document.getElementById('certificateScore');
+        }
+        if (!numeric && type && certificateScore.tagName !== 'SELECT') {
+          const levels = window.AxisCertificates.LEVELS[type] || [];
+          certificateScore.outerHTML = '<select id="certificateScore" data-profile-field="certificateScore"><option value="">Chọn cấp độ</option>' + levels.map(function (level) { return '<option value="' + level[1] + '">' + level[0] + '</option>'; }).join('') + '</select>';
+          certificateScore = document.getElementById('certificateScore');
+        }
+        certificateScore.type = numeric ? 'text' : 'text';
+        if (numeric) certificateScore.inputMode = 'decimal';
+        certificateScore.removeAttribute('min');
+        certificateScore.removeAttribute('max');
+        certificateScore.removeAttribute('step');
+        if (numeric) {
+          certificateScore.min = numeric[0];
+          certificateScore.max = numeric[1];
+          certificateScore.step = numeric[2];
+          certificateScore.placeholder = numeric[3];
+          certificateHelp.textContent = 'Thang điểm: ' + numeric[0] + '–' + numeric[1] + ', bước ' + numeric[2];
+        } else if (type) {
+          certificateScore.placeholder = 'Chọn cấp độ';
+          certificateHelp.textContent = 'Chọn cấp độ tương ứng với chứng chỉ.';
+        } else {
+          certificateScore.placeholder = 'Chọn chứng chỉ trước';
+          certificateHelp.textContent = 'Chọn ngôn ngữ và chứng chỉ để áp dụng đúng quy đổi.';
+        }
+        const useHighSchool = Boolean(certificateUseHighSchool && certificateUseHighSchool.checked);
+        if (certificateName) certificateName.disabled = !certificateLanguage.value || useHighSchool;
+        [certificateLanguage, certificateScore, certificateIssueDate].forEach(function (field) {
+          if (field) field.disabled = useHighSchool;
+        });
+        if (certificateScore && !useHighSchool) certificateScore.disabled = !type;
+        if (highSchoolLanguageScore) highSchoolLanguageScore.disabled = !useHighSchool;
+        if (useHighSchool) {
+          certificateScore.value = '';
+          if (certificateIssueDate) certificateIssueDate.value = '';
+        }
+      }
+      function updateCertificateExpiry() {
+        if (certificateExpiryWarning) certificateExpiryWarning.classList.toggle('hidden', !window.AxisCertificates || !window.AxisCertificates.isExpired(certificateIssueDate && certificateIssueDate.value));
+      }
+      function certificateDraft() {
+        return {
+          language: certificateLanguage && certificateLanguage.value,
+          name: certificateName && certificateName.value,
+          score: certificateScore && certificateScore.value,
+          issueDate: certificateIssueDate && certificateIssueDate.value
+        };
+      }
+      function renderCertificateList() {
+        if (!certificateList) return;
+        certificateList.innerHTML = certificateRecords.map(function (item, index) {
+          return '<div class="certificate-list-item"><div><strong>' +
+            String(item.name || 'Chứng chỉ').replace(/[&<>"']/g, '') +
+            '</strong><span>' + String(item.language || '') + ' · ' + String(item.score || 'Chưa có điểm') +
+            (item.issueDate ? ' · Cấp ngày ' + item.issueDate : '') +
+            '</span></div><button type="button" class="ghost-btn certificate-remove" data-index="' + index + '">Xóa</button></div>';
+        }).join('');
+        certificateList.querySelectorAll('.certificate-remove').forEach(function (button) {
+          button.addEventListener('click', function () {
+            certificateRecords.splice(Number(button.dataset.index), 1);
+            renderCertificateList();
+            if (window.AXISData && window.AXISData.setProfileValue) {
+              window.AXISData.setProfileValue('certificateRecords', certificateRecords);
+            }
+            if (window.AXISData && window.AXISData.markProfileDirty) window.AXISData.markProfileDirty();
+          });
+        });
+      }
+      if (addCertificateBtn) addCertificateBtn.addEventListener('click', function () {
+        const draft = certificateDraft();
+        if (!draft.language || !draft.name || !draft.score) {
+          if (window.AXISAuth && window.AXISAuth.showNotice) window.AXISAuth.showNotice('Hãy chọn ngôn ngữ, chứng chỉ và điểm trước khi thêm.');
+          return;
+        }
+        certificateRecords.push(draft);
+        renderCertificateList();
+        if (window.AXISData && window.AXISData.setProfileValue) {
+          window.AXISData.setProfileValue('certificateRecords', certificateRecords);
+        }
+        if (window.AXISData && window.AXISData.markProfileDirty) window.AXISData.markProfileDirty();
+        certificateScore.value = '';
+        if (certificateIssueDate) certificateIssueDate.value = '';
+      });
+      fillCertificateLanguages();
+      if (certificateLanguage) certificateLanguage.addEventListener('change', fillCertificateTypes);
+      if (certificateName) certificateName.addEventListener('change', updateCertificateValidation);
+      if (certificateIssueDate) certificateIssueDate.addEventListener('change', updateCertificateExpiry);
+      if (certificateUseHighSchool) certificateUseHighSchool.addEventListener('change', updateCertificateValidation);
+      document.addEventListener('futurepath:profile-hydrated', function () {
+        fillCertificateLanguages();
+        fillCertificateTypes();
+        const profile = window.AXISData && window.AXISData.getProfile ? window.AXISData.getProfile() : {};
+        certificateRecords = Array.isArray(profile.certificateRecords) ? profile.certificateRecords.slice() : [];
+        renderCertificateList();
+        updateCertificateExpiry();
+      });
+      document.addEventListener('futurepath:profile-changed', syncHighSchoolEnglishScore);
+
+      function updateAcademicGradeFields() {
+        if (!gradeSelect) return;
+        const selectedGrade = String(gradeSelect.value || 'Lớp 12');
+        const visibleKeys = {
+          'Lớp 10': ['entranceScore', 'entranceCombination', 'gpa9'],
+          'Lớp 11': ['gpa9', 'gpa10'],
+          'Lớp 12': ['gpa10', 'gpa11']
+        };
+        const keys = visibleKeys[selectedGrade] || ['entranceScore', 'gpa9', 'gpa10', 'gpa11'];
+        gradeFields.forEach(function (field) {
+          const key = field.getAttribute('data-grade-field');
+          field.classList.toggle('hidden', !keys.includes(key));
+        });
+        const visibleYears = {
+          'Lớp 10': ['9'],
+          'Lớp 11': ['9', '10'],
+          'Lớp 12': ['10', '11']
+        };
+        const years = visibleYears[selectedGrade] || ['9'];
+        subjectScoreRows.forEach(function (row) {
+          row.classList.toggle('hidden', years.indexOf(row.getAttribute('data-grade-year')) < 0);
+        });
+      }
+
+      const examSubjects = {
+        academic: [
+          'Toán', 'Vật lí', 'Hóa học', 'Sinh học', 'Tin học', 'Ngữ văn',
+          'Lịch sử', 'Địa lí', 'Tiếng Anh', 'Tiếng Pháp', 'Tiếng Nga',
+          'Tiếng Trung', 'Tiếng Nhật'
+        ],
+        visef: [
+          'Hệ thống nhúng', 'Phần mềm hệ thống', 'Khoa học máy tính',
+          'Robot và Máy thông minh', 'Kỹ thuật cơ khí', 'Kỹ thuật môi trường',
+          'Khoa học vật liệu', 'Năng lượng: Hóa học', 'Năng lượng: Vật lí',
+          'Hóa học', 'Hóa Sinh', 'Sinh học trên máy tính và Sinh tin học',
+          'Y sinh và Khoa học sức khỏe', 'Kỹ thuật Y sinh',
+          'Tế bào và Sinh học phân tử', 'Vi sinh vật', 'Khoa học động vật',
+          'Khoa học thực vật', 'Khoa học Trái đất và Môi trường',
+          'Vật lí và Thiên văn', 'Khoa học xã hội và Hành vi', 'Toán học'
+        ],
+        olympic: [
+          'Toán', 'Vật lí', 'Hóa học', 'Sinh học', 'Tin học', 'Tiếng Anh',
+          'Ngữ văn', 'Lịch sử', 'Địa lí'
+        ],
+        ioe: ['Tiếng Anh'],
+        violympic: ['Toán Tiếng Việt', 'Toán Tiếng Anh', 'Vật lí', 'Tiếng Việt'],
+        math: ['Toán học']
+      };
+
+      function subjectOptionsForExam(value) {
+        const normalized = String(value || '').toLowerCase();
+        if (normalized.includes('hsgqg') || normalized.includes('học sinh giỏi quốc gia') || normalized.includes('học sinh giỏi cấp tỉnh')) return examSubjects.academic;
+        if (normalized.includes('visef') || normalized.includes('khoa học kỹ thuật')) return examSubjects.visef;
+        if (normalized.includes('olympic')) return examSubjects.olympic;
+        if (normalized.includes('ioe')) return examSubjects.ioe;
+        if (normalized.includes('violympic')) return examSubjects.violympic;
+        if (normalized.includes('ikmc') || normalized.includes('kangaroo') || normalized.includes('amc')) return examSubjects.math;
+        return [];
+      }
+
+      function renderExamSubjects() {
+        if (!examSubject) return;
+        const profile = window.AXISData && window.AXISData.getProfile
+          ? window.AXISData.getProfile()
+          : {};
+        const currentValue = examSubject.value || profile.examSubject || profile.subject || '';
+        const subjects = subjectOptionsForExam(examType ? examType.value : '');
+        examSubject.innerHTML = '';
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'Chọn môn thi / lĩnh vực';
+        examSubject.appendChild(placeholder);
+        subjects.forEach(function (subject) {
+          const option = document.createElement('option');
+          option.value = subject;
+          option.textContent = subject;
+          examSubject.appendChild(option);
+        });
+        if (currentValue && subjects.indexOf(currentValue) < 0) {
+          const savedOption = document.createElement('option');
+          savedOption.value = currentValue;
+          savedOption.textContent = currentValue;
+          examSubject.appendChild(savedOption);
+        }
+        if (subjects.length === 1) {
+          examSubject.value = subjects[0];
+          examSubject.disabled = true;
+          examSubject.setAttribute('aria-disabled', 'true');
+        } else {
+          examSubject.disabled = !examType || !examType.value;
+          examSubject.setAttribute('aria-disabled', examSubject.disabled ? 'true' : 'false');
+          examSubject.value = currentValue;
+        }
+        if (examSelectionStatus) {
+          if (!examType || !examType.value) {
+            examSelectionStatus.textContent = 'Hãy chọn một kỳ thi để bắt đầu nhập thành tích.';
+          } else if (subjects.length === 1) {
+            examSelectionStatus.textContent = 'Môn thi được chọn tự động theo kỳ thi.';
+          } else if (subjects.length > 1) {
+            examSelectionStatus.textContent = 'Đã cập nhật danh sách môn thi. Bạn có thể chọn một mục.';
+          } else if (examType.value === 'Khác') {
+            examSelectionStatus.textContent = 'Với kỳ thi khác, hãy nhập tên kỳ thi ở ô bên dưới.';
+          } else {
+            examSelectionStatus.textContent = 'Chưa có danh sách môn thi cho lựa chọn này.';
+          }
+        }
+      }
 
       let currentPdfUrl = '';
       let normalizedPdfBlob = null;
+
+      function profileValue(key) {
+        const field = document.querySelector('[data-profile-field="' + key + '"]');
+        return field && String(field.value || '').trim() ? String(field.value).trim() : 'Chưa cập nhật';
+      }
+
+      function portfolioLines(isProjectTemplate) {
+        const lines = [
+          ['HỌC SINH', profileValue('name') + ' · Lớp ' + profileValue('className')],
+          ['LIÊN HỆ', [profileValue('email'), profileValue('phone'), profileValue('linkedin')].join(' · ')],
+          ['GIỚI THIỆU', profileValue('introduction')],
+          ['ĐỊNH HƯỚNG', profileValue('goal')],
+          ['HỌC TẬP', [profileValue('gpa9'), profileValue('gpa10'), profileValue('gpa11'), profileValue('gpa12')].join(' · ')],
+          ['ĐIỂM CÁC MÔN', ['Toán', 'Ngữ văn', 'Tiếng Anh', 'Vật lí', 'Hóa học', 'Sinh học', 'Tin học', 'Lịch sử', 'Địa lý', 'GDKT&PL'].map(function (subject) {
+            const key = subject === 'Toán' ? 'Math' : subject === 'Ngữ văn' ? 'Literature' : subject === 'Tiếng Anh' ? 'English' : subject === 'Vật lí' ? 'Physics' : subject === 'Hóa học' ? 'Chemistry' : subject === 'Sinh học' ? 'Biology' : subject === 'Tin học' ? 'Informatics' : subject === 'Lịch sử' ? 'History' : subject === 'Địa lý' ? 'Geography' : 'Civics';
+            return subject + ': ' + ['9', '10', '11', '12'].map(function (year) { return profileValue('score' + year + key); }).join('/');
+          }).join(' · ')],
+          ['CHỨNG CHỈ', profileValue('certificateName') + ' — ' + profileValue('certificateScore') + ' · ' + profileValue('certificateIssueDate')],
+          ['THÀNH TÍCH', profileValue('examType') + ' — ' + profileValue('examDescription') + ' · ' + profileValue('awardRank')],
+          ['HOẠT ĐỘNG', profileValue('activityName') + ' — ' + profileValue('activityImpact')],
+          ['DỰ ÁN NỔI BẬT', profileValue('projectName')],
+          ['LOẠI DỰ ÁN', profileValue('projectType')],
+          ['MÔ TẢ VÀ KẾT QUẢ', profileValue('projectDescription')],
+          ['KỸ NĂNG SỬ DỤNG', profileValue('supportingSkills')],
+          ['KỸ NĂNG', profileValue('skills')],
+          ['SỞ THÍCH', profileValue('interests')],
+          ['MINH CHỨNG', profileValue('activityEvidence')]
+        ];
+        const records = (window.AXISData && window.AXISData.getProfile ? window.AXISData.getProfile().certificateRecords : []) || [];
+        if (records.length) lines[7][1] = records.map(function (item) { return [item.name, item.score, item.issueDate].filter(Boolean).join(' · '); }).join(' | ');
+        return lines;
+      }
+
+      function printPortfolioFallback() {
+        const isProjectTemplate = portfolioTemplate && portfolioTemplate.value === 'project';
+        const sheet = document.createElement('section');
+        sheet.className = 'portfolio-print-sheet';
+        const title = isProjectTemplate ? 'AXIS — Portfolio dự án' : 'AXIS — Portfolio học thuật';
+        sheet.innerHTML = '<h1></h1><p class="portfolio-print-meta"></p><div class="portfolio-print-content"></div>';
+        sheet.querySelector('h1').textContent = title;
+        sheet.querySelector('.portfolio-print-meta').textContent =
+          'Xuất từ hồ sơ AXIS · ' + new Date().toLocaleDateString('vi-VN');
+        const content = sheet.querySelector('.portfolio-print-content');
+        portfolioLines(isProjectTemplate).forEach(function (item) {
+          const block = document.createElement('div');
+          const label = document.createElement('h2');
+          const value = document.createElement('p');
+          label.textContent = item[0];
+          value.textContent = item[1];
+          block.appendChild(label);
+          block.appendChild(value);
+          content.appendChild(block);
+        });
+        document.body.appendChild(sheet);
+        document.body.classList.add('printing-portfolio');
+        window.setTimeout(function () {
+          window.print();
+          window.setTimeout(function () {
+            document.body.classList.remove('printing-portfolio');
+            sheet.remove();
+          }, 500);
+        }, 0);
+      }
+
+      function createPortfolioPdf() {
+        if (!window.jspdf || !window.jspdf.jsPDF) return null;
+        const { jsPDF } = window.jspdf;
+        function pdfText(value) {
+          return String(value == null ? '' : value)
+            .replace(/[đĐ]/g, function (character) { return character === 'đ' ? 'd' : 'D'; })
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+        }
+        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const isProjectTemplate = portfolioTemplate && portfolioTemplate.value === 'project';
+        doc.setFillColor(isProjectTemplate ? 241 : 245, isProjectTemplate ? 248 : 241, isProjectTemplate ? 250 : 255);
+        doc.rect(0, 0, pageWidth, 842, 'F');
+        doc.setTextColor(isProjectTemplate ? 11 : 58, isProjectTemplate ? 61 : 43, isProjectTemplate ? 102 : 96);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.text(pdfText(isProjectTemplate ? 'AXIS - Portfolio du an' : 'AXIS - Portfolio hoc thuat'), 40, 60);
+        let y = 105;
+        portfolioLines(isProjectTemplate).forEach(function (item) {
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(10);
+          doc.text(pdfText(item[0]), 40, y);
+          y += 16;
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(12);
+          const wrapped = doc.splitTextToSize(pdfText(item[1]), pageWidth - 80);
+          doc.text(wrapped, 40, y);
+          y += wrapped.length * 18 + 18;
+          if (y > 770) {
+            doc.addPage();
+            y = 55;
+          }
+        });
+        return doc.output('blob');
+      }
 
       if (portraitUpload) {
         portraitUpload.addEventListener('change', function (event) {
@@ -412,6 +849,28 @@
         });
       }
 
+      function updateAchievementFields() {
+        const examValue = examType ? examType.value || '' : '';
+        const awardValue = awardRank ? awardRank.value || '' : '';
+        const requiresProvince = examValue.includes('Tỉnh') || examValue.includes('Thành phố') || examValue.includes('cấp');
+        if (customExamField) {
+          customExamField.classList.toggle('hidden', examValue !== 'Khác');
+          customExamField.setAttribute('aria-hidden', examValue !== 'Khác' ? 'true' : 'false');
+        }
+        if (customAwardField) {
+          customAwardField.classList.toggle('hidden', awardValue !== 'Khác');
+          customAwardField.setAttribute('aria-hidden', awardValue !== 'Khác' ? 'true' : 'false');
+        }
+        if (provinceField) {
+          provinceField.classList.toggle('hidden', !requiresProvince);
+          provinceField.setAttribute('aria-hidden', !requiresProvince ? 'true' : 'false');
+        }
+      }
+
+      if (gradeSelect) {
+        gradeSelect.addEventListener('change', updateAcademicGradeFields);
+      }
+
       if (examType) {
         examType.addEventListener('change', function () {
           const value = examType.value || '';
@@ -419,11 +878,45 @@
           if (provinceField) {
             provinceField.classList.toggle('hidden', !requiresProvince);
           }
+          updateAchievementFields();
+          renderExamSubjects();
+
         });
       }
+      document.addEventListener('futurepath:profile-hydrated', function () {
+        renderExamSubjects();
+        updateAcademicGradeFields();
+      });
+      renderExamSubjects();
+      updateAchievementFields();
+      syncHighSchoolEnglishScore();
+      if (saveProfileBtn && saveProfileBtn.dataset.bound !== 'true') {
+        saveProfileBtn.dataset.bound = 'true';
+        saveProfileBtn.addEventListener('click', async function () {
+          const status = document.getElementById('profileSaveStatus');
+          saveProfileBtn.disabled = true;
+          if (status) status.textContent = 'Đang lưu...';
+          try {
+            if (!window.AXISData || !window.AXISData.saveProfile) {
+              throw new Error('Chưa sẵn sàng lưu hồ sơ.');
+            }
+            await window.AXISData.saveProfile();
+            if (window.AXISAuth && window.AXISAuth.showNotice) window.AXISAuth.showNotice('Đã lưu hồ sơ của bạn.');
+            if (status) status.textContent = '';
+          } catch (error) {
+            if (status) status.textContent = error.message || 'Không thể lưu thông tin hồ sơ.';
+          } finally {
+            saveProfileBtn.disabled = false;
+          }
+        });
+      }
+      if (awardRank) awardRank.addEventListener('change', updateAchievementFields);
+      updateAchievementFields();
+      renderExamSubjects();
+      updateAcademicGradeFields();
 
       function showPdfPreview(url) {
-        if (!url) return;
+        if (!url || !pdfPreview || !pdfEmptyState) return;
         currentPdfUrl = url;
         pdfPreview.src = url;
         pdfPreview.style.display = 'block';
@@ -438,49 +931,41 @@
             alert('Vui lòng chọn file PDF hợp lệ.');
             return;
           }
+          if (clearPdfBtn) clearPdfBtn.addEventListener('click', function () {
+            if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
+            currentPdfUrl = '';
+            if (pdfUpload) pdfUpload.value = '';
+            if (pdfPreview) {
+              pdfPreview.removeAttribute('src');
+              pdfPreview.style.display = 'none';
+            }
+            if (pdfEmptyState) pdfEmptyState.style.display = '';
+            if (window.AXISAuth && window.AXISAuth.showNotice) window.AXISAuth.showNotice('Đã xóa bản xem trước PDF.');
+          });
           if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
           showPdfPreview(URL.createObjectURL(file));
+          if (window.AXISAuth && window.AXISAuth.isSignedIn()) {
+            window.AXISAuth.uploadDocument(file, 'profile_pdf')
+              .then(function () {
+                if (window.AXISAuth.showNotice) {
+                  window.AXISAuth.showNotice('Đã lưu tài liệu vào tài khoản của bạn.');
+                }
+              })
+              .catch(function (error) { alert(error.message); });
+          } else {
+            alert('Vui lòng đăng nhập trước khi lưu tài liệu.');
+          }
         });
       }
 
       if (normalizeBtn) {
         normalizeBtn.addEventListener('click', function () {
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-          const pageWidth = doc.internal.pageSize.getWidth();
-
-          doc.setFillColor(245, 241, 255);
-          doc.rect(0, 0, pageWidth, 842, 'F');
-          doc.setTextColor(58, 43, 96);
-          doc.setFont('helvetica', 'bold');
-          doc.setFontSize(20);
-          doc.text('FuturePath — Hồ sơ năng lực đã chuẩn hóa', 40, 60);
-
-          doc.setFontSize(12);
-          doc.setFont('helvetica', 'normal');
-          doc.setTextColor(73, 67, 109);
-          const lines = [
-            'Tên: Nguyễn Minh Anh',
-            'Lớp: 10',
-            'Mục tiêu nghề nghiệp: Khám phá nhóm ngành Công nghệ, tập trung vào phát triển kỹ năng phân tích và giải quyết vấn đề.',
-            'Điểm mạnh: tư duy logic, sáng tạo, khả năng học tập nhanh, tinh thần ham học hỏi.',
-            'Kỹ năng: kỹ năng trình bày, tổ chức thời gian, làm việc nhóm và sử dụng công cụ công nghệ cơ bản.',
-            'Khuyến nghị: tiếp tục phát triển kỹ năng tiếng Anh, lập trình cơ bản và kỹ năng thuyết trình để tăng cơ hội phù hợp với các ngành như Khoa học dữ liệu, Kỹ thuật phần mềm, UI/UX.',
-            'Tóm tắt: Hồ sơ này đã được sắp xếp theo hướng chuyên nghiệp, rõ mục tiêu, dễ đọc và phù hợp với đánh giá nghề nghiệp trong tương lai.'
-          ];
-
-          let y = 100;
-          lines.forEach((line) => {
-            const wrapped = doc.splitTextToSize(line, pageWidth - 80);
-            doc.text(wrapped, 40, y);
-            y += wrapped.length * 18 + 10;
-            if (y > 760) {
-              doc.addPage();
-              y = 50;
-            }
-          });
-
-          normalizedPdfBlob = doc.output('blob');
+          normalizedPdfBlob = createPortfolioPdf();
+          if (!normalizedPdfBlob) {
+            alert('Trình tạo PDF chưa sẵn sàng. Bạn có thể dùng nút Xuất PDF để in thành PDF.');
+            printPortfolioFallback();
+            return;
+          }
           if (currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
           showPdfPreview(URL.createObjectURL(normalizedPdfBlob));
         });
@@ -488,9 +973,10 @@
 
       if (exportBtn) {
         exportBtn.addEventListener('click', function () {
-          const blobToDownload = normalizedPdfBlob || (pdfUpload && pdfUpload.files && pdfUpload.files[0] ? new Blob([pdfUpload.files[0]], { type: 'application/pdf' }) : null);
+          const blobToDownload = normalizedPdfBlob || createPortfolioPdf();
           if (!blobToDownload) {
-            alert('Bạn cần chọn hoặc tạo file PDF trước khi xuất.');
+            alert('Trình tạo PDF chưa sẵn sàng. Hộp thoại in sẽ giúp bạn lưu portfolio thành PDF.');
+            printPortfolioFallback();
             return;
           }
 
@@ -547,7 +1033,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về dự án','/pages/about.html'] ];
+    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 
@@ -593,5 +1079,3 @@
 </script>
 </body>
 </html>
-
-

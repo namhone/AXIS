@@ -1,13 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Phát triển bản thân — FuturePath</title>
-    <link rel="stylesheet" href="../css/global.css" />
+    <title>Phát triển bản thân — AXIS</title>
+    <link rel="stylesheet" href="../css/global.css?v=development-layout" />
+    <script src="../js/axis-brand.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
   </head>
-  <body>
+  <body class="development-page">
     <div class="page-shell">
       
 
@@ -22,17 +24,19 @@
                     <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
               </div>
             </a>
           </div>
 
           <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
             <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
             <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
             <a class="nav-item active" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
             <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+            <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
           </nav>
 
           <div class="header-auth">
@@ -75,14 +79,33 @@
             </div>
           </section>
 
+          <section class="content-panel skill-plan-panel">
+            <div class="section-heading-row">
+              <div>
+                <h2>02 · Bản đồ kỹ năng trước lớp 12</h2>
+                <p class="section-note">Không học dồn toàn bộ một lĩnh vực. Chọn thứ tự ưu tiên, học từng module nhỏ và kiểm tra đầu ra trước khi chuyển tiếp.</p>
+              </div>
+              <span class="plan-progress" id="skillPlanSummary">Đang tải...</span>
+            </div>
+            <div id="skillPlanList" class="skill-plan-list" aria-live="polite">
+              <div class="timeline-item"><em>Đang xây dựng bản đồ kỹ năng theo hồ sơ và ngành phù hợp nhất...</em></div>
+            </div>
+            <div class="grade12-callout" id="grade12Mode"></div>
+          </section>
+
           <section class="content-panel">
-            <h2>02 · Lộ trình</h2>
+            <h2 id="todayRoadmapHeading">03 · Nhiệm vụ ngày hôm nay</h2>
+            <div class="action-row">
+              <button class="primary-btn" id="generateRoadmapBtn" type="button">Tạo lộ trình bằng AI</button>
+              <span id="roadmapStatus" role="status" aria-live="polite"></span>
+            </div>
+            <p class="section-note">Mỗi ngày gồm kỹ năng ngành, bài tập có đầu ra và một hoạt động bổ trợ. Hãy đánh dấu sau khi hoàn thành đủ nhiệm vụ.</p>
             <div class="timeline roadmap-list">
               <div class="timeline-item roadmap-item" data-roadmap-id="python" data-default-state="done">
                 <div class="timeline-badge">01</div>
                 <div>
-                  <strong>Học Python cơ bản</strong>
-                  <p>Tuần 1–2 · 4 bài học</p>
+                  <strong>Ngày 1 · Python: biến và kiểu dữ liệu</strong>
+                  <p>Học 45 phút, làm 5 bài tập biến/kiểu dữ liệu và nộp 1 file bài làm.</p>
                 </div>
                 <span class="status">Đã học</span>
                 <div class="roadmap-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
@@ -90,8 +113,8 @@
               <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="project" data-default-state="pending">
                 <div class="timeline-badge">02</div>
                 <div>
-                  <strong>Thực hiện mini project</strong>
-                  <p>Tuần 3–4 · 1 dự án</p>
+                  <strong>Ngày 2 · Python: điều kiện và vòng lặp</strong>
+                  <p>Học 45 phút, giải 5 bài if/for/while và viết 1 chương trình tính điểm.</p>
                 </div>
                 <span class="status pending">Chưa học</span>
                 <div class="roadmap-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
@@ -99,8 +122,8 @@
               <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="english" data-default-state="pending">
                 <div class="timeline-badge">03</div>
                 <div>
-                  <strong>Cải thiện tiếng Anh chuyên ngành</strong>
-                  <p>Tuần 5–8 · 3 module</p>
+                  <strong>Ngày 3 · C++: cú pháp nền tảng</strong>
+                  <p>Học 40 phút, viết 3 chương trình nhập/xuất dữ liệu và đọc 10 thuật ngữ kỹ thuật.</p>
                 </div>
                 <span class="status pending">Chưa học</span>
                 <div class="roadmap-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
@@ -109,27 +132,27 @@
           </section>
 
           <section class="content-panel" id="developmentWorkspace">
-            <h2>03 · Kế hoạch &amp; Mục tiêu (Nhật ký hành động)</h2>
+            <h2>04 · Kế hoạch &amp; Mục tiêu (Nhật ký hành động)</h2>
             <div class="plan-progress" id="planProgress">Tiến độ kế hoạch: 0%</div>
 
-            <div class="controls-row" style="margin-bottom:12px;">
+            <div class="controls-row plan-input-row plan-primary-row">
               <input type="text" id="goalTitle" class="input-compact" placeholder="Mục tiêu / Nhiệm vụ (ví dụ: Hoàn thành bài tập Python)" />
               <input type="date" id="goalDate" class="input-compact input-compact--fixed" aria-label="Ngày thực hiện" />
               <input type="number" id="goalMinutes" class="input-compact input-compact--fixed" min="1" max="1440" placeholder="Phút mỗi ngày" aria-label="Số phút mỗi ngày" />
-            </div>
-
-            <div class="controls-row" style="margin-bottom:12px;">
-              <input type="text" id="goalNote" class="input-compact" placeholder="Ghi chú ngắn (ví dụ: xem kênh học, trang tập)" />
               <select id="goalCategory" class="input-compact input-compact--select">
                 <option value="general">Chung</option>
                 <option value="study">Học tập</option>
                 <option value="project">Dự án</option>
                 <option value="skill">Kỹ năng</option>
               </select>
-              <button class="primary-btn" id="addGoal">Thêm</button>
             </div>
 
-            <div class="controls-row" style="margin-bottom:12px; gap:12px;">
+            <div class="controls-row plan-note-row">
+              <input type="text" id="goalNote" class="input-compact" placeholder="Ghi chú ngắn (ví dụ: xem kênh học, trang tập)" />
+            </div>
+
+            <div class="controls-row plan-actions-row">
+              <button class="primary-btn" id="addGoal">Thêm</button>
               <button class="ghost-btn" id="savePlan">Lưu kế hoạch</button>
               <button class="ghost-btn" id="exportPlan">Xuất kế hoạch (PDF)</button>
               <button class="ghost-btn" id="clearPlan">Xóa toàn bộ (demo)</button>
@@ -139,7 +162,7 @@
               <!-- goals rendered here -->
             </div>
 
-            <p class="muted">Ghi chú: tính năng lưu là demo dùng localStorage. Để lưu thật cần backend.</p>
+            <p class="muted">Kế hoạch được lưu an toàn theo tài khoản của bạn.</p>
           </section>
         </main>
       </div>
@@ -149,8 +172,8 @@
       <div class="footer-container">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
-          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
           <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
         </div>
 
@@ -168,7 +191,7 @@
           </form>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+      <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
     </footer>
 
     <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
@@ -198,11 +221,8 @@
         const userChip = document.getElementById('userChip');
         const userMenu = document.getElementById('userMenu');
         const menuButtons = document.querySelectorAll('[data-menu-action]');
-        const authButtons = document.querySelectorAll('[data-auth-action]');
-        const AUTH_KEY = 'futurepath.signed_in';
 
         const setSignedIn = (opts) => {
-          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
           if (authArea) authArea.classList.add('hidden');
           if (userPanel) userPanel.classList.remove('hidden');
           if (userMenu) userMenu.classList.add('hidden');
@@ -210,18 +230,12 @@
         };
 
         const setSignedOut = (opts) => {
-          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
           if (authArea) authArea.classList.remove('hidden');
           if (userPanel) userPanel.classList.add('hidden');
           if (userMenu) userMenu.classList.add('hidden');
           if (userChip) userChip.setAttribute('aria-expanded', 'false');
         };
 
-        authButtons.forEach(function (button) {
-          button.addEventListener('click', function () { setSignedIn(); });
-        });
-
-        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
 
         if (userChip) {
           userChip.addEventListener('click', function () {
@@ -294,9 +308,8 @@
         });
       })();
 
-      // Development page JS: manage goals / plan
       (function(){
-        const goalsKey = 'futurepath.goals';
+        let goalsCache = [];
         const addBtn = document.getElementById('addGoal');
         const titleInput = document.getElementById('goalTitle');
         const dateInput = document.getElementById('goalDate');
@@ -308,13 +321,39 @@
         const exportBtn = document.getElementById('exportPlan');
         const clearBtn = document.getElementById('clearPlan');
         const progressEl = document.getElementById('planProgress');
-        const roadmapKey = 'futurepath.roadmap';
+        const generateRoadmapBtn = document.getElementById('generateRoadmapBtn');
+        const roadmapStatus = document.getElementById('roadmapStatus');
+        const skillPlanList = document.getElementById('skillPlanList');
+        const skillPlanSummary = document.getElementById('skillPlanSummary');
+        const grade12Mode = document.getElementById('grade12Mode');
+        let accountPlanReady = false;
 
-        function loadGoals() {
-          try { return JSON.parse(localStorage.getItem(goalsKey) || '[]'); } catch (e) { return []; }
-        }
+        function loadGoals() { return goalsCache; }
         function saveGoals(goals) {
-          try { localStorage.setItem(goalsKey, JSON.stringify(goals)); } catch (e) { console.error(e); }
+          if (accountPlanReady && window.AXISAuth && window.AXISAuth.isSignedIn()) {
+            const payload = goals.map(function (goal) {
+              return {
+                title: goal.title,
+                target_date: goal.date || null,
+                status: goal.done ? 'completed' : 'pending',
+                minutes_per_day: Number(goal.minutes) || null,
+                note: goal.note || '',
+                category: goal.category || 'general'
+              };
+            });
+            return window.AXISAuth.accountRequest('/goals', { method: 'PUT', body: JSON.stringify(payload) })
+              .then(function (saved) {
+                goalsCache = saved.map(function (goal) {
+                  return Object.assign({}, goal, {
+                    date: goal.target_date || '',
+                    minutes: goal.minutes_per_day || '',
+                    done: goal.status === 'completed'
+                  });
+                });
+                return saved;
+              });
+          }
+          return Promise.reject(new Error('Kế hoạch đang đồng bộ. Vui lòng đợi rồi thử lại.'));
         }
 
         function render() {
@@ -329,24 +368,25 @@
             const item = document.createElement('div');
             item.className = 'timeline-item';
             const date = g.date ? new Date(g.date + 'T00:00:00') : null;
-            const overdue = date && date < new Date(new Date().toDateString()) && !g.done;
+            const done = g.done || g.status === 'completed';
+            const overdue = date && date < new Date(new Date().toDateString()) && !done;
             if (overdue) item.classList.add('is-overdue');
             item.innerHTML = `
               <div class="timeline-badge">${String(idx+1).padStart(2,'0')}</div>
               <div>
                 <div class="goal-header">
                   <strong class="goal-title">${escapeHtml(g.title)}</strong>
-                  <small class="goal-when">${escapeHtml(g.date || g.when || '')}${g.minutes ? ' · ' + g.minutes + ' phút' : ''}</small>
+                  <small class="goal-when">${escapeHtml(g.date || g.target_date || g.when || '')}${g.minutes || g.minutes_per_day ? ' · ' + (g.minutes || g.minutes_per_day) + ' phút' : ''}</small>
                   <small class="goal-category">${escapeHtml(g.category || 'Chung')}</small>
                 </div>
                 <p class="goal-note">${escapeHtml(g.note || '')}</p>
               </div>
               <div class="timeline-actions">
-                <button class="ghost-btn toggle-complete" data-idx="${idx}">${g.done ? 'Hoàn thành' : 'Đánh dấu'}</button>
+                <button class="ghost-btn toggle-complete" data-idx="${idx}">${done ? 'Hoàn thành' : 'Đánh dấu'}</button>
                 <button class="ghost-btn delete-goal" data-idx="${idx}">Xóa</button>
               </div>
             `;
-            if (g.done) {
+            if (done) {
               const status = document.createElement('span'); status.className='status'; status.textContent='Đã học';
               item.appendChild(status);
             }
@@ -354,25 +394,123 @@
           });
           attachListHandlers();
           updatePlanProgress(goals);
-          // update progress fills after render
-          try { updateProgressFills(); } catch (e) { /* ignore if not available */ }
+          updateProgressFills();
         }
 
-        function roadmapState() {
-          try { return JSON.parse(localStorage.getItem(roadmapKey) || '{}'); } catch (e) { return {}; }
+        function roadmapState() { return window.__futurepathRoadmap || {}; }
+        function renderRoadmapSteps(steps) {
+          const list = document.querySelector('.roadmap-list');
+          if (!list || !steps.length) return;
+          const today = new Date().toISOString().slice(0, 10);
+          const visibleSteps = steps.filter(function (step) {
+            try { return JSON.parse(step.content).date === today; } catch (error) { return false; }
+          });
+          const displaySteps = visibleSteps.length ? visibleSteps : steps.slice(0, 1);
+          const todaySchedule = displaySteps[0] ? (function () {
+            try { return JSON.parse(displaySteps[0].content); } catch (error) { return null; }
+          })() : null;
+          const heading = document.getElementById('todayRoadmapHeading');
+          if (heading) {
+            const label = todaySchedule && todaySchedule.date
+              ? new Date(todaySchedule.date + 'T00:00:00').toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })
+              : new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+            heading.textContent = '03 · Nhiệm vụ ngày hôm nay — ' + label;
+          }
+          list.innerHTML = displaySteps.map(function (step, index) {
+            const id = 'step-' + (index + 1);
+            const completed = Boolean(step.is_completed);
+            let schedule = null;
+            try { schedule = JSON.parse(step.content); } catch (error) { schedule = null; }
+            const tasks = schedule && Array.isArray(schedule.tasks) ? schedule.tasks : [];
+            const displayTasks = [];
+            tasks.forEach(function (task, sourceIndex) {
+              const subtasks = Array.isArray(task.subtasks) && task.subtasks.length ? task.subtasks : [task.title];
+              subtasks.forEach(function (title) {
+                displayTasks.push({ task: task, sourceIndex: sourceIndex, title: title });
+              });
+            });
+            const taskMarkup = displayTasks.length
+              ? '<ul class="roadmap-task-list">' + displayTasks.map(function (entry) {
+                const task = entry.task;
+                return '<li class="' + (task.status === 'completed' ? 'is-completed' : '') + '"><strong>' + escapeHtml(entry.title) + '</strong><span>' +
+                  (task.minutes ? ' · ' + task.minutes + ' phút' : '') +
+                  ' <button type="button" class="ghost-btn roadmap-task-start" data-task-index="' + entry.sourceIndex + '">Bắt đầu</button>' +
+                  ' <button type="button" class="ghost-btn roadmap-task-done" data-task-index="' + entry.sourceIndex + '"' + (task.status === 'completed' ? ' disabled' : '') + '>' +
+                  (task.status === 'completed' ? 'Đã học' : 'Đánh dấu đã học') + '</button></span></li>';
+              }).join('') + '</ul>'
+              : '<p>' + escapeHtml(step.content) + '</p>';
+            return `
+              <div class="timeline-item roadmap-item${completed ? '' : ' roadmap-pending'}"
+                   data-roadmap-id="step-${step.step_number || index + 1}" data-content="${escapeHtml(step.content)}" data-task-count="${tasks.length}" data-default-state="${completed ? 'done' : 'pending'}">
+                <div class="timeline-badge">${String(index + 1).padStart(2, '0')}</div>
+                <div>
+                  <strong>${escapeHtml(step.title)}</strong>
+                  ${taskMarkup}
+                </div>
+                <span class="status${completed ? '' : ' pending'}">${completed ? 'Đã học' : 'Chưa học'}</span>
+                <div class="roadmap-actions">
+                  <button class="ghost-btn roadmap-start" type="button">Bắt đầu</button>
+                  <button class="ghost-btn roadmap-done" type="button">Đã học</button>
+                  ${tasks.length ? '<button class="ghost-btn roadmap-defer" type="button">Dời task</button>' : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+          window.__futurepathRoadmap = {};
+          displaySteps.forEach(function (step, index) {
+            window.__futurepathRoadmap['step-' + (step.step_number || index + 1)] = step.is_completed ? 'done' : 'pending';
+          });
+          initRoadmap();
+        }
+        async function generateRoadmap() {
+          if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
+          generateRoadmapBtn.disabled = true;
+          if (roadmapStatus) roadmapStatus.textContent = 'AI đang xây dựng lộ trình...';
+          try {
+            const steps = await window.AXISAuth.apiRequest('/ai/roadmap', { method: 'POST' });
+            renderRoadmapSteps(steps);
+            if (roadmapStatus) roadmapStatus.textContent = 'Đã tạo và lưu lộ trình mới.';
+          } catch (error) {
+            if (roadmapStatus) roadmapStatus.textContent = error.message || 'Không thể tạo lộ trình AI.';
+          } finally {
+            generateRoadmapBtn.disabled = false;
+          }
         }
         function saveRoadmap(state) {
-          try { localStorage.setItem(roadmapKey, JSON.stringify(state)); } catch (e) { console.error(e); }
+          window.__futurepathRoadmap = state;
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return Promise.resolve();
+          const payload = Array.from(document.querySelectorAll('.roadmap-item')).map(function (item, index) {
+            return {
+              step_number: index + 1,
+              title: item.querySelector('strong').textContent,
+              content: item.getAttribute('data-content') || item.querySelector('p').textContent,
+              is_completed: state[item.getAttribute('data-roadmap-id')] === 'done'
+            };
+          });
+          return window.AXISAuth.accountRequest('/roadmap', { method: 'PUT', body: JSON.stringify(payload) });
         }
-        function getPomodoroMinutes() {
+        function getPomodoroMinutes(item, taskMinutes) {
+          if (Number(taskMinutes) > 0) return Number(taskMinutes);
+          if (item) {
+            const content = item.getAttribute('data-content') || '';
+            try {
+              const schedule = JSON.parse(content);
+              const tasks = Array.isArray(schedule.tasks) ? schedule.tasks : [];
+              const firstTask = tasks.find(function (task) { return Number(task.minutes) > 0; });
+              if (firstTask) return Number(firstTask.minutes);
+            } catch (error) {
+              // Legacy roadmap content can still use plain text.
+            }
+          }
           const goals = loadGoals();
-          return goals.length && Number(goals[0].minutes) > 0 ? Number(goals[0].minutes) : 25;
+          return goals.length && Number(goals[0].minutes) > 0 ? Number(goals[0].minutes) : 45;
         }
-        function openPomodoro(stepTitle) {
+        function openPomodoro(stepTitle, item, taskMinutes) {
           const modal = document.createElement('div');
           modal.className = 'pomodoro-modal';
-          let remaining = getPomodoroMinutes() * 60;
-          modal.innerHTML = '<div class="settings-modal-backdrop"></div><div class="pomodoro-panel" role="dialog" aria-modal="true"><button class="settings-close pomodoro-close" type="button" aria-label="Đóng">×</button><span class="eyebrow">Pomodoro</span><h3>' + escapeHtml(stepTitle) + '</h3><strong class="pomodoro-time">00:00</strong><p>Thời lượng lấy từ kế hoạch hiện tại: ' + getPomodoroMinutes() + ' phút.</p><button class="primary-btn pomodoro-finish" type="button">Hoàn thành phiên học</button></div>';
+          const minutes = getPomodoroMinutes(item, taskMinutes);
+          let remaining = minutes * 60;
+          modal.innerHTML = '<div class="settings-modal-backdrop"></div><div class="pomodoro-panel" role="dialog" aria-modal="true"><button class="settings-close pomodoro-close" type="button" aria-label="Đóng">×</button><span class="eyebrow">Pomodoro</span><h3>' + escapeHtml(stepTitle) + '</h3><strong class="pomodoro-time">00:00</strong><p>Thời lượng task: ' + minutes + ' phút.</p><button class="primary-btn pomodoro-finish" type="button">Hoàn thành phiên học</button></div>';
           document.body.appendChild(modal);
           const timeEl = modal.querySelector('.pomodoro-time');
           function tick() {
@@ -384,7 +522,7 @@
           function close() { clearInterval(timer); modal.remove(); }
           modal.querySelector('.pomodoro-close').addEventListener('click', close);
           modal.querySelector('.settings-modal-backdrop').addEventListener('click', close);
-          modal.querySelector('.pomodoro-finish').addEventListener('click', function () { close(); alert('Đã ghi nhận phiên học. Hãy đánh dấu “Đã học” khi hoàn tất nhiệm vụ.'); });
+          modal.querySelector('.pomodoro-finish').addEventListener('click', function () { close(); alert('Đã ghi nhận phiên học. Hãy đánh dấu "Đã học" khi hoàn tất nhiệm vụ.'); });
         }
         function initRoadmap() {
           const state = roadmapState();
@@ -393,6 +531,37 @@
             const status = item.querySelector('.status');
             const startButton = item.querySelector('.roadmap-start');
             const doneButton = item.querySelector('.roadmap-done');
+            const deferButton = item.querySelector('.roadmap-defer');
+            item.querySelectorAll('.roadmap-task-done').forEach(function (button) {
+              button.addEventListener('click', async function () {
+                button.disabled = true;
+                try {
+                  await window.AXISAuth.accountRequest('/roadmap/tasks/state', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      day_number: Number(item.getAttribute('data-roadmap-id').replace('step-', '')),
+                      task_index: Number(button.getAttribute('data-task-index'))
+                    })
+                  });
+                  button.textContent = 'Đã học';
+                  button.closest('li').classList.add('is-completed');
+                } catch (error) {
+                  button.disabled = false;
+                  alert(error.message || 'Không thể cập nhật task.');
+                }
+              });
+            });
+            item.querySelectorAll('.roadmap-task-start').forEach(function (button) {
+              button.addEventListener('click', function () {
+                const taskIndex = Number(button.getAttribute('data-task-index'));
+                let task = null;
+                try {
+                  const schedule = JSON.parse(item.getAttribute('data-content') || '');
+                  task = Array.isArray(schedule.tasks) ? schedule.tasks[taskIndex] : null;
+                } catch (error) {}
+                if (task) openPomodoro(task.title, item, task.minutes);
+              });
+            });
             const currentState = function () { return state[id] || item.getAttribute('data-default-state') || 'pending'; };
             function updateStatus() {
               const value = currentState();
@@ -407,12 +576,31 @@
             updateStatus();
             startButton.addEventListener('click', function () {
               if (currentState() === 'done') return;
-              state[id] = 'active'; saveRoadmap(state); updateStatus(); updatePlanProgress(loadGoals());
-              openPomodoro(item.querySelector('strong').textContent);
+              state[id] = 'active'; updateStatus(); updatePlanProgress(loadGoals());
+              openPomodoro(item.querySelector('strong').textContent, item);
             });
             doneButton.addEventListener('click', function () {
               if (currentState() === 'done') return;
-              state[id] = 'done'; saveRoadmap(state); updateStatus(); updatePlanProgress(loadGoals());
+              state[id] = 'done'; updateStatus(); updatePlanProgress(loadGoals());
+            });
+            if (deferButton) deferButton.addEventListener('click', async function () {
+              const taskCount = Number(item.getAttribute('data-task-count') || 0);
+              const taskIndex = Number(window.prompt('Nhập số task cần dời (1-' + taskCount + '):')) - 1;
+              if (!Number.isInteger(taskIndex) || taskIndex < 0 || taskIndex >= taskCount) return;
+              deferButton.disabled = true;
+              try {
+                const updated = await window.AXISAuth.accountRequest('/roadmap/tasks/defer', {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    day_number: Number(item.getAttribute('data-roadmap-id').replace('step-', '')),
+                    task_index: taskIndex
+                  })
+                });
+                renderRoadmapSteps(updated);
+              } catch (error) {
+                alert(error.message || 'Không thể dời task.');
+                deferButton.disabled = false;
+              }
             });
           });
         }
@@ -454,19 +642,32 @@
           listEl.querySelectorAll('.toggle-complete').forEach(function(btn){
             btn.addEventListener('click', function(){
               const i = Number(btn.getAttribute('data-idx'));
-              const goals = loadGoals();
+              const previousGoals = loadGoals().map(function (goal) { return Object.assign({}, goal); });
+              const goals = previousGoals.map(function (goal) { return Object.assign({}, goal); });
               if (!goals[i]) return;
-              goals[i].done = !goals[i].done;
-              saveGoals(goals);
+              goals[i].done = !(goals[i].done || goals[i].status === 'completed');
+              goals[i].status = goals[i].done ? 'completed' : 'pending';
+              saveGoals(goals).catch(function (error) {
+                goalsCache = previousGoals;
+                render();
+                alert(error.message || 'Không thể lưu kế hoạch.');
+              });
+              goalsCache = goals;
               render();
             });
           });
           listEl.querySelectorAll('.delete-goal').forEach(function(btn){
             btn.addEventListener('click', function(){
               const i = Number(btn.getAttribute('data-idx'));
-              const goals = loadGoals();
+              const previousGoals = loadGoals().map(function (goal) { return Object.assign({}, goal); });
+              const goals = previousGoals.map(function (goal) { return Object.assign({}, goal); });
               goals.splice(i,1);
-              saveGoals(goals);
+              saveGoals(goals).catch(function (error) {
+                goalsCache = previousGoals;
+                render();
+                alert(error.message || 'Không thể lưu kế hoạch.');
+              });
+              goalsCache = goals;
               render();
             });
           });
@@ -474,8 +675,73 @@
 
         function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"]+/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
+        function renderSkillPlan(plan) {
+          if (!skillPlanList || !plan || !Array.isArray(plan.tracks)) return;
+          if (skillPlanSummary) {
+            skillPlanSummary.textContent = plan.weeks_until_grade_12 + ' tuần · ' + plan.daily_minutes + ' phút/ngày';
+          }
+          skillPlanList.innerHTML = plan.tracks.map(function (track, index) {
+            return `
+              <article class="skill-plan-row" data-skill-id="${escapeHtml(track.id)}">
+                <div class="skill-plan-order">${String(index + 1).padStart(2, '0')}</div>
+                <div class="skill-plan-copy">
+                  <div class="skill-plan-title"><strong>${escapeHtml(track.name)}</strong><span>${track.suggested_weeks} tuần · ${track.minutes_per_day} phút/ngày</span></div>
+                  <p>${escapeHtml(track.why)}</p>
+                  <div class="skill-module-list">${track.modules.map(function (module) { return '<span>' + escapeHtml(module) + '</span>'; }).join('')}</div>
+                  <small>Đầu ra: ${escapeHtml(track.evidence)}</small>
+                </div>
+                <div class="skill-plan-actions">
+                  <button class="ghost-btn skill-up" type="button" aria-label="Đưa kỹ năng lên trước" ${index === 0 ? 'disabled' : ''}>↑</button>
+                  <button class="ghost-btn skill-down" type="button" aria-label="Đưa kỹ năng xuống sau" ${index === plan.tracks.length - 1 ? 'disabled' : ''}>↓</button>
+                </div>
+              </article>
+            `;
+          }).join('');
+          if (grade12Mode) {
+            grade12Mode.innerHTML = '<strong>' + escapeHtml(plan.grade_12_mode.title) + '</strong><p>' + escapeHtml(plan.grade_12_mode.description) + '</p><small>' + plan.grade_12_mode.weekly_pattern.map(escapeHtml).join(' · ') + '</small>';
+          }
+          skillPlanList.querySelectorAll('.skill-up, .skill-down').forEach(function (button) {
+            button.addEventListener('click', function () {
+              const row = button.closest('.skill-plan-row');
+              const rows = Array.from(skillPlanList.querySelectorAll('.skill-plan-row'));
+              const from = rows.indexOf(row);
+              const to = button.classList.contains('skill-up') ? from - 1 : from + 1;
+              if (from < 0 || to < 0 || to >= rows.length) return;
+              const order = rows.map(function (item) { return item.dataset.skillId; });
+              [order[from], order[to]] = [order[to], order[from]];
+              saveSkillOrder(order);
+            });
+          });
+        }
+
+        async function saveSkillOrder(order) {
+          if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
+          try {
+            const plan = await window.AXISAuth.accountRequest('/skill-plan/order', {
+              method: 'PUT',
+              body: JSON.stringify({ skill_order: order })
+            });
+            renderSkillPlan(plan);
+          } catch (error) {
+            if (skillPlanSummary) skillPlanSummary.textContent = error.message || 'Không thể lưu thứ tự kỹ năng.';
+          }
+        }
+
+        async function loadSkillPlan() {
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
+            if (skillPlanSummary) skillPlanSummary.textContent = 'Đăng nhập để cá nhân hóa';
+            if (skillPlanList) skillPlanList.innerHTML = '<div class="timeline-item"><em>Hãy đăng nhập để hệ thống tính khoảng thời gian trước lớp 12 và lưu thứ tự kỹ năng của bạn.</em></div>';
+            return;
+          }
+          try {
+            const plan = await window.AXISAuth.accountRequest('/skill-plan');
+            renderSkillPlan(plan);
+          } catch (error) {
+            if (skillPlanSummary) skillPlanSummary.textContent = 'Chưa thể tải bản đồ kỹ năng';
+          }
+        }
+
         if (addBtn) {
-          // support Enter key on the title or note to add
           [titleInput, noteInput].forEach(function(inp){
             inp && inp.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); addBtn.click(); } });
           });
@@ -491,25 +757,36 @@
             const c = categoryInput.value || 'general';
             const goals = loadGoals();
             goals.push({ title: t, date: date, minutes: minutes, note: n, category: c, done: false, created: Date.now() });
-            saveGoals(goals);
+            saveGoals(goals).catch(function (error) {
+              alert(error.message || 'Không thể lưu kế hoạch.');
+            });
             titleInput.value = ''; dateInput.value = ''; minutesInput.value = ''; noteInput.value = ''; categoryInput.value = 'general';
             render();
           });
         }
 
         if (saveBtn) {
-          saveBtn.addEventListener('click', function(){
+          saveBtn.addEventListener('click', async function(){
             const goals = loadGoals();
             if (!goals.length) { alert('Không có mục tiêu nào để lưu.'); return; }
-            // already persisted; notify user
-            alert('Kế hoạch đã được lưu (localStorage, demo).');
+            saveBtn.disabled = true;
+            try {
+              await saveGoals(goals);
+              alert('Kế hoạch đã được lưu vào tài khoản.');
+            } catch (error) {
+              alert(error.message || 'Không thể lưu kế hoạch.');
+            } finally {
+              saveBtn.disabled = false;
+            }
           });
         }
 
         if (clearBtn) {
           clearBtn.addEventListener('click', function(){
-            if (!confirm('Xóa toàn bộ kế hoạch? (demo, sẽ xóa localStorage)')) return;
-            saveGoals([]); render();
+            if (!confirm('Xóa toàn bộ kế hoạch?')) return;
+            saveGoals([]).catch(function (error) {
+              alert(error.message || 'Không thể xóa kế hoạch.');
+            }); render();
           });
         }
 
@@ -520,7 +797,7 @@
             const { jsPDF } = window.jspdf || {};
             if (jsPDF) {
               const doc = new jsPDF({ unit:'pt', format:'a4' });
-              doc.setFontSize(16); doc.text('FuturePath — Kế hoạch phát triển cá nhân', 40, 60);
+              doc.setFontSize(16); doc.text('AXIS — Kế hoạch phát triển cá nhân', 40, 60);
               doc.setFontSize(11); doc.text('Thời gian: ' + new Date().toLocaleString(), 40, 84);
               let y = 110;
               goals.forEach(function(g, i){
@@ -539,9 +816,52 @@
           });
         }
 
-        // initial render
-        try { render(); } catch (e) { console.error(e); }
+        if (generateRoadmapBtn) {
+          generateRoadmapBtn.addEventListener('click', generateRoadmap);
+        }
+
+        async function loadAccountPlan() {
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
+            render();
+            initRoadmap();
+            return;
+          }
+          try {
+            goalsCache = (await window.AXISAuth.accountRequest('/goals')).map(function (goal) {
+              return Object.assign({}, goal, {
+                date: goal.target_date || '',
+                minutes: goal.minutes_per_day || '',
+                done: goal.status === 'completed'
+              });
+            });
+            const steps = await window.AXISAuth.accountRequest('/roadmap');
+            window.__futurepathRoadmap = {};
+            steps.forEach(function (step) {
+              window.__futurepathRoadmap['step-' + step.step_number] = step.is_completed ? 'done' : 'pending';
+            });
+            if (steps.length) renderRoadmapSteps(steps);
+            accountPlanReady = true;
+            render();
+          } catch (error) {
+            console.error('Không thể tải kế hoạch tài khoản.', error);
+            accountPlanReady = false;
+            render();
+          }
+        }
+
+        document.addEventListener('futurepath:auth-state', function (event) {
+          accountPlanReady = false;
+          if (event.detail.signedIn) {
+            loadAccountPlan();
+            loadSkillPlan();
+          } else {
+            goalsCache = [];
+            render();
+          }
+        });
+        loadAccountPlan();
         initRoadmap();
+        loadSkillPlan();
       })();
 
     </script>
@@ -586,7 +906,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về dự án','/pages/about.html'] ];
+    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 
@@ -632,3 +952,4 @@
 </script>
 </body>
 </html>
+

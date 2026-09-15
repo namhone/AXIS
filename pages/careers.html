@@ -1,11 +1,13 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Thư viện nghề nghiệp — FuturePath</title>
+    <title>Thư viện nghề nghiệp — AXIS</title>
     <link rel="stylesheet" href="../css/global.css" />
+    <script src="../js/axis-brand.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -22,17 +24,19 @@
                     <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
               </div>
             </a>
           </div>
 
           <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
             <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
             <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
             <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
             <a class="nav-item active" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+            <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
           </nav>
 
           <div class="header-auth">
@@ -51,95 +55,12 @@
           </section>
 
           <div class="filter-row">
-            <input type="text" placeholder="⌕ Tìm kiếm ngành nghề..." />
-            <button class="primary-btn" type="button">Khám phá</button>
+            <input id="careerSearch" type="search" placeholder="⌕ Tìm kiếm ngành nghề..." />
+            <button class="primary-btn" id="careerSearchBtn" type="button">Khám phá</button>
           </div>
 
-          <section class="career-grid">
-            <article class="career-card" data-skills="Python,Statistics,Machine Learning">
-              <div class="career-icon">⌘</div>
-              <h3>Khoa học dữ liệu</h3>
-              <p>Phân tích dữ liệu, mô hình hóa và hỗ trợ ra quyết định.</p>
-              <div class="skill-row">
-                <small class="skill-pill pill-indigo">Python</small>
-                <small class="skill-pill pill-light">ML</small>
-                <span class="career-score">86% phù hợp</span>
-              </div>
-              <div style="margin-top:12px;display:flex;gap:8px;">
-                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
-                <a href="career-detail.html?career=Khoa%20học%20dữ%20liệu" class="ghost-btn">Xem chi tiết</a>
-              </div>
-            </article>
-            <article class="career-card" data-skills="Algorithms,Data Structures,Collaboration">
-              <div class="career-icon">◫</div>
-              <h3>Kỹ thuật phần mềm</h3>
-              <p>Thiết kế, xây dựng và duy trì các sản phẩm phần mềm.</p>
-              <div class="skill-row">
-                <small class="skill-pill pill-amber">Algorithms</small>
-                <small class="skill-pill pill-indigo">Git</small>
-                <span class="career-score">82% phù hợp</span>
-              </div>
-              <div style="margin-top:12px;display:flex;gap:8px;">
-                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
-                <a href="career-detail.html?career=Kỹ%20thuật%20phần%20mềm" class="ghost-btn">Xem chi tiết</a>
-              </div>
-            </article>
-            <article class="career-card" data-skills="User Research,Wireframing,Prototyping">
-              <div class="career-icon">✦</div>
-              <h3>UI/UX Designer</h3>
-              <p>Nghiên cứu người dùng và thiết kế trải nghiệm số.</p>
-              <div class="skill-row">
-                <small class="skill-pill pill-teal">Research</small>
-                <small class="skill-pill pill-indigo">Figma</small>
-                <span class="career-score">74% phù hợp</span>
-              </div>
-              <div style="margin-top:12px;display:flex;gap:8px;">
-                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
-                <a href="career-detail.html?career=UI%2FUX%20Designer" class="ghost-btn">Xem chi tiết</a>
-              </div>
-            </article>
-            <article class="career-card" data-skills="Market Research,Branding,Copywriting">
-              <div class="career-icon">◎</div>
-              <h3>Marketing</h3>
-              <p>Nghiên cứu thị trường, thương hiệu và truyền thông.</p>
-              <div class="skill-row">
-                <small class="skill-pill pill-amber">Brand</small>
-                <small class="skill-pill pill-indigo">SEO</small>
-                <span class="career-score">69% phù hợp</span>
-              </div>
-              <div style="margin-top:12px;display:flex;gap:8px;">
-                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
-                <a href="career-detail.html?career=Marketing" class="ghost-btn">Xem chi tiết</a>
-              </div>
-            </article>
-            <article class="career-card" data-skills="Healthcare,Patient Care,Nutrition">
-              <div class="career-icon">⚗</div>
-              <h3>Y tế &amp; Dinh dưỡng</h3>
-              <p>Hỗ trợ chăm sóc sức khỏe và người bệnh trong thực tế.</p>
-              <div class="skill-row">
-                <small class="skill-pill pill-teal">Care</small>
-                <small class="skill-pill pill-indigo">Science</small>
-                <span class="career-score">66% phù hợp</span>
-              </div>
-              <div style="margin-top:12px;display:flex;gap:8px;">
-                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
-                <a href="career-detail.html?career=Y%20tế%20%26%20Dinh%20dưỡng" class="ghost-btn">Xem chi tiết</a>
-              </div>
-            </article>
-            <article class="career-card" data-skills="Pattern Making,Sewing,Trend Forecasting">
-              <div class="career-icon">✎</div>
-              <h3>Thiết kế thời trang</h3>
-              <p>Phát triển phong cách, cảm hứng và sản phẩm truyền thông.</p>
-              <div class="skill-row">
-                <small class="skill-pill pill-amber">Design</small>
-                <small class="skill-pill pill-indigo">Sketch</small>
-                <span class="career-score">71% phù hợp</span>
-              </div>
-              <div style="margin-top:12px;display:flex;gap:8px;">
-                <button class="ghost-btn add-to-plan">Thêm vào lộ trình</button>
-                <a href="career-detail.html?career=Thiết%20kế%20thời%20trang" class="ghost-btn">Xem chi tiết</a>
-              </div>
-            </article>
+          <section class="career-grid" id="careerCards" aria-live="polite">
+            <p class="form-help">Đang tải các nhóm ngành…</p>
           </section>
         </main>
       </div>
@@ -149,8 +70,8 @@
       <div class="footer-container">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
-          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
           <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
         </div>
 
@@ -168,7 +89,7 @@
           </form>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+      <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
     </footer>
 
     <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
@@ -198,11 +119,8 @@
         const userChip = document.getElementById('userChip');
         const userMenu = document.getElementById('userMenu');
         const menuButtons = document.querySelectorAll('[data-menu-action]');
-        const authButtons = document.querySelectorAll('[data-auth-action]');
-        const AUTH_KEY = 'futurepath.signed_in';
 
         const setSignedIn = (opts) => {
-          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
           if (authArea) authArea.classList.add('hidden');
           if (userPanel) userPanel.classList.remove('hidden');
           if (userMenu) userMenu.classList.add('hidden');
@@ -210,18 +128,12 @@
         };
 
         const setSignedOut = (opts) => {
-          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
           if (authArea) authArea.classList.remove('hidden');
           if (userPanel) userPanel.classList.add('hidden');
           if (userMenu) userMenu.classList.add('hidden');
           if (userChip) userChip.setAttribute('aria-expanded', 'false');
         };
 
-        authButtons.forEach(function (button) {
-          button.addEventListener('click', function () { setSignedIn(); });
-        });
-
-        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
 
         if (userChip) {
           userChip.addEventListener('click', function () {
@@ -294,29 +206,174 @@
         });
       })();
 
-      // Careers -> add-to-plan integration with development goals (localStorage)
       (function(){
-        const careerCards = document.querySelectorAll('.career-card');
-        const goalsKey = 'futurepath.goals';
-        function loadGoals(){ try { return JSON.parse(localStorage.getItem(goalsKey)||'[]'); } catch(e){ return []; } }
-        function saveGoals(g){ try{ localStorage.setItem(goalsKey, JSON.stringify(g)); }catch(e){ console.error(e);} }
+        const catalog = document.getElementById('careerCatalog');
+        const careerCardsRoot = document.getElementById('careerCards');
+        const careerSearch = document.getElementById('careerSearch');
+        const careerSearchBtn = document.getElementById('careerSearchBtn');
+        let catalogItems = [];
+        const descriptions = {
+          N01: ['Phát triển hệ thống số, phần mềm và hạ tầng công nghệ cho doanh nghiệp.', 'Người học thường bắt đầu từ lập trình, cơ sở dữ liệu và tư duy giải quyết vấn đề; sau đó có thể đi theo web, mobile, cloud, an toàn thông tin hoặc dữ liệu.'],
+          N02: ['Tổ chức nguồn lực, vận hành doanh nghiệp và xây dựng chiến lược tăng trưởng.', 'Ngành kết hợp kinh tế, con người và dữ liệu để trả lời doanh nghiệp nên làm gì, làm với ai và đo hiệu quả ra sao.'],
+          N03: ['Chăm sóc sức khỏe, nghiên cứu y sinh và phát triển giải pháp điều trị.', 'Sinh học là nền tảng ưu tiên để hiểu cơ thể và bệnh học; Hóa học hỗ trợ thuốc, xét nghiệm và quy trình chuyên môn.'],
+          N04: ['Sử dụng ngôn ngữ, văn hóa và giao tiếp đa ngữ trong giáo dục và kinh doanh.', 'Cơ hội mở rộng từ biên phiên dịch, giáo dục, nội dung số đến quan hệ đối ngoại và làm việc trong môi trường quốc tế.'],
+          N05: ['Biến ý tưởng thị giác thành sản phẩm nghệ thuật, thương hiệu và trải nghiệm.', 'Ngoài năng khiếu thẩm mỹ, người học cần luyện quan sát, kể chuyện bằng hình ảnh và xây dựng portfolio qua dự án thực tế.'],
+          N06: ['Thiết kế, vận hành và tự động hóa máy móc, dây chuyền và hệ thống kỹ thuật.', 'Đây là nhóm ngành giao giữa Toán, Vật lí và công nghệ; sản phẩm đầu ra có thể là robot, thiết bị, dây chuyền hoặc hệ thống điều khiển.'],
+          N07: ['Quy hoạch không gian, thiết kế công trình và quản lý quá trình thi công.', 'Công việc đòi hỏi tư duy không gian, kỹ thuật, khả năng phối hợp nhiều bên và trách nhiệm với chất lượng, an toàn công trình.'],
+          N08: ['Phân tích quy định, bảo vệ quyền lợi và giữ gìn an ninh, trật tự xã hội.', 'Người học rèn đọc hiểu văn bản, lập luận, đạo đức nghề nghiệp và khả năng xử lý tình huống theo quy định.'],
+          N09: ['Thiết kế hoạt động học tập, hỗ trợ người học và phát triển cộng đồng giáo dục.', 'Không chỉ là truyền đạt kiến thức, ngành còn cần tâm lý học, thiết kế bài học, đánh giá tiến bộ và giao tiếp với gia đình.'],
+          N10: ['Tạo ra trải nghiệm dịch vụ, lưu trú, ẩm thực và du lịch đáng nhớ.', 'Môi trường làm việc năng động, coi trọng ngoại ngữ, kỹ năng phục vụ, vận hành và khả năng xử lý tình huống với khách hàng.'],
+          N11: ['Nghiên cứu công chúng, kể chuyện thương hiệu và truyền tải thông tin hiệu quả.', 'Người học kết hợp viết, hình ảnh, dữ liệu và nền tảng số để tạo nội dung có mục tiêu và đo được phản hồi.'],
+          N12: ['Phân tích dòng tiền, rủi ro và các quyết định tài chính của cá nhân, tổ chức.', 'Nền tảng Toán, kinh tế và sự cẩn trọng giúp người học đọc báo cáo, xây mô hình và hỗ trợ quyết định đầu tư hoặc quản trị.'],
+          N13: ['Giải quyết bài toán môi trường, tài nguyên và phát triển bền vững.', 'Ngành theo dõi chất lượng môi trường, đánh giá tác động và thiết kế giải pháp giảm phát thải, tiết kiệm tài nguyên.'],
+          N14: ['Nghiên cứu tế bào, thuốc, sinh phẩm và quy trình công nghệ sinh học.', 'Phù hợp với học sinh yêu thích phòng thí nghiệm, Sinh học và nghiên cứu; đầu ra gắn với dược, y sinh, thực phẩm và sản xuất.'],
+          N15: ['Nghiên cứu vật chất, phản ứng và vật liệu phục vụ sản xuất công nghiệp.', 'Hóa học được kết hợp với Vật lí, kỹ thuật và kiểm nghiệm để tạo ra vật liệu an toàn, bền hơn hoặc có tính năng mới.'],
+          N16: ['Ứng dụng khoa học vào nông nghiệp, lâm nghiệp và nuôi trồng thủy sản.', 'Công nghệ cảm biến, sinh học và dữ liệu đang giúp nhóm ngành nâng năng suất, thích ứng khí hậu và bảo vệ hệ sinh thái.'],
+          N17: ['Nghiên cứu con người, xã hội, lịch sử và các chuyển biến văn hóa.', 'Người học phát triển năng lực đọc, phỏng vấn, phân tích tư liệu và nhìn nhận vấn đề xã hội từ nhiều góc độ.'],
+          N18: ['Kết nối các quốc gia, tổ chức và cộng đồng trong môi trường đa văn hóa.', 'Ngoại ngữ, kiến thức khu vực, đàm phán và khả năng viết giúp người học làm việc trong đối ngoại, hợp tác và tổ chức quốc tế.'],
+          N19: ['Tối ưu dòng hàng hóa, kho vận và mạng lưới cung ứng.', 'Ngành dùng dữ liệu, quy trình và kỹ năng phối hợp để giảm thời gian, chi phí và rủi ro từ nhà cung cấp đến khách hàng.'],
+          N20: ['Vận hành, điều phối và bảo đảm an toàn trong lĩnh vực hàng không, hàng hải.', 'Đề cao kỷ luật, ngoại ngữ, kỹ thuật, sức khỏe và khả năng xử lý tình huống trong môi trường có tiêu chuẩn an toàn cao.'],
+          N21: ['Mô hình hóa, suy luận định lượng và khai thác dữ liệu để giải quyết vấn đề.', 'Toán, xác suất, lập trình và tư duy phản biện là nền tảng để xây mô hình, phân tích dữ liệu và truyền đạt kết quả.'],
+          N22: ['Khám phá các quy luật vật lý, không gian và công nghệ đo lường.', 'Người học có thể đi từ nghiên cứu cơ bản đến mô phỏng, thiết bị đo, năng lượng, viễn thông hoặc các ứng dụng không gian.'],
+          N23: ['Phát triển thành tích thể thao, sức khỏe thể chất và hoạt động thi đấu.', 'Bên cạnh luyện tập, ngành còn có hướng huấn luyện, quản lý sự kiện, khoa học thể thao và truyền thông thể thao.'],
+          N24: ['Thiết kế chính sách, quản trị công và các chương trình hỗ trợ xã hội.', 'Người học quan tâm tới cộng đồng, pháp luật, dữ liệu xã hội và cách biến nhu cầu thực tế thành chương trình có tác động.']
+        };
+        const icons = ['◈', '◎', '⚗', '文', '✦', '⌘', '⌂', '§', '∿', '✈', '◌', '₫'];
+        function escapeHtml(value) {
+          return String(value || '').replace(/[&<>"']/g, function (character) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character];
+          });
+        }
+        function renderCareerCards(items) {
+          if (!careerCardsRoot) return;
+          const coverImages = {
+            N01: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85',
+            N02: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85',
+            N03: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=85',
+            N04: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=85',
+            N05: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85',
+            N06: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=85',
+            N07: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=85',
+            N08: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=85',
+            N09: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85',
+            N10: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+            N11: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85',
+            N12: 'https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1200&q=85',
+            N13: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=85',
+            N14: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=85',
+            N15: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=85',
+            N16: 'https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=1200&q=85',
+            N17: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85',
+            N18: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=85',
+            N19: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=85',
+            N20: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85',
+            N21: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=85',
+            N22: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=85',
+            N23: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=85',
+            N24: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85'
+          };
+          careerCardsRoot.innerHTML = items.map(function (item, index) {
+            const skills = (item.subjects || []).concat(item.riasec || []).slice(0, 3);
+            const priority = item.code === 'N03' ? ' career-card--priority' : '';
+            const coverImage = coverImages[item.code];
+            const cover = coverImage ? '<div class="career-card-cover" style="background-image:url(' + coverImage + ')"><span>' + escapeHtml(item.code) + '</span></div>' : '';
+            return '<article class="career-card' + priority + '" data-career-code="' + escapeHtml(item.code) + '" data-skills="' + escapeHtml(skills.join(',')) + '">' +
+              cover +
+              '<div class="career-icon">' + icons[index % icons.length] + '</div>' +
+              '<span class="eyebrow">' + escapeHtml(item.code) + '</span>' +
+              '<h3>' + escapeHtml(item.name) + '</h3>' +
+              '<p>' + escapeHtml((descriptions[item.code] || ['Khám phá kiến thức, kỹ năng và cơ hội phát triển trong nhóm ngành này.', 'Tìm hiểu chương trình đào tạo, thử một dự án nhỏ và đối chiếu với hồ sơ năng lực của bạn.'])[0]) + '</p>' +
+              '<p class="career-card-detail">' + escapeHtml((descriptions[item.code] || ['', 'Tìm hiểu chương trình đào tạo, thử một dự án nhỏ và đối chiếu với hồ sơ năng lực của bạn.'])[1]) + '</p>' +
+              '<div class="skill-row">' + skills.map(function (skill, skillIndex) { return '<small class="skill-pill ' + (skillIndex === 1 ? 'pill-indigo' : 'pill-teal') + '">' + escapeHtml(skill) + '</small>'; }).join('') +
+              '<span class="career-score">AXIS catalog</span></div>' +
+              '<div class="career-card-actions"><button class="ghost-btn add-to-plan" type="button">Thêm vào lộ trình</button><a href="career-detail.html?career=' + encodeURIComponent(item.name) + '" class="ghost-btn">Xem chi tiết</a></div></article>';
+          }).join('');
+          bindCareerCards();
+        }
+        function bindCareerCards() {
+          careerCardsRoot.querySelectorAll('.career-card').forEach(function (card) {
+            const btn = card.querySelector('.add-to-plan');
+            if (btn) btn.addEventListener('click', function () {
+              addCareerToPlan(card.querySelector('h3').textContent.trim(), card.getAttribute('data-skills') || '');
+            });
+          });
+        }
+        let goalsCache = [];
+        function loadGoals(){ return goalsCache; }
+        function saveGoals(g){
+          if (window.AXISAuth && window.AXISAuth.isSignedIn()) {
+            const payload = g.map(function (goal) {
+              return {
+                title: goal.title,
+                target_date: goal.date || null,
+                status: goal.done ? 'completed' : 'pending',
+                minutes_per_day: Number(goal.minutes) || null,
+                note: goal.note || '',
+                category: goal.category || 'career'
+              };
+            });
+            return window.AXISAuth.accountRequest('/goals', { method: 'PUT', body: JSON.stringify(payload) })
+              .then(function (saved) {
+                goalsCache = saved.map(function (goal) {
+                  return Object.assign({}, goal, {
+                    date: goal.target_date || '',
+                    minutes: goal.minutes_per_day || '',
+                    done: goal.status === 'completed'
+                  });
+                });
+                return saved;
+              });
+          }
+          return Promise.reject(new Error('Vui lòng đăng nhập để lưu kế hoạch.'));
+        }
 
-        function addCareerToPlan(title, skills){
+        async function addCareerToPlan(title, skills){
           const goals = loadGoals();
           const goalTitle = `Tìm hiểu nghề: ${title}`;
           const note = skills ? `Kỹ năng gợi ý: ${skills}` : '';
           goals.push({ title: goalTitle, when: '', note: note, category: 'career', done: false, created: Date.now() });
-          saveGoals(goals);
-          alert('Đã thêm vào lộ trình của bạn — vào trang Phát triển bản thân để xem và chỉnh sửa.');
+          try {
+            await saveGoals(goals);
+            alert('Đã thêm vào lộ trình của bạn — vào trang Phát triển bản thân để xem và chỉnh sửa.');
+          } catch (error) {
+            alert(error.message || 'Không thể lưu kế hoạch.');
+          }
         }
 
-        careerCards.forEach(function(c){
-          const btn = c.querySelector('.add-to-plan');
-          if (!btn) return;
-          btn.addEventListener('click', function(){
-            const title = c.querySelector('h3') ? c.querySelector('h3').textContent.trim() : 'Ngành nghề';
-            const skills = c.getAttribute('data-skills') || '';
-            addCareerToPlan(title, skills);
+        fetch('/api/v1/axis/benchmarks').then(function (response) { return response.ok ? response.json() : []; }).then(function (items) {
+          if (!Array.isArray(items) || !items.length) throw new Error('empty catalog');
+          catalogItems = items;
+          if (catalog) catalog.innerHTML = items.map(function (item) {
+            return '<a class="career-catalog-item" href="career-detail.html?career=' + encodeURIComponent(item.name) + '"><strong>' + escapeHtml(item.code) + '</strong><span>' + escapeHtml(item.name) + '</span></a>';
+          }).join('');
+          renderCareerCards(items);
+        }).catch(function () {
+          if (catalog) catalog.innerHTML = '<span class="form-help">Danh mục tạm thời chưa khả dụng.</span>';
+          if (careerCardsRoot) careerCardsRoot.innerHTML = '<p class="form-help">Không thể tải danh mục ngành lúc này.</p>';
+        });
+        function filterCards() {
+          const query = String(careerSearch && careerSearch.value || '').trim().toLowerCase();
+          renderCareerCards(catalogItems.filter(function (item) {
+            return !query || (item.code + ' ' + item.name).toLowerCase().indexOf(query) !== -1;
+          }));
+        }
+        if (careerSearch) careerSearch.addEventListener('input', filterCards);
+        if (careerSearchBtn) careerSearchBtn.addEventListener('click', filterCards);
+        document.addEventListener('futurepath:auth-state', function (event) {
+          if (!event.detail.signedIn) {
+            goalsCache = [];
+            return;
+          }
+          window.AXISAuth.accountRequest('/goals').then(function (goals) {
+            goalsCache = goals.map(function (goal) {
+              return Object.assign({}, goal, {
+                date: goal.target_date || '',
+                minutes: goal.minutes_per_day || '',
+                done: goal.status === 'completed'
+              });
+            });
+          }).catch(function (error) {
+            alert(error.message || 'Không thể tải kế hoạch tài khoản.');
           });
         });
       })();
@@ -362,7 +419,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về dự án','/pages/about.html'] ];
+    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 
@@ -408,5 +465,4 @@
 </script>
 </body>
 </html>
-
 

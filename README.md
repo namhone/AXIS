@@ -1,10 +1,11 @@
-# FuturePath
+# AXIS — Academic & X-Career Intelligent System
 
-FuturePath là giao diện web hỗ trợ học sinh khám phá nghề nghiệp, tự đánh giá năng lực và lập lộ trình phát triển cá nhân. Phiên bản hiện tại là **frontend prototype**, phù hợp để trình bày UX, kiểm thử luồng người dùng và chuẩn bị tích hợp backend/AI.
+AXIS là nền tảng hỗ trợ học sinh THPT ra quyết định định hướng nghề nghiệp bằng dữ liệu định lượng. Hệ thống kết hợp hồ sơ năng lực, 5 biến S1–S5, Holland RIASEC và bộ tính toán Hybrid AHP-SAW-ROC.
 
 ## Chức năng hiện có
 
-- Trang chủ giới thiệu FuturePath, tiến độ hồ sơ và các công cụ chính.
+- Trang chủ giới thiệu AXIS, tiến độ hồ sơ và các công cụ chính.
+- Bảng điều khiển `/dashboard` với slider realtime, xếp hạng ngành và Gap Analysis.
 - Hồ sơ cá nhân:
   - Họ tên, năm sinh, lớp, email, số điện thoại, LinkedIn.
   - Mục tiêu và phần giới thiệu bản thân.
@@ -42,7 +43,7 @@ FuturePath là giao diện web hỗ trợ học sinh khám phá nghề nghiệp,
 ## Cấu trúc dự án
 
 ```text
-FuturePath/
+AXIS/
 ├── index.html                 # Trang chủ
 ├── css/
 │   └── global.css             # Theme, layout, responsive và animation
@@ -50,18 +51,37 @@ FuturePath/
 │   └── app.js                 # Dữ liệu dùng chung và đồng bộ hồ sơ
 ├── pages/
 │   ├── profile.html           # Hồ sơ cá nhân
+│   ├── cv-builder-editor.html # CV Builder độc lập, preview A4
 │   ├── assessment.html        # Đánh giá năng lực
 │   ├── development.html       # Mục tiêu và lộ trình phát triển
 │   ├── careers.html           # Thư viện nghề nghiệp
 │   ├── career-detail.html     # Chi tiết một nghề
 │   └── about.html             # Giới thiệu dự án
 ├── assets/                    # Ảnh minh họa và biểu đồ
+├── schemas/
+│   └── cv-builder.schema.json # JSON Schema dữ liệu CV trung gian
 ├── data/
 │   └── submissions.json       # Dữ liệu form runtime (không commit)
+├── backend/                   # FastAPI foundation, database and auth API
 ├── server.py                  # Flask server demo cho form liên hệ
 └── scripts/
     └── import_submissions.ps1 # Script hỗ trợ import dữ liệu
 ```
+
+### CV Builder Editor
+
+Mở `http://127.0.0.1:5000/cv-builder/editor` (hoặc
+`pages/cv-builder-editor.html` trên static server) để dùng editor CV A4 thuần
+HTML/CSS/JS. Nút **AI chuẩn hóa hồ sơ → CV Builder** trên trang hồ sơ chạy
+pipeline mô phỏng bốn agent ở frontend: trích xuất dữ liệu, cấu trúc trường,
+tối ưu nội dung và kiểm tra chất lượng. Editor đọc `window.AXISData`,
+bao gồm `certificateRecords`, có bốn template (modern, professional, simple,
+creative), cho phép sửa trực tiếp mọi đoạn chữ (trừ creative static-yellow
+badge), đổi màu theo biến CSS scoped và in bằng hộp thoại browser để lưu PDF.
+
+`schemas/cv-builder.schema.json` mô tả document trung gian chuẩn hóa. Bản nháp
+được lưu trong `localStorage` với khóa `futurepath_cv_draft`; dữ liệu profile
+vẫn được lưu theo cơ chế hiện có của AXIS.
 
 Các file `.bak` là bản sao lưu trong quá trình thiết kế. Có thể giữ lại để tham khảo hoặc loại khỏi repository trước khi phát hành chính thức.
 File `.gitignore` đã loại cache Python, file môi trường và dữ liệu form runtime khỏi lần commit đầu tiên.
@@ -73,7 +93,7 @@ File `.gitignore` đã loại cache Python, file môi trường và dữ liệu 
 Yêu cầu Python 3:
 
 ```powershell
-cd D:\FileCuaNam\KhoaHocKiThuat\FuturePath
+cd D:\FileCuaNam\KhoaHocKiThuat\AXIS
 python server.py
 ```
 
@@ -93,7 +113,7 @@ http://127.0.0.1:5000/
 Nếu chỉ cần xem frontend và không cần endpoint form liên hệ:
 
 ```powershell
-cd D:\FileCuaNam\KhoaHocKiThuat\FuturePath
+cd D:\FileCuaNam\KhoaHocKiThuat\AXIS
 python -m http.server 8000
 ```
 
@@ -101,34 +121,42 @@ Mở `http://127.0.0.1:8000/`.
 
 Không nên mở trực tiếp bằng `file://` khi kiểm thử các luồng cần server, vì trình duyệt có thể giới hạn request và module tài nguyên.
 
+### Backend API và AXIS engine
+
+Backend FastAPI nằm trong `backend/`, dùng PostgreSQL qua SQLAlchemy và
+Alembic. Xem `backend/README.md` để cài dependency, cấu hình `.env`, chạy
+migration và khởi động API. Các endpoint xác thực là
+`/api/v1/auth/register`, `/api/v1/auth/login`, `/api/v1/auth/logout` và
+`/api/v1/auth/me`; token được giữ trong HttpOnly cookie.
+Dashboard AXIS dùng `pages/dashboard.html`. Bộ tính toán Hybrid AHP-SAW-ROC
+nằm trong `backend/app/services/calculation_engine.py`; migration hiện tại là
+`0009_create_axis_tables`.
+
 ## Dữ liệu frontend
 
-Prototype hiện dùng `localStorage`, không có cơ sở dữ liệu và không đồng bộ giữa các thiết bị.
+Các dữ liệu tài khoản hiện được đồng bộ qua FastAPI và SQLite/PostgreSQL.
 
-| Key | Nội dung |
+| API | Ná»™i dung |
 |---|---|
-| `futurepath.profile` | Thông tin hồ sơ cá nhân |
-| `futurepath.profile_completion` | Phần trăm hoàn thiện hồ sơ dùng chung |
-| `futurepath.goals` | Mục tiêu, ngày học, số phút và trạng thái hoàn thành |
-| `futurepath.roadmap` | Trạng thái các bước lộ trình |
-| `futurepath.last_assessment` | Kết quả đánh giá gần nhất |
-| `futurepath.saved_recommendations` | Nghề nghiệp được đề xuất |
-| `futurepath.signed_in` | Trạng thái đăng nhập demo trên thiết bị |
+| `/api/v1/profile` | Thông tin hồ sơ cá nhân |
+| `/api/v1/goals` | Mục tiêu và trạng thái hoàn thành |
+| `/api/v1/roadmap` | Trạng thái các bước lộ trình |
+| `/api/v1/assessments` | Kết quả đánh giá và gợi ý nghề nghiệp |
 
-API dữ liệu dùng chung nằm trong `js/app.js` qua `window.FuturePathData`. Khi chuyển backend, đây là điểm nên thay bằng service gọi API thay vì sửa logic từng trang.
+API dữ liệu dùng chung nằm trong `js/app.js` qua `window.AXISData`. Khi chuyển backend, đây là điểm nên thay bằng service gọi API thay vì sửa logic từng trang.
 
 ## Đưa lên GitHub
 
 1. Tạo repository mới trên GitHub.
-2. Đặt toàn bộ thư mục `FuturePath` làm thư mục gốc repository.
+2. Đặt toàn bộ thư mục `AXIS` làm thư mục gốc repository.
 3. Kiểm tra không đưa dữ liệu cá nhân, API key hoặc thông tin đăng nhập vào repository.
 4. Commit và push:
 
 ```powershell
-cd D:\FileCuaNam\KhoaHocKiThuat\FuturePath
+cd D:\FileCuaNam\KhoaHocKiThuat\AXIS
 git init
 git add .
-git commit -m "Initial FuturePath frontend"
+git commit -m "Initial AXIS frontend"
 git branch -M main
 git remote add origin https://github.com/<username>/<repository>.git
 git push -u origin main
@@ -145,23 +173,23 @@ Frontend có thể chạy trên GitHub Pages vì các trang là HTML/CSS/JavaScr
 
 `server.py` không chạy trên GitHub Pages. Nếu cần lưu form, đăng nhập, hồ sơ hoặc kết quả đánh giá thì phải triển khai Flask/API ở một dịch vụ backend riêng.
 
-## Lưu ý trước khi làm backend
+## Trạng thái hiện tại và giới hạn
 
-- Đăng nhập và đăng ký hiện chỉ là UI demo; chưa có mật khẩu, session hoặc OAuth thật.
+- Đăng nhập, đăng ký và profile persistence đã chạy qua FastAPI với HttpOnly cookie.
 - Nút Google cần được nối với OAuth ở backend, không đặt secret ở frontend.
-- Hồ sơ, mục tiêu, roadmap và đánh giá cần chuyển từ `localStorage` sang API có xác thực người dùng.
+- Hồ sơ, mục tiêu, roadmap và đánh giá đã dùng API có xác thực người dùng.
 - Pomodoro hiện là timer frontend; chưa ghi nhận thời gian học thực tế và chưa tạo phiên học trong database.
 - Hoàn thành roadmap hiện cộng tiến độ giao diện; backend nên lưu lịch sử hoàn thành và phiên Pomodoro để tính chính xác.
-- Dữ liệu nghề nghiệp hiện là dữ liệu mẫu hard-coded. Bản production nên có nguồn tham khảo, ngày cập nhật và metadata nghề.
-- Đánh giá nghề nghiệp hiện là logic prototype; AI thật nên được gọi qua backend/AI gateway.
+- Catalog 24 ngành hiện dùng chung cho career matching và AXIS dashboard; production vẫn cần nguồn tham khảo, ngày cập nhật và metadata nghề.
+- AI roadmap được gọi qua backend/AI gateway; cần bổ sung rate limit và theo dõi chi phí trước production.
 - `server.py` là server thử nghiệm, chưa có xác thực, giới hạn request, database hoặc cấu hình production.
 - CORS trong server demo đang cho phép mọi origin; cần giới hạn domain khi triển khai thật.
 - Cần bổ sung kiểm tra MIME, kích thước và lưu trữ an toàn nếu hỗ trợ upload PDF production.
 
 ## Hướng phát triển đề xuất
 
-1. Thiết kế database cho `users`, `profiles`, `goals`, `roadmap_steps`, `pomodoro_sessions` và `assessments`.
-2. Xây dựng API xác thực và thay toàn bộ thao tác localStorage bằng API service.
+1. Bổ sung `pomodoro_sessions` và lịch sử hoàn thành chi tiết.
+2. Bổ sung test tự động cho các API dữ liệu tài khoản.
 3. Tích hợp Google OAuth ở backend.
 4. Xử lý PDF ở server, chuẩn hóa dữ liệu hồ sơ và kiểm tra file an toàn.
 5. Tích hợp AI gateway cho đánh giá năng lực và đề xuất nghề.
@@ -172,15 +200,18 @@ Frontend có thể chạy trên GitHub Pages vì các trang là HTML/CSS/JavaScr
 
 Giao diện tuân theo hướng minimalist/editorial: nền sáng, đường viền mảnh, màu nhấn pastel tiết chế, khoảng trắng rộng, typography có tương phản và không dùng hình nền SVG phức tạp cho các sơ đồ dễ lỗi. Các ảnh trong `assets/` được dùng thay cho những minh họa SVG không ổn định.
 
-## Xác nhận hoàn tất frontend
+## Xác nhận trạng thái hệ thống
 
-Trạng thái: **Frontend prototype đã sẵn sàng để chuyển sang thiết kế backend.**
+Trạng thái: **Frontend và backend local đã tích hợp; production hardening vẫn còn cần thực hiện.**
 
-Kiểm tra lần cuối ngày **03/09/2026**:
+Kiểm tra cập nhật ngày **13/09/2026**:
 
-- [x] 7 trang chính đều tải được qua static server.
-- [x] Không phát hiện lỗi JavaScript runtime khi mở các trang.
-- [x] `js/app.js` và `server.py` vượt qua kiểm tra cú pháp.
+- [x] AXIS dashboard realtime và trang giới thiệu AXIS.
+- [x] Catalog 24 ngành dùng chung qua API.
+- [x] Migration head `0009_create_axis_tables`.
+- [x] Python và JavaScript syntax checks.
+- [ ] Automated API test suite.
+- [ ] Server-side portfolio PDF renderer.
 - [x] Các đường dẫn tương đối tới trang và tài nguyên chính được kiểm tra.
 - [x] Header, footer và navigation dùng chung trên toàn bộ trang.
 - [x] Desktop có menu ngang; mobile có menu đầu trang và nút đăng nhập/đăng ký.
@@ -232,7 +263,7 @@ Không có `package.json`, framework frontend hoặc bộ test tự động tron
 
 ## Bàn giao cho backend
 
-Frontend đang coi `window.FuturePathData` trong `js/app.js` là lớp dữ liệu dùng chung. Backend có thể giữ nguyên các selector và luồng UI, sau đó thay phần lưu cục bộ bằng API service.
+Frontend đang coi `window.AXISData` trong `js/app.js` là lớp dữ liệu dùng chung. Backend có thể giữ nguyên các selector và luồng UI, sau đó thay phần lưu cục bộ bằng API service.
 
 ### Hợp đồng dữ liệu nên giữ
 
@@ -253,4 +284,31 @@ Frontend đang coi `window.FuturePathData` trong `js/app.js` là lớp dữ li�
 - Giới hạn CORS theo domain triển khai, không dùng `*` ở production.
 - Upload PDF cần kiểm tra MIME, kích thước, tên file và lưu trữ ngoài thư mục public.
 - AI nên chạy qua AI gateway/backend để bảo vệ API key, kiểm soát chi phí và lưu phiên bản prompt/model.
-- Khi API đã ổn định, giữ fallback localStorage chỉ cho offline/demo hoặc loại bỏ có chủ ý.
+- Không dùng localStorage cho dữ liệu tài khoản; mọi dữ liệu cần đồng bộ phải đi qua API.
+
+## Tích hợp Auth frontend với FastAPI
+
+Các trang HTML đã dùng chung [js/auth.js](./js/auth.js). Module này:
+
+- Gọi `POST /api/v1/auth/register` và `POST /api/v1/auth/login`.
+- Gửi `credentials: 'include'` cho register, login, logout và `/me`.
+- Đọc trạng thái phiên bằng `GET /api/v1/auth/me` khi tải mọi trang.
+- Không đọc JWT từ JavaScript; token chỉ nằm trong HttpOnly cookie.
+- Cập nhật cụm Auth trên header và menu mobile.
+- Khi đã đăng nhập, header chỉ hiển thị avatar chữ cái; click avatar mở email,
+  `Chỉnh sửa hồ sơ`, `Cài đặt thông tin` và `Đăng xuất`.
+- Ảnh đại diện được upload qua API có xác thực và lưu cùng bản ghi user trong database;
+  avatar được tải lại trên các trang khi tài khoản đăng nhập.
+- Hồ sơ, kết quả đánh giá, mục tiêu/lộ trình phát triển, gợi ý nghề nghiệp và
+  tài liệu PDF đều thuộc về tài khoản hiện tại. Backend lưu các nhóm dữ liệu
+  qua các API profile/goals/roadmap/assessments và tài liệu qua
+  `/api/v1/account/documents`;
+  không nhận `user_id` từ frontend nên tài khoản khác không thể truy cập chéo.
+- Hiển thị thông báo thành công/lỗi cho email trùng, sai mật khẩu hoặc API không khả dụng.
+- Gọi `POST /api/v1/auth/logout` rồi reload trang.
+
+Khi chạy local, backend FastAPI dùng port `8000`, nên chạy frontend ở port khác,
+ví dụ `http://localhost:5500` hoặc `http://localhost:8080`, rồi thêm origin đó
+vào `CORS_ORIGINS` trong `backend/.env`. Không mở HTML bằng `file://` khi kiểm
+thá»­ cookie/CORS.
+

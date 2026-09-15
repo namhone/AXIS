@@ -1,4 +1,4 @@
-# FuturePath — Frontend Summary
+# AXIS — Frontend Summary
 
 - Project root
   - index.html
@@ -11,7 +11,7 @@
     - career-detail.html
     - about.html
   - backups: *.html.bak, *.html.corrupt.bak
-  - export: FuturePath-export.zip
+  - export: AXIS-export.zip
 
 - Header layout (new)
   - header.topbar (sticky white)
@@ -36,7 +36,8 @@
 
 - Backups & exports
   - Original backup copies: *.html.bak (pre-meta), *.html.corrupt.bak (pre-mojibake-fix)
-  - Export ZIP: D:\FileCuaNam\KhoaHocKiThuat\FuturePath-export.zip
+  - Export ZIP: D:\FileCuaNam\KhoaHocKiThuat\AXIS-export.zip
 
 ---
 Generated as a concise reference for UI/design QA and handoff.
+

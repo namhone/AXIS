@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hướng dẫn sử dụng — AXIS</title>
+    <link rel="stylesheet" href="../css/global.css?v=guide-final">
+    <script src="../js/axis-brand.js"></script>
+    <script src="../js/auth.js"></script>
+    <style>
+      .guide-hero { padding: 48px 8px 28px; max-width: 760px; }
+      .guide-hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin: 12px 0 20px; color: var(--purple-deep); }
+      .guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 24px 0 72px; }
+      /* Bento card */
+      .guide-step { border: 1px solid var(--line); border-radius: 12px; padding: 18px; background: var(--panel); box-shadow: 0 12px 30px var(--shadow); display: flex; flex-direction: column; gap: 8px; }
+      /* Premium serif for step headings (matches project editorial style) */
+      .guide-step h2 { letter-spacing: -0.02em; line-height: 1.2; color: var(--text); font-weight: 700; font-size: 1.65rem; margin: 8px 0 8px; }
+      .guide-step p { color: var(--text-soft); line-height: 1.6; margin: 0; }
+      .guide-tag { display: inline-block; padding: 7px 12px; border-radius: 999px; background: var(--purple-soft); color: var(--purple); font-size: .78rem; font-weight: 700; }
+      .guide-step:nth-child(2) .guide-tag { background: #E8F5EF; color: #35745B; }
+      .guide-step:nth-child(3) .guide-tag { background: #FFF1DC; color: #9B6528; }
+      .guide-step:nth-child(4) .guide-tag { background: #F3EAFB; color: #73508F; }
+      /* Use fluid images; remove hard heights so cards size to content */
+      .guide-image { width: 100%; object-fit: cover; border-radius: 10px; margin: 12px 0 4px; display: block; height: auto; }
+      .guide-credit { display: block; color: var(--text-soft); font-size: .72rem; margin-top: 8px; }
+      @media (max-width: 700px) { .guide-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="workspace">
+        <header class="topbar">
+          <div class="header-brand">
+            <a class="brand-link" href="../index.html">
+              <div class="brand">
+                <div class="brand-mark" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg"><rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" /><path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
+              </div>
+            </a>
+          </div>
+          <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
+            <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
+            <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
+            <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
+            <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+            <a class="nav-item nav-item--guide active" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
+          </nav>
+          <div class="header-auth">
+            <div class="auth-area" id="authArea">
+              <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">Đăng nhập</button>
+              <button class="auth-btn primary-btn" type="button" data-auth-action="signup">Đăng ký</button>
+            </div>
+          </div>
+        </header>
+
+        <main>
+          <section class="guide-hero">
+            <span class="eyebrow">Hướng dẫn sử dụng</span>
+            <h1>Bắt đầu thật rõ ràng.</h1>
+            <p class="lead">Bốn bước ngắn để biến dữ liệu cá nhân thành một hướng đi học tập phù hợp cho kỳ thi KHKT và hành trình sau THPT.</p>
+            <div class="action-row">
+              <a class="primary-btn" href="dashboard.html">Mở Dashboard</a>
+              <a class="ghost-btn" href="profile.html">Cập nhật hồ sơ</a>
+            </div>
+          </section>
+          <section class="guide-grid" aria-label="Các bước sử dụng AXIS">
+            <article class="guide-step">
+              <span class="guide-tag">Bước 1</span>
+              <h2>Khởi tạo hồ sơ năng lực</h2>
+              <p>Điền thông tin học tập, chứng chỉ, thành tích, hoạt động và dự án. Bấm "Lưu thông tin hồ sơ" để dữ liệu được đồng bộ riêng theo tài khoản.</p>
+              <img class="guide-image" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Học sinh cùng học tập">
+              <small class="guide-credit">Ảnh minh họa: Unsplash</small>
+              <a class="ghost-btn" href="profile.html">Mở hồ sơ →</a>
+            </article>
+            <article class="guide-step">
+              <span class="guide-tag">Bước 2</span>
+              <h2>Khám phá thư viện nghề nghiệp</h2>
+              <p>Đọc các nhóm ngành, xem mô tả năng lực cần thiết và thêm hướng đi phù hợp vào kế hoạch cá nhân.</p>
+              <img class="guide-image" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Bàn làm việc và kế hoạch học tập">
+              <small class="guide-credit">Ảnh minh họa: Unsplash</small>
+              <a class="ghost-btn" href="careers.html">Khám phá ngành →</a>
+            </article>
+            <article class="guide-step">
+              <span class="guide-tag">Bước 3</span>
+              <h2>Lập mục tiêu &amp; gọi trợ lý AI</h2>
+              <p>Thêm mục tiêu học tập, sau đó dùng AI để sinh lộ trình 3–5 bước cá nhân hóa. Lộ trình và trạng thái hoàn thành sẽ được lưu theo tài khoản.</p>
+              <img class="guide-image" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Lập kế hoạch học tập trên máy tính">
+              <small class="guide-credit">Ảnh minh họa: Unsplash</small>
+              <a class="ghost-btn" href="development.html">Mở lộ trình →</a>
+            </article>
+            <article class="guide-step">
+              <span class="guide-tag">Bước 4</span>
+              <h2>Luyện tập &amp; phát triển bản thân</h2>
+              <p>Thực hiện các bước trong lộ trình, theo dõi tiến độ và cập nhật hồ sơ khi có thêm kỹ năng, thành tích hoặc dự án mới.</p>
+              <img class="guide-image" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Học sinh cùng luyện tập và phát triển kỹ năng">
+              <small class="guide-credit">Ảnh minh họa: Unsplash</small>
+              <a class="ghost-btn" href="development.html">Theo dõi tiến độ →</a>
+            </article>
+          </section>
+        </main>
+      </div>
+      <footer class="site-footer">
+        <div class="footer-container">
+          <div class="footer-contact">
+            <h4>Liên hệ</h4>
+            <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+            <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
+            <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+          </div>
+          <div class="footer-form">
+            <h4>Nhận thông tin &amp; tư vấn</h4>
+            <form action="#" onsubmit="event.preventDefault(); alert('Cảm ơn! Chúng tôi sẽ liên hệ sớm.');">
+              <div class="field-row"><input type="email" placeholder="Email của bạn" required><input type="tel" placeholder="Số điện thoại (tùy chọn)"></div>
+              <div class="field-row"><button type="submit" class="primary-btn">Gửi</button><button type="reset" class="ghost-btn">Xóa</button></div>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
+      </footer>
+    </div>
+  </body>
+  <script>
+    (function () {
+      const header = document.querySelector('.topbar');
+      if (!header || document.querySelector('.mobile-menu-button')) return;
+      const nav = header.querySelector('.header-nav');
+      const auth = header.querySelector('.header-auth');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'mobile-menu-button';
+      button.setAttribute('aria-label', 'Mở menu');
+      button.setAttribute('aria-expanded', 'false');
+      button.textContent = '☰';
+      header.insertBefore(button, auth);
+      const overlay = document.createElement('div');
+      overlay.className = 'mobile-nav-overlay hidden';
+      const mobileNav = document.createElement('nav');
+      mobileNav.className = 'mobile-nav';
+      nav.querySelectorAll('.nav-item').forEach(function (item) {
+        const clone = item.cloneNode(true);
+        clone.addEventListener('click', close);
+        mobileNav.appendChild(clone);
+      });
+      if (auth) {
+        const mobileAuth = auth.querySelector('.auth-area').cloneNode(true);
+        mobileAuth.classList.add('mobile-auth');
+        mobileAuth.querySelectorAll('[data-auth-action]').forEach(function (item) {
+          item.addEventListener('click', function () {
+            const original = auth.querySelector('[data-auth-action="' + item.dataset.authAction + '"]');
+            if (original) original.click();
+            close();
+          });
+        });
+        mobileNav.appendChild(mobileAuth);
+      }
+      overlay.appendChild(mobileNav);
+      document.body.appendChild(overlay);
+      function close() {
+        overlay.classList.add('hidden');
+        document.body.classList.remove('mobile-nav-open');
+        button.setAttribute('aria-expanded', 'false');
+      }
+      button.addEventListener('click', function () {
+        const open = overlay.classList.toggle('hidden');
+        document.body.classList.toggle('mobile-nav-open', !open);
+        button.setAttribute('aria-expanded', String(!open));
+      });
+    }());
+  </script>
+</html>
+

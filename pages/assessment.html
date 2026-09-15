@@ -1,11 +1,13 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Đánh giá &amp; Gợi ý — FuturePath</title>
-    <link rel="stylesheet" href="../css/global.css" />
+    <title>Đánh giá &amp; Gợi ý — AXIS</title>
+    <link rel="stylesheet" href="../css/global.css?v=top10-card-hover" />
+    <script src="../js/axis-brand.js"></script>
     <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
   </head>
   <body>
     <div class="page-shell">
@@ -22,17 +24,19 @@
                     <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                 </div>
-                <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+                <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
               </div>
             </a>
           </div>
 
           <nav class="header-nav" role="navigation" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
             <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
             <a class="nav-item active" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
             <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
             <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+            <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+            <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
           </nav>
 
           <div class="header-auth">
@@ -91,25 +95,31 @@
 
           <section class="content-panel">
             <h2>Ngành nghề đề xuất</h2>
-            <div class="career-grid">
-              <article class="career-card">
+            <div class="career-grid" id="topCareerGrid">
+              <a class="career-card" data-career-card href="career-detail.html">
                 <div class="career-icon">⌘</div>
-                <h3>Khoa học dữ liệu</h3>
-                <p>Phù hợp với tư duy logic, khả năng phân tích và xử lý thông tin.</p>
-                <span class="score-pill">86% phù hợp</span>
-              </article>
-              <article class="career-card">
+                <h3>Chưa có kết quả</h3>
+                <p>Chạy đánh giá để xem nhóm ngành phù hợp.</p>
+                <span class="score-pill">—</span>
+              </a>
+              <a class="career-card" data-career-card href="career-detail.html">
                 <div class="career-icon">◫</div>
-                <h3>Kỹ thuật phần mềm</h3>
-                <p>Nền tảng tốt về logic, công nghệ và giải quyết bài toán.</p>
-                <span class="score-pill">82% phù hợp</span>
-              </article>
-              <article class="career-card">
+                <h3>Chưa có kết quả</h3>
+                <p>Chạy đánh giá để xem nhóm ngành phù hợp.</p>
+                <span class="score-pill">—</span>
+              </a>
+              <a class="career-card" data-career-card href="career-detail.html">
                 <div class="career-icon">✦</div>
-                <h3>Thiết kế UI/UX</h3>
-                <p>Sáng tạo tốt, cần nâng cấp thêm kỹ năng giao tiếp và thuyết trình.</p>
-                <span class="score-pill">74% phù hợp</span>
-              </article>
+                <h3>Chưa có kết quả</h3>
+                <p>Chạy đánh giá để xem nhóm ngành phù hợp.</p>
+                <span class="score-pill">—</span>
+              </a>
+            </div>
+            <div class="assessment-results" id="assessmentResults" hidden>
+              <h3>7 ngành tiếp theo trong Top 10</h3>
+              <div class="remaining-career-list" id="fullRankingList"></div>
+              <h3>Khuyến nghị bổ khuyết</h3>
+              <ul id="assessmentAdvice"></ul>
             </div>
           </section>
         </main>
@@ -120,8 +130,8 @@
       <div class="footer-container">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
-          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
           <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
         </div>
 
@@ -139,7 +149,7 @@
           </form>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+      <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -159,13 +169,13 @@
             if (userMenu) userMenu.classList.add('hidden');
             if (userChip) userChip.setAttribute('aria-expanded','false');
           });
-        });
 
         headerNav.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
             const item = e.target.closest('.nav-item');
             if (item) { item.click(); e.preventDefault(); }
           }
+        });
         });
       })();;
 
@@ -179,146 +189,131 @@
         });
       })();
 
-      // Assessment logic: quick client-side demo to produce scores, update UI and export
+      // Assessment uses the account profile and the server-side 24-industry matching engine.
       (function(){
         const runBtn = document.getElementById('runAssessment');
         const saveBtn = document.getElementById('saveSuggestions');
         const exportBtn = document.getElementById('exportReport');
         const skillChart = document.getElementById('skillChart');
-        const AUTH_KEY = 'futurepath.signed_in';
 
-        const careers = [
-          { id:'data', name:'Khoa học dữ liệu', reason:'Tư duy logic, khả năng phân tích', score:86 },
-          { id:'sw', name:'Kỹ thuật phần mềm', reason:'Logic & công nghệ', score:82 },
-          { id:'ux', name:'Thiết kế UI/UX', reason:'Sáng tạo, cần giao tiếp', score:74 }
-        ];
+        let latestResult = null;
 
-        function seedRandom(seed) {
-          // simple seeded RNG
-          let s = 0;
-          for (let i=0;i<seed.length;i++) s = (s<<5) - s + seed.charCodeAt(i);
-          return function () { s = Math.imul(48271, s) | 0; return (s >>> 0) / 4294967295; };
-        }
-
-        function computeScores() {
-          // get a seed from stored profile name if any
-          let seed = '';
-          try { seed = localStorage.getItem('futurepath.profile_name') || ''; } catch (e) {}
-          const rand = seed ? seedRandom(seed) : Math.random;
-
-          const scores = {
-            logic: Math.round(60 + rand()*40),
-            communication: Math.round(40 + rand()*50),
-            creativity: Math.round(50 + rand()*40),
-            english: Math.round(30 + rand()*60),
-            presentation: Math.round(30 + rand()*55)
-          };
-          return scores;
-        }
-
-        function updateStats(scores) {
-          // update progress card
-          const progressSpan = document.querySelector('.stats-grid .stat-card .score-pill');
-          if (progressSpan) {
-            window.FuturePathData.syncProfileCompletion();
-          }
-
-          // strengths/weaknesses
-          const strengths = [];
-          const weaknesses = [];
-          Object.keys(scores).forEach(k=>{
-            if (scores[k] >= 70) strengths.push(k);
-            if (scores[k] <= 55) weaknesses.push(k);
+        function escapeHtml(value) {
+          return String(value).replace(/[&<>"']/g, function (character) {
+            return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[character];
           });
-          const mapName = {logic:'Tư duy logic', communication:'Giao tiếp', creativity:'Sáng tạo', english:'Tiếng Anh', presentation:'Thuyết trình'};
+        }
+
+        function updateStats(result) {
+          const items = result.results || [];
           const strengthsCard = document.querySelectorAll('.stats-grid .stat-card')[1];
           const weakCard = document.querySelectorAll('.stats-grid .stat-card')[2];
-          if (strengthsCard) strengthsCard.innerHTML = '<h3>Điểm mạnh</h3>' + strengths.map(s=>'<p>• '+mapName[s]+'</p>').join('');
-          if (weakCard) weakCard.innerHTML = '<h3>Điểm cần cải thiện</h3>' + weaknesses.map(s=>'<p>• '+mapName[s]+'</p>').join('');
-
-          // update career scores
-          const careerEls = document.querySelectorAll('.career-grid .career-card');
-          careerEls.forEach(function (el, idx) {
-            const pill = el.querySelector('.score-pill');
-            const base = careers[idx] ? careers[idx].score : 60;
-            // simple influence: logic & english & creativity
-            const influence = Math.round((scores.logic * 0.45 + scores.english * 0.25 + scores.creativity * 0.15 + scores.communication * 0.15));
-            const score = Math.max(0, Math.min(100, Math.round(base * 0.55 + influence * 0.45)));
-            if (pill) pill.textContent = score + '% phù hợp';
+          const top = items[0];
+          const scores = top ? top.scores : {};
+          const strengths = Object.keys(scores).filter(function (key) { return scores[key] >= 7; });
+          const weaknesses = Object.keys(scores).filter(function (key) { return scores[key] < 5; });
+          const labels = {S1:'Học thuật', S2:'Ngoại ngữ', S3:'Thành tích', S4:'RIASEC', S5:'Ngoại khóa'};
+          if (strengthsCard) strengthsCard.innerHTML = '<h3>Điểm mạnh</h3>' + (strengths.length ? strengths.map(function (key) { return '<p>• ' + labels[key] + '</p>'; }).join('') : '<p>• Cần thêm dữ liệu để kết luận</p>');
+          if (weakCard) weakCard.innerHTML = '<h3>Điểm cần cải thiện</h3>' + (weaknesses.length ? weaknesses.map(function (key) { return '<p>• ' + labels[key] + '</p>'; }).join('') : '<p>• Hồ sơ đang khá cân bằng</p>');
+          const careerEls = document.querySelectorAll('[data-career-card]');
+          (result.top5 || []).slice(0, 3).forEach(function (career, index) {
+            const el = careerEls[index];
+            if (!el) return;
+            el.querySelector('h3').textContent = career.name;
+            el.querySelector('p').textContent = 'Nổi bật ở ' + labels[career.highlight] + ' (' + career.scores[career.highlight] + '/10).';
+            el.querySelector('.score-pill').textContent = career.score + '% phù hợp';
+            el.href = 'career-detail.html?career=' + encodeURIComponent(career.name);
           });
         }
 
-        function drawChart(scores) {
+        function renderResults(result) {
+          const labels = {S1:'Học thuật', S2:'Ngoại ngữ', S3:'Thành tích', S4:'RIASEC', S5:'Ngoại khóa'};
+          const container = document.getElementById('assessmentResults');
+          document.getElementById('fullRankingList').innerHTML = result.results.slice(3, 10).map(function (item) {
+            return '<a class="remaining-career-item" href="career-detail.html?career=' + encodeURIComponent(item.name) + '"><span><strong>' + item.rank + '.</strong> ' + escapeHtml(item.code + ' — ' + item.name) + '</span><strong>' + item.score + '%</strong></a>';
+          }).join('');
+          document.getElementById('assessmentAdvice').innerHTML = [
+            result.top3.some(function (item) { return item.scores.S2 < 6; }) ? 'Bổ sung chứng chỉ ngoại ngữ hoặc nâng điểm hiện có.' : 'Tiếp tục duy trì và nâng chuẩn chứng chỉ ngoại ngữ.',
+            result.top3.some(function (item) { return item.scores.S1 < 6; }) ? 'Cập nhật điểm các môn cốt lõi để hệ thống đánh giá chính xác hơn.' : 'Duy trì điểm môn cốt lõi của nhóm ngành mục tiêu.',
+            result.top3.some(function (item) { return item.scores.S3 < 5 || item.scores.S5 < 5; }) ? 'Bổ sung thành tích, dự án hoặc hoạt động có vai trò rõ ràng.' : 'Tiếp tục ghi nhận thành tích và tác động của hoạt động.'
+          ].map(function (advice) { return '<li>' + advice + '</li>'; }).join('');
+          container.hidden = false;
+        }
+
+        function drawChart(result) {
           if (!skillChart) return;
           const ctx = skillChart.getContext('2d');
-          const w = skillChart.width; const h = skillChart.height;
-          ctx.clearRect(0,0,w,h);
-          const labels = ['Logic','Giao tiếp','Sáng tạo','Tiếng Anh','Thuyết trình'];
-          const vals = [scores.logic, scores.communication, scores.creativity, scores.english, scores.presentation];
-          const max = 100;
-          const barW = Math.floor(w / (vals.length*1.6));
-          vals.forEach(function (v,i) {
-            const x = 20 + i*(barW+30);
-            const barH = Math.round((v/max) * (h-60));
-            ctx.fillStyle = '#7b5cff';
-            ctx.fillRect(x, h-40-barH, barW, barH);
-            ctx.fillStyle = '#3a2b60';
-            ctx.font = '12px sans-serif';
-            ctx.fillText(labels[i], x, h-18);
-            ctx.fillText(v+'', x, h-46-barH);
+          const values = result.top3[0] ? Object.values(result.top3[0].scores) : [];
+          const labels = ['S1','S2','S3','S4','S5'];
+          ctx.clearRect(0, 0, skillChart.width, skillChart.height);
+          values.forEach(function (value, index) {
+            const x = 24 + index * 112;
+            const barHeight = value * 17;
+            ctx.fillStyle = '#0b3d66';
+            ctx.fillRect(x, 190 - barHeight, 64, barHeight);
+            ctx.fillStyle = '#0b1220';
+            ctx.font = '12px Inter, sans-serif';
+            ctx.fillText(labels[index] + ' ' + value, x, 215);
           });
         }
 
-        function runAssessment() {
-          const scores = computeScores();
-          updateStats(scores);
-          drawChart(scores);
-          // persist small summary
-          try { localStorage.setItem('futurepath.last_assessment', JSON.stringify({scores: scores, timestamp: Date.now()})); } catch (e) {}
-          return scores;
+        async function runAssessment() {
+          if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
+          try {
+            runBtn.disabled = true;
+            runBtn.textContent = 'Đang tính...';
+            latestResult = await window.AXISAuth.apiRequest('/assessments/run', { method: 'POST' });
+            updateStats(latestResult);
+            renderResults(latestResult);
+            drawChart(latestResult);
+            return latestResult;
+          } catch (error) {
+            alert(error.message || 'Không thể chạy đánh giá.');
+          } finally {
+            runBtn.disabled = false;
+            runBtn.textContent = 'Chạy đánh giá lại';
+          }
         }
 
         if (runBtn) runBtn.addEventListener('click', function () { runAssessment(); });
 
         if (saveBtn) saveBtn.addEventListener('click', function () {
-          // save suggested top careers into profile area in localStorage
-          const assRaw = localStorage.getItem('futurepath.last_assessment');
-          if (!assRaw) { alert('Chưa có kết quả đánh giá. Vui lòng chạy đánh giá trước.'); return; }
-          const ass = JSON.parse(assRaw);
-          // naive top 3 from career grid
-          const saved = { saved_at: Date.now(), recommendations: [ {id:'data', name:'Khoa học dữ liệu'}, {id:'sw', name:'Kỹ thuật phần mềm' }, {id:'ux', name:'Thiết kế UI/UX'} ] };
-          try { localStorage.setItem('futurepath.saved_recommendations', JSON.stringify(saved)); alert('Gợi ý đã được lưu vào hồ sơ (demo).'); } catch (e) { alert('Lưu thất bại.'); }
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) { alert('Vui lòng đăng nhập để lưu gợi ý.'); return; }
+          if (!latestResult) { alert('Hãy chạy đánh giá trước khi lưu gợi ý.'); return; }
+          alert('Kết quả đánh giá đã được lưu tự động vào tài khoản.');
         });
 
         if (exportBtn) exportBtn.addEventListener('click', function () {
-          const last = localStorage.getItem('futurepath.last_assessment');
-          const data = last ? JSON.parse(last) : {scores:{}, timestamp:Date.now()};
+          if (!latestResult) { alert('Hãy chạy đánh giá trước khi xuất báo cáo.'); return; }
+          const data = {result: latestResult, timestamp:Date.now()};
           const { jsPDF } = window.jspdf || {};
           if (jsPDF) {
             const doc = new jsPDF({ unit: 'pt', format: 'a4' });
             doc.setFontSize(18);
-            doc.text('FuturePath — Báo cáo đánh giá nhanh', 40, 60);
+            doc.text('AXIS — Báo cáo đánh giá nhanh', 40, 60);
             doc.setFontSize(12);
             doc.text('Thời gian: ' + new Date(data.timestamp).toLocaleString(), 40, 90);
-            doc.text('Điểm kỹ năng:', 40, 120);
+            doc.text('Top 10 nhóm ngành phù hợp:', 40, 120);
             let y = 140;
-            for (const k in data.scores) {
-              doc.text('- ' + k + ': ' + data.scores[k], 60, y);
+            latestResult.results.slice(0, 10).forEach(function (item) {
+              doc.text('- ' + item.code + ' ' + item.name + ': ' + item.score + '%', 60, y);
               y += 18;
-            }
+            });
             doc.save('futurepath-assessment.pdf');
           } else {
             // fallback: download JSON
-            const blob = new Blob([last || '{}'], { type: 'application/json' });
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = 'futurepath-assessment.json';
             document.body.appendChild(a); a.click(); a.remove();
+            URL.revokeObjectURL(a.href);
           }
         });
 
-        // run once on load to show something
-        try { runAssessment(); } catch (e) {}
+        document.addEventListener('futurepath:auth-state', function (event) {
+          if (event.detail.signedIn) runAssessment();
+        });
       })();
     </script>
     <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
@@ -348,11 +343,8 @@
         const userChip = document.getElementById('userChip');
         const userMenu = document.getElementById('userMenu');
         const menuButtons = document.querySelectorAll('[data-menu-action]');
-        const authButtons = document.querySelectorAll('[data-auth-action]');
-        const AUTH_KEY = 'futurepath.signed_in';
 
         const setSignedIn = (opts) => {
-          try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) {}
           if (authArea) authArea.classList.add('hidden');
           if (userPanel) userPanel.classList.remove('hidden');
           if (userMenu) userMenu.classList.add('hidden');
@@ -360,18 +352,12 @@
         };
 
         const setSignedOut = (opts) => {
-          try { localStorage.removeItem(AUTH_KEY); } catch (e) {}
           if (authArea) authArea.classList.remove('hidden');
           if (userPanel) userPanel.classList.add('hidden');
           if (userMenu) userMenu.classList.add('hidden');
           if (userChip) userChip.setAttribute('aria-expanded', 'false');
         };
 
-        authButtons.forEach(function (button) {
-          button.addEventListener('click', function () { setSignedIn(); });
-        });
-
-        try { if (localStorage.getItem(AUTH_KEY)) setSignedIn({ silent: true }); } catch (e) {}
 
         if (userChip) {
           userChip.addEventListener('click', function () {
@@ -482,7 +468,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về dự án','/pages/about.html'] ];
+    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 
@@ -528,5 +514,4 @@
 </script>
 </body>
 </html>
-
 

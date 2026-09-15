@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://futurepath.local/schemas/cv-builder.schema.json",
+  "title": "FuturePath CV Builder document",
+  "description": "Chuẩn dữ liệu trung gian giữa FuturePathData.profile và CV Builder editor.",
+  "type": "object",
+  "required": ["version", "template", "profile", "sections"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "template": {
+      "type": "string",
+      "enum": ["modern", "professional", "simple", "creative"]
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "accent": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "ink": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+        "paper": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+      },
+      "additionalProperties": false
+    },
+    "profile": {
+      "$ref": "#/$defs/profile"
+    },
+    "sections": {
+      "type": "object",
+      "required": ["summary", "experience", "education", "skills"],
+      "properties": {
+        "summary": { "type": "string" },
+        "experience": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+        "education": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+        "achievements": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "certificates": { "type": "array", "items": { "type": "string" } },
+        "interests": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "contentOverrides": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "location": { "type": "string" }
+      },
+      "required": ["name"],
+      "additionalProperties": true
+    },
+    "entry": {
+      "type": "object",
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "type": "string" },
+        "meta": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

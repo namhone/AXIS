@@ -1,11 +1,13 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Chi tiết nghề nghiệp — FuturePath</title>
+  <title>Chi tiết nghề nghiệp — AXIS</title>
   <link rel="stylesheet" href="../css/global.css">
+  <script src="../js/axis-brand.js"></script>
   <script src="../js/app.js"></script>
+  <script src="../js/auth.js"></script>
 </head>
 <body class="career-detail-page">
   <div class="page-shell">
@@ -22,17 +24,19 @@
                   <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
-              <div class="brand-copy"><span>FuturePath</span><small>Đồng hành cùng cuộc đời</small></div>
+              <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
             </div>
           </a>
         </div>
 
         <nav class="header-nav" role="navigation" aria-label="Chính">
+          <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
           <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
           <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
           <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
           <a class="nav-item active" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-          <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về dự án</span></a>
+          <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+          <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
         </nav>
 
         <div class="header-auth">
@@ -49,12 +53,13 @@
           <h1 id="careerPageTitle">Khoa học dữ liệu</h1>
           <p class="lead">Khám phá vai trò, kỹ năng cần thiết và lộ trình phát triển cho nghề nghiệp này.</p>
         </section>
+        <div class="career-detail-hero-image" role="img" aria-label="Minh họa môi trường nghề nghiệp"></div>
 
-        <section class="content-grid">
+      <section class="content-grid">
         <article class="main-column">
           <div class="panel-heading">
             <h3>Tổng quan nghề nghiệp</h3>
-            <a href="#">Lưu</a>
+            <button class="primary-btn add-to-plan" type="button">Thêm vào lộ trình</button>
           </div>
 
           <div class="tool-card">
@@ -71,9 +76,9 @@
             <section class="career-section">
               <h3>Kỹ năng</h3>
               <div class="skill-row">
-                <small class="skill-pill pill-indigo">Python</small>
-                <small class="skill-pill pill-indigo">Machine Learning</small>
-                <small class="skill-pill pill-teal">Statistics</small>
+                <small class="skill-pill pill-indigo">Tư duy logic</small>
+                <small class="skill-pill pill-indigo">Toán ứng dụng</small>
+                <small class="skill-pill pill-teal">Giao tiếp dữ liệu</small>
               </div>
             </section>
 
@@ -92,15 +97,17 @@
           <div class="mini-panel">
             <div class="panel-heading"><h3>Lộ trình nghề</h3></div>
             <div class="summary-list">
-              <div class="summary-item">Học Python</div>
-              <div class="summary-item">Học thống kê</div>
-              <div class="summary-item">Thực hành dự án</div>
+            <div class="summary-item">Lớp 12: củng cố Toán, Tin và tiếng Anh chuyên ngành</div>
+            <div class="summary-item">0–3 tháng đầu đại học: Python, thống kê, Git</div>
+            <div class="summary-item">3–12 tháng: hoàn thành 2 dự án có dữ liệu thật</div>
             </div>
           </div>
 
           <div class="mini-panel">
             <div class="panel-heading"><h3>Mức lương tham khảo</h3></div>
-            <div class="score-row"><div class="score-tag">VN</div><div class="score-value">10-25M</div></div>
+            <div class="score-row"><div class="score-tag">Fresh / Intern</div><div class="score-value">5–12 triệu</div></div>
+            <div class="score-row"><div class="score-tag">Junior</div><div class="score-value">12–25 triệu</div></div>
+            <div class="score-row"><div class="score-tag">Intermediate</div><div class="score-value">25–45 triệu</div></div>
           </div>
         </aside>
         </section>
@@ -112,8 +119,8 @@
       <div class="footer-container">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
-          <p>FuturePath — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-          <p><strong>Email:</strong> <a href="mailto:hello@futurepath.vn">hello@futurepath.vn</a></p>
+          <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+          <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
           <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
         </div>
         <div class="footer-form">
@@ -130,7 +137,7 @@
           </form>
         </div>
       </div>
-      <div class="footer-bottom">© 2026 FuturePath — All rights reserved.</div>
+      <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
     </footer>
 <script>
 (function(){
@@ -173,7 +180,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về dự án','/pages/about.html'] ];
+    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 
@@ -274,14 +281,22 @@
     }
   };
 
-  const item = data[careerName];
-  if (!item) return; // no match
+  const item = data[careerName] || {
+    title: careerName,
+    overview: careerName + ' là nhóm ngành kết hợp kiến thức nền tảng với kỹ năng chuyên môn để giải quyết các nhu cầu thực tế của xã hội và doanh nghiệp.',
+    skills: ['Tư duy phân tích', 'Giao tiếp', 'Học tập liên tục'],
+    description: 'Người học nên bắt đầu bằng việc tìm hiểu các môn nền tảng, thử một dự án nhỏ và quan sát môi trường làm việc thực tế. Khi đã xác định hướng phù hợp, hãy xây dựng kỹ năng theo từng giai đoạn và lưu lại sản phẩm trong hồ sơ năng lực.',
+    roadmap: ['Lớp 12: củng cố môn nền tảng và tìm hiểu chương trình đào tạo', '0–3 tháng đầu đại học: học công cụ cốt lõi và hoàn thành bài tập nhỏ', '3–12 tháng: tham gia dự án, câu lạc bộ hoặc hoạt động trải nghiệm'],
+    salary: 'Đang cập nhật'
+  };
 
   // Update headings
   const pageTitle = document.getElementById('careerPageTitle');
   if (pageTitle) pageTitle.textContent = item.title;
   const overviewP = document.getElementById('careerOverview');
   if (overviewP) overviewP.textContent = item.overview;
+  const descriptionP = document.querySelector('.summary-body');
+  if (descriptionP) descriptionP.textContent = item.description || 'Công việc thường ngày có thể gồm tìm hiểu yêu cầu, phân tích thông tin, phối hợp với đồng đội, tạo sản phẩm và cải thiện kết quả dựa trên phản hồi.';
 
   // Update skills
   const skillRow = document.querySelector('.tool-card .skill-row');
@@ -311,6 +326,16 @@
   const salaryEl = document.querySelector('.score-value');
   if (salaryEl) salaryEl.textContent = item.salary;
 
+  fetch('/api/v1/axis/benchmarks').then(function (response) { return response.ok ? response.json() : []; }).then(function (benchmarks) {
+    const benchmark = benchmarks.find(function (entry) { return entry.name === careerName || entry.name === item.title; });
+    if (!benchmark) return;
+    const subjects = (benchmark.subjects || []).join(' và ');
+    const overview = document.getElementById('careerOverview');
+    const description = document.querySelector('.summary-body');
+    if (overview) overview.textContent = item.overview + ' Trên AXIS, nhóm ngành này được đối chiếu với nền tảng ' + (subjects || 'kiến thức liên ngành') + ' và các tín hiệu sở thích RIASEC để bạn có thêm cơ sở tham khảo.';
+    if (description) description.textContent = 'Trong thực tế, người học có thể đi từ nền tảng học thuật đến các bài tập mô phỏng, dự án cá nhân và trải nghiệm nhóm. Hãy chú ý cách ngành tạo ra giá trị, môi trường làm việc, yêu cầu đầu vào và cơ hội học tiếp thay vì chỉ nhìn vào một chức danh.';
+  }).catch(function () {});
+
   // Keep the shared careers tab active while viewing a career detail.
   document.querySelectorAll('.header-nav .nav-item').forEach(function(n){ n.classList.remove('active'); });
   const navMatch = Array.from(document.querySelectorAll('.header-nav .nav-item')).find(function(a){
@@ -323,3 +348,4 @@
 
 </body>
 </html>
+

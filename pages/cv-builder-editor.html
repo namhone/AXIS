@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Trình biên tập CV A4 của AXIS">
+    <title>CV Builder Editor — AXIS</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/cv-builder-editor.css">
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cv-builder-editor.js" defer></script>
+  </head>
+  <body class="cv-builder-page">
+    <div class="cv-editor" data-cv-editor>
+      <header class="topbar cv-editor__topbar">
+        <div class="header-brand">
+          <a class="brand-link" href="../index.html">
+            <div class="brand">
+              <div class="brand-mark" aria-hidden="true">+</div>
+              <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
+            </div>
+          </a>
+        </div>
+        <nav class="header-nav" role="navigation" aria-label="Chính">
+          <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
+          <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
+          <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
+          <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
+          <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
+          <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
+          <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
+        </nav>
+        <div class="header-auth">
+          <div class="auth-area" id="authArea">
+            <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">Đăng nhập</button>
+            <button class="auth-btn primary-btn" type="button" data-auth-action="signup">Đăng ký</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="cv-editor__layout">
+        <div class="cv-editor__actions" aria-label="Thao tác CV">
+          <a class="cv-button cv-button--quiet" href="profile.html">← Hồ sơ</a>
+          <button class="cv-button cv-button--quiet" type="button" data-action="save">Lưu bản nháp</button>
+          <button class="cv-button cv-button--primary" type="button" data-action="print">In / lưu PDF</button>
+        </div>
+        <aside class="cv-editor__sidebar" aria-label="Công cụ CV">
+          <section class="cv-panel cv-panel--pipeline">
+            <div class="cv-panel__heading">
+              <div>
+                <span class="cv-eyebrow">Frontend AI pipeline</span>
+                <h1>Chuẩn hóa CV</h1>
+              </div>
+              <span class="cv-pipeline-state" data-pipeline-state>Đang chờ</span>
+            </div>
+            <p class="cv-panel__intro">Bốn agent mô phỏng sẽ trích xuất, cấu trúc, tối ưu và kiểm tra dữ liệu hồ sơ của bạn.</p>
+            <ol class="cv-agent-list" data-agent-list>
+              <li class="cv-agent" data-agent="extract">
+                <span class="cv-agent__number">01</span>
+                <span class="cv-agent__copy"><strong>Data Extractor</strong><small>Đọc profile &amp; chứng chỉ</small></span>
+                <span class="cv-agent__status" aria-label="Đang chờ">○</span>
+              </li>
+              <li class="cv-agent" data-agent="structure">
+                <span class="cv-agent__number">02</span>
+                <span class="cv-agent__copy"><strong>Profile Structurer</strong><small>Chuẩn hóa các trường CV</small></span>
+                <span class="cv-agent__status" aria-label="Đang chờ">○</span>
+              </li>
+              <li class="cv-agent" data-agent="content">
+                <span class="cv-agent__number">03</span>
+                <span class="cv-agent__copy"><strong>Content Optimizer</strong><small>Viết summary &amp; bullet rõ ràng</small></span>
+                <span class="cv-agent__status" aria-label="Đang chờ">○</span>
+              </li>
+              <li class="cv-agent" data-agent="review">
+                <span class="cv-agent__number">04</span>
+                <span class="cv-agent__copy"><strong>Quality Reviewer</strong><small>Kiểm tra độ đầy đủ</small></span>
+                <span class="cv-agent__status" aria-label="Đang chờ">○</span>
+              </li>
+            </ol>
+            <button class="cv-button cv-button--primary cv-button--full" type="button" data-action="normalize">✦ AI chuẩn hóa hồ sơ hiện tại</button>
+            <p class="cv-status" data-editor-status role="status" aria-live="polite">Bạn có thể dùng dữ liệu mẫu để xem trước editor.</p>
+          </section>
+
+          <section class="cv-panel">
+            <div class="cv-panel__heading">
+              <div>
+                <span class="cv-eyebrow">Layout</span>
+                <h2>Chọn template</h2>
+              </div>
+              <span class="cv-panel__hint">A4</span>
+            </div>
+            <div class="cv-template-picker" role="group" aria-label="Bốn template CV">
+              <button class="cv-template-option is-selected" type="button" data-template="modern" aria-pressed="true">
+                <span class="cv-template-swatch cv-template-swatch--modern"></span><span><strong>Modern</strong><small>Gọn, nổi bật kỹ năng</small></span>
+              </button>
+              <button class="cv-template-option" type="button" data-template="professional" aria-pressed="false">
+                <span class="cv-template-swatch cv-template-swatch--professional"></span><span><strong>Professional</strong><small>Cân bằng &amp; tin cậy</small></span>
+              </button>
+              <button class="cv-template-option" type="button" data-template="simple" aria-pressed="false">
+                <span class="cv-template-swatch cv-template-swatch--simple"></span><span><strong>Simple</strong><small>Tối giản, dễ đọc ATS</small></span>
+              </button>
+              <button class="cv-template-option" type="button" data-template="creative" aria-pressed="false">
+                <span class="cv-template-swatch cv-template-swatch--creative"></span><span><strong>Creative</strong><small>Cá tính với badge vàng</small></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="cv-panel cv-panel--appearance">
+            <div class="cv-panel__heading">
+              <div><span class="cv-eyebrow">Scoped theme</span><h2>Màu sắc</h2></div>
+            </div>
+            <div class="cv-color-grid" data-color-controls>
+              <label><span data-color-label="accent">Accent</span><input type="color" value="#0b3d66" data-color="accent"></label>
+              <label><span data-color-label="ink">Ink</span><input type="color" value="#14202e" data-color="ink"></label>
+              <label><span data-color-label="paper">Paper</span><input type="color" value="#ffffff" data-color="paper"></label>
+            </div>
+            <div class="cv-palette-picker" role="group" aria-label="Bảng màu gợi ý">
+              <span class="cv-palette-picker__label">Tone gợi ý</span>
+              <div class="cv-palette-options" data-palette-options></div>
+            </div>
+            <p class="form-help" data-color-help>Màu chỉ áp dụng cho các thành phần có thể chỉnh sửa của template hiện tại.</p>
+          </section>
+        </aside>
+
+        <section class="cv-editor__workspace" aria-label="Bản xem trước CV">
+          <div class="cv-preview-toolbar">
+            <span><span class="cv-live-dot"></span><strong data-preview-label>Modern</strong> · preview trực tiếp</span>
+            <span class="cv-preview-toolbar__tip">Nhấp vào mọi dòng chữ để chỉnh sửa</span>
+          </div>
+          <div class="cv-preview-scroll">
+            <div class="cv-preview" data-cv-preview></div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer cv-editor__footer">
+        <div class="footer-container">
+          <div class="footer-contact">
+            <h4>Liên hệ</h4>
+            <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
+            <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
+            <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
+          </div>
+          <div class="footer-form">
+            <h4>Nhận thông tin &amp; tư vấn</h4>
+            <form action="#" onsubmit="event.preventDefault(); alert('Cảm ơn! Chúng tôi sẽ liên hệ sớm.');">
+              <div class="field-row">
+                <input type="email" placeholder="Email của bạn" required>
+                <input type="tel" placeholder="Số điện thoại (tùy chọn)">
+              </div>
+              <button class="primary-btn" type="submit">Đăng ký nhận tin</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
+      </footer>
+    </div>
+    <script>
+      (function () {
+        var header = document.querySelector('.cv-editor__topbar');
+        var nav = header && header.querySelector('.header-nav');
+        if (!header || !nav) return;
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'mobile-menu-button';
+        button.setAttribute('aria-label', 'Mở menu');
+        button.setAttribute('aria-expanded', 'false');
+        button.textContent = '☰';
+        header.appendChild(button);
+        button.addEventListener('click', function () {
+          var open = nav.classList.toggle('is-mobile-open');
+          button.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      })();
+    </script>
+  </body>
+</html>
