@@ -468,7 +468,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
+    const links = [ ['Hồ sơ năng lực','profile.html'], ['Đánh giá & Gợi ý','assessment.html'], ['Phát triển bản thân','development.html'], ['Thư viện nghề nghiệp','careers.html'], ['Về AXIS','about.html'], ['Hướng dẫn','guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 

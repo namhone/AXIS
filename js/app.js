@@ -233,7 +233,6 @@
           initProfile();
         }
         hydrateProfile().catch(function (error) {
-          console.warn('Không thể tải hồ sơ tài khoản.', error);
           var status = document.getElementById('profileSaveStatus');
           if (status) status.textContent = error.message || 'Không thể tải hồ sơ tài khoản.';
         });

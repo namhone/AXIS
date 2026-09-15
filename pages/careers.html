@@ -247,30 +247,30 @@
         function renderCareerCards(items) {
           if (!careerCardsRoot) return;
           const coverImages = {
-            N01: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85',
-            N02: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85',
-            N03: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=85',
-            N04: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=85',
-            N05: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85',
-            N06: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=85',
-            N07: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=85',
-            N08: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=85',
-            N09: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85',
-            N10: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
-            N11: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85',
-            N12: 'https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1200&q=85',
-            N13: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1200&q=85',
-            N14: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=85',
-            N15: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=85',
-            N16: 'https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=1200&q=85',
-            N17: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85',
-            N18: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=85',
-            N19: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=85',
-            N20: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85',
-            N21: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=85',
-            N22: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=85',
-            N23: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=85',
-            N24: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=85'
+            N01: '../assets/hero-1.png',
+            N02: '../assets/hero-2.png',
+            N03: '../assets/hero-3.png',
+            N04: '../assets/hero-4.png',
+            N05: '../assets/hero-5.png',
+            N06: '../assets/hero-6.png',
+            N07: '../assets/hero-1.png',
+            N08: '../assets/hero-2.png',
+            N09: '../assets/hero-3.png',
+            N10: '../assets/hero-4.png',
+            N11: '../assets/hero-5.png',
+            N12: '../assets/hero-6.png',
+            N13: '../assets/hero-1.png',
+            N14: '../assets/hero-2.png',
+            N15: '../assets/hero-3.png',
+            N16: '../assets/hero-4.png',
+            N17: '../assets/hero-5.png',
+            N18: '../assets/hero-6.png',
+            N19: '../assets/hero-1.png',
+            N20: '../assets/hero-2.png',
+            N21: '../assets/hero-3.png',
+            N22: '../assets/hero-4.png',
+            N23: '../assets/hero-5.png',
+            N24: '../assets/hero-6.png'
           };
           careerCardsRoot.innerHTML = items.map(function (item, index) {
             const skills = (item.subjects || []).concat(item.riasec || []).slice(0, 3);
@@ -419,7 +419,7 @@
     });
   } else {
     // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
+    const links = [ ['Hồ sơ năng lực','profile.html'], ['Đánh giá & Gợi ý','assessment.html'], ['Phát triển bản thân','development.html'], ['Thư viện nghề nghiệp','careers.html'], ['Về AXIS','about.html'], ['Hướng dẫn','guide.html'] ];
     links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
   }
 

@@ -608,7 +608,7 @@ button, input {
    overflow: hidden;
    background:
      linear-gradient(90deg, rgba(6, 29, 51, .96) 0%, rgba(6, 29, 51, .82) 46%, rgba(6, 29, 51, .36) 100%),
-     url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80') center/cover;
+     url('../assets/hero-2.png') center/cover;
    box-shadow: 0 18px 38px rgba(6, 29, 51, .16);
  }
 
@@ -702,7 +702,7 @@ button, input {
    border-radius: 20px;
    background:
      linear-gradient(90deg, rgba(6, 29, 51, .2), rgba(6, 29, 51, .02)),
-     url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80') center/cover;
+     url('../assets/hero-1.png') center/cover;
    box-shadow: var(--surface-shadow);
  }
 
@@ -4053,7 +4053,7 @@ body.has-search .search-box { display: block !important; }
   }
 }
 /* Menu adjustments: larger icons, smaller labels, desktop centering preserved */
-.header-nav .nav-item .nav-ico { font-size: 22px; width: 26px; }
+.header-nav .nav-item .nav-ico { font-size: 18px; width: 26px; }
 .header-nav .nav-item span:last-child { font-size: 13px; }
 
 /* Mobile menu button (hidden on desktop) */
@@ -4739,7 +4739,7 @@ button.ghost:hover {
   align-items: center;
   background:
     linear-gradient(90deg, rgba(6, 29, 51, .96) 0%, rgba(6, 29, 51, .82) 46%, rgba(6, 29, 51, .36) 100%),
-    url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80') center/cover;
+    url('../assets/hero-2.png') center/cover;
   border-color: rgba(255, 255, 255, .3);
   border-radius: 20px;
   display: grid;

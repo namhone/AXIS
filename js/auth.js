@@ -362,7 +362,9 @@
         }
       }
       setAuthState(null);
-      if (error.status && error.status !== 401) {
+      // Static deployments can run without the optional FastAPI origin.
+      // Keep the signed-out UI quiet for an unavailable API endpoint.
+      if (error.status && error.status !== 401 && error.status !== 404) {
         showNotice('Không thể kiểm tra trạng thái đăng nhập.', true);
       }
     }

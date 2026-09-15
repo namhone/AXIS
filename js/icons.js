@@ -7,7 +7,9 @@
     'assessment.html': 'sparkles',
     'development.html': 'trending-up',
     'careers.html': 'briefcase',
-    'about.html': 'info'
+    'about.html': 'info',
+    'guide.html': 'book-open',
+    'portfolio.html': 'briefcase'
   };
 
   var careerByCode = {
