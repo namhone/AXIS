@@ -5,16 +5,17 @@ from sqlalchemy import engine_from_config, pool
 
 try:
     from backend.app.core.config import get_settings
-    from backend.app.core.database import Base
+    from backend.app.core.database import Base, _resolve_database_url
     from backend.app.models import User, AccountDocument, Goal, RoadmapStep, Assessment, Profile, CompetencyScore, CareerBenchmark, MatchLog  # noqa: F401
 except ModuleNotFoundError:
     from app.core.config import get_settings
-    from app.core.database import Base
+    from app.core.database import Base, _resolve_database_url
     from app.models import User, AccountDocument, Goal, RoadmapStep, Assessment, Profile, CompetencyScore, CareerBenchmark, MatchLog  # noqa: F401
 
 config = context.config
 settings = get_settings()
-config.set_main_option("sqlalchemy.url", settings.database_url)
+database_url = _resolve_database_url(settings.database_url)
+config.set_main_option("sqlalchemy.url", database_url)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -24,7 +25,7 @@ target_metadata = Base.metadata
 
 def run_migrations_offline() -> None:
     context.configure(
-        url=settings.database_url,
+        url=database_url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},

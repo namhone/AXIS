@@ -20,6 +20,11 @@ def _engine_options(database_url: str) -> dict[str, object]:
 def _resolve_database_url(database_url: str) -> str:
     """Use the bundled local database when a relative SQLite URL is used."""
 
+    database_url = database_url.strip().strip('"').strip("'")
+    if database_url.startswith("postgres://"):
+        return "postgresql+psycopg2://" + database_url[len("postgres://"):]
+    if database_url.startswith("postgresql://"):
+        return "postgresql+psycopg2://" + database_url[len("postgresql://"):]
     if database_url != "sqlite:///./dev.db":
         return database_url
     local_database = Path.cwd() / "dev.db"
