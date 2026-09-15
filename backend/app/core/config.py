@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     cookie_name: str = "futurepath_access_token"
     cookie_secure: bool = False
     cors_origins: Annotated[list[str], NoDecode] = [
+        "https://axis-career-app.vercel.app",
         "http://localhost:3000",
         "http://localhost:8000",
         "http://127.0.0.1:8000",
@@ -65,6 +66,7 @@ class Settings(BaseSettings):
             raise ValueError("CORS_ORIGINS must contain explicit origins, not '*'")
         if not value:
             return [
+                "https://axis-career-app.vercel.app",
                 "http://localhost:3000",
                 "http://localhost:4173",
                 "http://127.0.0.1:4173",
