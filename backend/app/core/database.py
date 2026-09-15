@@ -1,4 +1,5 @@
 from collections.abc import Generator
+from pathlib import Path
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
@@ -16,11 +17,23 @@ def _engine_options(database_url: str) -> dict[str, object]:
     return {"pool_pre_ping": True}
 
 
+def _resolve_database_url(database_url: str) -> str:
+    """Use the bundled local database when a relative SQLite URL is used."""
+
+    if database_url != "sqlite:///./dev.db":
+        return database_url
+    local_database = Path.cwd() / "dev.db"
+    bundled_database = Path(__file__).resolve().parents[2] / "dev.db"
+    database_path = local_database if local_database.exists() else bundled_database
+    return "sqlite:///" + database_path.resolve().as_posix()
+
+
 settings = get_settings()
+database_url = _resolve_database_url(settings.database_url)
 engine = create_engine(
-    settings.database_url,
+    database_url,
     future=True,
-    **_engine_options(settings.database_url),
+    **_engine_options(database_url),
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
