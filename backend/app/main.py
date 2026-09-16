@@ -3,7 +3,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from .api.routes import ai, auth, axis, data, health, learning, profile
+from .api.routes import ai, auth, axis, data, health, learning, profile, tasks
 from .core.config import get_settings
 
 settings = get_settings()
@@ -65,3 +65,4 @@ app.include_router(ai.router)
 app.include_router(learning.router)
 app.include_router(profile.router)
 app.include_router(axis.router)
+app.include_router(tasks.router)

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AXIS — Lịch công việc</title>
+    <link rel="stylesheet" href="../css/global.css?v=axis-calendar">
+    <script src="../js/auth.js"></script>
+    <script defer src="../js/calendar.js"></script>
+  </head>
+  <body class="axis-calendar-page">
+    <div class="page-shell">
+      <div class="workspace">
+        <header class="topbar">
+          <a class="brand-link" href="../index.html"><div class="brand"><div class="brand-mark">+</div><div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div></div></a>
+          <nav class="header-nav" aria-label="Chính">
+            <a class="nav-item" href="dashboard.html">Bảng điều khiển</a>
+            <a class="nav-item active" href="calendar.html">Lịch công việc</a>
+            <a class="nav-item" href="profile.html">Hồ sơ năng lực</a>
+            <a class="nav-item" href="development.html">Phát triển bản thân</a>
+          </nav>
+          <div class="header-auth"><div class="auth-area" id="authArea"></div></div>
+        </header>
+        <main class="main-column calendar-layout">
+          <section class="page-hero axis-hero">
+            <span class="eyebrow">PERSONAL TASK PLANNER</span>
+            <h1>Lịch học tập của bạn</h1>
+            <p class="lead">Mỗi ngày tối đa 4 task và 180 phút. Task quá hạn sẽ được đưa về hôm nay rồi tự động dời phần xung đột.</p>
+          </section>
+          <section class="content-panel calendar-toolbar">
+            <button class="primary-btn" id="generatePlan" type="button">Tạo kế hoạch 3 ngày</button>
+            <button class="ghost-btn" id="refreshCalendar" type="button">Làm mới</button>
+            <span id="calendarMessage" role="status"></span>
+          </section>
+          <section class="content-panel">
+            <div class="calendar-heading"><button id="previousMonth" type="button">←</button><h2 id="calendarMonth"></h2><button id="nextMonth" type="button">→</button></div>
+            <div class="calendar-weekdays"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+          </section>
+          <section class="content-panel">
+            <div class="panel-heading"><div><span class="eyebrow">SELECTED DAY</span><h2 id="selectedDateLabel">Chọn một ngày</h2></div></div>
+            <div id="taskList" class="task-list"></div>
+          </section>
+          <section class="content-panel">
+            <div class="panel-heading"><div><span class="eyebrow">MANUAL TASK</span><h2>Thêm công việc</h2></div></div>
+            <form id="taskForm" class="calendar-form">
+              <label>Tên task<input name="task_name" required maxlength="255"></label>
+              <label>Mô tả tối đa 3 câu<textarea name="description" rows="3"></textarea></label>
+              <label>Ngày thực hiện<input name="scheduled_date" type="date" required></label>
+              <label>Thời lượng (phút)<input name="estimated_time_minutes" type="number" min="1" max="180" value="30" required></label>
+              <button class="primary-btn" type="submit">Lưu task thủ công</button>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script>document.addEventListener('DOMContentLoaded', function () { if (window.FuturePathCalendar) window.FuturePathCalendar.init(); });</script>
+  </body>
+</html>

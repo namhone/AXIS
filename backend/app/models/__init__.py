@@ -3,6 +3,7 @@ from .account_data import AccountDocument
 from .learning import Assessment, Goal, RoadmapStep
 from .profile import Profile
 from .axis import CareerBenchmark, CompetencyScore, MatchLog
+from .tasks import CustomTag, Task
 
 __all__ = [
     "User",
@@ -14,4 +15,6 @@ __all__ = [
     "CompetencyScore",
     "CareerBenchmark",
     "MatchLog",
+    "CustomTag",
+    "Task",
 ]
