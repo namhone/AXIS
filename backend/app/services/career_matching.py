@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from datetime import date
 from dataclasses import dataclass
 from typing import Any
 
@@ -122,7 +123,19 @@ def _score_language_certificate(cert_name: str | None, cert_score: Any, *, expir
     if not name and score is None:
         return 0.0
 
-    if any(token in name for token in ("ielts", "toeic", "toeic")):
+    if "toeic" in name:
+        value = max(0.0, min(990.0, float(score if score is not None else 0.0)))
+        if value >= 945:
+            return 10.0
+        if value >= 785:
+            return 9.0
+        if value >= 605:
+            return 8.0
+        if value >= 505:
+            return 6.5
+        return 0.0
+
+    if "ielts" in name:
         value = max(0.0, min(9.0, float(score if score is not None else 0.0)))
         if value >= 8.5:
             return 10.0
@@ -211,7 +224,42 @@ def _s2(profile: dict[str, Any]) -> float:
     if toefl is not None:
         scores.append(_score_language_certificate("TOEFL", toefl, expired=expired))
     if certificate_name:
-        scores.append(_score_language_certificate(certificate_name, certificate_score, expired=expired))
+        certificate_label = f"{certificate_name} {profile.get('certificateScore', '')}".strip()
+        scores.append(_score_language_certificate(
+            certificate_label, certificate_score, expired=expired
+        ))
+
+    if profile.get("certificateUseHighSchool"):
+        high_school_score = _number(profile.get("highSchoolLanguageScore"))
+        if high_school_score is not None:
+            scores.append(_clamp(high_school_score))
+
+    records = profile.get("certificateRecords")
+    if isinstance(records, list):
+        for record in records:
+            if not isinstance(record, dict):
+                continue
+            issue_date = str(record.get("issueDate") or "").strip()
+            record_expired = False
+            if issue_date:
+                try:
+                    issued = date.fromisoformat(issue_date[:10])
+                    try:
+                        expiry = issued.replace(year=issued.year + 2)
+                    except ValueError:
+                        # February 29 certificates expire on February 28.
+                        expiry = issued.replace(year=issued.year + 2, day=28)
+                    record_expired = expiry < date.today()
+                except ValueError:
+                    # Invalid dates cannot establish a valid, active certificate.
+                    record_expired = True
+            record_name = record.get("name")
+            record_score = record.get("score")
+            if record_name:
+                record_label = f"{record_name} {record_score}".strip()
+                scores.append(_score_language_certificate(
+                    record_label, record_score, expired=record_expired
+                ))
 
     if not scores:
         return 0.0

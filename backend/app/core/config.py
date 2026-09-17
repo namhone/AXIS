@@ -3,7 +3,7 @@ import json
 from secrets import token_urlsafe
 from typing import Annotated
 
-from pydantic import field_validator
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     app_name: str = "FuturePath API"
     environment: str = "development"
     database_url: str = "sqlite:///./dev.db"
-    jwt_secret_key: str = "FUTUREPATH_LOCAL_SECRET_KEY_PROTOTYPE"
+    jwt_secret_key: str = ""
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     cookie_name: str = "futurepath_access_token"
@@ -77,12 +77,23 @@ class Settings(BaseSettings):
             ]
         return value
 
-    def signing_key(self) -> str:
-        """Return a key without committing a secret to source control.
+    @model_validator(mode="after")
+    def validate_production_security(self) -> "Settings":
+        environment = self.environment.strip().lower()
+        if environment in {"production", "prod"}:
+            if len(self.jwt_secret_key.strip()) < 32:
+                raise ValueError(
+                    "JWT_SECRET_KEY must be at least 32 characters in production"
+                )
+            if not self.cookie_secure:
+                raise ValueError("COOKIE_SECURE must be true in production")
+        return self
 
-        A process-local key keeps local imports and development runs usable when
-        ``JWT_SECRET_KEY`` is omitted. Deployments must set a stable secret so
-        tokens survive restarts.
+    def signing_key(self) -> str:
+        """Return a configured key, or generate an ephemeral development key.
+
+        Development can run without a configured secret, but production is
+        rejected by validation before this method can be called.
         """
 
         if not self.jwt_secret_key:

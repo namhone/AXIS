@@ -72,6 +72,11 @@ def js_asset(filename):
     return send_from_directory(PROJECT_ROOT / 'js', filename)
 
 
+@app.route('/components/<path:filename>', methods=['GET'])
+def component_asset(filename):
+    return send_from_directory(PROJECT_ROOT / 'components', filename)
+
+
 @app.route('/assets/<path:filename>', methods=['GET'])
 def image_asset(filename):
     return send_from_directory(PROJECT_ROOT / 'assets', filename)

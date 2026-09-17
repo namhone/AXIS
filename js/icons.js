@@ -8,8 +8,7 @@
     'development.html': 'trending-up',
     'careers.html': 'briefcase',
     'about.html': 'info',
-    'guide.html': 'book-open',
-    'portfolio.html': 'briefcase'
+    'guide.html': 'book-open'
   };
 
   var careerByCode = {

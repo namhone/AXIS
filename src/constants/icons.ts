@@ -1,8 +1,9 @@
 import type { LucideIcon } from 'lucide-react';
 import {
-  Building2,
+  BookOpen,
   Briefcase,
   BrainCircuit,
+  Building2,
   Code,
   Dna,
   GraduationCap,
@@ -38,7 +39,9 @@ export const MENU_ICONS_MAP = {
   recommendation: Sparkles,
   development: TrendingUp,
   library: Briefcase,
-  about: Info
+  careers: Briefcase,
+  about: Info,
+  guide: BookOpen
 } satisfies Record<string, LucideIcon>;
 
 export const CAREER_ICONS_MAP = {

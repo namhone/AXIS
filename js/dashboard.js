@@ -23,7 +23,7 @@
   var currentProfile = {};
   var renderTimer = 0;
 
-  function clamp(value) { return Math.max(0, Math.min(10, value)); }
+  function clamp(value) { return Math.max(0, Math.min(10, number(value))); }
   function number(value) {
     var parsed = Number.parseFloat(String(value == null ? '' : value).trim().replace(',', '.'));
     return Number.isFinite(parsed) ? parsed : 0;
@@ -34,16 +34,29 @@
       return result;
     }, {});
   }
+  function rocWeightsFor(benchmark) {
+    var weights = {};
+    var priority = Array.isArray(benchmark.priority) ? benchmark.priority : [];
+    priority.forEach(function (key, index) {
+      if (dimensions.some(function (dimension) { return dimension.key === key; })) {
+        weights[key] = (weights[key] || 0) + (ROC[index] || 0);
+      }
+    });
+    return weights;
+  }
   function scoreFor(values, benchmark) {
     var total = 0;
-    benchmark.priority.forEach(function (key, index) { total += ROC[index] * values[key]; });
+    var weights = rocWeightsFor(benchmark);
+    Object.keys(weights).forEach(function (key) { total += weights[key] * number(values[key]); });
     return total * 10;
   }
   function gapFor(values, benchmark) {
     var weighted = 0;
-    benchmark.need.forEach(function (required, index) {
-      var key = dimensions[index].key;
-      weighted += ROC[index] * Math.pow(Math.max(0, required - values[key]), 2);
+    var weights = rocWeightsFor(benchmark);
+    dimensions.forEach(function (dimension, index) {
+      var required = number(Array.isArray(benchmark.need) ? benchmark.need[index] : 0);
+      var key = dimension.key;
+      weighted += (weights[key] || 0) * Math.pow(Math.max(0, required - number(values[key])), 2);
     });
     return Math.sqrt(weighted);
   }
@@ -56,12 +69,15 @@
   }
   function academicScore() {
     var values = profileScore('score');
-    return values.length ? values.reduce(function (sum, value) { return sum + value; }, 0) / values.length : number(currentProfile.gpa10 || currentProfile.gpa11 || currentProfile.gpa12);
+    if (values.length) return values.reduce(function (sum, value) { return sum + value; }, 0) / values.length;
+    var gpas = ['gpa10', 'gpa11', 'gpa12'].map(function (key) { return number(currentProfile[key]); }).filter(function (value) { return value > 0; });
+    return gpas.length ? gpas.reduce(function (sum, value) { return sum + value; }, 0) / gpas.length : 0;
   }
   function certificateScore() {
     if (currentProfile.certificateUseHighSchool) return clamp(number(currentProfile.highSchoolLanguageScore));
     var records = Array.isArray(currentProfile.certificateRecords) ? currentProfile.certificateRecords : [];
     var recordScores = records.map(function (record) {
+      if (window.AxisCertificates && window.AxisCertificates.isExpired(record.issueDate)) return 0;
       return window.AxisCertificates ? window.AxisCertificates.convertCertificateToNormalizedScore(
         record.language,
         record.name,
@@ -155,7 +171,10 @@
       typeSelect.value = currentProfile.certificateName || '';
       typeSelect.dispatchEvent(new Event('change'));
       var scoreInput = document.getElementById('axisCertificateScore');
-      if (scoreInput) scoreInput.value = currentProfile.certificateScore || '';
+      if (scoreInput) {
+        scoreInput.value = currentProfile.certificateScore || '';
+        scoreInput.dispatchEvent(new Event('input'));
+      }
     }
     dimensions.filter(function (item) { return item.readonly; }).forEach(function (item) {
       var target = document.getElementById('axis-readonly-' + item.key);
@@ -215,7 +234,7 @@
     if (window.FuturePathAuth) window.FuturePathAuth.apiRequest('/axis/benchmarks').then(function (items) {
       if (Array.isArray(items) && items.length) {
         benchmarks = items.map(function (item) {
-          return { code: item.code, name: item.name, need: dimensions.map(function (dimension) { var requirement = item.requirements && item.requirements[dimension.key]; return requirement ? Number(requirement.target || requirement.maximum || 0) : 0; }), priority: item.roc_order || dimensions.map(function (dimension) { return dimension.key; }) };
+          return { code: item.code, name: item.name, need: dimensions.map(function (dimension) { var requirement = item.requirements && item.requirements[dimension.key]; return requirement ? number(requirement.target || requirement.maximum || 0) : 0; }), priority: Array.isArray(item.roc_order) ? item.roc_order : dimensions.map(function (dimension) { return dimension.key; }) };
         });
         render();
       }

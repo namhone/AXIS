@@ -7,20 +7,12 @@
     <link rel="stylesheet" href="../css/global.css?v=axis-calendar">
     <script src="../js/auth.js"></script>
     <script defer src="../js/calendar.js"></script>
-  </head>
+      <script src="../js/components.js?v=mobile-nav-2" defer></script>
+</head>
   <body class="axis-calendar-page">
     <div class="page-shell">
       <div class="workspace">
-        <header class="topbar">
-          <a class="brand-link" href="../index.html"><div class="brand"><div class="brand-mark">+</div><div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div></div></a>
-          <nav class="header-nav" aria-label="Chính">
-            <a class="nav-item" href="dashboard.html">Bảng điều khiển</a>
-            <a class="nav-item active" href="calendar.html">Lịch công việc</a>
-            <a class="nav-item" href="profile.html">Hồ sơ năng lực</a>
-            <a class="nav-item" href="development.html">Phát triển bản thân</a>
-          </nav>
-          <div class="header-auth"><div class="auth-area" id="authArea"></div></div>
-        </header>
+        <app-header class="topbar"></app-header>
         <main class="main-column calendar-layout">
           <section class="page-hero axis-hero">
             <span class="eyebrow">PERSONAL TASK PLANNER</span>
@@ -54,6 +46,7 @@
         </main>
       </div>
     </div>
+    <app-footer class="site-footer"></app-footer>
     <script>document.addEventListener('DOMContentLoaded', function () { if (window.FuturePathCalendar) window.FuturePathCalendar.init(); });</script>
   </body>
 </html>

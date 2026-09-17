@@ -1,0 +1,25 @@
+{
+  "name": "axis-auth-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test:security": "node test-security.js",
+    "check": "node --check src/app.js && node --check src/server.js && node --check src/security/jwt.js && node --check src/models/User.js && node --check src/middlewares/authMiddleware.js && node --check src/controllers/authController.js && node --check src/routes/authRoutes.js"
+  },
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5"
+  }
+}

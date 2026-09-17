@@ -5,11 +5,14 @@
   const API_HOSTS = Array.from(new Set(
     [pageHost, 'localhost', '127.0.0.1'].filter(Boolean)
   ));
+  const configuredApiBase = typeof window.FUTUREPATH_API_BASE === 'string'
+    ? window.FUTUREPATH_API_BASE.replace(/\/+$/, '')
+    : '';
   const USE_SAME_ORIGIN_API = !['localhost', '127.0.0.1'].includes(pageHost) || window.location.port === '8787';
   let activeApiHost = API_HOSTS[0];
-  function apiBase(host) { return USE_SAME_ORIGIN_API ? '/api/v1/auth' : 'http://' + host + ':8000/api/v1/auth'; }
-  function accountApiBase(host) { return USE_SAME_ORIGIN_API ? '/api/v1/account' : 'http://' + host + ':8000/api/v1/account'; }
-  function rootApiBase(host) { return USE_SAME_ORIGIN_API ? '/api/v1' : 'http://' + host + ':8000/api/v1'; }
+  function apiBase(host) { return configuredApiBase || (USE_SAME_ORIGIN_API ? '/api/v1/auth' : 'http://' + host + ':8000/api/v1/auth'); }
+  function accountApiBase(host) { return configuredApiBase ? configuredApiBase + '/account' : (USE_SAME_ORIGIN_API ? '/api/v1/account' : 'http://' + host + ':8000/api/v1/account'); }
+  function rootApiBase(host) { return configuredApiBase ? configuredApiBase.replace(/\/auth$/, '') : (USE_SAME_ORIGIN_API ? '/api/v1' : 'http://' + host + ':8000/api/v1'); }
   const AUTH_AREA_SELECTOR = '#authArea';
   let currentUser = null;
   let currentAvatarUrl = '';
@@ -138,7 +141,11 @@
     const requestVersion = avatarRequestVersion;
     const userId = currentUser && currentUser.id;
     try {
-      const response = await fetch(apiBase(activeApiHost) + '/avatar?refresh=' + Date.now(), { credentials: 'include' });
+      const response = await fetchWithTimeout(
+        apiBase(activeApiHost) + '/avatar?refresh=' + Date.now(),
+        { credentials: 'include' },
+        8000
+      );
       if (requestVersion !== avatarRequestVersion || !currentUser || currentUser.id !== userId) return;
       if (!response.ok) {
         clearAvatar();
@@ -168,11 +175,11 @@
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const response = await fetch(apiBase(activeApiHost) + '/avatar', {
+      const response = await fetchWithTimeout(apiBase(activeApiHost) + '/avatar', {
         method: 'PUT',
         credentials: 'include',
         body: formData
-      });
+      }, 15000);
       if (!response.ok) {
         let message = 'Không thể tải ảnh đại diện lên.';
         try {
@@ -197,11 +204,11 @@
     const formData = new FormData();
     formData.append('file', file);
     formData.append('document_type', documentType || 'certificate');
-    const response = await fetch(accountApiBase(activeApiHost) + '/documents', {
+    const response = await fetchWithTimeout(accountApiBase(activeApiHost) + '/documents', {
       method: 'POST',
       credentials: 'include',
       body: formData
-    });
+    }, 15000);
     if (!response.ok) throw new Error('Không thể lưu tài liệu vào tài khoản.');
     return response.json();
   }
@@ -209,10 +216,10 @@
   async function accountRequest(path, options) {
     let response;
     try {
-      response = await fetch(accountApiBase(activeApiHost) + path, Object.assign({
+      response = await fetchWithTimeout(accountApiBase(activeApiHost) + path, Object.assign({
         credentials: 'include',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-      }, options || {}));
+      }, options || {}), 10000);
     } catch (error) {
       throw new Error('Không thể kết nối máy chủ. Vui lòng thử lại.');
     }
@@ -223,10 +230,10 @@
   async function apiRequest(path, options) {
     let response;
     try {
-      response = await fetch(rootApiBase(activeApiHost) + path, Object.assign({
+      response = await fetchWithTimeout(rootApiBase(activeApiHost) + path, Object.assign({
         credentials: 'include',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-      }, options || {}));
+      }, options || {}), 10000);
     } catch (error) {
       throw new Error('Không thể kết nối máy chủ. Vui lòng thử lại.');
     }
@@ -294,6 +301,23 @@
     }
   }
 
+  function fetchWithTimeout(url, options, timeoutMs) {
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
+    const requestOptions = Object.assign({}, options || {});
+    if (controller) requestOptions.signal = controller.signal;
+    const limit = timeoutMs || 8000;
+    let timer;
+    const timeout = new Promise(function (_, reject) {
+      timer = window.setTimeout(function () {
+        if (controller) controller.abort();
+        reject(new Error('Yêu cầu máy chủ đã hết thời gian chờ.'));
+      }, limit);
+    });
+    return Promise.race([fetch(url, requestOptions), timeout]).finally(function () {
+      window.clearTimeout(timer);
+    });
+  }
+
   function openModal(signUp) {
     const modal = createModal();
     modal.dataset.mode = signUp ? 'signup' : 'signin';
@@ -316,10 +340,10 @@
   }
 
   async function request(path, options) {
-    const response = await fetch(apiBase(activeApiHost) + path, Object.assign({
+    const response = await fetchWithTimeout(apiBase(activeApiHost) + path, Object.assign({
       credentials: 'include',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-    }, options || {}));
+    }, options || {}), 8000);
     let body = null;
     try {
       body = await response.json();
@@ -349,7 +373,7 @@
         const fallbackHost = API_HOSTS.find(function (host) { return host !== activeApiHost; });
         if (fallbackHost) {
           try {
-            const response = await fetch(apiBase(fallbackHost) + '/me', { credentials: 'include' });
+            const response = await fetchWithTimeout(apiBase(fallbackHost) + '/me', { credentials: 'include' }, 8000);
             if (requestVersion !== sessionCheckVersion) return;
             if (response.ok) {
               activeApiHost = fallbackHost;
@@ -469,6 +493,9 @@
   }
 
   function initialize() {
+    document.addEventListener('futurepath:components-ready', function () {
+      setAuthState(currentUser);
+    });
     document.addEventListener('click', handleClick, true);
     document.addEventListener('submit', handleSubmit, true);
     document.addEventListener('click', function (event) {
@@ -512,6 +539,7 @@
     uploadDocument: uploadDocument,
     accountRequest: accountRequest,
     apiRequest: apiRequest,
+    fetchWithTimeout: fetchWithTimeout,
     requireAuth: requireAuth,
     showNotice: showNotice
   };

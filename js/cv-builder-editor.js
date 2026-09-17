@@ -777,6 +777,7 @@
     var pageHeight = page ? Math.max(1123, page.scrollHeight) : 1123;
     var availableWidth = Math.max(0, scroll.clientWidth - 16);
     var scale = availableWidth > 0 ? Math.min(1, availableWidth / pageWidth) : 1;
+    if (window.innerWidth <= 560) scale = Math.max(scale, 0.56);
     if (!isFinite(scale) || scale <= 0) scale = 1;
     preview.style.setProperty('--cv-preview-scale', String(scale));
     preview.style.height = String(pageHeight) + 'px';

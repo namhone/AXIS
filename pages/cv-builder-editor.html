@@ -10,34 +10,11 @@
     <script src="../js/app.js"></script>
     <script src="../js/auth.js"></script>
     <script src="../js/cv-builder-editor.js" defer></script>
-  </head>
+      <script src="../js/components.js?v=mobile-nav-2" defer></script>
+</head>
   <body class="cv-builder-page">
     <div class="cv-editor" data-cv-editor>
-      <header class="topbar cv-editor__topbar">
-        <div class="header-brand">
-          <a class="brand-link" href="../index.html">
-            <div class="brand">
-              <div class="brand-mark" aria-hidden="true">+</div>
-              <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
-            </div>
-          </a>
-        </div>
-        <nav class="header-nav" role="navigation" aria-label="Chính">
-          <a class="nav-item" href="dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
-          <a class="nav-item" href="profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
-          <a class="nav-item" href="assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
-          <a class="nav-item" href="development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
-          <a class="nav-item" href="careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-          <a class="nav-item" href="about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
-          <a class="nav-item nav-item--guide" href="guide.html"><span class="nav-ico">?</span><span>Hướng dẫn</span></a>
-        </nav>
-        <div class="header-auth">
-          <div class="auth-area" id="authArea">
-            <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">Đăng nhập</button>
-            <button class="auth-btn primary-btn" type="button" data-auth-action="signup">Đăng ký</button>
-          </div>
-        </div>
-      </header>
+      <app-header class="topbar cv-editor__topbar"></app-header>
 
       <main class="cv-editor__layout">
         <div class="cv-editor__actions" aria-label="Thao tác CV">
@@ -132,45 +109,8 @@
           </div>
         </section>
       </main>
-      <footer class="site-footer cv-editor__footer">
-        <div class="footer-container">
-          <div class="footer-contact">
-            <h4>Liên hệ</h4>
-            <p>AXIS — Hỗ trợ định hướng nghề nghiệp và phát triển kỹ năng cho học sinh.</p>
-            <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
-            <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
-          </div>
-          <div class="footer-form">
-            <h4>Nhận thông tin &amp; tư vấn</h4>
-            <form action="#" onsubmit="event.preventDefault(); alert('Cảm ơn! Chúng tôi sẽ liên hệ sớm.');">
-              <div class="field-row">
-                <input type="email" placeholder="Email của bạn" required>
-                <input type="tel" placeholder="Số điện thoại (tùy chọn)">
-              </div>
-              <button class="primary-btn" type="submit">Đăng ký nhận tin</button>
-            </form>
-          </div>
-        </div>
-        <div class="footer-bottom">© 2026 AXIS — All rights reserved.</div>
-      </footer>
+      <app-footer class="site-footer cv-editor__footer"></app-footer>
     </div>
-    <script>
-      (function () {
-        var header = document.querySelector('.cv-editor__topbar');
-        var nav = header && header.querySelector('.header-nav');
-        if (!header || !nav) return;
-        var button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'mobile-menu-button';
-        button.setAttribute('aria-label', 'Mở menu');
-        button.setAttribute('aria-expanded', 'false');
-        button.textContent = '☰';
-        header.appendChild(button);
-        button.addEventListener('click', function () {
-          var open = nav.classList.toggle('is-mobile-open');
-          button.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-      })();
-    </script>
+
   </body>
 </html>

@@ -1,0 +1,46 @@
+# MongoDB Atlas và Render
+
+## MongoDB Atlas
+
+Tạo database user riêng cho service, giới hạn Network Access theo IP của
+provider deploy, rồi đặt biến:
+
+```env
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/axis_auth?retryWrites=true&w=majority
+```
+
+Không commit chuỗi kết nối thật vào Git.
+
+## Render
+
+File `../render.yaml` tạo Node web service với:
+
+- `npm ci` làm build command.
+- `npm start` làm start command.
+- `/health` làm health check.
+- JWT secrets được Render tự sinh.
+- `MONGODB_URI` và `FRONTEND_ORIGIN` cần nhập trong Render Dashboard.
+
+`FRONTEND_ORIGIN` phải là URL HTTPS chính xác của frontend. Cookie production
+dùng `HttpOnly`, `Secure` và `SameSite=None` để frontend và backend khác domain
+trao đổi refresh cookie.
+
+Mongoose dùng connection pool giới hạn 2-10 kết nối, timeout chọn server 10 giây,
+timeout kết nối 10 giây và socket timeout 45 giây để tránh request treo vô hạn
+khi Atlas không khả dụng.
+
+## Frontend API URL
+
+Frontend hiện vẫn dùng FastAPI `/api/v1` cho profile, dashboard và account.
+Có thể override URL FastAPI bằng cách đặt trước `js/auth.js`:
+
+```html
+<script>
+  window.FUTUREPATH_API_BASE = 'https://api.example.com/api/v1/auth';
+</script>
+<script src="/js/auth.js"></script>
+```
+
+Node auth service dùng API riêng `/api/auth`. Không đổi `FUTUREPATH_API_BASE`
+sang Node service cho đến khi các route profile/dashboard được triển khai tương
+ứng trên Node.

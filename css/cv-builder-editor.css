@@ -24,17 +24,17 @@
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-.cv-editor *, .cv-editor *::before, .cv-editor *::after { box-sizing: border-box; }
+.cv-editor *, .cv-editor *::before, .cv-editor *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 .cv-editor button, .cv-editor input { font: inherit; }
 .cv-editor__topbar { position: sticky; top: 0; z-index: 10; }
 .cv-editor__actions { align-items: center; display: flex; gap: 10px; grid-column: 1 / -1; justify-content: flex-end; margin-bottom: -8px; }
 .cv-editor__topbar .header-nav { flex: 1 1 auto; }
 .cv-editor__topbar .mobile-menu-button { display: none; }
 .cv-editor .cv-button { align-items: center; border: 1px solid transparent; border-radius: 9px; cursor: pointer; display: inline-flex; font-size: 12px; font-weight: 800; height: 42px; justify-content: center; letter-spacing: .01em; line-height: 1; margin: 0; padding: 0 14px; transition: transform .16s ease, box-shadow .16s ease, background .16s ease; white-space: nowrap; }
-.cv-button:hover { transform: translateY(-1px); }
-.cv-button:focus-visible, .cv-template-option:focus-visible, .cv-editor input:focus-visible { outline: 3px solid rgba(11,61,102,.25); outline-offset: 2px; }
-.cv-button--quiet { background: #fff; border-color: var(--cv-line); color: var(--cv-ink); text-decoration: none; }
-.cv-button--primary { background: var(--cv-accent); box-shadow: 0 8px 18px rgba(11,61,102,.18); color: #fff; }
+.cv-editor .cv-button:hover { transform: translateY(-1px); }
+.cv-editor .cv-button:focus-visible, .cv-editor .cv-template-option:focus-visible, .cv-editor input:focus-visible { outline: 3px solid rgba(11,61,102,.25); outline-offset: 2px; }
+.cv-editor .cv-button--quiet { background: #fff; border-color: var(--cv-line); color: var(--cv-ink); text-decoration: none; }
+.cv-editor .cv-button--primary { background: var(--cv-accent); box-shadow: 0 8px 18px rgba(11,61,102,.18); color: #fff; }
 .cv-editor .cv-button--full { justify-content: center; width: 100%; }
 
 .cv-editor__layout { display: grid; gap: 24px; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); margin: 0 auto; max-width: 1600px; padding: 88px clamp(16px, 4vw, 52px) 52px; }
@@ -63,9 +63,9 @@
 .cv-agent.is-error .cv-agent__status { color: #c34444; }
 .cv-status { margin: 10px 0 0; min-height: 18px; }
 .cv-template-picker { display: grid; gap: 7px; margin-top: 14px; }
-.cv-template-option { align-items: center; background: #fff; border: 1px solid var(--cv-line); border-radius: 10px; cursor: pointer; display: flex; gap: 10px; padding: 9px; text-align: left; width: 100%; }
-.cv-template-option:hover, .cv-template-option.is-selected { background: var(--cv-accent-soft); border-color: var(--cv-accent); }
-.cv-template-option strong, .cv-template-option small { display: block; }
+.cv-editor .cv-template-option { align-items: center; background: #fff; border: 1px solid var(--cv-line); border-radius: 10px; cursor: pointer; display: flex; gap: 10px; padding: 9px; text-align: left; width: 100%; }
+.cv-editor .cv-template-option:hover, .cv-editor .cv-template-option.is-selected { background: var(--cv-accent-soft); border-color: var(--cv-accent); }
+.cv-editor .cv-template-option strong, .cv-editor .cv-template-option small { display: block; }
 .cv-template-option strong { font-size: 12px; }
 .cv-template-option small { color: var(--cv-muted); font-size: 10px; margin-top: 2px; }
 .cv-template-swatch { border-radius: 6px; display: block; flex: 0 0 36px; height: 36px; position: relative; }

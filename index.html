@@ -7,43 +7,13 @@
   <link rel="stylesheet" href="css/global.css?v=home-layout" />
   <script src="js/axis-brand.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/components.js?v=mobile-nav-2" defer></script>
 </head>
 <body class="home-page">
   <div class="page-shell">
 
     <div class="workspace">
-      <header class="topbar">
-        <div class="header-brand">
-          <a class="brand-link" href="index.html">
-            <div class="brand">
-              <div class="brand-mark" aria-hidden="true">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-mark-inner-svg" aria-hidden="true">
-                  <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
-                  <path d="M7 12h10M12 7v10" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </div>
-              <div class="brand-copy"><span>AXIS</span><small>Academic &amp; X-Career Intelligent System</small></div>
-            </div>
-          </a>
-        </div>
-
-        <nav class="header-nav" role="navigation" aria-label="Chính">
-          <a class="nav-item" href="pages/dashboard.html"><span class="nav-ico">◈</span><span>Bảng điều khiển</span></a>
-          <a class="nav-item" href="pages/profile.html"><span class="nav-ico">☰</span><span>Hồ sơ năng lực</span></a>
-          <a class="nav-item" href="pages/assessment.html"><span class="nav-ico">◎</span><span>Đánh giá &amp; Gợi ý</span></a>
-          <a class="nav-item" href="pages/development.html"><span class="nav-ico">▣</span><span>Phát triển bản thân</span></a>
-          <a class="nav-item" href="pages/calendar.html"><span class="nav-ico">◷</span><span>Lịch công việc</span></a>
-          <a class="nav-item" href="pages/careers.html"><span class="nav-ico">▤</span><span>Thư viện nghề nghiệp</span></a>
-          <a class="nav-item" href="pages/about.html"><span class="nav-ico">ⓘ</span><span>Về AXIS</span></a>
-        </nav>
-
-        <div class="header-auth">
-          <div class="auth-area" id="authArea">
-            <button class="auth-btn ghost-btn" type="button" data-auth-action="signin">Đăng nhập</button>
-            <button class="auth-btn primary-btn" type="button" data-auth-action="signup">Đăng ký</button>
-          </div>
-        </div>
-      </header>
+      <app-header class="topbar"></app-header>
 
       <div class="content-grid">
         <main class="main-column">
@@ -150,31 +120,7 @@
         </div>
       </section>
 
-      <footer class="site-footer">
-        <div class="footer-container">
-          <div class="footer-contact">
-            <h4>Liên hệ</h4>
-            <p>AXIS — Hỗ trợ ra quyết định hướng nghiệp bằng dữ liệu khoa học.</p>
-            <p><strong>Email:</strong> <a href="mailto:hello@axis.edu.vn">hello@axis.edu.vn</a></p>
-            <p><strong>Điện thoại:</strong> <a href="tel:+840123456789">+84 0123 456 789</a></p>
-          </div>
-
-          <div class="footer-form">
-            <h4>Nhận thông tin &amp; tư vấn</h4>
-            <form id="contactForm" action="#">
-              <div class="field-row">
-                <input type="email" name="email" placeholder="Email của bạn" required />
-                <input type="tel" name="phone" placeholder="Số điện thoại (tùy chọn)" />
-              </div>
-              <div class="field-row">
-                <button type="submit" class="primary-btn">Gửi</button>
-                <button type="reset" class="ghost-btn">Xóa</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="footer-bottom">© 2026 AXIS — Nghiên cứu Khoa học Kỹ thuật Học sinh THPT.</div>
-      </footer>
+      <app-footer class="site-footer"></app-footer>
 
       <div class="settings-modal hidden" id="settingsModal" aria-hidden="true">
         <div class="settings-modal-backdrop" data-close-settings="true"></div>
@@ -221,11 +167,20 @@
             const phone = form.querySelector('input[name="phone"]').value;
             const payload = { email, phone };
             try {
-              const res = await fetch('http://127.0.0.1:5000/submit', {
+              const controller = typeof AbortController === 'function' ? new AbortController() : null;
+              const request = fetch('/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                signal: controller ? controller.signal : undefined
               });
+              const timeout = new Promise(function (_, reject) {
+                window.setTimeout(function () {
+                  if (controller) controller.abort();
+                  reject(new Error('Contact request timed out'));
+                }, 8000);
+              });
+              const res = await Promise.race([request, timeout]);
               if (!res.ok) throw new Error('Network response was not ok');
               await res.json();
               alert('Cảm ơn! Chúng tôi đã nhận thông tin.');
@@ -289,90 +244,5 @@
 
     </div>
   </div>
-<script>
-(function(){
-  // Build mobile menu UI once
-  const header = document.querySelector('.topbar');
-  if (!header) return;
-  if (document.querySelector('.mobile-menu-button')) return; // already added
-
-  const headerAuth = header.querySelector('.header-auth');
-  const headerNav = header.querySelector('.header-nav');
-
-  // Create button
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'mobile-menu-button';
-  btn.setAttribute('aria-expanded', 'false');
-  btn.setAttribute('aria-label', 'Mở menu');
-  btn.innerHTML = '☰';
-
-  // Insert button before auth (so it's between nav area and auth)
-  if (headerAuth && headerAuth.parentNode) {
-    header.insertBefore(btn, headerAuth);
-  } else {
-    header.appendChild(btn);
-  }
-
-  // Create overlay and clone nav into it
-  const overlay = document.createElement('div');
-  overlay.className = 'mobile-nav-overlay hidden';
-  const mobileNav = document.createElement('nav');
-  mobileNav.className = 'mobile-nav';
-
-  if (headerNav) {
-    // clone nav items
-    headerNav.querySelectorAll('.nav-item').forEach(function(item){
-      const clone = item.cloneNode(true);
-      // ensure spacing and block behavior
-      clone.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); });
-      mobileNav.appendChild(clone);
-    });
-  } else {
-    // fallback: build basic links
-    const links = [ ['Hồ sơ năng lực','/pages/profile.html'], ['Đánh giá & Gợi ý','/pages/assessment.html'], ['Phát triển bản thân','/pages/development.html'], ['Thư viện nghề nghiệp','/pages/careers.html'], ['Về AXIS','/pages/about.html'], ['Hướng dẫn','/pages/guide.html'] ];
-    links.forEach(function(l){ const a = document.createElement('a'); a.className='nav-item'; a.href=l[1]; a.textContent=l[0]; a.addEventListener('click', function(){ overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); }); mobileNav.appendChild(a); });
-  }
-
-  if (headerAuth) {
-    const mobileAuth = headerAuth.querySelector('.auth-area').cloneNode(true);
-    mobileAuth.classList.add('mobile-auth');
-    mobileAuth.querySelectorAll('[data-auth-action]').forEach(function (button) {
-      button.addEventListener('click', function () {
-        const action = button.getAttribute('data-auth-action');
-        const originalButton = header.querySelector('[data-auth-action="' + action + '"]');
-        if (originalButton) originalButton.click();
-        overlay.classList.add('hidden');
-        document.body.classList.remove('mobile-nav-open');
-        btn.setAttribute('aria-expanded', 'false');
-      });
-    });
-    mobileNav.appendChild(mobileAuth);
-  }
-
-  overlay.appendChild(mobileNav);
-  document.body.appendChild(overlay);
-
-  // Toggle handler
-  btn.addEventListener('click', function(e){
-    const open = !overlay.classList.contains('hidden');
-    if (open) {
-      overlay.classList.add('hidden');
-      document.body.classList.remove('mobile-nav-open');
-      btn.setAttribute('aria-expanded','false');
-    } else {
-      overlay.classList.remove('hidden');
-      document.body.classList.add('mobile-nav-open');
-      btn.setAttribute('aria-expanded','true');
-    }
-  });
-
-  // Close overlay on backdrop click
-  overlay.addEventListener('click', function(e){ if (e.target === overlay) { overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); } });
-
-  // Close on Escape
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { overlay.classList.add('hidden'); document.body.classList.remove('mobile-nav-open'); btn.setAttribute('aria-expanded','false'); } });
-})();
-</script>
 </body>
 </html>
