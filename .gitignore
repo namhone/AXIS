@@ -7,6 +7,8 @@ __pycache__/
 .env.*
 !.env.example
 !backend/.env.example
+# Local deployment credentials; never commit this file.
+api.md
 
 # Runtime form submissions
 data/submissions.json
