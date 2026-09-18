@@ -6,6 +6,8 @@ services:
     buildCommand: pip install -r requirements.txt
     # Run migrations separately (Render pre-deploy or manually). Start the app only.
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    # Run alembic migrations before starting the app. Render runs this command from the service rootDir (backend).
+    preDeployCommand: alembic -c alembic.ini upgrade head
     healthCheckPath: /health
     autoDeploy: true
     envVars:
