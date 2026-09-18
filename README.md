@@ -7,7 +7,7 @@
 
 AXIS is an open-source career-orientation and development platform for high-school students. It combines an academic and personal profile, Holland RIASEC interests, language certificates, achievement and extracurricular data, and a quantitative career-matching engine to help users compare 24 career domains and identify practical development gaps.
 
-> **Project status:** local frontend/backend integration is working. Production hardening, operational controls, and additional API coverage are still required before treating the service as production-ready.
+> **Project status:** deployment manifests and production security checks are prepared for GitHub-connected Vercel, Render, and MongoDB Atlas deployment. Cloud credentials and provider-side environment variables still need to be configured.
 
 ## Overview
 
@@ -21,6 +21,25 @@ The application currently provides:
 - An optional backend AI roadmap endpoint powered by Groq. The API key remains server-side and is never placed in frontend code.
 
 AXIS is decision support, not an admissions, aptitude, or employment guarantee. Recommendations should be reviewed with educators and current, authoritative career information.
+
+## Design system
+
+Poster-ready brand, color, typography, spacing, component, responsive, A4 CV,
+and accessibility guidance is available in
+[`DESIGN-SYSTEM-POSTER.md`](./DESIGN-SYSTEM-POSTER.md).
+
+## Deployment architecture
+
+For a complete production deployment, connect this repository to:
+
+1. **Vercel** for the static frontend and the existing FastAPI serverless entrypoint.
+2. **Render** using [`render.yaml`](./render.yaml) for the dedicated FastAPI API and Node authentication service.
+3. **MongoDB Atlas** for the Node authentication database.
+4. A PostgreSQL provider for the FastAPI `DATABASE_URL`.
+
+The frontend continues to use FastAPI `/api/v1` for profile, dashboard, and
+account features. Node `/api/auth` remains the dedicated authentication service
+until equivalent profile and dashboard routes are implemented there.
 
 ## Architecture
 
