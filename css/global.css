@@ -5363,7 +5363,10 @@ a.button-like:active {
   }
 
   .topbar .header-auth {
-    display: none !important;
+    display: flex !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
   }
 
   .topbar .header-nav {
@@ -5373,7 +5376,25 @@ a.button-like:active {
   .topbar .mobile-menu-button {
     display: inline-flex !important;
     flex: 0 0 44px !important;
-    margin-left: auto !important;
+    margin-left: 0 !important;
+  }
+
+  .topbar .header-auth .auth-area {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+
+  .topbar .header-auth .auth-btn[data-auth-action="signup"] {
+    display: none !important;
+  }
+
+  .topbar .header-auth .auth-btn[data-auth-action="signin"] {
+    display: inline-flex !important;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 10px;
+    white-space: nowrap;
   }
 }
 
@@ -5393,12 +5414,12 @@ a.button-like:active {
     left: 50vw !important;
     right: auto !important;
     bottom: auto !important;
-    width: min(360px, calc(100vw - 32px)) !important;
+    width: min(380px, calc(100vw - 24px)) !important;
     max-height: min(72vh, 560px) !important;
     margin: 0 !important;
-    padding: 14px !important;
+    padding: 10px !important;
     display: grid !important;
-    gap: 4px !important;
+    gap: 2px !important;
     overflow-y: auto !important;
     transform: translate(-50%, -50%) !important;
     background: var(--panel, #fff) !important;
@@ -5410,12 +5431,12 @@ a.button-like:active {
   }
 
   .header-nav.is-mobile-open .nav-item {
-    min-height: 48px !important;
+    min-height: 44px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    padding: 12px 14px !important;
-    border-radius: 12px !important;
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
     box-sizing: border-box !important;
   }
 
@@ -5430,7 +5451,7 @@ a.button-like:active {
     left: 50vw !important;
     right: auto !important;
     bottom: auto !important;
-    width: min(360px, calc(100vw - 32px)) !important;
+    width: min(380px, calc(100vw - 24px)) !important;
     max-height: min(72vh, 560px) !important;
     margin: 0 !important;
     transform: translate(-50%, -50%) !important;
@@ -5442,6 +5463,51 @@ a.button-like:active {
   app-header.topbar .header-nav.is-mobile-open .nav-item span:last-child,
   app-header.topbar.cv-editor__topbar .header-nav.is-mobile-open .nav-item span:last-child {
     display: inline !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .topbar .brand-copy small {
+    display: none;
+  }
+
+  .topbar .header-auth .auth-btn[data-auth-action="signin"] {
+    min-height: 36px;
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+
+  .header-nav.is-mobile-open,
+  app-header.topbar .header-nav.is-mobile-open,
+  app-header.topbar.cv-editor__topbar .header-nav.is-mobile-open {
+    width: calc(100vw - 20px) !important;
+    max-height: calc(100vh - 96px) !important;
+  }
+}
+
+/* Keep recommendation cards aligned when descriptions have different lengths. */
+#topCareerGrid .career-card {
+  min-width: 0;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+#topCareerGrid .career-card p {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+#topCareerGrid .career-card .score-pill {
+  margin-top: auto;
+}
+
+@media (max-width: 640px) {
+  #topCareerGrid .career-card {
+    min-height: 0;
   }
 }
 

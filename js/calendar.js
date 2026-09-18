@@ -2,7 +2,15 @@
   'use strict';
   var state = { month: new Date(new Date().getFullYear(), new Date().getMonth(), 1), tasks: [], selected: new Date() };
   function api(path, options) { return window.FuturePathAuth.apiRequest(path, options); }
-  function dateKey(value) { var date = value instanceof Date ? value : new Date(value); return date.toISOString().slice(0, 10); }
+  function dateKey(value) {
+    var date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, '0'),
+      String(date.getDate()).padStart(2, '0')
+    ].join('-');
+  }
   function setMessage(text, error) { var node = document.getElementById('calendarMessage'); node.textContent = text || ''; node.className = error ? 'calendar-error' : 'calendar-success'; }
   function tasksFor(day) { return state.tasks.filter(function (task) { return task.scheduled_date === day; }); }
   function renderTasks() {
@@ -29,7 +37,15 @@
       grid.appendChild(cell);
     }
   }
-  function load() { return api('/tasks').then(function (data) { state.tasks = data.tasks || []; renderCalendar(); renderTasks(); if (data.calendar_metadata.auto_rescheduled_count) setMessage('Đã tự dời ' + data.calendar_metadata.auto_rescheduled_count + ' task quá hạn.'); }); }
+  function load() {
+    return api('/tasks').then(function (data) {
+      state.tasks = Array.isArray(data.tasks) ? data.tasks : [];
+      renderCalendar();
+      renderTasks();
+      var movedCount = data.calendar_metadata && data.calendar_metadata.auto_rescheduled_count;
+      if (movedCount) setMessage('Đã tự dời ' + movedCount + ' task quá hạn.');
+    });
+  }
   function updateStatus(id, checked) { return api('/tasks/' + id + '/status', { method: 'PATCH', body: JSON.stringify({ status: checked ? 'COMPLETED' : 'PENDING' }) }).then(load).catch(function (error) { setMessage(error.message, true); }); }
   function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, function (char) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[char]; }); }
   function init() {

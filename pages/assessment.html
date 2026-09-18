@@ -143,6 +143,32 @@
         const skillChart = document.getElementById('skillChart');
 
         let latestResult = null;
+        const careerDescriptions = {
+          N01: 'Phát triển phần mềm, dữ liệu và hệ thống số; phù hợp với người thích giải quyết vấn đề bằng tư duy logic.',
+          N02: 'Tổ chức vận hành, chiến lược và nguồn lực để doanh nghiệp tăng trưởng bền vững.',
+          N03: 'Nghiên cứu, chăm sóc và cải thiện sức khỏe con người bằng kiến thức sinh học, hóa học và y khoa.',
+          N04: 'Sử dụng ngôn ngữ và hiểu biết văn hóa để giảng dạy, biên dịch hoặc kết nối cộng đồng quốc tế.',
+          N05: 'Tạo ra sản phẩm thị giác, không gian và trải nghiệm giàu tính thẩm mỹ, sáng tạo.',
+          N06: 'Thiết kế, vận hành và tự động hóa máy móc, dây chuyền và hệ thống kỹ thuật.',
+          N07: 'Tạo lập công trình an toàn, hữu ích từ quy hoạch, kiến trúc đến thi công và quản lý dự án.',
+          N08: 'Phân tích quy định, bảo vệ trật tự và hỗ trợ xây dựng môi trường công bằng, an toàn.',
+          N09: 'Thiết kế hoạt động học tập và đồng hành cùng người học phát triển năng lực, nhân cách.',
+          N10: 'Tạo trải nghiệm dịch vụ hiếu khách, quản lý điểm đến, lưu trú và hoạt động ẩm thực.',
+          N11: 'Nghiên cứu công chúng và kể chuyện bằng nội dung, báo chí, thương hiệu và chiến dịch truyền thông.',
+          N12: 'Phân tích dòng tiền, rủi ro và quyết định tài chính cho cá nhân, doanh nghiệp hoặc tổ chức.',
+          N13: 'Giải quyết bài toán bảo tồn, tài nguyên và phát triển kinh tế theo hướng bền vững.',
+          N14: 'Ứng dụng sinh học và hóa học để tạo thuốc, vật liệu hoặc quy trình công nghệ sinh học.',
+          N15: 'Khám phá tính chất vật chất và phát triển vật liệu, sản phẩm hóa học mới.',
+          N16: 'Tối ưu sản xuất nông nghiệp, lâm nghiệp và thủy sản gắn với công nghệ và môi trường.',
+          N17: 'Nghiên cứu con người, xã hội và lịch sử để tạo ra góc nhìn sâu sắc cho cộng đồng.',
+          N18: 'Xây dựng quan hệ hợp tác giữa các tổ chức, quốc gia và cộng đồng đa văn hóa.',
+          N19: 'Điều phối dòng hàng hóa, kho vận và dữ liệu để chuỗi cung ứng nhanh, tiết kiệm hơn.',
+          N20: 'Vận hành hệ thống hàng không, hàng hải với yêu cầu cao về kỹ thuật, an toàn và kỷ luật.',
+          N21: 'Mô hình hóa vấn đề bằng toán học, thống kê và dữ liệu để hỗ trợ quyết định.',
+          N22: 'Tìm hiểu các quy luật tự nhiên, vật chất và vũ trụ qua thí nghiệm và mô hình.',
+          N23: 'Phát triển sức khỏe, thành tích thể thao và hoạt động quản lý trong lĩnh vực thể chất.',
+          N24: 'Phục vụ cộng đồng, quản trị chính sách và vận hành các chương trình xã hội công.'
+        };
 
         function escapeHtml(value) {
           return String(value).replace(/[&<>"']/g, function (character) {
@@ -166,7 +192,8 @@
             const el = careerEls[index];
             if (!el) return;
             el.querySelector('h3').textContent = career.name;
-            el.querySelector('p').textContent = 'Nổi bật ở ' + labels[career.highlight] + ' (' + career.scores[career.highlight] + '/10).';
+            el.querySelector('p').textContent = careerDescriptions[career.code] || ('Nổi bật ở ' + labels[career.highlight] + ' (' + career.scores[career.highlight] + '/10).');
+            el.setAttribute('aria-label', career.name + ': ' + (careerDescriptions[career.code] || 'Gợi ý ngành nghề phù hợp với hồ sơ.'));
             el.querySelector('.score-pill').textContent = career.score + '% phù hợp';
             el.href = 'career-detail.html?career=' + encodeURIComponent(career.name);
           });
