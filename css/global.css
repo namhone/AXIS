@@ -4704,8 +4704,15 @@ body.mobile-nav-open { overflow: hidden; }
 }
 
 .guide-image {
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+  margin: 12px 0 4px;
+  background: rgba(11, 61, 102, 0.04);
   filter: saturate(.9);
 }
 

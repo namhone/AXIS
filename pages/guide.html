@@ -20,8 +20,8 @@
       .guide-step:nth-child(2) .guide-tag { background: #E8F5EF; color: #35745B; }
       .guide-step:nth-child(3) .guide-tag { background: #FFF1DC; color: #9B6528; }
       .guide-step:nth-child(4) .guide-tag { background: #F3EAFB; color: #73508F; }
-      /* Preserve the full illustration instead of cropping it into a fixed-ratio box. */
-      .guide-image { width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; border-radius: 10px; margin: 12px 0 4px; display: block; }
+      /* Giữ nguyên hình ảnh toàn bộ, không cắt theo khung 16:9. */
+      .guide-image { display: block; width: 100%; height: auto; max-height: 280px; object-fit: contain; object-position: center; border-radius: 12px; margin: 12px 0 4px; background: rgba(11, 61, 102, 0.04); }
       .guide-credit { display: block; color: var(--text-soft); font-size: .72rem; margin-top: 8px; }
       @media (max-width: 700px) { .guide-grid { grid-template-columns: 1fr; } }
     </style>
