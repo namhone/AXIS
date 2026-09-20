@@ -4558,7 +4558,7 @@ body.mobile-nav-open { overflow: hidden; }
     border-top: 1px solid var(--line);
   }
   .header-nav.is-mobile-open .mobile-auth .auth-btn {
-    flex: 0 0 auto;
+    flex: 1 1 0;
     min-width: 0;
     min-height: 42px;
   }
@@ -4566,8 +4566,8 @@ body.mobile-nav-open { overflow: hidden; }
   .header-nav.is-mobile-open .mobile-auth {
     margin-bottom: 0;
     padding-bottom: 0;
-    width: max-content;
-    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 /* Desktop header button compact override: make auth buttons smaller without affecting hero buttons */
@@ -5436,7 +5436,7 @@ a.button-like:active {
     box-shadow: 0 24px 70px rgba(3, 18, 30, .28) !important;
     z-index: 1100 !important;
     box-sizing: border-box !important;
-    grid-template-columns: max-content !important;
+    grid-template-columns: auto !important;
   }
 
   .header-nav.is-mobile-open .nav-item {
@@ -5447,8 +5447,6 @@ a.button-like:active {
     padding: 8px 12px !important;
     border-radius: 10px !important;
     box-sizing: border-box !important;
-    width: max-content !important;
-    max-width: 100% !important;
     white-space: nowrap !important;
   }
 
@@ -5472,7 +5470,7 @@ a.button-like:active {
     display: grid !important;
     overflow-y: auto !important;
     z-index: 1100 !important;
-    grid-template-columns: max-content !important;
+    grid-template-columns: auto !important;
   }
 
   app-header.topbar .header-nav.is-mobile-open .nav-item span:last-child,
