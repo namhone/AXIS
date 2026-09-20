@@ -5418,7 +5418,9 @@ a.button-like:active {
     left: 50vw !important;
     right: auto !important;
     bottom: auto !important;
-    width: min(380px, calc(100vw - 24px)) !important;
+    width: fit-content !important;
+    min-width: min(300px, calc(100vw - 24px)) !important;
+    max-width: calc(100vw - 24px) !important;
     max-height: min(72vh, 560px) !important;
     margin: 0 !important;
     padding: 8px 10px 6px !important;
@@ -5455,7 +5457,9 @@ a.button-like:active {
     left: 50vw !important;
     right: auto !important;
     bottom: auto !important;
-    width: min(380px, calc(100vw - 24px)) !important;
+    width: fit-content !important;
+    min-width: min(300px, calc(100vw - 24px)) !important;
+    max-width: calc(100vw - 24px) !important;
     max-height: min(72vh, 560px) !important;
     margin: 0 !important;
     transform: translate(-50%, -50%) !important;
@@ -5484,7 +5488,9 @@ a.button-like:active {
   .header-nav.is-mobile-open,
   app-header.topbar .header-nav.is-mobile-open,
   app-header.topbar.cv-editor__topbar .header-nav.is-mobile-open {
-    width: calc(100vw - 20px) !important;
+    width: fit-content !important;
+    min-width: min(300px, calc(100vw - 20px)) !important;
+    max-width: calc(100vw - 20px) !important;
     max-height: calc(100vh - 96px) !important;
   }
 }
