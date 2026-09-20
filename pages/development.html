@@ -408,7 +408,9 @@
           initRoadmap();
         }
         async function generateRoadmap() {
-          if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
+          if (!window.AXISAuth) return;
+          await window.AXISAuth.checkSession();
+          if (!window.AXISAuth.requireAuth()) return;
           generateRoadmapBtn.disabled = true;
           if (roadmapStatus) roadmapStatus.textContent = 'AI đang xây dựng lộ trình...';
           try {
