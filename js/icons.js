@@ -14,13 +14,13 @@
   };
 
   var careerByCode = {
-    N01: 'it_software', N02: 'business_admin', N03: 'medicine_health', N04: 'languages_trans',
-    N05: 'design_uiux', N06: 'automation_ee', N07: 'architecture_civil', N08: 'law_legal',
-    N09: 'education_pedagogy', N10: 'hospitality_tourism', N11: 'journalism_media',
-    N12: 'finance_banking', N13: 'agriculture_env', N14: 'biotech_food',
-    N15: 'chemistry_materials', N16: 'agriculture_env', N17: 'psychology_social',
-    N18: 'languages_trans', N19: 'logistics_supply', N20: 'aviation_maritime',
-    N21: 'ai_data', N22: 'mechanical_semiconductor', N23: 'trending-up', N24: 'security_defense'
+    N01: 'code', N02: 'building-2', N03: 'stethoscope', N04: 'languages',
+    N05: 'palette', N06: 'zap', N07: 'ruler', N08: 'scale',
+    N09: 'graduation-cap', N10: 'hotel', N11: 'newspaper',
+    N12: 'wallet', N13: 'sprout', N14: 'dna',
+    N15: 'test-tube', N16: 'sprout', N17: 'heart-handshake',
+    N18: 'languages', N19: 'truck', N20: 'plane',
+    N21: 'brain-circuit', N22: 'wrench', N23: 'trending-up', N24: 'shield-check'
   };
 
   function loadLucide() {
@@ -48,7 +48,7 @@
         element.setAttribute('data-lucide', iconName);
         needsRender = true;
       }
-      if (!element.querySelector('svg')) {
+      if (window.lucide && !element.querySelector('svg')) {
         element.textContent = '';
         needsRender = true;
       }
@@ -60,7 +60,7 @@
         element.setAttribute('data-lucide', iconName);
         needsRender = true;
       }
-      if (!element.querySelector('svg')) {
+      if (window.lucide && !element.querySelector('svg')) {
         element.textContent = '';
         needsRender = true;
       }
