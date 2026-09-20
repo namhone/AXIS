@@ -4358,6 +4358,9 @@ body.has-search .search-box { display: block !important; }
   flex: 1 1 0;
   min-width: 0;
 }
+.header-nav .mobile-auth {
+  display: none;
+}
 
 /* Show mobile button and hide desktop nav on small screens */
 @media (max-width: 980px) {
@@ -4547,6 +4550,18 @@ body.mobile-nav-open { overflow: hidden; }
   .mobile-nav-overlay .mobile-nav .nav-item { display:flex; align-items:center; gap:12px; padding:12px 14px; }
   .mobile-nav-overlay .mobile-nav .nav-item .nav-ico { width:34px; height:34px; display:inline-grid; place-items:center; border-radius:8px; background: rgba(0,0,0,0.03); font-size:18px; }
   .mobile-nav-overlay .mobile-nav .nav-item span:last-child { font-size:15px; }
+  .header-nav.is-mobile-open .mobile-auth {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 10px 2px 2px;
+    border-top: 1px solid var(--line);
+  }
+  .header-nav.is-mobile-open .mobile-auth .auth-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 42px;
+  }
 }
 /* Desktop header button compact override: make auth buttons smaller without affecting hero buttons */
 @media (min-width: 981px) {

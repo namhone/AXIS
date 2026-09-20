@@ -64,8 +64,9 @@
       button.textContent = isOpen ? '×' : '☰';
     });
     nav.addEventListener('click', function (event) {
-      if (!event.target.closest('a')) return;
-      closeMenu();
+      if (event.target.closest('a') || event.target.closest('[data-auth-action]')) {
+        closeMenu();
+      }
     });
     document.addEventListener('keydown', function (event) {
       if (event.key !== 'Escape' || !nav.classList.contains('is-mobile-open')) return;
