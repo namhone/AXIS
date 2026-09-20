@@ -38,28 +38,53 @@
   }
 
   function renderIcons() {
+    var needsRender = false;
     document.querySelectorAll('.nav-item .nav-ico').forEach(function (element) {
       var link = element.closest('.nav-item');
-      element.setAttribute('data-lucide', link ? menuName(link) : 'briefcase');
-      element.textContent = '';
+      var iconName = link ? menuName(link) : 'briefcase';
+      if (element.getAttribute('data-lucide') !== iconName) {
+        element.setAttribute('data-lucide', iconName);
+        needsRender = true;
+      }
+      if (!element.querySelector('svg')) {
+        element.textContent = '';
+        needsRender = true;
+      }
     });
     document.querySelectorAll('.career-card[data-career-code] .career-icon').forEach(function (element) {
       var code = element.closest('[data-career-code]').getAttribute('data-career-code');
-      element.setAttribute('data-lucide', careerByCode[code] || 'help-circle');
-      element.textContent = '';
+      var iconName = careerByCode[code] || 'help-circle';
+      if (element.getAttribute('data-lucide') !== iconName) {
+        element.setAttribute('data-lucide', iconName);
+        needsRender = true;
+      }
+      if (!element.querySelector('svg')) {
+        element.textContent = '';
+        needsRender = true;
+      }
     });
     document.querySelectorAll('[data-career-card] .career-icon').forEach(function (element) {
       if (!element.hasAttribute('data-lucide')) {
         element.setAttribute('data-lucide', 'help-circle');
         element.textContent = '';
+        needsRender = true;
       }
     });
-    if (window.lucide) window.lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });
+    if (needsRender && window.lucide) {
+      window.lucide.createIcons({ attrs: { 'stroke-width': 1.75 } });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
     loadLucide().then(renderIcons);
-    var observer = new MutationObserver(renderIcons);
+    var observer = new MutationObserver(function (records) {
+      var hasNewContent = records.some(function (record) {
+        return Array.prototype.some.call(record.addedNodes, function (node) {
+          return node.nodeType === 1 && node.tagName !== 'SVG';
+        });
+      });
+      if (hasNewContent) renderIcons();
+    });
     observer.observe(document.body, { childList: true, subtree: true });
   });
 })();

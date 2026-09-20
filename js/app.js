@@ -218,6 +218,8 @@
     hydrateProfile: hydrateProfile,
     saveProfile: saveProfile
   };
+  // Keep the legacy global available for page-level scripts during the migration.
+  window.AXISData = window.FuturePathData;
 
   document.addEventListener('DOMContentLoaded', function () {
     initProfile();

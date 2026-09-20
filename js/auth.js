@@ -369,7 +369,7 @@
       setAuthState(user);
     } catch (error) {
       if (requestVersion !== sessionCheckVersion) return;
-      if (error.status === 401) {
+      if (error.status === 401 && !USE_SAME_ORIGIN_API) {
         const fallbackHost = API_HOSTS.find(function (host) { return host !== activeApiHost; });
         if (fallbackHost) {
           try {
@@ -543,6 +543,8 @@
     requireAuth: requireAuth,
     showNotice: showNotice
   };
+  // Keep the legacy global available for pages that still use the AXIS naming.
+  window.AXISAuth = window.FuturePathAuth;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize, { once: true });
   } else {
@@ -554,7 +556,7 @@
   var authScript = document.querySelector('script[src$="auth.js"]');
   if (!authScript || document.querySelector('script[data-axis-icons]')) return;
   var iconScript = document.createElement('script');
-  iconScript.src = new URL('icons.js', authScript.src).href;
+  iconScript.src = new URL('icons.js?v=20260920-icons-fix', authScript.src).href;
   iconScript.setAttribute('data-axis-icons', 'true');
   document.head.appendChild(iconScript);
 })();

@@ -83,15 +83,6 @@
     });
   }
 
-  function watchLegacyMobileMenu() {
-    if (!window.MutationObserver || !document.body) return;
-    removeLegacyMobileMenu();
-    var observer = new MutationObserver(function () {
-      removeLegacyMobileMenu();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
-
   function showComponentError(host) {
     host.replaceChildren();
     host.setAttribute('aria-busy', 'false');
@@ -162,5 +153,5 @@
 
   customElements.define('app-header', AppHeader);
   customElements.define('app-footer', AppFooter);
-  watchLegacyMobileMenu();
+  removeLegacyMobileMenu();
 })();
