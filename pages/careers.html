@@ -233,7 +233,7 @@
               '<p class="career-card-detail">' + escapeHtml((descriptions[item.code] || ['', 'Tìm hiểu chương trình đào tạo, thử một dự án nhỏ và đối chiếu với hồ sơ năng lực của bạn.'])[1]) + '</p>' +
               '<div class="skill-row">' + skills.map(function (skill, skillIndex) { return '<small class="skill-pill ' + (skillIndex === 1 ? 'pill-indigo' : 'pill-teal') + '">' + escapeHtml(skill) + '</small>'; }).join('') +
               '<span class="career-score">AXIS catalog</span></div>' +
-              '<div class="career-card-actions"><button class="ghost-btn add-to-plan" type="button">Thêm vào lộ trình</button><a href="career-detail.html?career=' + encodeURIComponent(item.name) + '" class="ghost-btn">Xem chi tiết</a></div></article>';
+              '<div class="career-card-actions"><button class="ghost-btn add-to-plan" type="button">Thêm vào lộ trình</button><a href="career-detail.html?code=' + encodeURIComponent(item.code) + '&career=' + encodeURIComponent(item.name) + '" class="ghost-btn">Xem chi tiết</a></div></article>';
           }).join('');
           bindCareerCards();
         }
@@ -291,7 +291,7 @@
           if (!Array.isArray(items) || !items.length) throw new Error('empty catalog');
           catalogItems = items;
           if (catalog) catalog.innerHTML = items.map(function (item) {
-            return '<a class="career-catalog-item" href="career-detail.html?career=' + encodeURIComponent(item.name) + '"><strong>' + escapeHtml(item.code) + '</strong><span>' + escapeHtml(item.name) + '</span></a>';
+            return '<a class="career-catalog-item" href="career-detail.html?code=' + encodeURIComponent(item.code) + '&career=' + encodeURIComponent(item.name) + '"><strong>' + escapeHtml(item.code) + '</strong><span>' + escapeHtml(item.name) + '</span></a>';
           }).join('');
           renderCareerCards(items);
         }).catch(function () {

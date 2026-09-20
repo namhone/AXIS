@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Chi tiết nghề nghiệp — AXIS</title>
-  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/global.css?v=career-images-1">
   <script src="../js/axis-brand.js"></script>
   <script src="../js/app.js"></script>
   <script src="../js/auth.js"></script>
@@ -23,7 +23,9 @@
           <h1 id="careerPageTitle">Khoa học dữ liệu</h1>
           <p class="lead">Khám phá vai trò, kỹ năng cần thiết và lộ trình phát triển cho nghề nghiệp này.</p>
         </section>
-        <div class="career-detail-hero-image" role="img" aria-label="Minh họa môi trường nghề nghiệp"></div>
+        <div class="career-detail-hero-image" role="img" aria-label="Minh họa môi trường nghề nghiệp">
+          <img id="careerHeroImage" src="../assets/hero-1.png" alt="" loading="eager" decoding="async">
+        </div>
 
       <section class="content-grid">
         <article class="main-column">
@@ -59,6 +61,12 @@
                 <li>Nền tảng toán học, thống kê hoặc chuyên môn liên quan</li>
                 <li>Khả năng giao tiếp và trình bày kết quả rõ ràng</li>
               </ul>
+            </section>
+
+            <section class="career-section academic-sources">
+              <h3>Nguồn tham khảo học thuật</h3>
+              <p class="source-intro">Thông tin được diễn giải ngắn gọn từ chương trình học và tài nguyên mở của các trường đại học; hãy xem nguồn gốc để tìm hiểu sâu hơn.</p>
+              <ul class="checklist" id="careerSources"></ul>
             </section>
           </div>
         </article>
@@ -100,53 +108,96 @@
   const careerParam = qs('career');
   if (!careerParam) return;
   const careerName = decodeURIComponent(careerParam);
-
-  const data = {
-    'Khoa học dữ liệu': {
-      title: 'Khoa học dữ liệu',
-      overview: 'Phân tích dữ liệu, mô hình hóa và hỗ trợ ra quyết định.',
-      skills: ['Python','Machine Learning','Statistics'],
-      roadmap: ['Học Python','Học thống kê','Thực hành dự án'],
-      salary: '10-25M'
-    },
-    'Kỹ thuật phần mềm': {
-      title: 'Kỹ thuật phần mềm',
-      overview: 'Thiết kế, xây dựng và duy trì các sản phẩm phần mềm.',
-      skills: ['Algorithms','Data Structures','Collaboration'],
-      roadmap: ['Học cấu trúc dữ liệu','Xây dự án','Tham gia code review'],
-      salary: '8-22M'
-    },
-    'UI/UX Designer': {
-      title: 'UI/UX Designer',
-      overview: 'Nghiên cứu người dùng và thiết kế trải nghiệm số.',
-      skills: ['Research','Figma','Prototyping'],
-      roadmap: ['Học design fundamentals','Thực hành wireframe','Xây portfolio'],
-      salary: '7-18M'
-    },
-    'Marketing': {
-      title: 'Marketing',
-      overview: 'Nghiên cứu thị trường, thương hiệu và truyền thông.',
-      skills: ['Brand','SEO','Copywriting'],
-      roadmap: ['Học nền tảng marketing','Thực hành campaign','Theo dõi KPI'],
-      salary: '6-16M'
-    },
-    'Y tế & Dinh dưỡng': {
-      title: 'Y tế & Dinh dưỡng',
-      overview: 'Hỗ trợ chăm sóc sức khỏe và người bệnh trong thực tế.',
-      skills: ['Care','Science','Patient Care'],
-      roadmap: ['Học kiến thức y tế cơ bản','Thực tập tại cơ sở','Làm việc cộng đồng'],
-      salary: '7-15M'
-    },
-    'Thiết kế thời trang': {
-      title: 'Thiết kế thời trang',
-      overview: 'Phát triển phong cách, cảm hứng và sản phẩm truyền thông.',
-      skills: ['Design','Sketch','Trend Forecasting'],
-      roadmap: ['Học vẽ & thiết kế','Thực hành bộ sưu tập','Tham gia dự án thương mại'],
-      salary: '6-14M'
-    }
+  const careerCode = (qs('code') || '').toUpperCase();
+  const coverImages = {
+    N01: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=85',
+    N02: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=85',
+    N03: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85',
+    N04: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1400&q=85',
+    N05: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1400&q=85',
+    N06: 'https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1400&q=85',
+    N07: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85',
+    N08: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1400&q=85',
+    N09: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=85',
+    N10: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=85',
+    N11: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1400&q=85',
+    N12: 'https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1400&q=85',
+    N13: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=85',
+    N14: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1400&q=85',
+    N15: 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?auto=format&fit=crop&w=1400&q=85',
+    N16: 'https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=1400&q=85',
+    N17: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=85',
+    N18: 'https://images.unsplash.com/photo-1521292270410-a8c4d716d518?auto=format&fit=crop&w=1400&q=85',
+    N19: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
+    N20: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1400&q=85',
+    N21: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=85',
+    N22: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1400&q=85',
+    N23: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1400&q=85',
+    N24: 'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?auto=format&fit=crop&w=1400&q=85'
   };
 
-  const item = data[careerName] || {
+  const sourceMap = {
+    N01: ['MIT OpenCourseWare — Electrical Engineering and Computer Science', 'https://ocw.mit.edu/search/?d=Electrical%20Engineering%20and%20Computer%20Science'],
+    N02: ['MIT Sloan — Undergraduate management education', 'https://mitsloan.mit.edu/undergraduate'],
+    N03: ['Harvard Medical School — Medical education', 'https://meded.hms.harvard.edu/'],
+    N04: ['MIT OpenCourseWare — Global Studies and Languages', 'https://ocw.mit.edu/search/?d=Global%20Studies%20and%20Languages'],
+    N05: ['RISD — Undergraduate programs', 'https://www.risd.edu/academics'],
+    N06: ['MIT OpenCourseWare — Mechanical Engineering', 'https://ocw.mit.edu/search/?d=Mechanical%20Engineering'],
+    N07: ['MIT OpenCourseWare — Architecture', 'https://ocw.mit.edu/search/?d=Architecture'],
+    N08: ['Harvard Law School — Academics', 'https://hls.harvard.edu/academics/'],
+    N09: ['Harvard Graduate School of Education — Learning and teaching', 'https://www.gse.harvard.edu/'],
+    N10: ['Cornell Nolan — School of Hotel Administration', 'https://sha.cornell.edu/'],
+    N11: ['USC Annenberg — Communication and journalism', 'https://annenberg.usc.edu/'],
+    N12: ['MIT OpenCourseWare — Economics', 'https://ocw.mit.edu/search/?d=Economics'],
+    N13: ['MIT OpenCourseWare — Environment', 'https://ocw.mit.edu/search/?d=Environment'],
+    N14: ['MIT OpenCourseWare — Biology', 'https://ocw.mit.edu/search/?d=Biology'],
+    N15: ['MIT OpenCourseWare — Materials Science and Engineering', 'https://ocw.mit.edu/search/?d=Materials%20Science%20and%20Engineering'],
+    N16: ['Cornell CALS — Agriculture and life sciences', 'https://cals.cornell.edu/'],
+    N17: ['Harvard Faculty of Arts and Sciences', 'https://www.fas.harvard.edu/'],
+    N18: ['Harvard Kennedy School — International affairs', 'https://www.hks.harvard.edu/educational-programs'],
+    N19: ['MIT OpenCourseWare — Supply chain management', 'https://ocw.mit.edu/search/?q=supply%20chain%20management'],
+    N20: ['MIT OpenCourseWare — Aeronautics and Astronautics', 'https://ocw.mit.edu/search/?d=Aeronautics%20and%20Astronautics'],
+    N21: ['MIT OpenCourseWare — Mathematics', 'https://ocw.mit.edu/search/?d=Mathematics'],
+    N22: ['MIT OpenCourseWare — Physics', 'https://ocw.mit.edu/search/?d=Physics'],
+    N23: ['University of Michigan — School of Kinesiology', 'https://www.kines.umich.edu/'],
+    N24: ['Harvard Kennedy School — Public policy', 'https://www.hks.harvard.edu/educational-programs']
+  };
+
+  const industryData = {
+    N01: ['Máy tính & CNTT', 'Xây dựng phần mềm, hệ thống số và hạ tầng công nghệ.', ['Lập trình', 'Cấu trúc dữ liệu', 'Cơ sở dữ liệu'], ['Học nền tảng máy tính', 'Làm ứng dụng nhỏ', 'Thực hành Git và triển khai'], '8–25 triệu'],
+    N02: ['Kinh doanh & Quản lý', 'Phân tích tổ chức, thị trường và nguồn lực để vận hành doanh nghiệp.', ['Kinh tế', 'Phân tích dữ liệu', 'Giao tiếp'], ['Học nguyên lý kinh doanh', 'Phân tích một doanh nghiệp', 'Thử lập kế hoạch vận hành'], '7–25 triệu'],
+    N03: ['Y dược & Khoa học Sức khỏe', 'Ứng dụng sinh học, hóa học và khoa học lâm sàng để bảo vệ sức khỏe.', ['Sinh học', 'Hóa học', 'Đạo đức nghề'], ['Củng cố Sinh–Hóa', 'Đọc tài liệu y sinh', 'Tìm hiểu môi trường thực hành'], '7–30 triệu'],
+    N04: ['Ngôn ngữ, Văn hóa & Ngoại ngữ', 'Nghiên cứu ngôn ngữ, giao tiếp liên văn hóa và cách con người tạo nghĩa.', ['Ngữ âm', 'Viết', 'Liên văn hóa'], ['Học ngữ pháp nền', 'Dịch hoặc viết thử', 'Thực hành giao tiếp đa văn hóa'], '6–20 triệu'],
+    N05: ['Thiết kế, Mỹ thuật & Nghệ thuật', 'Tạo ra sản phẩm thị giác và trải nghiệm bằng tư duy hình ảnh, chất liệu và ý tưởng.', ['Thẩm mỹ', 'Phác thảo', 'Tư duy ý tưởng'], ['Học nguyên lý thị giác', 'Làm bộ sản phẩm nhỏ', 'Xây portfolio'], '6–22 triệu'],
+    N06: ['Kỹ thuật & Tự động hóa', 'Thiết kế máy móc, mạch điều khiển và hệ thống tự động.', ['Toán–Lý', 'Điều khiển', 'Lập trình nhúng'], ['Học mạch và cơ học', 'Mô phỏng hệ thống', 'Lắp prototype có cảm biến'], '8–28 triệu'],
+    N07: ['Kiến trúc & Xây dựng', 'Thiết kế không gian và tổ chức quá trình tạo dựng công trình an toàn, bền vững.', ['Hình họa', 'Kết cấu', 'Vật liệu'], ['Học bản vẽ', 'Dựng mô hình', 'Đọc một hồ sơ công trình'], '7–25 triệu'],
+    N08: ['Luật & An ninh - Quốc phòng', 'Phân tích quy định, quyền và nghĩa vụ để bảo vệ trật tự và lợi ích hợp pháp.', ['Tư duy pháp lý', 'Đọc văn bản', 'Lập luận'], ['Đọc văn bản pháp luật', 'Viết bản phân tích', 'Tìm hiểu đạo đức và quy trình'], '7–30 triệu'],
+    N09: ['Sư phạm & Giáo dục', 'Thiết kế trải nghiệm học tập và hỗ trợ người học phát triển năng lực.', ['Tâm lý học', 'Thiết kế bài học', 'Trình bày'], ['Quan sát lớp học', 'Soạn một bài học', 'Thử dạy và nhận phản hồi'], '6–22 triệu'],
+    N10: ['Du lịch, Khách sạn & Nhà hàng', 'Tổ chức dịch vụ và trải nghiệm hiếu khách cho khách hàng, cộng đồng.', ['Dịch vụ', 'Ngoại ngữ', 'Vận hành'], ['Học quy trình dịch vụ', 'Thiết kế hành trình', 'Thực hành chăm sóc khách hàng'], '6–20 triệu'],
+    N11: ['Truyền thông, Báo chí & MKT', 'Nghiên cứu công chúng và tạo nội dung có mục tiêu, dữ liệu và trách nhiệm.', ['Viết', 'Nghiên cứu công chúng', 'Đo lường'], ['Học kể chuyện', 'Làm một chiến dịch nhỏ', 'Theo dõi chỉ số và tối ưu'], '6–25 triệu'],
+    N12: ['Tài chính - Ngân hàng - Bảo hiểm', 'Đánh giá rủi ro, dòng tiền và quyết định tài chính của cá nhân, tổ chức.', ['Toán tài chính', 'Kế toán', 'Phân tích rủi ro'], ['Học Excel và tài chính', 'Phân tích báo cáo', 'Mô phỏng ngân sách'], '7–30 triệu'],
+    N13: ['Môi trường & Tài nguyên', 'Đo lường tác động lên hệ sinh thái và xây dựng giải pháp sử dụng tài nguyên bền vững.', ['Sinh thái', 'Hóa môi trường', 'Dữ liệu không gian'], ['Học khoa học môi trường', 'Đọc dữ liệu quan trắc', 'Đề xuất giải pháp địa phương'], '7–25 triệu'],
+    N14: ['Bào chế & Công nghệ Sinh học', 'Khai thác hệ thống sống để nghiên cứu, sản xuất thuốc và sản phẩm sinh học.', ['Sinh học phân tử', 'Hóa sinh', 'Phòng thí nghiệm'], ['Học sinh học tế bào', 'Đọc quy trình thí nghiệm', 'Tìm hiểu kiểm soát chất lượng'], '8–30 triệu'],
+    N15: ['Hóa học & Công nghệ Vật liệu', 'Tìm hiểu cấu trúc vật chất và phát triển vật liệu cho sản xuất, năng lượng, đời sống.', ['Hóa học', 'Vật lý vật liệu', 'Thực nghiệm'], ['Củng cố Hóa–Lý', 'Mô tả tính chất vật liệu', 'Đọc một nghiên cứu ứng dụng'], '8–28 triệu'],
+    N16: ['Nông - Lâm - Thủy sản', 'Quản lý hệ thống sản xuất từ đất, rừng, nước đến chuỗi thực phẩm.', ['Sinh học', 'Sinh thái', 'Kỹ thuật sản xuất'], ['Học hệ sinh thái', 'Theo dõi một mô hình', 'Thử phân tích năng suất'], '6–22 triệu'],
+    N17: ['Khoa học Xã hội & Nhân văn', 'Nghiên cứu con người, lịch sử, văn hóa và các vấn đề xã hội bằng bằng chứng.', ['Đọc–viết', 'Nghiên cứu định tính', 'Tư duy phản biện'], ['Đọc tài liệu nền', 'Phỏng vấn hoặc khảo sát', 'Viết báo cáo có trích dẫn'], '6–22 triệu'],
+    N18: ['Quan hệ Quốc tế & Ngoại giao', 'Phân tích quan hệ giữa các quốc gia và hỗ trợ hợp tác trong môi trường đa văn hóa.', ['Ngoại ngữ', 'Địa–chính trị', 'Đàm phán'], ['Theo dõi tin quốc tế', 'Viết policy brief', 'Thực hành mô phỏng đàm phán'], '7–28 triệu'],
+    N19: ['Logistics & Chuỗi cung ứng', 'Tối ưu luồng hàng, thông tin và quyết định vận hành từ nhà cung cấp tới khách hàng.', ['Toán', 'Vận hành', 'Phân tích dữ liệu'], ['Học quy trình chuỗi cung ứng', 'Vẽ bản đồ luồng hàng', 'Mô phỏng tồn kho'], '7–28 triệu'],
+    N20: ['Hàng không & Hàng hải', 'Vận hành hệ thống vận tải phức tạp với yêu cầu cao về an toàn và phối hợp.', ['Vật lý', 'An toàn', 'Tiếng Anh chuyên ngành'], ['Học nguyên lý vận tải', 'Tìm hiểu tiêu chuẩn an toàn', 'Thực hành mô phỏng quy trình'], '8–30 triệu'],
+    N21: ['Toán học & Khoa học Dữ liệu', 'Dùng mô hình toán, xác suất và tính toán để hiểu dữ liệu và dự đoán.', ['Giải tích', 'Xác suất', 'Lập trình'], ['Học Python và đại số', 'Phân tích bộ dữ liệu', 'Đánh giá một mô hình'], '8–32 triệu'],
+    N22: ['Vật lý & Khoa học Vũ trụ', 'Khám phá quy luật tự nhiên qua thí nghiệm, mô hình và thiết bị đo.', ['Vật lý', 'Toán', 'Thực nghiệm'], ['Học cơ học và điện từ', 'Làm thí nghiệm nhỏ', 'Đọc dữ liệu đo hoặc mô phỏng'], '8–30 triệu'],
+    N23: ['Thể dục, Thể thao & Quản lý TDTT', 'Phát triển sức khỏe, thành tích và hoạt động thể thao dựa trên khoa học vận động.', ['Sinh lý học', 'Huấn luyện', 'Quản lý sự kiện'], ['Theo dõi chỉ số tập luyện', 'Thiết kế giáo án', 'Tổ chức một hoạt động thể thao'], '6–22 triệu'],
+    N24: ['Quản lý Nhà nước & Công tác Xã hội', 'Thiết kế chính sách và chương trình hỗ trợ cộng đồng dựa trên nhu cầu và bằng chứng.', ['Chính sách công', 'Xã hội học', 'Phân tích chương trình'], ['Tìm hiểu một vấn đề địa phương', 'Phỏng vấn các bên liên quan', 'Viết đề xuất can thiệp'], '6–24 triệu']
+  };
+
+  const data = Object.keys(industryData).reduce(function (result, code) {
+    const item = industryData[code];
+    result[code] = { title: item[0], overview: item[1], description: item[1] + ' Người học nên kết hợp kiến thức nền với trải nghiệm thực tế, dự án nhỏ và phản hồi từ người trong ngành.', skills: item[2], roadmap: item[3], salary: item[4], sources: [sourceMap[code]] };
+    return result;
+  }, {});
+
+  const matchedCode = careerCode && data[careerCode] ? careerCode : Object.keys(data).find(function (code) { return data[code].title === careerName; });
+  const item = data[matchedCode] || {
     title: careerName,
     overview: careerName + ' là nhóm ngành kết hợp kiến thức nền tảng với kỹ năng chuyên môn để giải quyết các nhu cầu thực tế của xã hội và doanh nghiệp.',
     skills: ['Tư duy phân tích', 'Giao tiếp', 'Học tập liên tục'],
@@ -154,6 +205,18 @@
     roadmap: ['Lớp 12: củng cố môn nền tảng và tìm hiểu chương trình đào tạo', '0–3 tháng đầu đại học: học công cụ cốt lõi và hoàn thành bài tập nhỏ', '3–12 tháng: tham gia dự án, câu lạc bộ hoặc hoạt động trải nghiệm'],
     salary: 'Đang cập nhật'
   };
+
+  const heroImage = document.querySelector('.career-detail-hero-image');
+  const heroImageElement = document.getElementById('careerHeroImage');
+  const imageUrl = coverImages[matchedCode];
+  if (heroImage && heroImageElement && imageUrl) {
+    heroImageElement.src = imageUrl;
+    heroImageElement.alt = 'Hình ảnh minh họa cho ngành ' + item.title;
+    heroImageElement.addEventListener('error', function () {
+      heroImageElement.src = '../assets/hero-1.png';
+    }, { once: true });
+    heroImage.setAttribute('aria-label', 'Hình ảnh minh họa cho ngành ' + item.title);
+  }
 
   // Update headings
   const pageTitle = document.getElementById('careerPageTitle');
@@ -172,6 +235,21 @@
       small.className = 'skill-pill pill-indigo';
       small.textContent = s;
       skillRow.appendChild(small);
+    });
+  }
+
+  const sourceList = document.getElementById('careerSources');
+  if (sourceList) {
+    sourceList.innerHTML = '';
+    (item.sources || []).forEach(function(source) {
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = source[1];
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = source[0];
+      li.appendChild(link);
+      sourceList.appendChild(li);
     });
   }
 
