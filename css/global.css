@@ -956,11 +956,15 @@ button, input {
  .career-card .career-icon {
    width: 42px;
    height: 42px;
-   margin-top: -28px;
+   margin-top: 0;
    position: relative;
    z-index: 2;
    border: 3px solid #fff;
    box-shadow: 0 6px 16px rgba(3, 18, 30, .12);
+ }
+
+ .career-card-cover + .career-icon {
+   margin-top: -28px;
  }
 
  .career-card h3 {

@@ -143,6 +143,8 @@
         const skillChart = document.getElementById('skillChart');
 
         let latestResult = null;
+        let assessmentRequest = null;
+        let hasLoadedAuthAssessment = false;
         const careerDescriptions = {
           N01: 'Phát triển phần mềm, dữ liệu và hệ thống số; phù hợp với người thích giải quyết vấn đề bằng tư duy logic.',
           N02: 'Tổ chức vận hành, chiến lược và nguồn lực để doanh nghiệp tăng trưởng bền vững.',
@@ -232,6 +234,8 @@
 
         async function runAssessment() {
           if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
+          if (assessmentRequest) return assessmentRequest;
+          assessmentRequest = (async function () {
           try {
             runBtn.disabled = true;
             runBtn.textContent = 'Đang tính...';
@@ -245,7 +249,10 @@
           } finally {
             runBtn.disabled = false;
             runBtn.textContent = 'Chạy đánh giá lại';
+            assessmentRequest = null;
           }
+          })();
+          return assessmentRequest;
         }
 
         if (runBtn) runBtn.addEventListener('click', function () { runAssessment(); });
@@ -285,7 +292,11 @@
         });
 
         document.addEventListener('futurepath:auth-state', function (event) {
-          if (event.detail.signedIn) runAssessment();
+          if (event.detail.signedIn && !hasLoadedAuthAssessment) {
+            hasLoadedAuthAssessment = true;
+            runAssessment();
+          }
+          if (!event.detail.signedIn) hasLoadedAuthAssessment = false;
         });
       })();
     </script>

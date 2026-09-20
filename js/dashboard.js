@@ -22,6 +22,8 @@
   var benchmarks = fallbackBenchmarks.slice();
   var currentProfile = {};
   var renderTimer = 0;
+  var evaluationRequest = null;
+  var lastEvaluationPayload = '';
 
   function clamp(value) { return Math.max(0, Math.min(10, number(value))); }
   function number(value) {
@@ -195,9 +197,20 @@
   }
   function syncServerEvaluation() {
     if (!window.FuturePathAuth || !window.FuturePathAuth.isSignedIn()) return;
+    var payload = JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) });
+    if (payload === lastEvaluationPayload || evaluationRequest) return;
     window.clearTimeout(renderTimer);
     renderTimer = window.setTimeout(function () {
-      window.FuturePathAuth.apiRequest('/axis/evaluate', { method: 'POST', body: JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) }).catch(function () {});
+      evaluationRequest = window.FuturePathAuth.apiRequest('/axis/evaluate', {
+        method: 'POST',
+        body: payload
+      }).then(function () {
+        lastEvaluationPayload = payload;
+      }).catch(function () {
+        // A later input change can retry the failed evaluation.
+      }).finally(function () {
+        evaluationRequest = null;
+      });
     }, 350);
   }
   function render() {
