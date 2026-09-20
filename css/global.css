@@ -4558,7 +4558,7 @@ body.mobile-nav-open { overflow: hidden; }
     border-top: 1px solid var(--line);
   }
   .header-nav.is-mobile-open .mobile-auth .auth-btn {
-    flex: 1 1 0;
+    flex: 0 0 auto;
     min-width: 0;
     min-height: 42px;
   }
@@ -4566,6 +4566,8 @@ body.mobile-nav-open { overflow: hidden; }
   .header-nav.is-mobile-open .mobile-auth {
     margin-bottom: 0;
     padding-bottom: 0;
+    width: max-content;
+    max-width: 100%;
   }
 }
 /* Desktop header button compact override: make auth buttons smaller without affecting hero buttons */
@@ -5418,8 +5420,8 @@ a.button-like:active {
     left: 50vw !important;
     right: auto !important;
     bottom: auto !important;
-    width: fit-content !important;
-    min-width: min(300px, calc(100vw - 24px)) !important;
+    width: max-content !important;
+    min-width: 0 !important;
     max-width: calc(100vw - 24px) !important;
     max-height: min(72vh, 560px) !important;
     margin: 0 !important;
@@ -5434,6 +5436,7 @@ a.button-like:active {
     box-shadow: 0 24px 70px rgba(3, 18, 30, .28) !important;
     z-index: 1100 !important;
     box-sizing: border-box !important;
+    grid-template-columns: max-content !important;
   }
 
   .header-nav.is-mobile-open .nav-item {
@@ -5444,6 +5447,9 @@ a.button-like:active {
     padding: 8px 12px !important;
     border-radius: 10px !important;
     box-sizing: border-box !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
   }
 
   .header-nav.is-mobile-open .nav-item span:last-child {
@@ -5457,8 +5463,8 @@ a.button-like:active {
     left: 50vw !important;
     right: auto !important;
     bottom: auto !important;
-    width: fit-content !important;
-    min-width: min(300px, calc(100vw - 24px)) !important;
+    width: max-content !important;
+    min-width: 0 !important;
     max-width: calc(100vw - 24px) !important;
     max-height: min(72vh, 560px) !important;
     margin: 0 !important;
@@ -5466,6 +5472,7 @@ a.button-like:active {
     display: grid !important;
     overflow-y: auto !important;
     z-index: 1100 !important;
+    grid-template-columns: max-content !important;
   }
 
   app-header.topbar .header-nav.is-mobile-open .nav-item span:last-child,
@@ -5488,8 +5495,8 @@ a.button-like:active {
   .header-nav.is-mobile-open,
   app-header.topbar .header-nav.is-mobile-open,
   app-header.topbar.cv-editor__topbar .header-nav.is-mobile-open {
-    width: fit-content !important;
-    min-width: min(300px, calc(100vw - 20px)) !important;
+    width: max-content !important;
+    min-width: 0 !important;
     max-width: calc(100vw - 20px) !important;
     max-height: calc(100vh - 96px) !important;
   }
