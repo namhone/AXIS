@@ -144,7 +144,6 @@
 
         let latestResult = null;
         let assessmentRequest = null;
-        let hasLoadedAuthAssessment = false;
         const careerDescriptions = {
           N01: 'Phát triển phần mềm, dữ liệu và hệ thống số; phù hợp với người thích giải quyết vấn đề bằng tư duy logic.',
           N02: 'Tổ chức vận hành, chiến lược và nguồn lực để doanh nghiệp tăng trưởng bền vững.',
@@ -292,11 +291,7 @@
         });
 
         document.addEventListener('futurepath:auth-state', function (event) {
-          if (event.detail.signedIn && !hasLoadedAuthAssessment) {
-            hasLoadedAuthAssessment = true;
-            runAssessment();
-          }
-          if (!event.detail.signedIn) hasLoadedAuthAssessment = false;
+          if (!event.detail.signedIn) latestResult = null;
         });
       })();
     </script>
