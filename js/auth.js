@@ -18,6 +18,7 @@
   let currentAvatarUrl = '';
   let avatarRequestVersion = 0;
   let sessionCheckVersion = 0;
+  let sessionInvalidationPromise = null;
 
   function ensureNotice() {
     let notice = document.getElementById('authNotice');
@@ -223,7 +224,14 @@
     } catch (error) {
       throw new Error('Không thể kết nối máy chủ. Vui lòng thử lại.');
     }
-    if (!response.ok) throw await createApiError(response, 'Không thể đồng bộ dữ liệu tài khoản.');
+    if (!response.ok) {
+      if (response.status === 401) {
+        await invalidateExpiredSession();
+      }
+      throw await createApiError(response, response.status === 401
+        ? 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'
+        : 'Không thể đồng bộ dữ liệu tài khoản.');
+    }
     return response.status === 204 ? null : response.json();
   }
 
@@ -237,7 +245,14 @@
     } catch (error) {
       throw new Error('Không thể kết nối máy chủ. Vui lòng thử lại.');
     }
-    if (!response.ok) throw await createApiError(response, 'Không thể đồng bộ dữ liệu tài khoản.');
+    if (!response.ok) {
+      if (response.status === 401) {
+        await invalidateExpiredSession();
+      }
+      throw await createApiError(response, response.status === 401
+        ? 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'
+        : 'Không thể đồng bộ dữ liệu tài khoản.');
+    }
     return response.status === 204 ? null : response.json();
   }
 
@@ -248,7 +263,9 @@
     } catch (error) {
       body = null;
     }
-    const message = body && body.error && body.error.message
+    const message = response.status === 401 && fallbackMessage
+      ? fallbackMessage
+      : body && body.error && body.error.message
       ? body.error.message
       : body && typeof body.detail === 'string'
         ? body.detail
@@ -256,6 +273,26 @@
     const error = new Error(message);
     error.status = response.status;
     return error;
+  }
+
+  async function invalidateExpiredSession() {
+    if (sessionInvalidationPromise) return sessionInvalidationPromise;
+    sessionInvalidationPromise = (async function () {
+      try {
+        await fetchWithTimeout(apiBase(activeApiHost) + '/logout', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { Accept: 'application/json' }
+        }, 5000);
+      } catch (error) {
+        // The local UI must still leave the stale session even if logout cannot reach the API.
+      } finally {
+        setAuthState(null);
+        showNotice('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.', true);
+        sessionInvalidationPromise = null;
+      }
+    })();
+    return sessionInvalidationPromise;
   }
 
   function appPageUrl(pageName) {
@@ -384,6 +421,10 @@
             // Continue with the signed-out state when neither local host has a session.
           }
         }
+      }
+      if (error.status === 401) {
+        await invalidateExpiredSession();
+        return;
       }
       setAuthState(null);
       // Static deployments can run without the optional FastAPI origin.
