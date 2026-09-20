@@ -5382,10 +5382,7 @@ a.button-like:active {
   }
 
   .topbar .header-auth {
-    display: flex !important;
-    align-items: center !important;
-    flex: 0 0 auto !important;
-    margin-left: auto !important;
+    display: none !important;
   }
 
   .topbar .header-nav {
@@ -5398,23 +5395,6 @@ a.button-like:active {
     margin-left: 0 !important;
   }
 
-  .topbar .header-auth .auth-area {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0 !important;
-  }
-
-  .topbar .header-auth .auth-btn[data-auth-action="signup"] {
-    display: none !important;
-  }
-
-  .topbar .header-auth .auth-btn[data-auth-action="signin"] {
-    display: inline-flex !important;
-    min-height: 40px;
-    padding: 0 14px;
-    border-radius: 10px;
-    white-space: nowrap;
-  }
 }
 
 /* Keep desktop navigation labels visible below the compact 1200px layout cap. */
