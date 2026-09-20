@@ -77,7 +77,7 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  function initialize() {
     var renderScheduled = false;
     var rendering = false;
     function scheduleRender() {
@@ -103,5 +103,11 @@
       if (hasNewContent) scheduleRender();
     });
     observer.observe(document.body, { childList: true, subtree: true });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize, { once: true });
+  } else {
+    initialize();
+  }
 })();

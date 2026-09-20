@@ -84,6 +84,15 @@
     });
   }
 
+  function ensureIconRenderer() {
+    if (document.querySelector('script[data-axis-icon-renderer]')) return;
+    var iconScript = document.createElement('script');
+    iconScript.src = resolvePath('js/icons.js?v=menu-icons-1');
+    iconScript.defer = true;
+    iconScript.setAttribute('data-axis-icon-renderer', '');
+    document.head.appendChild(iconScript);
+  }
+
   function showComponentError(host) {
     host.replaceChildren();
     host.setAttribute('aria-busy', 'false');
@@ -112,6 +121,7 @@
           removeLegacyMobileMenu();
           markActive(host);
           setupMobileMenu(host);
+          ensureIconRenderer();
         }
         if (name === 'footer') {
           host.querySelectorAll('form.contact-form').forEach(function (form) {
