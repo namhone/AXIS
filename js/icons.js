@@ -1,5 +1,7 @@
 (function () {
   'use strict';
+  if (window.__axisIconsInitialized) return;
+  window.__axisIconsInitialized = true;
 
   var menuByPath = {
     'dashboard.html': 'layout-dashboard',
@@ -76,14 +78,29 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    loadLucide().then(renderIcons);
+    var renderScheduled = false;
+    var rendering = false;
+    function scheduleRender() {
+      if (renderScheduled || rendering) return;
+      renderScheduled = true;
+      window.requestAnimationFrame(function () {
+        renderScheduled = false;
+        rendering = true;
+        try {
+          renderIcons();
+        } finally {
+          rendering = false;
+        }
+      });
+    }
+    loadLucide().then(scheduleRender);
     var observer = new MutationObserver(function (records) {
       var hasNewContent = records.some(function (record) {
         return Array.prototype.some.call(record.addedNodes, function (node) {
           return node.nodeType === 1 && node.tagName !== 'SVG';
         });
       });
-      if (hasNewContent) renderIcons();
+      if (hasNewContent) scheduleRender();
     });
     observer.observe(document.body, { childList: true, subtree: true });
   });
