@@ -20,6 +20,16 @@
   let sessionCheckVersion = 0;
   let sessionInvalidationPromise = null;
 
+  function normalizeAuthUser(payload) {
+    if (!payload || typeof payload !== 'object') return null;
+    if (payload.data && typeof payload.data === 'object') {
+      if (payload.data.user && typeof payload.data.user === 'object') return payload.data.user;
+      if (payload.data.id || payload.data.email) return payload.data;
+    }
+    if (payload.user && typeof payload.user === 'object') return payload.user;
+    return payload.id || payload.email ? payload : null;
+  }
+
   function ensureNotice() {
     let notice = document.getElementById('authNotice');
     if (!notice) {
@@ -400,10 +410,11 @@
 
   async function checkSession() {
     const requestVersion = ++sessionCheckVersion;
+    const hadSession = Boolean(currentUser);
     try {
       const user = await request('/me', { method: 'GET' });
       if (requestVersion !== sessionCheckVersion) return;
-      setAuthState(user);
+      setAuthState(normalizeAuthUser(user));
     } catch (error) {
       if (requestVersion !== sessionCheckVersion) return;
       if (error.status === 401 && !USE_SAME_ORIGIN_API) {
@@ -414,7 +425,7 @@
             if (requestVersion !== sessionCheckVersion) return;
             if (response.ok) {
               activeApiHost = fallbackHost;
-              setAuthState(await response.json());
+              setAuthState(normalizeAuthUser(await response.json()));
               return;
             }
           } catch (fallbackError) {
@@ -423,7 +434,11 @@
         }
       }
       if (error.status === 401) {
-        await invalidateExpiredSession();
+        if (hadSession) {
+          await invalidateExpiredSession();
+        } else {
+          setAuthState(null);
+        }
         return;
       }
       setAuthState(null);
@@ -453,7 +468,7 @@
         body: JSON.stringify(payload)
       });
       sessionCheckVersion += 1;
-      setAuthState(user);
+      setAuthState(normalizeAuthUser(user));
       closeModal();
       showNotice(signUp ? 'Đăng ký thành công. Bạn đã được đăng nhập.' : 'Đăng nhập thành công.');
     } catch (error) {

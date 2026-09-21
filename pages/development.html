@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Phát triển bản thân — AXIS</title>
-    <link rel="stylesheet" href="../css/global.css?v=development-layout" />
+    <link rel="stylesheet" href="../css/global.css?v=task-cards-20260921" />
     <script src="../js/axis-brand.js"></script>
     <script src="../js/app.js"></script>
-    <script src="../js/auth.js"></script>
+    <script src="../js/auth.js?v=session-cookie-fix-20260921"></script>
       <script src="../js/components.js?v=mobile-nav-2" defer></script>
 </head>
   <body class="development-page">
@@ -73,7 +73,7 @@
               <div class="timeline-item roadmap-item" data-roadmap-id="python" data-default-state="done">
                 <div class="timeline-badge">01</div>
                 <div>
-                  <strong>Ngày 1 · Python: biến và kiểu dữ liệu</strong>
+                  <strong>Nhiệm vụ 1 · Python: biến và kiểu dữ liệu</strong>
                   <p>Học 45 phút, làm 5 bài tập biến/kiểu dữ liệu và nộp 1 file bài làm.</p>
                 </div>
                 <span class="status">Đã học</span>
@@ -82,7 +82,7 @@
               <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="project" data-default-state="pending">
                 <div class="timeline-badge">02</div>
                 <div>
-                  <strong>Ngày 2 · Python: điều kiện và vòng lặp</strong>
+                  <strong>Nhiệm vụ 2 · Python: điều kiện và vòng lặp</strong>
                   <p>Học 45 phút, giải 5 bài if/for/while và viết 1 chương trình tính điểm.</p>
                 </div>
                 <span class="status pending">Chưa học</span>
@@ -91,7 +91,7 @@
               <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="english" data-default-state="pending">
                 <div class="timeline-badge">03</div>
                 <div>
-                  <strong>Ngày 3 · C++: cú pháp nền tảng</strong>
+                  <strong>Nhiệm vụ 3 · C++: cú pháp nền tảng</strong>
                   <p>Học 40 phút, viết 3 chương trình nhập/xuất dữ liệu và đọc 10 thuật ngữ kỹ thuật.</p>
                 </div>
                 <span class="status pending">Chưa học</span>
@@ -361,6 +361,7 @@
               : new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
             heading.textContent = '03 · Nhiệm vụ ngày hôm nay — ' + label;
           }
+          let taskNumber = 0;
           list.innerHTML = displaySteps.map(function (step, index) {
             const id = 'step-' + (index + 1);
             const completed = Boolean(step.is_completed);
@@ -369,34 +370,42 @@
             const tasks = schedule && Array.isArray(schedule.tasks) ? schedule.tasks : [];
             const displayTasks = [];
             tasks.forEach(function (task, sourceIndex) {
-              const subtasks = Array.isArray(task.subtasks) && task.subtasks.length ? task.subtasks : [task.title];
+              const subtasks = Array.isArray(task.subtasks) && task.subtasks.length
+                ? task.subtasks.map(function (subtask) {
+                  return typeof subtask === 'object'
+                    ? (subtask.title || subtask.name || '')
+                    : String(subtask || '');
+                }).filter(Boolean)
+                : [task.title];
               subtasks.forEach(function (title) {
                 displayTasks.push({ task: task, sourceIndex: sourceIndex, title: title });
               });
             });
             const taskMarkup = displayTasks.length
-              ? '<ul class="roadmap-task-list">' + displayTasks.map(function (entry) {
+              ? '<div class="roadmap-task-list">' + displayTasks.map(function (entry) {
                 const task = entry.task;
-                return '<li class="' + (task.status === 'completed' ? 'is-completed' : '') + '"><strong>' + escapeHtml(entry.title) + '</strong><span>' +
+                const resources = Array.isArray(task.resources) ? task.resources.filter(function (resource) {
+                  return resource && typeof resource === 'object' && resource.url;
+                }).slice(0, 2) : [];
+                const resourceMarkup = resources.length
+                  ? '<div class="roadmap-task-resources">' + resources.map(function (resource) {
+                    return '<a href="' + escapeHtml(resource.url) + '" target="_blank" rel="noopener noreferrer">' +
+                      escapeHtml(resource.title || 'Nguồn tham khảo') + '</a>';
+                  }).join('') + '</div>'
+                  : '';
+                taskNumber += 1;
+                return '<article class="roadmap-task-card ' + (task.status === 'completed' ? 'is-completed' : '') + '"><div class="roadmap-task-heading"><span class="roadmap-task-number">Nhiệm vụ ' + taskNumber + '</span><strong>' + escapeHtml(entry.title) + '</strong></div><span>' +
                   (task.minutes ? ' · ' + task.minutes + ' phút' : '') +
                   ' <button type="button" class="ghost-btn roadmap-task-start" data-task-index="' + entry.sourceIndex + '">Bắt đầu</button>' +
                   ' <button type="button" class="ghost-btn roadmap-task-done" data-task-index="' + entry.sourceIndex + '"' + (task.status === 'completed' ? ' disabled' : '') + '>' +
-                  (task.status === 'completed' ? 'Đã học' : 'Đánh dấu đã học') + '</button></span></li>';
-              }).join('') + '</ul>'
+                  (task.status === 'completed' ? 'Đã học' : 'Đánh dấu đã học') + '</button></span>' + resourceMarkup + '</article>';
+              }).join('') + '</div>'
               : '<p>' + escapeHtml(step.content) + '</p>';
             return `
               <div class="timeline-item roadmap-item${completed ? '' : ' roadmap-pending'}"
                    data-roadmap-id="step-${step.step_number || index + 1}" data-content="${escapeHtml(step.content)}" data-task-count="${tasks.length}" data-default-state="${completed ? 'done' : 'pending'}">
-                <div class="timeline-badge">${String(index + 1).padStart(2, '0')}</div>
                 <div>
-                  <strong>${escapeHtml(step.title)}</strong>
                   ${taskMarkup}
-                </div>
-                <span class="status${completed ? '' : ' pending'}">${completed ? 'Đã học' : 'Chưa học'}</span>
-                <div class="roadmap-actions">
-                  <button class="ghost-btn roadmap-start" type="button">Bắt đầu</button>
-                  <button class="ghost-btn roadmap-done" type="button">Đã học</button>
-                  ${tasks.length ? '<button class="ghost-btn roadmap-defer" type="button">Dời task</button>' : ''}
                 </div>
               </div>
             `;
@@ -491,7 +500,8 @@
                     })
                   });
                   button.textContent = 'Đã học';
-                  button.closest('li').classList.add('is-completed');
+                  const card = button.closest('.roadmap-task-card');
+                  if (card) card.classList.add('is-completed');
                 } catch (error) {
                   button.disabled = false;
                   alert(error.message || 'Không thể cập nhật task.');
@@ -512,21 +522,23 @@
             const currentState = function () { return state[id] || item.getAttribute('data-default-state') || 'pending'; };
             function updateStatus() {
               const value = currentState();
-              status.textContent = value === 'done' ? 'Đã học' : 'Chưa học';
-              status.classList.toggle('pending', value !== 'done');
+              if (status) status.textContent = value === 'done' ? 'Đã học' : 'Chưa học';
+              if (status) status.classList.toggle('pending', value !== 'done');
               item.classList.toggle('roadmap-pending', value !== 'done');
               item.classList.toggle('roadmap-active', false);
               item.classList.toggle('roadmap-done', value === 'done');
-              doneButton.disabled = value === 'done';
-              doneButton.setAttribute('aria-disabled', String(value === 'done'));
+              if (doneButton) {
+                doneButton.disabled = value === 'done';
+                doneButton.setAttribute('aria-disabled', String(value === 'done'));
+              }
             }
             updateStatus();
-            startButton.addEventListener('click', function () {
+            if (startButton) startButton.addEventListener('click', function () {
               if (currentState() === 'done') return;
               state[id] = 'active'; updateStatus(); updatePlanProgress(loadGoals());
               openPomodoro(item.querySelector('strong').textContent, item);
             });
-            doneButton.addEventListener('click', function () {
+            if (doneButton) doneButton.addEventListener('click', function () {
               if (currentState() === 'done') return;
               state[id] = 'done'; updateStatus(); updatePlanProgress(loadGoals());
             });

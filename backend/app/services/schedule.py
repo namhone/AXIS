@@ -14,7 +14,7 @@ def parse_step_content(content: str) -> dict[str, Any]:
     try:
         value = json.loads(content)
     except (TypeError, json.JSONDecodeError):
-        return {"tasks": [{"title": content.strip(), "subtasks": [content.strip(), "Ghi lại kết quả và lỗi sai."]}]}
+        return {"tasks": [{"title": content.strip(), "subtasks": []}]}
     return value if isinstance(value, dict) else {"tasks": []}
 
 
@@ -86,9 +86,15 @@ def _task(raw: Any, fallback_title: str) -> dict[str, Any]:
     else:
         title = str(raw or fallback_title).strip()
         subtasks = []
-    subtasks = [str(item).strip() for item in subtasks if str(item).strip()][:2]
-    while len(subtasks) < 2:
-        subtasks.append("Ghi lại kết quả và một lỗi cần sửa.")
+    normalized_subtasks: list[str] = []
+    for item in subtasks:
+        if isinstance(item, dict):
+            item_title = str(item.get("title") or item.get("name") or "").strip()
+        else:
+            item_title = str(item).strip()
+        if item_title:
+            normalized_subtasks.append(item_title)
+    subtasks = normalized_subtasks[:4]
     return {
         "task_id": str(raw.get("task_id") or uuid.uuid4()) if isinstance(raw, dict) else str(uuid.uuid4()),
         "title": title[:160],
@@ -104,6 +110,7 @@ def _task(raw: Any, fallback_title: str) -> dict[str, Any]:
 def _expand_tasks(raw: Any, fallback_title: str) -> list[dict[str, Any]]:
     """Turn nested AI subtasks into independently actionable task records."""
     parent = _task(raw, fallback_title)
+    raw_subtasks = raw.get("subtasks", []) if isinstance(raw, dict) else []
     subtasks = parent.pop("subtasks", [])
     if not subtasks:
         return [parent]
@@ -111,7 +118,16 @@ def _expand_tasks(raw: Any, fallback_title: str) -> list[dict[str, Any]]:
     for index, subtask in enumerate(subtasks, start=1):
         task = dict(parent)
         task["task_id"] = f"{parent['task_id']}-{index}"
-        task["title"] = f"{parent['title']}: {subtask}"[:160]
+        task["title"] = subtask[:160]
+        child_raw = raw_subtasks[index - 1] if index - 1 < len(raw_subtasks) else None
+        if isinstance(child_raw, dict):
+            child_task = _task(child_raw, task["title"])
+            for key in ("minutes", "status", "completion_percent", "defer_count", "resources"):
+                if child_task.get(key):
+                    task[key] = child_task[key]
+            nested = child_task.get("subtasks", [])
+            if nested:
+                task["subtasks"] = nested
         expanded.append(task)
     return expanded
 

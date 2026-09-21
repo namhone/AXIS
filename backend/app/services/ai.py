@@ -9,6 +9,28 @@ from ..core.config import Settings
 class AIService:
     """Generate structured learning content through the OpenAI API."""
 
+    @staticmethod
+    def _validate_school_task(task: dict[str, Any]) -> None:
+        title = str(task.get("title") or "").lower()
+        has_school_signal = any(token in title for token in ["toán", "văn", "lý", "hóa", "sinh", "anh", "sử", "địa", "tin", "bài", "chương", "hệ thức", "đại số", "hình học"])
+        resources = task.get("resources") or []
+        urls = [
+            str(resource.get("url", ""))
+            for resource in resources
+            if isinstance(resource, dict) and isinstance(resource.get("url"), str)
+        ]
+        if has_school_signal and not urls:
+            raise ValueError("School tasks must include at least one valid source URL")
+        if any(term in title for term in ["cộng", "trừ", "nhân", "chia"]) and "lớp 9" in title:
+            raise ValueError("Unsupported Grade 9 arithmetic lesson content")
+
+    @staticmethod
+    def _validate_steps(steps: list[dict[str, Any]]) -> None:
+        for step in steps:
+            for task in step.get("tasks") or []:
+                if isinstance(task, dict):
+                    AIService._validate_school_task(task)
+
     def __init__(self, settings: Settings) -> None:
         if not settings.groq_api_key:
             raise RuntimeError("GROQ_API_KEY is not configured")
@@ -44,8 +66,13 @@ class AIService:
                         "Ví dụ ngành Máy tính: tuần này chỉ học biến/kiểu dữ liệu hoặc vòng lặp Python, "
                         "không nhảy đồng thời qua toàn bộ Python và C++. Mỗi ngày tối đa một chủ đề mới; "
                         "dành ngày cuối để kiểm tra và sửa lỗi. "
+                        "Với môn học phổ thông, không được bịa kiến thức quá cơ bản hoặc gán sai lớp học. "
+                        "Không viết chung chung như 'Sách giáo khoa lớp 9, trang 45-48'. Hãy tham khảo tên bài "
+                        "và chủ đề thực tế từ VietJack (https://vietjack.com/) rồi ghi đúng tên bài trong title; "
+                        "resources phải có URL VietJack cụ thể nếu nhiệm vụ là môn phổ thông. Nếu không xác định chắc "
+                        "tên bài hoặc URL, hãy chọn một chủ đề phổ thông khác mà bạn biết chắc thay vì tự đoán. "
                         "Với môn học phổ thông, ưu tiên chủ đề phù hợp chương trình hiện tại và ghi nguồn tham khảo "
-                        "ở trường resources (sách giáo khoa/chương nếu biết chắc). Với lập trình, chỉ dùng tài liệu "
+                        "ở trường resources. Với lập trình, chỉ dùng tài liệu "
                         "chính thức hoặc uy tín như Python Docs, MDN, C++ Reference, Arduino Docs hoặc roadmap.sh; "
                         "không bịa liên kết. "
                         "Nếu đầu vào có career_matches, hãy ưu tiên nhóm ngành đứng đầu và chọn "
@@ -82,12 +109,16 @@ class AIService:
                 raise ValueError("Roadmap step title is missing")
             if not isinstance(content, str) and not isinstance(tasks, list):
                 raise ValueError("Roadmap step content is missing")
+            normalized_task_list = tasks if isinstance(tasks, list) else []
+            self._validate_steps([
+                {"tasks": normalized_task_list}
+            ])
             normalized.append(
                 {
                     "step_number": index,
                     "title": title.strip()[:255],
                     "content": content.strip() if isinstance(content, str) else "",
-                    "tasks": tasks if isinstance(tasks, list) else [],
+                    "tasks": normalized_task_list,
                 }
             )
         return normalized
