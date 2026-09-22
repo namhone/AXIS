@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trắc nghiệm RIASEC — AXIS</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <script src="../js/axis-brand.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/auth.js?v=session-cookie-fix-20260921"></script>
+    <script src="../js/components.js?v=mobile-nav-2" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="workspace">
+        <app-header class="topbar"></app-header>
+        <main class="main-column riasec-page">
+          <section class="page-hero">
+            <span class="eyebrow">RIASEC · HOLLAND</span>
+            <h1>Hiểu mình, chọn hướng đi phù hợp.</h1>
+            <p class="lead">Bộ câu hỏi gồm 6 nhóm tính cách. Mỗi nhóm có 20 câu được chọn đều từ 5 khía cạnh để kết quả cân bằng và sát với bạn hơn.</p>
+          </section>
+
+          <section class="content-panel riasec-card" id="riasecApp" aria-live="polite">
+            <div id="riasecWelcome">
+              <span class="riasec-icon">✦</span>
+              <h2>Trước khi bắt đầu</h2>
+              <ul class="riasec-rules">
+                <li>Trả lời theo mức độ bạn thấy đúng với mình, không có đáp án đúng hay sai.</li>
+                <li>Mỗi nhóm có 20 câu, phủ đủ 5 khía cạnh; tổng thời gian khoảng 8–12 phút.</li>
+                <li>Câu trả lời được tự động lưu trên thiết bị để bạn có thể quay lại.</li>
+              </ul>
+              <button class="primary-btn" id="startRiasec" type="button">Xác nhận bắt đầu làm trắc nghiệm</button>
+              <p class="form-help" id="riasecLoadStatus" role="status">Đang tải ngân hàng câu hỏi...</p>
+            </div>
+
+            <div id="riasecQuestionnaire" class="hidden">
+              <div class="riasec-assessment-layout">
+                <div class="riasec-question-column">
+                  <div class="riasec-progress-head">
+                    <div>
+                      <span class="eyebrow" id="groupEyebrow">NHÓM R</span>
+                      <h2 id="groupTitle">Thực tế</h2>
+                    </div>
+                  </div>
+                  <div id="questionList" class="riasec-question-list"></div>
+                  <div class="riasec-actions">
+                    <span class="form-help" id="draftStatus">Đã lưu nháp</span>
+                    <button class="primary-btn" id="nextGroup" type="button">Lưu nhóm và sang nhóm tiếp theo →</button>
+                  </div>
+                </div>
+                <aside class="riasec-control-column" aria-label="Điều khiển bài trắc nghiệm">
+                  <span class="eyebrow">TIẾN ĐỘ BÀI LÀM</span>
+                  <div class="riasec-progress" aria-label="Tiến độ toàn bài">
+                    <div id="riasecProgressBar"></div>
+                  </div>
+                  <div class="riasec-group-switcher">
+                    <div class="riasec-group-tabs" id="groupTabs"></div>
+                    <button class="primary-btn riasec-submit-button" id="submitRiasec" type="button">Nộp bài kiểm tra</button>
+                  </div>
+                  <div class="riasec-answered-track" aria-label="Các câu đã làm">
+                    <div class="riasec-answered-track-label">
+                      <span>Câu hỏi trong nhóm hiện tại</span>
+                    </div>
+                    <div id="answeredQuestions" class="riasec-question-dots"></div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+
+            <div id="riasecResult" class="hidden">
+              <span class="eyebrow">KẾT QUẢ CỦA BẠN</span>
+              <div class="riasec-result-code" id="hollandCode">RIA</div>
+              <h2 id="resultTitle">Hồ sơ tính cách Holland</h2>
+              <p class="lead" id="resultSummary"></p>
+              <div class="riasec-evaluation-notice hidden" id="riasecEvaluationNotice" role="status"></div>
+              <section class="riasec-career-matches hidden" id="riasecCareerMatches">
+                <div class="riasec-section-heading">
+                  <div>
+                    <span class="eyebrow">GỢI Ý THEO S4</span>
+                    <h3>Mức độ phù hợp với nhóm ngành</h3>
+                  </div>
+                  <span class="form-help">Tính từ hồ sơ và kết quả RIASEC</span>
+                </div>
+                <div id="careerMatchList" class="riasec-career-match-list"></div>
+              </section>
+              <div class="riasec-result-grid" id="riasecResultDetails">
+                <section>
+                  <h3>Điểm theo nhóm</h3>
+                  <div id="scoreList"></div>
+                </section>
+                <section>
+                  <h3>Khía cạnh nổi bật</h3>
+                  <div id="aspectList"></div>
+                </section>
+              </div>
+              <div class="riasec-result-actions">
+                <a class="primary-btn" href="profile.html">Xem trong hồ sơ</a>
+                <button class="ghost-btn" id="retakeRiasec" type="button">Làm lại trắc nghiệm</button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <app-footer class="site-footer"></app-footer>
+    <div class="riasec-submit-modal hidden" id="submitModal" aria-hidden="true">
+      <div class="riasec-submit-backdrop" data-close-submit></div>
+      <section class="riasec-submit-dialog" role="dialog" aria-modal="true" aria-labelledby="submitTitle">
+        <span class="eyebrow">XÁC NHẬN NỘP BÀI</span>
+        <h2 id="submitTitle">Bạn muốn nộp bài kiểm tra?</h2>
+        <p id="submitWarning">Thông tin chưa hoàn thiện có thể khiến kết quả và nhận xét không chính xác.</p>
+        <p class="riasec-submit-countdown" id="submitCountdown">Vui lòng chờ 5 giây...</p>
+        <div class="riasec-submit-actions">
+          <button class="ghost-btn hidden" id="cancelSubmit" type="button">Hủy</button>
+          <button class="primary-btn" id="confirmSubmit" type="button" disabled>Xác nhận nộp bài</button>
+        </div>
+      </section>
+    </div>
+    <script src="../js/riasec.js"></script>
+  </body>
+</html>

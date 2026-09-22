@@ -107,6 +107,11 @@ def _s1(profile: dict[str, Any], industry: Industry) -> float:
     return _clamp(first * 0.35 + second * 0.35 + gpa * 0.30)
 
 
+def _has_valid_core_subjects(profile: dict[str, Any], industry: Industry) -> bool:
+    """Require both core subjects before recommending an industry."""
+    return all(_subject_score(profile, subject) is not None for subject in industry.subjects)
+
+
 def _score_language_certificate(cert_name: str | None, cert_score: Any, *, expired: bool = False) -> float:
     """Map a language certificate to the AXIS 0..10 scale.
 
@@ -286,6 +291,12 @@ def _s3(profile: dict[str, Any], industry: Industry) -> float:
 
 
 def _riasec_scores(profile: dict[str, Any]) -> dict[str, float]:
+    progress = profile.get("riasecProgress")
+    if isinstance(progress, dict):
+        answered = _number(progress.get("answered")) or 0
+        total = _number(progress.get("total")) or 0
+        if total > 0 and answered / total < 0.6:
+            return {code: 0.0 for code in RIASEC_KEYWORDS}
     raw = profile.get("riasecScores")
     if isinstance(raw, dict):
         values = {code: _number(raw.get(code)) or 0 for code in RIASEC_KEYWORDS}
@@ -317,7 +328,14 @@ def _s5(profile: dict[str, Any]) -> float:
 def calculate_matches(profile: dict[str, Any]) -> dict[str, Any]:
     results = []
     for industry in INDUSTRIES:
-        scores = {"S1": _s1(profile, industry), "S2": _s2(profile), "S3": _s3(profile, industry), "S4": _s4(profile, industry), "S5": _s5(profile)}
+        valid_core = _has_valid_core_subjects(profile, industry)
+        scores = {
+            "S1": _s1(profile, industry) if valid_core else 0.0,
+            "S2": _s2(profile) if valid_core else 0.0,
+            "S3": _s3(profile, industry) if valid_core else 0.0,
+            "S4": _s4(profile, industry) if valid_core else 0.0,
+            "S5": _s5(profile) if valid_core else 0.0,
+        }
         weights = {criterion: ROC_WEIGHTS[index] for index, criterion in enumerate(industry.priority)}
         match_score = sum(scores[key] * weights[key] for key in scores)
         results.append({
