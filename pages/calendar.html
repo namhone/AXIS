@@ -25,7 +25,7 @@
             <span id="calendarMessage" role="status"></span>
           </section>
           <section class="content-panel">
-            <div class="calendar-heading"><button id="previousMonth" type="button">←</button><h2 id="calendarMonth"></h2><button id="nextMonth" type="button">→</button></div>
+            <div class="calendar-heading"><button id="previousMonth" type="button" aria-label="Tháng trước"><span data-lucide="arrow-left" aria-hidden="true"></span></button><h2 id="calendarMonth"></h2><button id="nextMonth" type="button" aria-label="Tháng sau"><span data-lucide="arrow-right" aria-hidden="true"></span></button></div>
             <div class="calendar-weekdays"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div>
             <div class="calendar-grid" id="calendarGrid"></div>
           </section>
@@ -47,6 +47,6 @@
       </div>
     </div>
     <app-footer class="site-footer"></app-footer>
-    <script>document.addEventListener('DOMContentLoaded', function () { if (window.FuturePathCalendar) window.FuturePathCalendar.init(); });</script>
+    <script>document.addEventListener('DOMContentLoaded', function () { if (window.AxisCalendar) window.AxisCalendar.init(); });</script>
   </body>
 </html>

@@ -29,6 +29,7 @@
               <button class="primary-btn" id="runAssessment">Chạy đánh giá lại</button>
               <button class="ghost-btn" id="saveSuggestions">Lưu gợi ý vào hồ sơ</button>
               <button class="ghost-btn" id="exportReport">Xuất báo cáo (PDF)</button>
+              <button class="ghost-btn" id="exportJson">Tải dữ liệu (JSON)</button>
             </div>
 
             <div class="assessment-visual">
@@ -37,15 +38,23 @@
             </div>
           </section>
 
+          <section class="content-panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">Progress over time</span><h2>Tiến bộ theo thời gian</h2></div>
+            </div>
+            <canvas id="progressChart" width="900" height="260" aria-label="Biểu đồ tiến bộ theo thời gian"></canvas>
+            <p class="assessment-note" id="progressSummary">Chưa có lịch sử đánh giá.</p>
+          </section>
+
           <section class="stats-grid">
             <article class="stat-card">
               <h3>Mức độ hoàn thiện hồ sơ</h3>
-              <div class="score-pill" data-profile-completion>78%</div>
+              <div class="score-pill" data-profile-completion>0%</div>
               <div class="progress-row">
-                <div class="label"><span>Tiến độ</span><strong data-profile-completion>78%</strong></div>
+                <div class="label"><span>Tiến độ</span><strong data-profile-completion>0%</strong></div>
                 <div class="progress-bar"><span class="progress-fill" data-profile-progress></span></div>
               </div>
-              <p>Còn 3 phần cần hoàn thiện để có bản hồ sơ tốt hơn.</p>
+              <p data-profile-completion-help>Hoàn thiện hồ sơ để nhận đánh giá chính xác hơn.</p>
             </article>
 
             <article class="stat-card">
@@ -63,23 +72,23 @@
             </article>
           </section>
 
-          <section class="content-panel">
+          <section class="content-panel" id="careerRecommendationSection" hidden>
             <h2>Ngành nghề đề xuất</h2>
             <div class="career-grid" id="topCareerGrid">
-              <a class="career-card" data-career-card href="career-detail.html">
-                <div class="career-icon">⌘</div>
+              <a class="career-card" data-career-card data-career-code="N01">
+                <div class="career-icon" data-lucide="code" aria-hidden="true"></div>
                 <h3>Chưa có kết quả</h3>
                 <p>Chạy đánh giá để xem nhóm ngành phù hợp.</p>
                 <span class="score-pill">—</span>
               </a>
-              <a class="career-card" data-career-card href="career-detail.html">
-                <div class="career-icon">◫</div>
+              <a class="career-card" data-career-card data-career-code="N02">
+                <div class="career-icon" data-lucide="building-2" aria-hidden="true"></div>
                 <h3>Chưa có kết quả</h3>
                 <p>Chạy đánh giá để xem nhóm ngành phù hợp.</p>
                 <span class="score-pill">—</span>
               </a>
-              <a class="career-card" data-career-card href="career-detail.html">
-                <div class="career-icon">✦</div>
+              <a class="career-card" data-career-card data-career-code="N03">
+                <div class="career-icon" data-lucide="sparkles" aria-hidden="true"></div>
                 <h3>Chưa có kết quả</h3>
                 <p>Chạy đánh giá để xem nhóm ngành phù hợp.</p>
                 <span class="score-pill">—</span>
@@ -88,6 +97,8 @@
             <div class="assessment-results" id="assessmentResults" hidden>
               <h3>7 ngành tiếp theo trong Top 10</h3>
               <div class="remaining-career-list" id="fullRankingList"></div>
+              <h3>Phân tích gap theo kỹ năng</h3>
+              <div class="axis-gap-grid" id="assessmentGapResults"></div>
               <h3>Khuyến nghị bổ khuyết</h3>
               <ul id="assessmentAdvice"></ul>
             </div>
@@ -98,7 +109,7 @@
 
     <app-footer class="site-footer"></app-footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous"></script>
     <script>
             (function(){
         // Header-nav is the single source of truth now. Attach handlers safely.
@@ -140,10 +151,15 @@
         const runBtn = document.getElementById('runAssessment');
         const saveBtn = document.getElementById('saveSuggestions');
         const exportBtn = document.getElementById('exportReport');
+        const exportJsonBtn = document.getElementById('exportJson');
         const skillChart = document.getElementById('skillChart');
+        const progressChart = document.getElementById('progressChart');
 
         let latestResult = null;
         let assessmentRequest = null;
+        let assessmentHistory = [];
+        let benchmarks = [];
+        let historyLoadRequest = null;
         const careerDescriptions = {
           N01: 'Phát triển phần mềm, dữ liệu và hệ thống số; phù hợp với người thích giải quyết vấn đề bằng tư duy logic.',
           N02: 'Tổ chức vận hành, chiến lược và nguồn lực để doanh nghiệp tăng trưởng bền vững.',
@@ -183,20 +199,33 @@
           const weakCard = document.querySelectorAll('.stats-grid .stat-card')[2];
           const top = items[0];
           const scores = top ? top.scores : {};
-          const strengths = Object.keys(scores).filter(function (key) { return scores[key] >= 7; });
-          const weaknesses = Object.keys(scores).filter(function (key) { return scores[key] < 5; });
           const labels = {S1:'Học thuật', S2:'Ngoại ngữ', S3:'Thành tích', S4:'RIASEC', S5:'Ngoại khóa'};
-          if (strengthsCard) strengthsCard.innerHTML = '<h3>Điểm mạnh</h3>' + (strengths.length ? strengths.map(function (key) { return '<p>• ' + labels[key] + '</p>'; }).join('') : '<p>• Cần thêm dữ liệu để kết luận</p>');
-          if (weakCard) weakCard.innerHTML = '<h3>Điểm cần cải thiện</h3>' + (weaknesses.length ? weaknesses.map(function (key) { return '<p>• ' + labels[key] + '</p>'; }).join('') : '<p>• Hồ sơ đang khá cân bằng</p>');
+          const rankedScores = Object.keys(labels).map(function (key) {
+            return { key: key, value: Number(scores[key] || 0) };
+          }).sort(function (a, b) { return b.value - a.value; });
+          const strengths = rankedScores.slice(0, 3);
+          const weaknesses = rankedScores.slice().sort(function (a, b) { return a.value - b.value; }).slice(0, 3);
+          if (strengthsCard) strengthsCard.innerHTML = '<h3>Điểm mạnh</h3>' + strengths.map(function (item) {
+            return '<p>• ' + labels[item.key] + ' · <strong>' + item.value.toFixed(1) + '/10</strong></p>';
+          }).join('');
+          if (weakCard) weakCard.innerHTML = '<h3>Điểm cần cải thiện</h3>' + weaknesses.map(function (item) {
+            return '<p>• ' + labels[item.key] + ' · <strong>' + item.value.toFixed(1) + '/10</strong></p>';
+          }).join('');
           const careerEls = document.querySelectorAll('[data-career-card]');
+          const recommendationSection = document.getElementById('careerRecommendationSection');
+          if (recommendationSection) recommendationSection.hidden = !(result.top5 && result.top5.length);
           (result.top5 || []).slice(0, 3).forEach(function (career, index) {
             const el = careerEls[index];
             if (!el) return;
+            el.hidden = false;
             el.querySelector('h3').textContent = career.name;
             el.querySelector('p').textContent = careerDescriptions[career.code] || ('Nổi bật ở ' + labels[career.highlight] + ' (' + career.scores[career.highlight] + '/10).');
             el.setAttribute('aria-label', career.name + ': ' + (careerDescriptions[career.code] || 'Gợi ý ngành nghề phù hợp với hồ sơ.'));
             el.querySelector('.score-pill').textContent = career.score + '% phù hợp';
-            el.href = 'career-detail.html?career=' + encodeURIComponent(career.name);
+            el.href = 'career-detail.html?code=' + encodeURIComponent(career.code) + '&career=' + encodeURIComponent(career.name);
+          });
+          careerEls.forEach(function (el, index) {
+            if (!(result.top5 || [])[index]) el.hidden = true;
           });
         }
 
@@ -204,14 +233,40 @@
           const labels = {S1:'Học thuật', S2:'Ngoại ngữ', S3:'Thành tích', S4:'RIASEC', S5:'Ngoại khóa'};
           const container = document.getElementById('assessmentResults');
           document.getElementById('fullRankingList').innerHTML = result.results.slice(3, 10).map(function (item) {
-            return '<a class="remaining-career-item" href="career-detail.html?career=' + encodeURIComponent(item.name) + '"><span><strong>' + item.rank + '.</strong> ' + escapeHtml(item.code + ' — ' + item.name) + '</span><strong>' + item.score + '%</strong></a>';
+            return '<a class="remaining-career-item" href="career-detail.html?code=' + encodeURIComponent(item.code) + '&career=' + encodeURIComponent(item.name) + '"><span><strong>' + item.rank + '.</strong> ' + escapeHtml(item.code + ' — ' + item.name) + '</span><strong>' + item.score + '%</strong></a>';
           }).join('');
+          renderGapAnalysis(result);
           document.getElementById('assessmentAdvice').innerHTML = [
             result.top3.some(function (item) { return item.scores.S2 < 6; }) ? 'Bổ sung chứng chỉ ngoại ngữ hoặc nâng điểm hiện có.' : 'Tiếp tục duy trì và nâng chuẩn chứng chỉ ngoại ngữ.',
             result.top3.some(function (item) { return item.scores.S1 < 6; }) ? 'Cập nhật điểm các môn cốt lõi để hệ thống đánh giá chính xác hơn.' : 'Duy trì điểm môn cốt lõi của nhóm ngành mục tiêu.',
             result.top3.some(function (item) { return item.scores.S3 < 5 || item.scores.S5 < 5; }) ? 'Bổ sung thành tích, dự án hoặc hoạt động có vai trò rõ ràng.' : 'Tiếp tục ghi nhận thành tích và tác động của hoạt động.'
           ].map(function (advice) { return '<li>' + advice + '</li>'; }).join('');
           container.hidden = false;
+        }
+
+        function renderGapAnalysis(result) {
+          const top = (result.top3 || [])[0];
+          const labels = {S1:'Học thuật', S2:'Ngoại ngữ', S3:'Thành tích', S4:'RIASEC', S5:'Ngoại khóa'};
+          const benchmark = benchmarks.find(function (item) { return item.code === (top && top.code); });
+          const targetByKey = {};
+          if (benchmark && benchmark.requirements) {
+            Object.keys(labels).forEach(function (key) {
+              const requirement = benchmark.requirements[key] || {};
+              targetByKey[key] = Number(requirement.target || requirement.maximum || 0);
+            });
+          }
+          const scores = top && top.scores ? top.scores : {};
+          const gap = document.getElementById('assessmentGapResults');
+          if (!gap || !top) return;
+          gap.innerHTML = Object.keys(labels).map(function (key) {
+            const actual = Number(scores[key] || 0);
+            const target = targetByKey[key] || 0;
+            const delta = Math.max(0, target - actual);
+            return '<article class="axis-gap-card"><span class="eyebrow">' + labels[key] + '</span>' +
+              '<strong>' + actual.toFixed(1) + '/10</strong><p>Mục tiêu: ' + target.toFixed(1) +
+              ' · Gap: <b>' + delta.toFixed(1) + '</b></p><small>' +
+              (delta > 0 ? 'Ưu tiên bổ sung kỹ năng này.' : 'Đã đạt hoặc vượt mục tiêu.') + '</small></article>';
+          }).join('');
         }
 
         function drawChart(result) {
@@ -231,6 +286,85 @@
           });
         }
 
+        function drawProgressChart(history) {
+          if (!progressChart) return;
+          const ctx = progressChart.getContext('2d');
+          const entries = history.slice().reverse().map(function (item) {
+            const results = item.career_suggestions_json && item.career_suggestions_json.results;
+            const top = Array.isArray(results) && results[0];
+            const scores = top && top.scores ? Object.keys(top.scores).map(function (key) { return Number(top.scores[key]); }).filter(Number.isFinite) : [];
+            const score = scores.length ? scores.reduce(function (sum, value) { return sum + value; }, 0) / scores.length : 0;
+            return { date: new Date(item.created_at), score: score };
+          }).filter(function (item) { return Number.isFinite(item.date.getTime()); });
+          ctx.clearRect(0, 0, progressChart.width, progressChart.height);
+          ctx.strokeStyle = '#d8e0e8';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(48, 20); ctx.lineTo(48, 220); ctx.lineTo(870, 220); ctx.stroke();
+          if (!entries.length) return;
+          const max = 10;
+          const points = entries.map(function (entry, index) {
+            const x = entries.length === 1 ? 460 : 60 + index * (790 / (entries.length - 1));
+            const y = 215 - (entry.score / max) * 180;
+            return { entry: entry, x: x, y: y };
+          });
+          ctx.strokeStyle = '#0b3d66'; ctx.lineWidth = 3; ctx.beginPath();
+          points.forEach(function (point, index) {
+            if (index === 0) ctx.moveTo(point.x, point.y); else ctx.lineTo(point.x, point.y);
+          });
+          ctx.stroke();
+          points.forEach(function (point) {
+            const entry = point.entry;
+            const x = point.x;
+            const y = point.y;
+            ctx.fillStyle = '#0b3d66'; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#0b1220'; ctx.font = '11px Inter, sans-serif';
+            ctx.fillText(entry.score.toFixed(1) + '/10', x - 12, y - 10);
+            ctx.fillText(entry.date.toLocaleDateString(), x - 25, 240);
+          });
+          const first = entries[0].score;
+          const last = entries[entries.length - 1].score;
+          document.getElementById('progressSummary').textContent = entries.length + ' lần đánh giá · ' +
+            (last - first >= 0 ? 'Tăng ' : 'Giảm ') + Math.abs(last - first).toFixed(1) + ' điểm năng lực trên thang 10 so với lần đầu.';
+        }
+
+        async function loadAssessmentHistory() {
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return;
+          if (historyLoadRequest) return historyLoadRequest;
+          historyLoadRequest = (async function () {
+          try {
+            assessmentHistory = await window.AXISAuth.apiRequest('/assessments');
+            if (!Array.isArray(assessmentHistory)) assessmentHistory = [];
+            drawProgressChart(assessmentHistory);
+            if (!latestResult && assessmentHistory[0]) {
+              const saved = assessmentHistory[0];
+              const savedSuggestions = saved.career_suggestions_json || {};
+              const savedResults = Array.isArray(savedSuggestions.results) ? savedSuggestions.results : [];
+              latestResult = {
+                results: savedResults,
+                top3: savedSuggestions.top3 || savedResults.slice(0, 3),
+                top5: savedSuggestions.top5 || savedResults.slice(0, 5),
+                riasec: (saved.score_json || {}).riasec || {}
+              };
+              if (latestResult.results.length) {
+                updateStats(latestResult);
+                renderResults(latestResult);
+                drawChart(latestResult);
+              }
+            }
+            if (!assessmentHistory.length && !latestResult) {
+              document.getElementById('careerRecommendationSection').hidden = true;
+              document.getElementById('progressSummary').textContent = 'Chưa có lịch sử đánh giá.';
+            }
+          } catch (error) {
+            document.getElementById('progressSummary').textContent = 'Không thể tải lịch sử đánh giá.';
+          } finally {
+            historyLoadRequest = null;
+          }
+          })();
+          return historyLoadRequest;
+        }
+
         async function runAssessment() {
           if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
           if (assessmentRequest) return assessmentRequest;
@@ -238,7 +372,11 @@
           try {
             runBtn.disabled = true;
             runBtn.textContent = 'Đang tính...';
+            if (window.AxisData && window.AxisData.hasUnsavedChanges && window.AxisData.hasUnsavedChanges()) {
+              await window.AxisData.saveProfile();
+            }
             latestResult = await window.AXISAuth.apiRequest('/assessments/run', { method: 'POST' });
+            await loadAssessmentHistory();
             updateStats(latestResult);
             renderResults(latestResult);
             drawChart(latestResult);
@@ -278,20 +416,48 @@
               doc.text('- ' + item.code + ' ' + item.name + ': ' + item.score + '%', 60, y);
               y += 18;
             });
-            doc.save('futurepath-assessment.pdf');
+            doc.save('axis-assessment.pdf');
           } else {
             // fallback: download JSON
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'futurepath-assessment.json';
+            a.download = 'axis-assessment.json';
             document.body.appendChild(a); a.click(); a.remove();
             URL.revokeObjectURL(a.href);
           }
         });
 
-        document.addEventListener('futurepath:auth-state', function (event) {
-          if (!event.detail.signedIn) latestResult = null;
+        if (exportJsonBtn) exportJsonBtn.addEventListener('click', function () {
+          if (!latestResult) { alert('Hãy chạy đánh giá trước khi xuất dữ liệu.'); return; }
+          const blob = new Blob([JSON.stringify({ result: latestResult, history: assessmentHistory, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'axis-assessment-' + new Date().toISOString().slice(0, 10) + '.json';
+          link.click();
+          URL.revokeObjectURL(link.href);
+        });
+
+        function initializeAssessmentData() {
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return;
+          window.AXISAuth.apiRequest('/axis/benchmarks').then(function (items) {
+            benchmarks = Array.isArray(items) ? items : [];
+            if (latestResult) renderGapAnalysis(latestResult);
+          }).catch(function () {});
+          loadAssessmentHistory();
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeAssessmentData);
+        document.addEventListener('axis:profile-hydrated', initializeAssessmentData);
+
+        document.addEventListener('axis:auth-state', function (event) {
+          if (!event.detail.signedIn) {
+            latestResult = null;
+            assessmentHistory = [];
+            document.getElementById('careerRecommendationSection').hidden = true;
+          } else {
+            initializeAssessmentData();
+          }
         });
       })();
     </script>

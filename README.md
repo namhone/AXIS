@@ -46,7 +46,7 @@ until equivalent profile and dashboard routes are implemented there.
 AXIS is intentionally split into a framework-free static client and a Python API:
 
 ```text
-FuturePath/
+Axis/
 ├── index.html, pages/          Static HTML screens
 ├── css/global.css              Shared theme, layout, responsive styles
 ├── js/                         Browser modules and API integration

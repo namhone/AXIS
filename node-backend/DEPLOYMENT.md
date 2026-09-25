@@ -52,11 +52,11 @@ Có thể override URL FastAPI bằng cách đặt trước `js/auth.js`:
 
 ```html
 <script>
-  window.FUTUREPATH_API_BASE = 'https://api.example.com/api/v1/auth';
+  window.AXIS_API_BASE = 'https://api.example.com/api/v1/auth';
 </script>
 <script src="/js/auth.js"></script>
 ```
 
-Node auth service dùng API riêng `/api/auth`. Không đổi `FUTUREPATH_API_BASE`
+Node auth service dùng API riêng `/api/auth`. Không đổi `AXIS_API_BASE`
 sang Node service cho đến khi các route profile/dashboard được triển khai tương
 ứng trên Node.

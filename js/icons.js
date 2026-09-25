@@ -28,6 +28,8 @@
     return new Promise(function (resolve) {
       var script = document.createElement('script');
       script.src = 'https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js';
+      script.integrity = 'sha384-LtmWBcrD5iuFIR4sFphS8IiiaftkypL5dJzLKywbyd9ATLB7ZbPz3JYnI9nvXHkV';
+      script.crossOrigin = 'anonymous';
       script.onload = resolve;
       script.onerror = resolve;
       document.head.appendChild(script);
@@ -53,8 +55,9 @@
         needsRender = true;
       }
     });
-    document.querySelectorAll('.career-card[data-career-code] .career-icon').forEach(function (element) {
-      var code = element.closest('[data-career-code]').getAttribute('data-career-code');
+    document.querySelectorAll('.career-card[data-career-code] .career-icon, .career-icon[data-lucide]').forEach(function (element) {
+      var careerCard = element.closest('[data-career-code]');
+      var code = careerCard ? careerCard.getAttribute('data-career-code') : '';
       var iconName = careerByCode[code] || 'help-circle';
       if (element.getAttribute('data-lucide') !== iconName) {
         element.setAttribute('data-lucide', iconName);
@@ -68,6 +71,12 @@
     document.querySelectorAll('[data-career-card] .career-icon').forEach(function (element) {
       if (!element.hasAttribute('data-lucide')) {
         element.setAttribute('data-lucide', 'help-circle');
+        element.textContent = '';
+        needsRender = true;
+      }
+    });
+    document.querySelectorAll('[data-lucide]').forEach(function (element) {
+      if (!element.querySelector('svg')) {
         element.textContent = '';
         needsRender = true;
       }

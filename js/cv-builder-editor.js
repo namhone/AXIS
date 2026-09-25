@@ -4,6 +4,7 @@
   var root;
   var preview;
   var currentTemplate = 'modern';
+  var currentLanguage = 'vi';
   var pipelineRun = 0;
   var model = null;
   var previewResizeObserver;
@@ -41,6 +42,20 @@
     professional: ['Teal chính', 'Màu chữ', 'Nền giấy'],
     simple: ['Teal', 'Màu chữ', 'Nền giấy'],
     creative: ['Màu chủ đạo', 'Màu chữ', 'Nền giấy']
+  };
+  var CV_LABELS = {
+    vi: {
+      summary: 'GIỚI THIỆU', experience: 'KINH NGHIỆM & DỰ ÁN', education: 'HỌC VẤN',
+      achievements: 'THÀNH TÍCH', skills: 'KỸ NĂNG', certificates: 'CHỨNG CHỈ',
+      interests: 'SỞ THÍCH', contact: 'THÔNG TIN CÁ NHÂN', focus: 'MỤC TIÊU',
+      phone: 'Điện thoại', email: 'Email', linkedin: 'Liên kết', location: 'Địa điểm'
+    },
+    en: {
+      summary: 'PROFILE', experience: 'EXPERIENCE & PROJECTS', education: 'EDUCATION',
+      achievements: 'ACHIEVEMENTS', skills: 'SKILLS', certificates: 'CERTIFICATES',
+      interests: 'INTERESTS', contact: 'CONTACT', focus: 'FOCUS',
+      phone: 'Phone', email: 'Email', linkedin: 'Website', location: 'Location'
+    }
   };
   var SAMPLE_PROFILE = {
     name: 'Nguyễn Minh Anh',
@@ -158,21 +173,11 @@
     };
   }
 
-  function makeModel(profile) {
+  function makeModel(profile, language) {
     var extracted = extractProfile(profile);
     return {
       data: extracted,
-      labels: {
-        summary: 'PROFILE',
-        experience: 'EXPERIENCE & PROJECTS',
-        education: 'EDUCATION',
-        achievements: 'ACHIEVEMENTS',
-        skills: 'SKILLS',
-        certificates: 'CERTIFICATES',
-        interests: 'INTERESTS',
-        contact: 'CONTACT',
-        focus: 'FOCUS'
-      },
+      labels: Object.assign({}, CV_LABELS[language] || CV_LABELS.vi),
       overrides: {}
     };
   }
@@ -193,12 +198,77 @@
     var resolved = value(key || '', fallback);
     node.textContent = escapeValue(resolved);
     if (key) node.dataset.cvBind = key;
+    var mode = (options && options.mode) ? options.mode : 'paragraph';
+    node.dataset.cvMode = mode;
     if (!options || options.editable !== false) {
       node.contentEditable = 'true';
       node.dataset.cvEditable = 'true';
       node.spellcheck = true;
     }
     if (options && options.role) node.setAttribute('role', options.role);
+    return node;
+  }
+
+  function createListItemNode(text) {
+    var item = document.createElement('li');
+    item.dataset.cvEditable = 'true';
+    item.dataset.cvMode = 'list-item';
+    item.contentEditable = 'true';
+    item.spellcheck = true;
+    item.textContent = text || '';
+    return item;
+  }
+
+  function insertNewListItem(currentItem) {
+    var list = currentItem.parentElement;
+    var nextItem = createListItemNode('');
+    if (!list || !list.matches('ul,ol')) {
+      return;
+    }
+    list.insertBefore(nextItem, currentItem.nextSibling || null);
+    nextItem.focus();
+    var selection = window.getSelection();
+    if (!selection) return;
+    var range = document.createRange();
+    range.selectNodeContents(nextItem);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
+  function bindEditableNode(node) {
+    var mode = node.dataset.cvMode || 'paragraph';
+    if (node.dataset.cvBoundEnter === 'true') return;
+    node.dataset.cvBoundEnter = 'true';
+
+    node.addEventListener('keydown', function (event) {
+      if (event.key !== 'Enter') return;
+      if (mode === 'paragraph') {
+        if (!event.ctrlKey && !event.metaKey && !event.shiftKey) {
+          event.preventDefault();
+          return;
+        }
+        if (event.ctrlKey || event.metaKey) {
+          event.preventDefault();
+          document.execCommand('insertLineBreak');
+          return;
+        }
+      }
+      if (mode === 'list-item') {
+        if (event.ctrlKey || event.metaKey || event.shiftKey) {
+          return;
+        }
+        event.preventDefault();
+        insertNewListItem(node);
+      }
+    });
+  }
+
+  function lucideIcon(name, className) {
+    var node = document.createElement('span');
+    if (className) node.className = className;
+    node.setAttribute('data-lucide', name);
+    node.setAttribute('aria-hidden', 'true');
     return node;
   }
 
@@ -300,7 +370,7 @@
       if (!model.data[key]) return;
       var item = document.createElement('p');
       item.className = 'cv-modern-contact-row';
-      item.appendChild(element('span', 'cv-modern-contact-label', '', key === 'phone' ? 'Phone' : key === 'email' ? 'Email' : key === 'linkedin' ? 'Website' : 'Location', { editable: false }));
+      item.appendChild(element('span', 'cv-modern-contact-label', '', CV_LABELS[model.language || currentLanguage][key], { editable: false }));
       item.appendChild(element('span', 'cv-modern-contact-value', 'data.' + key, model.data[key]));
       contact.appendChild(item);
     });
@@ -331,8 +401,7 @@
       heading.className = 'cv-professional-section-header';
       var mark = document.createElement('span');
       mark.className = 'cv-professional-section-icon';
-      mark.textContent = icon;
-      mark.setAttribute('aria-hidden', 'true');
+      mark.appendChild(lucideIcon(icon));
       var title = element('h2', '', 'labels.' + label, label.toUpperCase());
       heading.appendChild(mark);
       heading.appendChild(title);
@@ -397,27 +466,27 @@
 
     var contact = document.createElement('div');
     contact.className = 'cv-professional-contact';
-    [['birthYear', '●'], ['className', '◌'], ['phone', '☎'], ['email', '✉'], ['location', '⌖'], ['linkedin', '↗']].forEach(function (entry) {
+    [['birthYear', 'calendar-days'], ['className', 'graduation-cap'], ['phone', 'phone'], ['email', 'mail'], ['location', 'map-pin'], ['linkedin', 'external-link']].forEach(function (entry) {
       var row = document.createElement('div');
       row.className = 'cv-professional-info-item';
       var icon = document.createElement('span');
       icon.className = 'cv-professional-info-icon';
-      icon.textContent = entry[1];
+      icon.appendChild(lucideIcon(entry[1]));
       row.appendChild(icon);
       row.appendChild(element('span', '', 'data.' + entry[0], model.data[entry[0]] || 'Thông tin bổ sung'));
       contact.appendChild(row);
     });
-    sidebar.appendChild(professionalSection('contact', '●', contact));
+    sidebar.appendChild(professionalSection('contact', 'contact', contact));
 
     var objective = document.createElement('div');
     objective.appendChild(element('p', 'cv-professional-objective-text', 'data.summary', model.data.summary));
-    sidebar.appendChild(professionalSection('focus', '✦', objective));
+    sidebar.appendChild(professionalSection('focus', 'sparkles', objective));
 
-    main.appendChild(professionalSection('education', '▣', professionalEntry('education', model.data.education, false)));
+    main.appendChild(professionalSection('education', 'graduation-cap', professionalEntry('education', model.data.education, false)));
     var experience = document.createElement('div');
     experience.appendChild(professionalEntry('project', model.data.project, true));
     experience.appendChild(professionalEntry('activity', model.data.activity, true));
-    main.appendChild(professionalSection('experience', '▤', experience));
+    main.appendChild(professionalSection('experience', 'briefcase', experience));
 
     var skills = document.createElement('div');
     model.data.skills.forEach(function (skill, index) {
@@ -430,7 +499,7 @@
       row.appendChild(bar);
       skills.appendChild(row);
     });
-    main.appendChild(professionalSection('skills', '◆', skills));
+    main.appendChild(professionalSection('skills', 'sparkles', skills));
 
     var certificates = document.createElement('div');
     model.data.certificates.forEach(function (certificate, index) {
@@ -442,9 +511,9 @@
       row.appendChild(year);
       certificates.appendChild(row);
     });
-    main.appendChild(professionalSection('certificates', '◇', certificates));
+    main.appendChild(professionalSection('certificates', 'badge-check', certificates));
 
-    main.appendChild(professionalSection('achievements', '★', professionalEntry('achievement', model.data.achievement, false)));
+    main.appendChild(professionalSection('achievements', 'trophy', professionalEntry('achievement', model.data.achievement, false)));
     columns.appendChild(main);
     columns.appendChild(sidebar);
     page.appendChild(columns);
@@ -470,14 +539,14 @@
     var contact = document.createElement('div');
     contact.className = 'cv-simple-contact';
     [
-      ['⌂', 'location', model.data.location],
-      ['☎', 'phone', model.data.phone],
-      ['✉', 'email', model.data.email],
-      ['↗', 'linkedin', model.data.linkedin]
+      ['map-pin', 'location', model.data.location],
+      ['phone', 'phone', model.data.phone],
+      ['mail', 'email', model.data.email],
+      ['external-link', 'linkedin', model.data.linkedin]
     ].forEach(function (entry) {
       var row = document.createElement('div');
       row.className = 'cv-simple-contact-item';
-      row.appendChild(document.createElement('span')).textContent = entry[0];
+      row.appendChild(lucideIcon(entry[0]));
       row.appendChild(element('span', '', 'data.' + entry[1], entry[2]));
       contact.appendChild(row);
     });
@@ -635,11 +704,11 @@
     sidebar.className = 'cv-creative-sidebar';
     var contact = document.createElement('div');
     contact.className = 'cv-creative-contact';
-    [['birthYear', '◷'], ['phone', '☎'], ['email', '✉'], ['location', '⌖']].forEach(function (entry) {
+    [['birthYear', 'calendar-days'], ['phone', 'phone'], ['email', 'mail'], ['location', 'map-pin']].forEach(function (entry) {
       var row = document.createElement('div');
       row.className = 'cv-creative-contact-item';
       var icon = document.createElement('span');
-      icon.textContent = entry[1];
+      icon.appendChild(lucideIcon(entry[1]));
       row.appendChild(icon);
       row.appendChild(element('span', '', 'data.' + entry[0], model.data[entry[0]] || 'Thông tin bổ sung'));
       contact.appendChild(row);
@@ -758,11 +827,12 @@
     var label = document.querySelector('[data-preview-label]');
     if (label) label.textContent = TEMPLATE_LABELS[currentTemplate];
     preview.querySelectorAll('[data-cv-editable]').forEach(function (node) {
+      bindEditableNode(node);
       node.addEventListener('input', function () {
         var key = node.dataset.cvBind;
         if (key) model.overrides[key] = node.textContent.trim();
         fitPreviewToViewport();
-        setStatus('Đã cập nhật nội dung. Bạn có thể lưu bản nháp.', 'neutral');
+        setStatus('Đã cập nhật nội dung. Bạn có thể lưu bản nhách.', 'neutral');
       });
     });
     fitPreviewToViewport();
@@ -803,9 +873,155 @@
     }
   }
 
-  function profileFromFuturePath() {
-    if (window.FuturePathData && typeof window.FuturePathData.getProfile === 'function') {
-      return window.FuturePathData.getProfile();
+  function currentCvData() {
+    if (!model || !model.data) return {};
+    var data = JSON.parse(JSON.stringify(model.data));
+    Object.keys(model.overrides || {}).forEach(function (key) {
+      var parts = key.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+      if (!parts.length) return;
+      var target = data;
+      for (var index = 0; index < parts.length - 1; index += 1) {
+        if (!target || target[parts[index]] == null) return;
+        target = target[parts[index]];
+      }
+      if (target && parts.length > 0) {
+        target[parts[parts.length - 1]] = model.overrides[key];
+      }
+    });
+    return data;
+  }
+
+  function aiEditableSection(data) {
+    var payload = {};
+    payload.summary = text(data.summary, '');
+    payload.role = text(data.role, '');
+    payload.skills = Array.isArray(data.skills) ? data.skills.slice(0, 12) : [];
+    payload.interests = Array.isArray(data.interests) ? data.interests.slice(0, 12) : [];
+    payload.project = {
+      name: text(data.project && data.project.name, ''),
+      meta: text(data.project && data.project.meta, ''),
+      description: text(data.project && data.project.description, '')
+    };
+    payload.activity = {
+      name: text(data.activity && data.activity.name, ''),
+      meta: text(data.activity && data.activity.meta, ''),
+      description: text(data.activity && data.activity.description, '')
+    };
+    payload.education = {
+      name: text(data.education && data.education.name, ''),
+      meta: text(data.education && data.education.meta, ''),
+      description: text(data.education && data.education.description, '')
+    };
+    payload.achievement = {
+      name: text(data.achievement && data.achievement.name, ''),
+      meta: text(data.achievement && data.achievement.meta, ''),
+      description: text(data.achievement && data.achievement.description, '')
+    };
+    return payload;
+  }
+
+  function mergeAiEditableSection(target, aiPayload) {
+    if (!target || !aiPayload) return target;
+    var safePayload = aiPayload || {};
+    if (safePayload.summary) target.summary = safePayload.summary;
+    if (safePayload.role) target.role = safePayload.role;
+    if (Array.isArray(safePayload.skills) && safePayload.skills.length) target.skills = safePayload.skills;
+    if (Array.isArray(safePayload.interests) && safePayload.interests.length) target.interests = safePayload.interests;
+    if (safePayload.project) {
+      if (safePayload.project.name) target.project.name = safePayload.project.name;
+      if (safePayload.project.meta) target.project.meta = safePayload.project.meta;
+      if (safePayload.project.description) target.project.description = safePayload.project.description;
+    }
+    if (safePayload.activity) {
+      if (safePayload.activity.name) target.activity.name = safePayload.activity.name;
+      if (safePayload.activity.meta) target.activity.meta = safePayload.activity.meta;
+      if (safePayload.activity.description) target.activity.description = safePayload.activity.description;
+    }
+    if (safePayload.education) {
+      if (safePayload.education.name) target.education.name = safePayload.education.name;
+      if (safePayload.education.meta) target.education.meta = safePayload.education.meta;
+      if (safePayload.education.description) target.education.description = safePayload.education.description;
+    }
+    if (safePayload.achievement) {
+      if (safePayload.achievement.name) target.achievement.name = safePayload.achievement.name;
+      if (safePayload.achievement.meta) target.achievement.meta = safePayload.achievement.meta;
+      if (safePayload.achievement.description) target.achievement.description = safePayload.achievement.description;
+    }
+    return target;
+  }
+
+  function fallbackCvTransform(data, language, operation) {
+    var clone = JSON.parse(JSON.stringify(data || {}));
+    var translationMap = language === 'en'
+      ? { 'học sinh': 'student', 'sinh viên': 'student', 'hồ sơ': 'profile', 'giới thiệu': 'profile', 'mục tiêu': 'objective', 'kỹ năng': 'skills', 'kinh nghiệm': 'experience', 'học vấn': 'education', 'chứng chỉ': 'certificates', 'sở thích': 'interests', 'thành tích': 'achievements', 'điện thoại': 'phone', 'email': 'email', 'địa điểm': 'location', 'liên kết': 'website', 'dự án': 'project', 'lớp': 'class', 'gpa': 'GPA' }
+      : { 'student': 'học sinh', 'profile': 'hồ sơ', 'objective': 'mục tiêu', 'skills': 'kỹ năng', 'experience': 'kinh nghiệm', 'education': 'học vấn', 'certificates': 'chứng chỉ', 'interests': 'sở thích', 'achievements': 'thành tích', 'phone': 'điện thoại', 'location': 'địa điểm', 'website': 'liên kết', 'project': 'dự án', 'class': 'lớp', 'gpa': 'GPA' };
+
+    function visit(node) {
+      if (Array.isArray(node)) return node.map(visit);
+      if (node && typeof node === 'object') {
+        Object.keys(node).forEach(function (key) {
+          node[key] = visit(node[key]);
+        });
+        return node;
+      }
+      if (typeof node !== 'string') return node;
+      var trimmed = node.trim();
+      if (!trimmed) return node;
+      if (operation === 'normalize') return trimmed.replace(/\s+/g, ' ');
+      if (operation === 'translate') {
+        var text = trimmed;
+        Object.keys(translationMap).forEach(function (source) {
+          var target = translationMap[source];
+          var pattern = new RegExp(source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+          text = text.replace(pattern, target);
+        });
+        return text;
+      }
+      return trimmed;
+    }
+
+    return visit(clone);
+  }
+
+  function requestCvAI(data, language, operation) {
+    var fallbackRequest = function () {
+      return Promise.resolve(fallbackCvTransform(data, language, operation));
+    };
+
+    if (!window.AxisAuth || typeof window.AxisAuth.apiRequest !== 'function') {
+      return fallbackRequest();
+    }
+
+    if (!window.AxisAuth.isSignedIn()) {
+      return fallbackRequest();
+    }
+
+    return window.AxisAuth.apiRequest('/ai/cv', {
+      method: 'POST',
+      body: JSON.stringify({ data: data, language: language, operation: operation })
+    }).then(function (payload) {
+      if (!payload || !payload.data || typeof payload.data !== 'object') {
+        throw new Error('AI trả về dữ liệu CV không hợp lệ.');
+      }
+      if (operation === 'normalize') {
+        var merged = mergeAiEditableSection(JSON.parse(JSON.stringify(data || {})), payload.data);
+        return merged;
+      }
+      return payload.data;
+    }).catch(function (error) {
+      var message = error && (error.message || '');
+      var shouldFallback = /không thể kết nối|hết thời gian|not configured|ai is not configured|đã hết hạn|Không thể đồng bộ dữ liệu tài khoản|500|502|503|401|403/i.test(message || '') ||
+        (error && typeof error.status === 'number' && error.status >= 401);
+      if (shouldFallback) {
+        return fallbackCvTransform(data, language, operation);
+      }
+      throw error;
+    });
+  }
+
+  function profileFromAxis() {
+    if (window.AxisData && typeof window.AxisData.getProfile === 'function') {
+      return window.AxisData.getProfile();
     }
     return {};
   }
@@ -817,45 +1033,86 @@
     var state = document.querySelector('[data-pipeline-state]');
     if (state) state.textContent = 'Đang chạy';
     ['extract', 'structure', 'content', 'review'].forEach(function (agent) { setAgent(agent, null); });
-    setStatus('Agent 01 đang đọc hồ sơ và dữ liệu chứng chỉ…', 'working');
+    setStatus('Đang đọc và cấu trúc hồ sơ CV…', 'working');
     setAgent('extract', 'running');
-    await wait(280);
-    if (run !== pipelineRun) return;
-    var extracted = extractProfile(profileFromFuturePath());
+    var extracted = extractProfile(profileFromAxis());
     setAgent('extract', 'done');
-    setStatus('Agent 02 đang chuẩn hóa các trường CV…', 'working');
+    setStatus('Đang lọc nội dung AI chỉ cho phần mô tả và kỹ năng…', 'working');
     setAgent('structure', 'running');
-    await wait(300);
-    if (run !== pipelineRun) return;
-    var nextModel = makeModel(profileFromFuturePath());
+    var nextModel = makeModel({}, currentLanguage);
+    nextModel.data = extracted;
+    nextModel.language = currentLanguage;
     setAgent('structure', 'done');
-    setStatus('Agent 03 đang tối ưu summary và bullet…', 'working');
+    setStatus('Đang tối ưu đoạn văn, skill, abstract bằng AI…', 'working');
     setAgent('content', 'running');
-    await wait(320);
+    try {
+      var aiPayload = await requestCvAI(aiEditableSection(nextModel.data), currentLanguage, 'normalize');
+      nextModel.data = Object.assign({}, nextModel.data, aiPayload || {});
+    } catch (error) {
+      if (run !== pipelineRun) return;
+      ['structure', 'content', 'review'].forEach(function (agent) { setAgent(agent, 'error'); });
+      if (state) state.textContent = 'AI lỗi';
+      if (normalizeButton) normalizeButton.disabled = false;
+      setStatus(error.message || 'Không thể kết nối AI. Nội dung hiện tại vẫn được giữ nguyên.', 'error');
+      return;
+    }
     if (run !== pipelineRun) return;
-    nextModel.data.summary = text(nextModel.data.summary, SAMPLE_PROFILE.introduction);
     setAgent('content', 'done');
-    setStatus('Agent 04 đang kiểm tra trường bắt buộc…', 'working');
+    setStatus('Đang kiểm tra dữ liệu CV…', 'working');
     setAgent('review', 'running');
-    await wait(260);
-    if (run !== pipelineRun) return;
     model = nextModel;
     setAgent('review', 'done');
     renderPreview();
+    
+    setStatus('Đang lưu dữ liệu CV đã chuẩn hóa…', 'working');
+    try {
+      await persistCvToProfile(nextModel.data);
+    } catch (persistError) {
+      if (run === pipelineRun) {
+        if (state) state.textContent = 'Đã sẵn sàng';
+        if (normalizeButton) normalizeButton.disabled = false;
+        setStatus('⚠ Dữ liệu CV đã cập nhật trên màn hình nhưng chưa lưu trên server: ' + (persistError.message || 'Lỗi không xác định.'), 'warning');
+      }
+      return;
+    }
+    
     if (state) state.textContent = 'Đã sẵn sàng';
     if (normalizeButton) normalizeButton.disabled = false;
-    setStatus('Đã chuẩn hóa xong. Nhấp vào văn bản trong CV để chỉnh sửa.', 'success');
+    setStatus('AI chỉ tác động vào các phần mô tả và kỹ năng. Thông tin dạng số, chứng chỉ, mục tiêu, thành tích vẫn giữ nguyên. Dữ liệu đã lưu thành công.', 'success');
+  }
+
+  function persistCvToProfile(cvData) {
+    if (!window.AxisAuth || typeof window.AxisAuth.apiRequest !== 'function') {
+      return Promise.reject(new Error('Hệ thống xác thực chưa sẵn sàng.'));
+    }
+    if (!window.AxisAuth.isSignedIn()) {
+      return Promise.reject(new Error('Vui lòng đăng nhập để lưu CV lên server.'));
+    }
+    var payload = Object.assign({}, cvData || {});
+    return window.AxisAuth.apiRequest('/profile', {
+      method: 'PUT',
+      body: JSON.stringify(payload)
+    });
   }
 
   function saveDraft() {
     if (!model) return;
     try {
-      localStorage.setItem('futurepath_cv_draft', JSON.stringify({
+      localStorage.setItem('axis_cv_draft', JSON.stringify({
         template: currentTemplate,
+        language: currentLanguage,
         model: model,
         savedAt: new Date().toISOString()
       }));
-      setStatus('Đã lưu bản nháp trên trình duyệt.', 'success');
+      
+      if (window.AxisAuth && window.AxisAuth.isSignedIn()) {
+        persistCvToProfile(currentCvData()).catch(function (error) {
+          console.warn('Failed to persist CV to server:', error);
+          setStatus('✓ Bản nháp đã lưu trên trình duyệt, nhưng chưa đồng bộ với server.', 'warning');
+        });
+      } else {
+        setStatus('Đã lưu bản nháp trên trình duyệt.', 'success');
+      }
     } catch (error) {
       setStatus('Không thể lưu bản nháp trong trình duyệt này.', 'error');
     }
@@ -863,10 +1120,12 @@
 
   function snapshotDraft() {
     try {
-      var saved = JSON.parse(localStorage.getItem('futurepath_cv_draft') || 'null');
+      var saved = JSON.parse(localStorage.getItem('axis_cv_draft') || 'null');
       if (!saved || !saved.model || !saved.model.data) return false;
       model = saved.model;
       currentTemplate = TEMPLATE_LABELS[saved.template] ? saved.template : 'modern';
+      currentLanguage = saved.language === 'en' ? 'en' : 'vi';
+      model.language = currentLanguage;
       return true;
     } catch (error) {
       return false;
@@ -906,6 +1165,33 @@
     document.querySelectorAll('[data-action="normalize"]').forEach(function (button) {
       button.addEventListener('click', function () { runPipeline(); });
     });
+    var languageSelect = document.querySelector('[data-cv-language]');
+    if (languageSelect) {
+      languageSelect.addEventListener('change', function () {
+        var nextLanguage = languageSelect.value === 'en' ? 'en' : 'vi';
+        var previousLanguage = currentLanguage;
+        currentLanguage = nextLanguage;
+        if (!model) return;
+        model.language = currentLanguage;
+        model.labels = Object.assign({}, CV_LABELS[currentLanguage]);
+        setStatus('Đang dịch nội dung CV bằng AI server…', 'working');
+        languageSelect.disabled = true;
+        requestCvAI(currentCvData(), currentLanguage, 'translate').then(function (data) {
+          model.data = data;
+          renderPreview();
+          setStatus(currentLanguage === 'vi' ? 'Đã dịch nội dung CV sang tiếng Việt.' : 'CV content translated to English.', 'success');
+        }).catch(function (error) {
+          currentLanguage = previousLanguage;
+          model.language = previousLanguage;
+          model.labels = Object.assign({}, CV_LABELS[previousLanguage]);
+          languageSelect.value = previousLanguage;
+          renderPreview();
+          setStatus(error.message || 'Không thể dịch CV; nội dung ban đầu vẫn được giữ nguyên.', 'error');
+        }).finally(function () {
+          languageSelect.disabled = false;
+        });
+      });
+    }
     document.querySelectorAll('[data-action="save"]').forEach(function (button) {
       button.addEventListener('click', saveDraft);
     });
@@ -915,8 +1201,8 @@
         window.setTimeout(function () { window.print(); }, 40);
       });
     });
-    document.addEventListener('futurepath:profile-hydrated', function () { runPipeline(); });
-    document.addEventListener('futurepath:auth-state', function (event) {
+    document.addEventListener('axis:profile-hydrated', function () { runPipeline(); });
+    document.addEventListener('axis:auth-state', function (event) {
       if (event.detail && event.detail.signedIn) runPipeline();
     });
   }
@@ -932,8 +1218,11 @@
     window.addEventListener('resize', fitPreviewToViewport);
     var restoredDraft = snapshotDraft();
     if (!restoredDraft) {
-      model = makeModel(profileFromFuturePath());
+      model = makeModel(profileFromAxis(), currentLanguage);
+      model.language = currentLanguage;
     }
+    var languageSelect = document.querySelector('[data-cv-language]');
+    if (languageSelect) languageSelect.value = currentLanguage;
     syncColorControls();
     renderPreview();
     if (restoredDraft) {

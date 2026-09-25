@@ -1,1 +1,1 @@
-"""FuturePath backend application package."""
+"""Axis backend application package."""

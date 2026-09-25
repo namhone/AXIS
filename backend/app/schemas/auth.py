@@ -14,3 +14,9 @@ class RegisterRequest(Credentials):
 
 class LoginRequest(Credentials):
     pass
+
+
+class UserUpdate(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    full_name: str = Field(min_length=1, max_length=120)

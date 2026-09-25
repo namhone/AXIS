@@ -29,7 +29,7 @@
   - .hero-card, .tool-card, .mini-panel, .user-menu, .summary-item
 
 - JS behavior (short)
-  - Auth: demo persists to localStorage key `futurepath.signed_in`; setSignedIn()/setSignedOut() toggle DOM and storage; authArea id used as toggle
+  - Auth: demo persists to localStorage key `axis.signed_in`; setSignedIn()/setSignedOut() toggle DOM and storage; authArea id used as toggle
   - Progress: elements use data-progress; JS sets CSS var `--progress` on .progress-fill; CSS reads var for width
   - Nav: .header-nav is single source; script attaches click + keyboard handlers to .nav-item, toggles .active, closes userMenu
   - Safety: scripts guarded for missing elements (null checks) after sidebar removal

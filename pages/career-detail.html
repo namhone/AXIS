@@ -63,6 +63,16 @@
               </ul>
             </section>
 
+            <section class="career-section">
+              <h3>Công việc và môi trường</h3>
+              <p id="careerWorkProfile">Khám phá các nhiệm vụ thường gặp, cách phối hợp trong đội nhóm và môi trường làm việc phù hợp với ngành.</p>
+            </section>
+
+            <section class="career-section">
+              <h3>Dự án khởi đầu nên thử</h3>
+              <ul class="checklist" id="careerProjects"></ul>
+            </section>
+
             <section class="career-section academic-sources">
               <h3>Nguồn tham khảo học thuật</h3>
               <p class="source-intro">Thông tin được diễn giải ngắn gọn từ chương trình học và tài nguyên mở của các trường đại học; hãy xem nguồn gốc để tìm hiểu sâu hơn.</p>
@@ -105,10 +115,9 @@
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
   }
-  const careerParam = qs('career');
-  if (!careerParam) return;
-  const careerName = decodeURIComponent(careerParam);
-  const careerCode = (qs('code') || '').toUpperCase();
+  const careerParam = qs('career') || '';
+  const careerName = careerParam.trim();
+  const careerCode = (qs('code') || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
   const coverImages = {
     N01: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=85',
     N02: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=85',
@@ -192,19 +201,40 @@
 
   const data = Object.keys(industryData).reduce(function (result, code) {
     const item = industryData[code];
-    result[code] = { title: item[0], overview: item[1], description: item[1] + ' Người học nên kết hợp kiến thức nền với trải nghiệm thực tế, dự án nhỏ và phản hồi từ người trong ngành.', skills: item[2], roadmap: item[3], salary: item[4], sources: [sourceMap[code]] };
+    result[code] = {
+      title: item[0],
+      overview: item[1],
+      description: item[1] + ' Công việc thường kết hợp kiến thức chuyên môn, công cụ số và khả năng phối hợp với nhiều vai trò khác nhau. Người học nên bắt đầu từ bài tập nhỏ, ghi lại sản phẩm và chủ động xin phản hồi để hiểu mình phù hợp với nhánh nào trong ngành.',
+      skills: item[2],
+      roadmap: item[3],
+      salary: item[4],
+      workProfile: 'Các vị trí trong ' + item[0].toLowerCase() + ' thường làm việc theo dự án, phối hợp với đồng đội và điều chỉnh giải pháp dựa trên dữ liệu hoặc phản hồi thực tế. Môi trường có thể là doanh nghiệp, trường học, phòng thí nghiệm, cơ quan công hoặc tổ chức xã hội tùy chuyên môn.',
+      projects: [
+        'Chọn một vấn đề thực tế liên quan đến ' + item[0].toLowerCase() + ' và viết bản mô tả mục tiêu, đối tượng hưởng lợi cùng tiêu chí đánh giá.',
+        'Tạo một sản phẩm thử nghiệm nhỏ bằng công cụ phù hợp, lưu lại quy trình, giả định và kết quả thay vì chỉ trình bày sản phẩm cuối.',
+        'Trình bày sản phẩm cho ít nhất một người có kinh nghiệm để nhận góp ý, sau đó cập nhật portfolio hoặc nhật ký học tập.'
+      ],
+      sources: [sourceMap[code]]
+    };
     return result;
   }, {});
 
-  const matchedCode = careerCode && data[careerCode] ? careerCode : Object.keys(data).find(function (code) { return data[code].title === careerName; });
-  const item = data[matchedCode] || {
-    title: careerName,
-    overview: careerName + ' là nhóm ngành kết hợp kiến thức nền tảng với kỹ năng chuyên môn để giải quyết các nhu cầu thực tế của xã hội và doanh nghiệp.',
-    skills: ['Tư duy phân tích', 'Giao tiếp', 'Học tập liên tục'],
-    description: 'Người học nên bắt đầu bằng việc tìm hiểu các môn nền tảng, thử một dự án nhỏ và quan sát môi trường làm việc thực tế. Khi đã xác định hướng phù hợp, hãy xây dựng kỹ năng theo từng giai đoạn và lưu lại sản phẩm trong hồ sơ năng lực.',
-    roadmap: ['Lớp 12: củng cố môn nền tảng và tìm hiểu chương trình đào tạo', '0–3 tháng đầu đại học: học công cụ cốt lõi và hoàn thành bài tập nhỏ', '3–12 tháng: tham gia dự án, câu lạc bộ hoặc hoạt động trải nghiệm'],
-    salary: 'Đang cập nhật'
-  };
+  // Links from older pages may only contain the career name. Resolve by either
+  // stable code or exact title so a partial/legacy URL does not become a false 404.
+  const matchedCode = careerCode && data[careerCode]
+    ? careerCode
+    : Object.keys(data).find(function (code) {
+        return careerName && data[code].title.toLowerCase() === careerName.toLowerCase();
+      }) || '';
+  if (!matchedCode) {
+    if (!careerCode && !careerName) {
+      window.location.replace('careers.html');
+      return;
+    }
+    document.querySelector('.main-column').innerHTML = '<section class="content-panel"><h1>Không tìm thấy ngành nghề</h1><p>Ngành nghề này không tồn tại hoặc đường dẫn đã hết hiệu lực.</p><a class="primary-btn" href="careers.html">Về thư viện nghề nghiệp</a></section>';
+    return;
+  }
+  const item = data[matchedCode];
 
   const heroImage = document.querySelector('.career-detail-hero-image');
   const heroImageElement = document.getElementById('careerHeroImage');
@@ -225,6 +255,17 @@
   if (overviewP) overviewP.textContent = item.overview;
   const descriptionP = document.querySelector('.summary-body');
   if (descriptionP) descriptionP.textContent = item.description || 'Công việc thường ngày có thể gồm tìm hiểu yêu cầu, phân tích thông tin, phối hợp với đồng đội, tạo sản phẩm và cải thiện kết quả dựa trên phản hồi.';
+  const workProfile = document.getElementById('careerWorkProfile');
+  if (workProfile) workProfile.textContent = item.workProfile;
+  const projectList = document.getElementById('careerProjects');
+  if (projectList) {
+    projectList.innerHTML = '';
+    item.projects.forEach(function (project) {
+      const li = document.createElement('li');
+      li.textContent = project;
+      projectList.appendChild(li);
+    });
+  }
 
   // Update skills
   const skillRow = document.querySelector('.tool-card .skill-row');
@@ -269,7 +310,45 @@
   const salaryEl = document.querySelector('.score-value');
   if (salaryEl) salaryEl.textContent = item.salary;
 
-  window.FuturePathAuth.fetchWithTimeout('/api/v1/axis/benchmarks', {}, 8000).then(function (response) { return response.ok ? response.json() : []; }).then(function (benchmarks) {
+  const addToPlanButton = document.querySelector('.career-detail-page .add-to-plan');
+  if (addToPlanButton) addToPlanButton.addEventListener('click', async function () {
+    if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) {
+      alert('Vui lòng đăng nhập để thêm ngành vào lộ trình.');
+      return;
+    }
+    addToPlanButton.disabled = true;
+    try {
+      await window.AxisAuth.apiRequest('/goals', { method: 'POST', body: JSON.stringify({
+        title: 'Tìm hiểu nghề: ' + item.title,
+        target_date: null,
+        status: 'pending',
+        minutes_per_day: 30,
+        note: 'Kỹ năng gợi ý: ' + item.skills.join(', '),
+        category: 'career',
+        career_code: matchedCode
+      }) });
+      addToPlanButton.textContent = 'Đã thêm vào lộ trình';
+      window.location.href = 'development.html';
+    } catch (error) {
+      alert(error.message || 'Không thể thêm ngành vào lộ trình.');
+      addToPlanButton.disabled = false;
+    }
+  });
+  if (addToPlanButton && window.AxisAuth && window.AxisAuth.isSignedIn()) {
+    window.AxisAuth.apiRequest('/goals').then(function (goals) {
+      const alreadyAdded = goals.some(function (goal) {
+        return goal.category === 'career' && goal.career_code === matchedCode;
+      });
+      if (alreadyAdded) {
+        addToPlanButton.disabled = true;
+        addToPlanButton.textContent = 'Đã thêm vào lộ trình';
+      }
+    }).catch(function (error) {
+      console.warn('Không thể kiểm tra trạng thái ngành trong lộ trình.', error);
+    });
+  }
+
+  window.AxisAuth.fetchWithTimeout('/api/v1/axis/benchmarks', {}, 8000).then(function (response) { return response.ok ? response.json() : []; }).then(function (benchmarks) {
     const benchmark = benchmarks.find(function (entry) { return entry.name === careerName || entry.name === item.title; });
     if (!benchmark) return;
     const subjects = (benchmark.subjects || []).join(' và ');

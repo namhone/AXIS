@@ -17,13 +17,13 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    app_name: str = "FuturePath API"
+    app_name: str = "Axis API"
     environment: str = "development"
     database_url: str = "sqlite:///./dev.db"
     jwt_secret_key: str = ""
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
-    cookie_name: str = "futurepath_access_token"
+    cookie_name: str = "axis_access_token"
     cookie_secure: bool = False
     cors_origins: Annotated[list[str], NoDecode] = [
         "https://axis-career-app.vercel.app",
@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     ]
     groq_api_key: str = ""
     groq_model: str = "openai/gpt-oss-120b"
+    ai_rate_limit_requests: int = 5
+    ai_rate_limit_window_seconds: int = 60
 
     @field_validator("cors_origins", mode="before")
     @classmethod

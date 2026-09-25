@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://futurepath.local/schemas/cv-builder.schema.json",
-  "title": "FuturePath CV Builder document",
-  "description": "Chuẩn dữ liệu trung gian giữa FuturePathData.profile và CV Builder editor.",
+  "$id": "https://axis.local/schemas/cv-builder.schema.json",
+  "title": "Axis CV Builder document",
+  "description": "Chuẩn dữ liệu trung gian giữa AxisData.profile và CV Builder editor.",
   "type": "object",
   "required": ["version", "template", "profile", "sections"],
   "properties": {

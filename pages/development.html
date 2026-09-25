@@ -27,11 +27,6 @@
             <h2>01 · Mục tiêu hiện tại</h2>
             <div class="info-grid">
               <article class="stat-card">
-                <h3>Hướng đến</h3>
-                <p><strong>Khoa học dữ liệu</strong></p>
-                <p>Mục tiêu 8 tuần: hoàn thiện nền tảng Python và tiếng Anh chuyên ngành.</p>
-              </article>
-              <article class="stat-card">
                 <h3>Python</h3>
                 <div class="progress-row">
                   <div class="label"><span>Tiến độ</span><strong>62%</strong></div>
@@ -45,6 +40,7 @@
                   <div class="progress-bar"><span class="progress-fill" data-progress="67"></span></div>
                 </div>
               </article>
+              <div id="careerGoalsCurrent" class="info-grid" aria-live="polite"></div>
             </div>
           </section>
 
@@ -283,10 +279,11 @@
                 status: goal.done ? 'completed' : 'pending',
                 minutes_per_day: Number(goal.minutes) || null,
                 note: goal.note || '',
-                category: goal.category || 'general'
+                category: goal.category || 'general',
+                career_code: goal.career_code || null
               };
             });
-            return window.AXISAuth.accountRequest('/goals', { method: 'PUT', body: JSON.stringify(payload) })
+            return window.AXISAuth.apiRequest('/goals', { method: 'PUT', body: JSON.stringify(payload) })
               .then(function (saved) {
                 goalsCache = saved.map(function (goal) {
                   return Object.assign({}, goal, {
@@ -303,6 +300,13 @@
 
         function render() {
           const goals = loadGoals();
+          const careerGoalsCurrent = document.getElementById('careerGoalsCurrent');
+          if (careerGoalsCurrent) {
+            const careers = goals.filter(function (goal) { return goal.category === 'career'; });
+            careerGoalsCurrent.innerHTML = careers.map(function (goal) {
+              return '<article class="stat-card"><h3>' + escapeHtml(goal.title.replace(/^Tìm hiểu nghề:\s*/i, '')) + '</h3><div class="progress-row"><div class="label"><span>Trạng thái</span><strong>' + (goal.done ? 'Đã hoàn thành' : 'Đang theo dõi') + '</strong></div><div class="progress-bar"><span class="progress-fill" data-progress="' + (goal.done ? '100' : '0') + '"></span></div></div></article>';
+            }).join('');
+          }
           listEl.innerHTML = '';
           if (!goals.length) {
             listEl.innerHTML = '<div class="timeline-item"><div><em>Chưa có mục tiêu nào. Thêm mục tiêu phía trên để bắt đầu.</em></div></div>';
@@ -342,7 +346,7 @@
           updateProgressFills();
         }
 
-        function roadmapState() { return window.__futurepathRoadmap || {}; }
+        function roadmapState() { return window.__axisRoadmap || {}; }
         function renderRoadmapSteps(steps) {
           const list = document.querySelector('.roadmap-list');
           if (!list || !steps.length) return;
@@ -385,7 +389,9 @@
               ? '<div class="roadmap-task-list">' + displayTasks.map(function (entry) {
                 const task = entry.task;
                 const resources = Array.isArray(task.resources) ? task.resources.filter(function (resource) {
-                  return resource && typeof resource === 'object' && resource.url;
+                  return resource && typeof resource === 'object' &&
+                    typeof resource.url === 'string' &&
+                    /^https:\/\//i.test(resource.url);
                 }).slice(0, 2) : [];
                 const resourceMarkup = resources.length
                   ? '<div class="roadmap-task-resources">' + resources.map(function (resource) {
@@ -394,11 +400,16 @@
                   }).join('') + '</div>'
                   : '';
                 taskNumber += 1;
-                return '<article class="roadmap-task-card ' + (task.status === 'completed' ? 'is-completed' : '') + '"><div class="roadmap-task-heading"><span class="roadmap-task-number">Nhiệm vụ ' + taskNumber + '</span><strong>' + escapeHtml(entry.title) + '</strong></div><span>' +
-                  (task.minutes ? ' · ' + task.minutes + ' phút' : '') +
-                  ' <button type="button" class="ghost-btn roadmap-task-start" data-task-index="' + entry.sourceIndex + '">Bắt đầu</button>' +
-                  ' <button type="button" class="ghost-btn roadmap-task-done" data-task-index="' + entry.sourceIndex + '"' + (task.status === 'completed' ? ' disabled' : '') + '>' +
-                  (task.status === 'completed' ? 'Đã học' : 'Đánh dấu đã học') + '</button></span>' + resourceMarkup + '</article>';
+                const statusLabel = task.status === 'completed' ? 'Đã học' : 'Chưa học';
+                return '<article class="roadmap-task-card ' + (task.status === 'completed' ? 'is-completed' : '') + '">' +
+                  '<div class="roadmap-task-heading"><span class="roadmap-task-number">' + String(taskNumber).padStart(2, '0') + '</span>' +
+                  '<strong>Nhiệm vụ ' + taskNumber + ' - ' + escapeHtml(task.subject || task.category || 'Kỹ năng') + ': ' + escapeHtml(entry.title) + '</strong></div>' +
+                  '<div class="roadmap-task-description">' + escapeHtml(task.description || task.content || 'Hoàn thành nội dung học tập và tạo đầu ra cụ thể cho nhiệm vụ này.') + '</div>' +
+                  '<div class="roadmap-task-meta"><span class="status' + (task.status === 'completed' ? '' : ' pending') + '">' + statusLabel + '</span>' +
+                  (task.minutes ? '<span>Thời lượng: ' + task.minutes + ' phút</span>' : '') + '</div>' +
+                  '<div class="roadmap-task-actions"><button type="button" class="ghost-btn roadmap-task-start" data-task-index="' + entry.sourceIndex + '">Bắt đầu</button>' +
+                  '<button type="button" class="ghost-btn roadmap-task-done" data-task-index="' + entry.sourceIndex + '"' + (task.status === 'completed' ? ' disabled' : '') + '>' +
+                  (task.status === 'completed' ? 'Đã học' : 'Đánh dấu đã học') + '</button></div>' + resourceMarkup + '</article>';
               }).join('') + '</div>'
               : '<p>' + escapeHtml(step.content) + '</p>';
             return `
@@ -410,9 +421,9 @@
               </div>
             `;
           }).join('');
-          window.__futurepathRoadmap = {};
+          window.__axisRoadmap = {};
           displaySteps.forEach(function (step, index) {
-            window.__futurepathRoadmap['step-' + (step.step_number || index + 1)] = step.is_completed ? 'done' : 'pending';
+            window.__axisRoadmap['step-' + (step.step_number || index + 1)] = step.is_completed ? 'done' : 'pending';
           });
           initRoadmap();
         }
@@ -433,7 +444,7 @@
           }
         }
         function saveRoadmap(state) {
-          window.__futurepathRoadmap = state;
+          window.__axisRoadmap = state;
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return Promise.resolve();
           const payload = Array.from(document.querySelectorAll('.roadmap-item')).map(function (item, index) {
             return {
@@ -443,7 +454,7 @@
               is_completed: state[item.getAttribute('data-roadmap-id')] === 'done'
             };
           });
-          return window.AXISAuth.accountRequest('/roadmap', { method: 'PUT', body: JSON.stringify(payload) });
+          return window.AXISAuth.apiRequest('/roadmap', { method: 'PUT', body: JSON.stringify(payload) });
         }
         function getPomodoroMinutes(item, taskMinutes) {
           if (Number(taskMinutes) > 0) return Number(taskMinutes);
@@ -462,6 +473,12 @@
           return goals.length && Number(goals[0].minutes) > 0 ? Number(goals[0].minutes) : 45;
         }
         function openPomodoro(stepTitle, item, taskMinutes) {
+          const existingModal = document.querySelector('.pomodoro-modal');
+          if (existingModal) {
+            const existingClose = existingModal.querySelector('.pomodoro-close');
+            if (existingClose) existingClose.focus();
+            return;
+          }
           const modal = document.createElement('div');
           modal.className = 'pomodoro-modal';
           const minutes = getPomodoroMinutes(item, taskMinutes);
@@ -492,7 +509,7 @@
               button.addEventListener('click', async function () {
                 button.disabled = true;
                 try {
-                  await window.AXISAuth.accountRequest('/roadmap/tasks/state', {
+                  await window.AXISAuth.apiRequest('/roadmap/tasks/state', {
                     method: 'POST',
                     body: JSON.stringify({
                       day_number: Number(item.getAttribute('data-roadmap-id').replace('step-', '')),
@@ -541,6 +558,11 @@
             if (doneButton) doneButton.addEventListener('click', function () {
               if (currentState() === 'done') return;
               state[id] = 'done'; updateStatus(); updatePlanProgress(loadGoals());
+              saveRoadmap(state).catch(function (error) {
+                state[id] = 'pending';
+                updateStatus();
+                alert(error.message || 'Không thể lưu trạng thái nhiệm vụ.');
+              });
             });
             if (deferButton) deferButton.addEventListener('click', async function () {
               const taskCount = Number(item.getAttribute('data-task-count') || 0);
@@ -548,7 +570,7 @@
               if (!Number.isInteger(taskIndex) || taskIndex < 0 || taskIndex >= taskCount) return;
               deferButton.disabled = true;
               try {
-                const updated = await window.AXISAuth.accountRequest('/roadmap/tasks/defer', {
+                const updated = await window.AXISAuth.apiRequest('/roadmap/tasks/defer', {
                   method: 'POST',
                   body: JSON.stringify({
                     day_number: Number(item.getAttribute('data-roadmap-id').replace('step-', '')),
@@ -767,10 +789,10 @@
                 y += (wrapped.length*14) + 8;
                 if (y > 750) { doc.addPage(); y = 50; }
               });
-              doc.save('futurepath-plan.pdf');
+              doc.save('axis-plan.pdf');
             } else {
               const blob = new Blob([JSON.stringify(goals, null, 2)], { type: 'application/json' });
-              const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'futurepath-plan.json'; document.body.appendChild(a); a.click(); a.remove();
+              const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'axis-plan.json'; document.body.appendChild(a); a.click(); a.remove();
             }
           });
         }
@@ -786,17 +808,17 @@
             return;
           }
           try {
-            goalsCache = (await window.AXISAuth.accountRequest('/goals')).map(function (goal) {
+            goalsCache = (await window.AXISAuth.apiRequest('/goals')).map(function (goal) {
               return Object.assign({}, goal, {
                 date: goal.target_date || '',
                 minutes: goal.minutes_per_day || '',
                 done: goal.status === 'completed'
               });
             });
-            const steps = await window.AXISAuth.accountRequest('/roadmap');
-            window.__futurepathRoadmap = {};
+            const steps = await window.AXISAuth.apiRequest('/roadmap');
+            window.__axisRoadmap = {};
             steps.forEach(function (step) {
-              window.__futurepathRoadmap['step-' + step.step_number] = step.is_completed ? 'done' : 'pending';
+              window.__axisRoadmap['step-' + step.step_number] = step.is_completed ? 'done' : 'pending';
             });
             if (steps.length) renderRoadmapSteps(steps);
             accountPlanReady = true;
@@ -807,7 +829,7 @@
           }
         }
 
-        document.addEventListener('futurepath:auth-state', function (event) {
+        document.addEventListener('axis:auth-state', function (event) {
           accountPlanReady = false;
           if (event.detail.signedIn) {
             loadAccountPlan();

@@ -9,6 +9,51 @@ from ..core.config import Settings
 class AIService:
     """Generate structured learning content through the OpenAI API."""
 
+    _VI_TO_EN = {
+        "học sinh": "student",
+        "sinh viên": "student",
+        "hồ sơ": "profile",
+        "giới thiệu": "profile",
+        "mục tiêu": "objective",
+        "kỹ năng": "skills",
+        "kinh nghiệm": "experience",
+        "học vấn": "education",
+        "chứng chỉ": "certificates",
+        "sở thích": "interests",
+        "thành tích": "achievements",
+        "điện thoại": "phone",
+        "email": "email",
+        "địa điểm": "location",
+        "liên kết": "website",
+        "dự án": "project",
+        "cá nhân": "personal",
+        "lớp": "class",
+        "gpa": "GPA",
+        "thành viên": "member",
+        "trưởng ban": "team lead",
+        "phòng": "department",
+    }
+
+    _EN_TO_VI = {
+        "student": "học sinh",
+        "profile": "hồ sơ",
+        "objective": "mục tiêu",
+        "skills": "kỹ năng",
+        "experience": "kinh nghiệm",
+        "education": "học vấn",
+        "certificates": "chứng chỉ",
+        "interests": "sở thích",
+        "achievements": "thành tích",
+        "phone": "điện thoại",
+        "email": "email",
+        "location": "địa điểm",
+        "website": "liên kết",
+        "project": "dự án",
+        "member": "thành viên",
+        "class": "lớp",
+        "gpa": "GPA",
+    }
+
     @staticmethod
     def _validate_school_task(task: dict[str, Any]) -> None:
         title = str(task.get("title") or "").lower()
@@ -32,13 +77,103 @@ class AIService:
                     AIService._validate_school_task(task)
 
     def __init__(self, settings: Settings) -> None:
-        if not settings.groq_api_key:
-            raise RuntimeError("GROQ_API_KEY is not configured")
-        self._client = OpenAI(
-            api_key=settings.groq_api_key,
-            base_url="https://api.groq.com/openai/v1",
+        self._client = None
+        if settings.groq_api_key:
+            self._client = OpenAI(
+                api_key=settings.groq_api_key,
+                base_url="https://api.groq.com/openai/v1",
+            )
+        self._model = settings.groq_model or "llama-3.1-8b-instant"
+
+    @classmethod
+    def _translate_tokens(cls, text: str, language: str) -> str:
+        if not text:
+            return text
+        if language == "en":
+            mapping = cls._VI_TO_EN
+            target = "en"
+        else:
+            mapping = cls._EN_TO_VI
+            target = "vi"
+
+        lowered = text.lower()
+        for source, replacement in sorted(mapping.items(), key=lambda item: len(item[0]), reverse=True):
+            if source in lowered:
+                lowered = lowered.replace(source, replacement)
+        if lowered == text.lower() and target == "en":
+            return text
+        return lowered
+
+    @classmethod
+    def _normalize_text(cls, text: str) -> str:
+        if not isinstance(text, str):
+            return text
+        return " ".join(text.strip().split())
+
+    @classmethod
+    def _fallback_cv_transform(cls, value: Any, language: str, operation: str) -> Any:
+        if isinstance(value, dict):
+            return {key: cls._fallback_cv_transform(item, language, operation) for key, item in value.items()}
+        if isinstance(value, list):
+            return [cls._fallback_cv_transform(item, language, operation) for item in value]
+        if isinstance(value, str):
+            text = value.strip()
+            if not text:
+                return value
+            if operation == "normalize":
+                return cls._normalize_text(text)
+            if operation == "translate":
+                return cls._translate_tokens(text, language)
+            return text
+        return value
+
+    def generate_cv(self, cv_data: dict[str, Any], language: str, operation: str) -> dict[str, Any]:
+        """Translate/optimize CV content without exposing the provider key to clients."""
+        if language not in {"vi", "en"}:
+            raise ValueError("Unsupported CV language")
+        if operation not in {"translate", "normalize"}:
+            raise ValueError("Unsupported CV operation")
+        payload = json.dumps(cv_data, ensure_ascii=False, default=str)
+        if len(payload) > 16000:
+            raise ValueError("CV content is too large")
+
+        if self._client is None:
+            fallback = self._fallback_cv_transform(cv_data, language, operation)
+            if not isinstance(fallback, dict):
+                raise ValueError("AI returned invalid CV content")
+            return fallback
+
+        instruction = (
+            "Translate every human-written value to English" if language == "en"
+            else "Translate every human-written value to Vietnamese"
         )
-        self._model = settings.groq_model
+        response = self._client.chat.completions.create(
+            model=self._model,
+            temperature=0.2,
+            response_format={"type": "json_object"},
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You transform a CV data object. Return JSON only, with the exact same keys and "
+                        "array/object shape as the input. " + instruction + ". "
+                        "Never translate names, email addresses, phone numbers, URLs, scores, years, "
+                        "proper product/company names, or certificate acronyms. Preserve facts and numbers. "
+                        "Do not add claims or invent experience. Keep translated strings concise. "
+                        + ("Improve grammar and concise professional wording while preserving facts. "
+                           if operation == "normalize" else "")
+                    ),
+                },
+                {"role": "user", "content": payload},
+            ],
+        )
+        content = response.choices[0].message.content
+        if not content:
+            raise ValueError("AI returned empty CV content")
+        result = json.loads(content)
+        if not isinstance(result, dict):
+            raise ValueError("AI returned invalid CV content")
+        return result
 
     def generate_roadmap(self, profile: dict[str, Any], goals: list[dict[str, Any]]) -> list[dict[str, Any]]:
         response = self._client.chat.completions.create(

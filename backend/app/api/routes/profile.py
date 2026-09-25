@@ -14,12 +14,31 @@ router = APIRouter(prefix="/api/v1/profile", tags=["profile"])
 
 
 class ProfileUpdate(BaseModel):
-    """Profile fields are intentionally open-ended for frontend compatibility."""
+    """Profile fields are intentionally open-ended for frontend compatibility.
+    
+    Accepts both flat fields and nested CV data. Extra fields are preserved.
+    """
 
     model_config = ConfigDict(extra="allow")
 
     subject: str | None = Field(default=None, max_length=255)
     examSubject: str | None = Field(default=None, max_length=255)
+    
+    # CV Builder fields - all optional and flexible
+    name: str | None = None
+    role: str | None = None
+    email: str | None = None
+    phone: str | None = None
+    linkedin: str | None = None
+    location: str | None = None
+    summary: str | None = None
+    skills: list[str] | None = None
+    interests: list[str] | None = None
+    certificates: list[str] | None = None
+    project: dict[str, Any] | None = None
+    activity: dict[str, Any] | None = None
+    education: dict[str, Any] | None = None
+    achievement: dict[str, Any] | None = None
 
     @model_validator(mode="before")
     @classmethod
@@ -60,6 +79,12 @@ def _normalize_score_values(data: dict[str, Any]) -> dict[str, Any]:
             normalized["entranceScore"] = round(min(30.0, max(0.0, parsed)), 2)
         except (TypeError, ValueError):
             normalized["entranceScore"] = ""
+    if "certificateName" in normalized and normalized.get("certificateName") == "IELTS":
+        try:
+            parsed = float(str(normalized.get("certificateScore", "")).strip().replace(",", "."))
+            normalized["certificateScore"] = round(parsed, 1) if 0 <= parsed <= 9 else ""
+        except (TypeError, ValueError):
+            normalized["certificateScore"] = ""
     return normalized
 
 
@@ -93,12 +118,18 @@ def update_profile(
 ) -> dict:
     profile = db.get(Profile, user.id)
     data = dict(profile.data) if profile else {}
-    data.update(_normalize_score_values(payload.model_dump()))
+    
+    # Merge payload into profile data, preserving nested CV structures
+    payload_dict = payload.model_dump(exclude_unset=True)
+    data.update(_normalize_score_values(payload_dict))
+    
+    # Preserve user's identity
     data["name"] = user.full_name
     data["email"] = user.email
     subject = payload.examSubject or payload.subject or _canonical_subject(data)
     data["examSubject"] = subject
     data["subject"] = subject
+    
     if profile is None:
         profile = Profile(user_id=user.id, data=data, subject=subject)
         db.add(profile)

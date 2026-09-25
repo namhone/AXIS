@@ -78,6 +78,20 @@
     });
   }
 
+  function setupHorizontalWheelScroll(host) {
+    var nav = host.querySelector('.header-nav');
+    if (!nav || nav.dataset.horizontalWheelReady === 'true') return;
+    nav.dataset.horizontalWheelReady = 'true';
+    nav.addEventListener('wheel', function (event) {
+      if (nav.scrollWidth <= nav.clientWidth) return;
+      var horizontalDelta = event.deltaX;
+      var verticalDelta = event.deltaY;
+      if (Math.abs(verticalDelta) <= Math.abs(horizontalDelta)) return;
+      nav.scrollLeft += verticalDelta;
+      event.preventDefault();
+    }, { passive: false });
+  }
+
   function removeLegacyMobileMenu() {
     document.querySelectorAll('.mobile-nav-overlay').forEach(function (overlay) {
       overlay.remove();
@@ -121,6 +135,7 @@
           removeLegacyMobileMenu();
           markActive(host);
           setupMobileMenu(host);
+          setupHorizontalWheelScroll(host);
           ensureIconRenderer();
         }
         if (name === 'footer') {
@@ -150,7 +165,7 @@
       loadComponent(this, 'header').then(function () {
         if (!componentReadyDispatched) {
           componentReadyDispatched = true;
-          document.dispatchEvent(new CustomEvent('futurepath:components-ready'));
+          document.dispatchEvent(new CustomEvent('axis:components-ready'));
         }
       });
     }

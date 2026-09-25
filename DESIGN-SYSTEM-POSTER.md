@@ -1,4 +1,4 @@
-# FuturePath / AXIS — Design System Poster
+# Axis / AXIS — Design System Poster
 
 ## 1. Brand direction
 
@@ -11,7 +11,7 @@
 
 - Tên sản phẩm chính: **AXIS**
 - Mô tả ngắn: **Academic & X-Career Intelligent System**
-- Tên nền tảng trong nội dung dài: **FuturePath**
+- Tên nền tảng trong nội dung dài: **Axis**
 - Viết hoa AXIS khi dùng ở tiêu đề, logo, badge và navigation.
 - Không dùng Portfolio Editor như một sản phẩm riêng; CV Builder là công cụ hồ sơ chính.
 
@@ -146,7 +146,7 @@
    - Build your path.
 3. Middle 35%: palette swatches + AXIS `S1–S5` diagram.
 4. Next 15%: typography, spacing and card examples.
-5. Bottom 10%: FuturePath URL/QR code and short product statement.
+5. Bottom 10%: Axis URL/QR code and short product statement.
 
 ### A4 landscape
 

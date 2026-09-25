@@ -8,7 +8,7 @@ from ...core.config import get_settings
 from ...core.database import get_db
 from ...core.security import create_access_token
 from ...models.user import User
-from ...schemas.auth import LoginRequest, RegisterRequest
+from ...schemas.auth import LoginRequest, RegisterRequest, UserUpdate
 from ...schemas.user import UserResponse
 from ...services.auth import authenticate_user, register_user
 
@@ -78,6 +78,18 @@ def logout(response: Response) -> None:
 
 @router.get("/me", response_model=UserResponse)
 def me(current_user: User = Depends(get_current_user)) -> User:
+    return current_user
+
+
+@router.patch("/me", response_model=UserResponse)
+def update_me(
+    payload: UserUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> User:
+    current_user.full_name = payload.full_name
+    db.commit()
+    db.refresh(current_user)
     return current_user
 
 

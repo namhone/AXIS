@@ -60,7 +60,10 @@
   function convertCertificateToNormalizedScore(language, certType, scoreOrLevel, highSchoolLanguageScore) {
     if (!certType || certType === 'NONE') return clamp(highSchoolLanguageScore);
     var score = numericValue(scoreOrLevel);
-    if (certType === 'IELTS') return score >= 7.5 ? 10 : score >= 7 ? 9.5 : score >= 6.5 ? 9 : score >= 6 ? 8 : score >= 5.5 ? 7 : score >= 5 ? 6 : 0;
+    if (certType === 'IELTS') {
+      if (!Number.isFinite(score) || score < 0 || score > 9) return 0;
+      return score >= 7.5 ? 10 : score >= 7 ? 9.5 : score >= 6.5 ? 9 : score >= 6 ? 8 : score >= 5.5 ? 7 : score >= 5 ? 6 : 0;
+    }
     if (certType === 'TOEIC') return score >= 945 ? 10 : score >= 785 ? 9 : score >= 605 ? 8 : score >= 505 ? 6.5 : 0;
     if (certType === 'JLPT') return LEVEL_SCORES[scoreOrLevel] || 0;
     if (certType === 'HSK') return LEVEL_SCORES[scoreOrLevel] || 0;

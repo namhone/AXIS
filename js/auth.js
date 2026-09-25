@@ -5,8 +5,8 @@
   const API_HOSTS = Array.from(new Set(
     [pageHost, 'localhost', '127.0.0.1'].filter(Boolean)
   ));
-  const configuredApiBase = typeof window.FUTUREPATH_API_BASE === 'string'
-    ? window.FUTUREPATH_API_BASE.replace(/\/+$/, '')
+  const configuredApiBase = typeof window.AXIS_API_BASE === 'string'
+    ? window.AXIS_API_BASE.replace(/\/+$/, '')
     : '';
   const USE_SAME_ORIGIN_API = !['localhost', '127.0.0.1'].includes(pageHost) || window.location.port === '8787';
   let activeApiHost = API_HOSTS[0];
@@ -116,7 +116,7 @@
       }
       clearAvatar();
     }
-    document.dispatchEvent(new CustomEvent('futurepath:auth-state', {
+    document.dispatchEvent(new CustomEvent('axis:auth-state', {
       detail: { signedIn: signedIn, user: currentUser }
     }));
   }
@@ -220,8 +220,24 @@
       credentials: 'include',
       body: formData
     }, 15000);
-    if (!response.ok) throw new Error('Không thể lưu tài liệu vào tài khoản.');
+    if (!response.ok) throw await createApiError(response, 'Không thể lưu tài liệu vào tài khoản.');
     return response.json();
+  }
+
+  async function listDocuments() {
+    return accountRequest('/documents', { headers: { Accept: 'application/json' } });
+  }
+
+  async function downloadDocument(documentId) {
+    const response = await fetchWithTimeout(accountApiBase(activeApiHost) + '/documents/' + encodeURIComponent(documentId) + '/download', {
+      credentials: 'include'
+    }, 15000);
+    if (!response.ok) throw await createApiError(response, 'Không thể tải tài liệu xuống.');
+    return response.blob();
+  }
+
+  async function deleteDocument(documentId) {
+    return accountRequest('/documents/' + encodeURIComponent(documentId), { method: 'DELETE' });
   }
 
   async function accountRequest(path, options) {
@@ -326,7 +342,7 @@
       '<div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">',
       '<button type="button" class="settings-close" data-close-auth="true" aria-label="Đóng">×</button>',
       '<h3 id="authModalTitle">Đăng nhập</h3>',
-      '<p class="auth-modal-note">Tiếp tục hành trình định hướng cùng FuturePath.</p>',
+      '<p class="auth-modal-note">Tiếp tục hành trình định hướng cùng Axis.</p>',
       '<form id="authForm">',
       '<label class="auth-field hidden" id="authNameField">Họ và tên<input name="name" type="text" autocomplete="name" placeholder="Nguyễn Văn A"></label>',
       '<label class="auth-field">Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>',
@@ -549,7 +565,7 @@
   }
 
   function initialize() {
-    document.addEventListener('futurepath:components-ready', function () {
+    document.addEventListener('axis:components-ready', function () {
       setAuthState(currentUser);
     });
     document.addEventListener('click', handleClick, true);
@@ -587,12 +603,16 @@
     checkSession();
   }
 
-  window.FuturePathAuth = {
+  window.AxisAuth = {
     checkSession: checkSession,
     refreshUser: checkSession,
     logout: logout,
     isSignedIn: function () { return Boolean(currentUser); },
+    getCurrentUser: function () { return currentUser ? Object.assign({}, currentUser) : null; },
     uploadDocument: uploadDocument,
+    listDocuments: listDocuments,
+    downloadDocument: downloadDocument,
+    deleteDocument: deleteDocument,
     accountRequest: accountRequest,
     apiRequest: apiRequest,
     fetchWithTimeout: fetchWithTimeout,
@@ -600,7 +620,7 @@
     showNotice: showNotice
   };
   // Keep the legacy global available for pages that still use the AXIS naming.
-  window.AXISAuth = window.FuturePathAuth;
+  window.AXISAuth = window.AxisAuth;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize, { once: true });
   } else {

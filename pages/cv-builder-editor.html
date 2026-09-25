@@ -31,7 +31,7 @@
               </div>
               <span class="cv-pipeline-state" data-pipeline-state>Đang chờ</span>
             </div>
-            <p class="cv-panel__intro">Bốn agent mô phỏng sẽ trích xuất, cấu trúc, tối ưu và kiểm tra dữ liệu hồ sơ của bạn.</p>
+            <p class="cv-panel__intro">AI server sẽ trích xuất, cấu trúc, tối ưu và kiểm tra dữ liệu hồ sơ. API key luôn được giữ ở backend.</p>
             <ol class="cv-agent-list" data-agent-list>
               <li class="cv-agent" data-agent="extract">
                 <span class="cv-agent__number">01</span>
@@ -54,7 +54,14 @@
                 <span class="cv-agent__status" aria-label="Đang chờ">○</span>
               </li>
             </ol>
-            <button class="cv-button cv-button--primary cv-button--full" type="button" data-action="normalize">✦ AI chuẩn hóa hồ sơ hiện tại</button>
+            <button class="cv-button cv-button--primary cv-button--full" type="button" data-action="normalize"><span data-lucide="sparkles" aria-hidden="true"></span> AI chuẩn hóa hồ sơ hiện tại</button>
+            <label class="cv-language-control">
+              <span>Ngôn ngữ CV</span>
+              <select data-cv-language aria-label="Ngôn ngữ CV">
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+              </select>
+            </label>
             <p class="cv-status" data-editor-status role="status" aria-live="polite">Bạn có thể dùng dữ liệu mẫu để xem trước editor.</p>
           </section>
 

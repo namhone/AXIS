@@ -196,12 +196,12 @@
     render();
   }
   function syncServerEvaluation() {
-    if (!window.FuturePathAuth || !window.FuturePathAuth.isSignedIn()) return;
+    if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) return;
     var payload = JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) });
     if (payload === lastEvaluationPayload || evaluationRequest) return;
     window.clearTimeout(renderTimer);
     renderTimer = window.setTimeout(function () {
-      evaluationRequest = window.FuturePathAuth.apiRequest('/axis/evaluate', {
+      evaluationRequest = window.AxisAuth.apiRequest('/axis/evaluate', {
         method: 'POST',
         body: payload
       }).then(function () {
@@ -227,7 +227,16 @@
     if (ranked.length > 3) {
       careerResults.insertAdjacentHTML('beforeend', '<button class="ghost-btn axis-career-toggle" type="button" aria-expanded="false">Xem thêm ngành <span aria-hidden="true">↓</span></button>');
     }
-    document.getElementById('axisGapResults').innerHTML = ranked.slice(0, 3).map(function (item) { return '<article class="axis-gap-card"><span class="eyebrow">' + item.benchmark.code + ' · ' + item.benchmark.name + '</span><p class="axis-advice">Ưu tiên bổ sung năng lực còn thiếu bằng một mục tiêu đo được trong 4 tuần tới.</p></article>'; }).join('');
+    var labels = { S1: 'Học thuật', S2: 'Ngoại ngữ', S3: 'Thành tích', S4: 'RIASEC', S5: 'Ngoại khóa' };
+    document.getElementById('axisGapResults').innerHTML = ranked.slice(0, 3).map(function (item) {
+      var details = dimensions.map(function (dimension, index) {
+        var target = number(Array.isArray(item.benchmark.need) ? item.benchmark.need[index] : 0);
+        var actual = number(values[dimension.key]);
+        var gap = Math.max(0, target - actual);
+        return '<li><span>' + labels[dimension.key] + '</span><strong>' + actual.toFixed(1) + '/' + target.toFixed(1) + '</strong><small>Gap ' + gap.toFixed(1) + '</small></li>';
+      }).join('');
+      return '<article class="axis-gap-card"><span class="eyebrow">' + item.benchmark.code + ' · ' + item.benchmark.name + '</span><ul class="axis-gap-detail-list">' + details + '</ul><p class="axis-advice">Ưu tiên kỹ năng có gap lớn nhất trong 4 tuần tới.</p></article>';
+    }).join('');
     syncServerEvaluation();
   }
   document.addEventListener('DOMContentLoaded', function () {
@@ -241,10 +250,10 @@
       toggle.innerHTML = expanded ? 'Xem thêm ngành <span aria-hidden="true">↓</span>' : 'Thu gọn danh sách <span aria-hidden="true">↑</span>';
       document.getElementById('axisCareerResults').classList.toggle('is-expanded', !expanded);
     });
-    document.addEventListener('futurepath:profile-hydrated', function () {
-      if (window.FuturePathData && window.FuturePathData.getProfile) applyProfile(window.FuturePathData.getProfile());
+    document.addEventListener('axis:profile-hydrated', function () {
+      if (window.AxisData && window.AxisData.getProfile) applyProfile(window.AxisData.getProfile());
     });
-    if (window.FuturePathAuth) window.FuturePathAuth.apiRequest('/axis/benchmarks').then(function (items) {
+    if (window.AxisAuth) window.AxisAuth.apiRequest('/axis/benchmarks').then(function (items) {
       if (Array.isArray(items) && items.length) {
         benchmarks = items.map(function (item) {
           return { code: item.code, name: item.name, need: dimensions.map(function (dimension) { var requirement = item.requirements && item.requirements[dimension.key]; return requirement ? number(requirement.target || requirement.maximum || 0) : 0; }), priority: Array.isArray(item.roc_order) ? item.roc_order : dimensions.map(function (dimension) { return dimension.key; }) };

@@ -26,6 +26,7 @@
           </section>
 
           <div class="filter-row">
+            <label class="sr-only" for="careerSearch">Tìm kiếm ngành nghề</label>
             <input id="careerSearch" type="search" placeholder="⌕ Tìm kiếm ngành nghề..." />
             <button class="primary-btn" id="careerSearchBtn" type="button">Khám phá</button>
           </div>
@@ -33,6 +34,7 @@
           <section class="career-grid" id="careerCards" aria-live="polite">
             <p class="form-help">Đang tải các nhóm ngành…</p>
           </section>
+          <nav class="career-pagination" id="careerPagination" aria-label="Phân trang thư viện nghề nghiệp"></nav>
         </main>
       </div>
     </div>
@@ -158,7 +160,21 @@
         const careerCardsRoot = document.getElementById('careerCards');
         const careerSearch = document.getElementById('careerSearch');
         const careerSearchBtn = document.getElementById('careerSearchBtn');
+        const careerPagination = document.getElementById('careerPagination');
+        const pageSize = 8;
         let catalogItems = [];
+        let filteredItems = [];
+        let currentPage = 1;
+        const fallbackCatalog = [
+          ['N01', 'Máy tính & CNTT'], ['N02', 'Kinh doanh & Quản lý'], ['N03', 'Y dược & Khoa học Sức khỏe'],
+          ['N04', 'Ngôn ngữ, Văn hóa & Ngoại ngữ'], ['N05', 'Thiết kế, Mỹ thuật & Nghệ thuật'], ['N06', 'Kỹ thuật & Tự động hóa'],
+          ['N07', 'Kiến trúc & Xây dựng'], ['N08', 'Luật & An ninh - Quốc phòng'], ['N09', 'Sư phạm & Giáo dục'],
+          ['N10', 'Du lịch, Khách sạn & Nhà hàng'], ['N11', 'Truyền thông, Báo chí & MKT'], ['N12', 'Tài chính - Ngân hàng - Bảo hiểm'],
+          ['N13', 'Môi trường & Tài nguyên'], ['N14', 'Bào chế & Công nghệ Sinh học'], ['N15', 'Hóa học & Công nghệ Vật liệu'],
+          ['N16', 'Nông - Lâm - Thủy sản'], ['N17', 'Khoa học Xã hội & Nhân văn'], ['N18', 'Quan hệ Quốc tế & Ngoại giao'],
+          ['N19', 'Logistics & Chuỗi cung ứng'], ['N20', 'Hàng không & Hàng hải'], ['N21', 'Toán học & Khoa học Dữ liệu'],
+          ['N22', 'Vật lý & Khoa học Vũ trụ'], ['N23', 'Thể dục, Thể thao & Quản lý TDTT'], ['N24', 'Quản lý Nhà nước & Công tác Xã hội']
+        ].map(function (entry) { return { code: entry[0], name: entry[1], subjects: [], riasec: [] }; });
         const descriptions = {
           N01: ['Phát triển hệ thống số, phần mềm và hạ tầng công nghệ cho doanh nghiệp.', 'Người học thường bắt đầu từ lập trình, cơ sở dữ liệu và tư duy giải quyết vấn đề; sau đó có thể đi theo web, mobile, cloud, an toàn thông tin hoặc dữ liệu.'],
           N02: ['Tổ chức nguồn lực, vận hành doanh nghiệp và xây dựng chiến lược tăng trưởng.', 'Ngành kết hợp kinh tế, con người và dữ liệu để trả lời doanh nghiệp nên làm gì, làm với ai và đo hiệu quả ra sao.'],
@@ -185,14 +201,29 @@
           N23: ['Phát triển thành tích thể thao, sức khỏe thể chất và hoạt động thi đấu.', 'Bên cạnh luyện tập, ngành còn có hướng huấn luyện, quản lý sự kiện, khoa học thể thao và truyền thông thể thao.'],
           N24: ['Thiết kế chính sách, quản trị công và các chương trình hỗ trợ xã hội.', 'Người học quan tâm tới cộng đồng, pháp luật, dữ liệu xã hội và cách biến nhu cầu thực tế thành chương trình có tác động.']
         };
-        const icons = ['◈', '◎', '⚗', '文', '✦', '⌘', '⌂', '§', '∿', '✈', '◌', '₫'];
+        const icons = ['code', 'building-2', 'stethoscope', 'languages', 'palette', 'zap', 'ruler', 'scale', 'graduation-cap', 'hotel', 'newspaper', 'wallet'];
         function escapeHtml(value) {
           return String(value || '').replace(/[&<>"']/g, function (character) {
             return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character];
           });
         }
         function renderCareerCards(items) {
+          filteredItems = items;
+          const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+          currentPage = Math.min(currentPage, totalPages);
+          if (!items.length) {
+            careerCardsRoot.innerHTML = '<div class="empty-state"><p>Không tìm thấy ngành nghề phù hợp.</p><button type="button" class="ghost-btn" id="resetCareerSearch">Xóa bộ lọc</button></div>';
+            const resetButton = document.getElementById('resetCareerSearch');
+            if (resetButton) resetButton.addEventListener('click', function () {
+              if (careerSearch) careerSearch.value = '';
+              currentPage = 1;
+              renderCareerCards(catalogItems);
+            });
+            if (careerPagination) careerPagination.innerHTML = '';
+            return;
+          }
           if (!careerCardsRoot) return;
+          const pageItems = items.slice((currentPage - 1) * pageSize, currentPage * pageSize);
           const coverImages = {
             N01: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80',
             N02: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80',
@@ -219,14 +250,14 @@
             N23: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80',
             N24: 'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?auto=format&fit=crop&w=900&q=80'
           };
-          careerCardsRoot.innerHTML = items.map(function (item, index) {
+          careerCardsRoot.innerHTML = pageItems.map(function (item, index) {
             const skills = (item.subjects || []).concat(item.riasec || []).slice(0, 3);
             const priority = item.code === 'N03' ? ' career-card--priority' : '';
             const coverImage = coverImages[item.code];
             const cover = coverImage ? '<div class="career-card-cover" style="background-image:url(' + coverImage + ')"><span>' + escapeHtml(item.code) + '</span></div>' : '';
             return '<article class="career-card' + priority + '" data-career-code="' + escapeHtml(item.code) + '" data-skills="' + escapeHtml(skills.join(',')) + '">' +
               cover +
-              '<div class="career-icon">' + icons[index % icons.length] + '</div>' +
+              '<div class="career-icon" data-lucide="' + icons[index % icons.length] + '" aria-hidden="true"></div>' +
               '<span class="eyebrow">' + escapeHtml(item.code) + '</span>' +
               '<h3>' + escapeHtml(item.name) + '</h3>' +
               '<p>' + escapeHtml((descriptions[item.code] || ['Khám phá kiến thức, kỹ năng và cơ hội phát triển trong nhóm ngành này.', 'Tìm hiểu chương trình đào tạo, thử một dự án nhỏ và đối chiếu với hồ sơ năng lực của bạn.'])[0]) + '</p>' +
@@ -236,58 +267,53 @@
               '<div class="career-card-actions"><button class="ghost-btn add-to-plan" type="button">Thêm vào lộ trình</button><a href="career-detail.html?code=' + encodeURIComponent(item.code) + '&career=' + encodeURIComponent(item.name) + '" class="ghost-btn">Xem chi tiết</a></div></article>';
           }).join('');
           bindCareerCards();
+          renderPagination(totalPages);
+        }
+        function renderPagination(totalPages) {
+          if (!careerPagination) return;
+          if (totalPages <= 1) {
+            careerPagination.innerHTML = '';
+            return;
+          }
+          careerPagination.innerHTML = '<button type="button" class="ghost-btn" data-page-action="previous" aria-label="Trang trước"' +
+            (currentPage === 1 ? ' disabled' : '') + '><span data-lucide="arrow-left" aria-hidden="true"></span> Trước</button>' +
+            '<span class="career-pagination-status" aria-live="polite">Trang ' + currentPage + ' / ' + totalPages + '</span>' +
+            '<button type="button" class="ghost-btn" data-page-action="next" aria-label="Trang sau"' +
+            (currentPage === totalPages ? ' disabled' : '') + '>Sau <span data-lucide="arrow-right" aria-hidden="true"></span></button>';
+          careerPagination.querySelectorAll('[data-page-action]').forEach(function (button) {
+            button.addEventListener('click', function () {
+              currentPage += button.getAttribute('data-page-action') === 'next' ? 1 : -1;
+              renderCareerCards(filteredItems);
+              careerCardsRoot.scrollIntoView({ block: 'start' });
+            });
+          });
         }
         function bindCareerCards() {
           careerCardsRoot.querySelectorAll('.career-card').forEach(function (card) {
             const btn = card.querySelector('.add-to-plan');
             if (btn) btn.addEventListener('click', function () {
-              addCareerToPlan(card.querySelector('h3').textContent.trim(), card.getAttribute('data-skills') || '');
+              addCareerToPlan(card.querySelector('h3').textContent.trim(), card.getAttribute('data-skills') || '', card.getAttribute('data-career-code') || '');
             });
           });
         }
         let goalsCache = [];
-        function loadGoals(){ return goalsCache; }
-        function saveGoals(g){
-          if (window.AXISAuth && window.AXISAuth.isSignedIn()) {
-            const payload = g.map(function (goal) {
-              return {
-                title: goal.title,
-                target_date: goal.date || null,
-                status: goal.done ? 'completed' : 'pending',
-                minutes_per_day: Number(goal.minutes) || null,
-                note: goal.note || '',
-                category: goal.category || 'career'
-              };
-            });
-            return window.AXISAuth.accountRequest('/goals', { method: 'PUT', body: JSON.stringify(payload) })
-              .then(function (saved) {
-                goalsCache = saved.map(function (goal) {
-                  return Object.assign({}, goal, {
-                    date: goal.target_date || '',
-                    minutes: goal.minutes_per_day || '',
-                    done: goal.status === 'completed'
-                  });
-                });
-                return saved;
-              });
-          }
-          return Promise.reject(new Error('Vui lòng đăng nhập để lưu kế hoạch.'));
-        }
 
-        async function addCareerToPlan(title, skills){
-          const goals = loadGoals();
+        async function addCareerToPlan(title, skills, code){
           const goalTitle = `Tìm hiểu nghề: ${title}`;
           const note = skills ? `Kỹ năng gợi ý: ${skills}` : '';
-          goals.push({ title: goalTitle, when: '', note: note, category: 'career', done: false, created: Date.now() });
           try {
-            await saveGoals(goals);
-            alert('Đã thêm vào lộ trình của bạn — vào trang Phát triển bản thân để xem và chỉnh sửa.');
+            if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) throw new Error('Vui lòng đăng nhập để lưu kế hoạch.');
+            const saved = await window.AXISAuth.apiRequest('/goals', { method: 'POST', body: JSON.stringify({
+              title: goalTitle, target_date: null, status: 'pending', minutes_per_day: null, note: note, category: 'career', career_code: code
+            }) });
+            goalsCache.push(Object.assign({}, saved, { date: '', minutes: '', done: false }));
+            window.location.href = 'development.html';
           } catch (error) {
             alert(error.message || 'Không thể lưu kế hoạch.');
           }
         }
 
-        window.FuturePathAuth.fetchWithTimeout('/api/v1/axis/benchmarks', {}, 8000).then(function (response) { return response.ok ? response.json() : []; }).then(function (items) {
+        window.AxisAuth.fetchWithTimeout('/api/v1/axis/benchmarks', {}, 8000).then(function (response) { return response.ok ? response.json() : []; }).then(function (items) {
           if (!Array.isArray(items) || !items.length) throw new Error('empty catalog');
           catalogItems = items;
           if (catalog) catalog.innerHTML = items.map(function (item) {
@@ -295,23 +321,27 @@
           }).join('');
           renderCareerCards(items);
         }).catch(function () {
-          if (catalog) catalog.innerHTML = '<span class="form-help">Danh mục tạm thời chưa khả dụng.</span>';
-          if (careerCardsRoot) careerCardsRoot.innerHTML = '<p class="form-help">Không thể tải danh mục ngành lúc này.</p>';
+          catalogItems = fallbackCatalog;
+          if (catalog) catalog.innerHTML = fallbackCatalog.map(function (item) {
+            return '<a class="career-catalog-item" href="career-detail.html?code=' + encodeURIComponent(item.code) + '&career=' + encodeURIComponent(item.name) + '"><strong>' + escapeHtml(item.code) + '</strong><span>' + escapeHtml(item.name) + '</span></a>';
+          }).join('');
+          renderCareerCards(fallbackCatalog);
         });
         function filterCards() {
           const query = String(careerSearch && careerSearch.value || '').trim().toLowerCase();
+          currentPage = 1;
           renderCareerCards(catalogItems.filter(function (item) {
             return !query || (item.code + ' ' + item.name).toLowerCase().indexOf(query) !== -1;
           }));
         }
         if (careerSearch) careerSearch.addEventListener('input', filterCards);
         if (careerSearchBtn) careerSearchBtn.addEventListener('click', filterCards);
-        document.addEventListener('futurepath:auth-state', function (event) {
+        document.addEventListener('axis:auth-state', function (event) {
           if (!event.detail.signedIn) {
             goalsCache = [];
             return;
           }
-          window.AXISAuth.accountRequest('/goals').then(function (goals) {
+          window.AXISAuth.apiRequest('/goals').then(function (goals) {
             goalsCache = goals.map(function (goal) {
               return Object.assign({}, goal, {
                 date: goal.target_date || '',

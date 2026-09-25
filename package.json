@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "npx tsc --noEmit --jsx react-jsx --esModuleInterop --skipLibCheck --moduleResolution node --module commonjs --target ES2020 src/constants/icons.ts src/components/common/CareerIcon.tsx src/components/common/MenuIcon.tsx",
-    "test": "cd backend && python -m pytest tests/test_career_matching.py -q"
+    "test": "cd backend && python -m pytest tests/test_career_matching.py -q",
+    "test:frontend": "node --test tests/frontend-smoke.mjs"
   },
   "dependencies": {
     "@neon/config": "^1.5.0",

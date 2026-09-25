@@ -12,6 +12,7 @@ class GoalPayload(BaseModel):
     minutes_per_day: int | None = Field(default=None, ge=0, le=1440)
     note: str = ""
     category: str = "general"
+    career_code: str | None = Field(default=None, max_length=16)
 
 
 class RoadmapStepPayload(BaseModel):

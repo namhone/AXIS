@@ -1,0 +1,667 @@
+Nhóm R:
+
+Khía cạnh 1: Sửa chữa, Lắp ráp & Kỹ thuật điện/Điện tử (Câu 1 - 20)
+R1. Tự tay sửa chữa các thiết bị điện gia dụng bị hỏng trong nhà (như quạt máy, nồi cơm điện).
+R2. Thích mày mò, lắp ráp các linh kiện điện tử hoặc bo mạch nhỏ.
+R3. Thích tìm hiểu sơ đồ đi dây điện và cách vận hành của hệ thống điện trong tòa nhà.
+R4. Tự nối lại dây cáp mạng internet hoặc dây điện bị đứt một cách an toàn.
+R5. Thích thay thế, nâng cấp các bộ phận phần cứng của máy tính (RAM, ổ cứng, card đồ họa).
+R6. Thích sử dụng các thiết bị đo đạc kỹ thuật như đồng hồ vạn năng (multimeter), bút thử điện.
+R7. Tìm tòi cách sửa chữa các loại đèn chiếu sáng hoặc hệ thống đèn LED thông minh.
+R8. Thích lắp đặt hệ thống loa, âm thanh hoặc rạp phim tại gia.
+R9. Tự tay sửa các lỗi vặt của máy giặt, tủ lạnh trước khi gọi thợ chuyên nghiệp.
+R10. Cảm thấy hứng thú khi xem các video hướng dẫn tự sửa đồ điện tử (DIY).
+R11. Thích hàn xì, gắn kết các mối nối kim loại hoặc dây điện bằng mỏ hàn.
+R12. Tự thiết kế và lắp ráp các mô hình đồ chơi có động cơ điện chạy bằng pin.
+R13. Thích kiểm tra và bảo dưỡng định kỳ các thiết bị điện để đảm bảo an toàn.
+R14. Muốn tự tay lắp đặt hệ thống camera an ninh hoặc thiết bị chống trộm cho gia đình.
+R15. Thích xử lý các sự cố liên quan đến mất tín hiệu truyền hình hoặc đường dây điện thoại.
+R16. Thích tìm hiểu cách hoạt động và cấu tạo bên trong của một viên pin hoặc viên sạc dự phòng.
+R17. Thích lắp ráp các thiết bị sưởi ấm, làm mát hoặc điều hòa không khí mini.
+R18. Có khả năng đọc hiểu nhanh các ký hiệu kỹ thuật trên sơ đồ mạch điện.
+R19. Thích lau chùi, tra dầu mỡ và làm sạch các ổ cắm, công tắc điện.
+R20. Muốn tự tay cấu hình và lắp đặt hệ thống điện năng lượng mặt trời quy mô nhỏ.
+
+Khía cạnh 2: Cơ khí, Chế tác vật liệu & Công cụ cầm tay (Câu 21 - 40)
+R21. Sử dụng các công cụ mộc (cưa, đục, búa) để đóng hoặc sửa bàn ghế bằng gỗ.
+R22. Thích tự sửa chữa xe đạp, xe máy hoặc các phương tiện di chuyển cá nhân.
+R23. Thích làm việc với các vật liệu thô rắn như sắt, thép, nhôm để chế tạo đồ dùng.
+R24. Cảm thấy tự tin khi sử dụng máy khoan cầm tay để bắt vít hoặc khoan tường.
+R25. Thích mài đục, gọt giũa hoặc sơn lại các bề mặt kim loại bị rỉ sét.
+R26. Thích tự tay làm ra một sản phẩm vật lý cụ thể từ các mảnh gỗ thừa.
+R27. Thích thay dầu nhớt, má phanh hoặc bugi cho xe máy định kỳ.
+R28. Cảm thấy hứng thú với việc cắt, uốn các thanh kim loại theo hình dáng mong muốn.
+R29. Thích học cách vận hành các máy công cụ nhỏ như máy cắt cầm tay, máy mài.
+R30. Tự tay khóa van, thay thế vòi nước hoặc sửa đường ống nước bị rò rỉ trong nhà.
+R31. Thích cấu trúc hình học và cách ăn khớp của các bánh răng cơ khí.
+R32. Thích lắp ráp các mô hình kỹ thuật bằng gỗ hoặc kim loại có độ chi tiết cao.
+R33. Thích sưu tầm và sắp xếp ngăn nắp các loại ốc vít, bu lông, kìm, tua vít.
+R34. Thích mài sắc dao kéo hoặc các dụng cụ cắt gọt trong nhà bếp, nhà kho.
+R35. Tự tay đóng các kệ treo tường hoặc tủ sách nhỏ để tối ưu không gian sống.
+R36. Thích tìm hiểu cấu tạo và nguyên lý hoạt động của động cơ đốt trong (xe máy, ô tô).
+R37. Thích làm việc với các loại keo chuyên dụng, chất dính để gắn kết các vật liệu cứng.
+R38. Thích tự chế tạo các dụng cụ hỗ trợ công việc hàng ngày bằng vật liệu tái chế.
+R39. Có thói quen bảo dưỡng, lau chùi các công cụ cầm tay sau khi sử dụng xong.
+R40. Thích trải nghiệm việc đúc khuôn, tạo hình các vật thể bằng nhựa, thạch cao hoặc xi măng.
+
+Khía cạnh 3: Vận hành máy móc công nghiệp & Thiết bị nặng (Câu 41 - 60)
+R41. Thích cảm giác điều khiển các phương tiện giao thông cỡ lớn như xe tải, máy xúc.
+R42. Tìm hiểu cách vận hành của các máy móc tự động hóa trong các nhà máy sản xuất.
+R43. Thích lập trình hoặc vận hành máy cắt cơ khí chính xác CNC.
+R44. Thích làm việc trực tiếp tại các dây chuyền lắp ráp công nghiệp.
+R45. Thích ngồi trong buồng lái và điều khiển các thiết bị nâng hạ, cần cẩu.
+R46. Tìm hiểu quy trình vận hành của các nhà máy sấy, hệ thống xay xát công nghiệp.
+R47. Thích kiểm tra các thông số áp suất, nhiệt độ trên bảng điều khiển của máy móc lớn.
+R48. Cảm thấy phấn khích khi tham quan các xưởng cơ khí chế tạo hoặc nhà máy đóng tàu.
+R49. Thích vận hành các loại máy in công nghiệp khổ lớn hoặc máy dập bao bì.
+R50. Thích học cách điều khiển các thiết bị bay không người lái (drone) phục vụ kỹ thuật.
+R51. Thích làm công việc bảo trì hệ thống băng tải tự động trong các kho hàng lớn.
+R52. Thích nghiên cứu cách tối ưu hóa công suất hoạt động của một chiếc máy bơm nước cỡ lớn.
+R53. Thích vận hành các máy nén khí hoặc máy phát điện dự phòng công suất cao.
+R54. Muốn làm quen với cách sử dụng các robot cánh tay công nghiệp trong sản xuất.
+R55. Thích trực tiếp xử lý các lỗi kẹt cơ học của máy móc khi đang vận hành.
+R56. Thích làm việc trong môi trường có tiếng động cơ và nhịp điệu của máy móc.
+R57. Thích kiểm tra mức độ mài mòn của các chi tiết máy lớn để lên kế hoạch thay thế.
+R58. Thích học cách lái và vận hành xe nâng hàng (forklift) trong các nhà kho.
+R59. Thích cấu hình các thông số cơ học trên các máy trộn vật liệu công nghiệp.
+R60. Cảm thấy tự hào khi kiểm soát và vận hành trơn tru một hệ thống máy móc phức tạp.
+
+Khía cạnh 4: Nông nghiệp, Lâm nghiệp, Chăn nuôi & Sinh vật (Câu 61 - 80)
+R61. Thích tự tay xới đất, bón phân và gieo trồng các loại rau củ sạch.
+R62. Thích công việc chăm sóc, cắt tỉa cành cây và tạo dáng cho cây cảnh (bonsai).
+R63. Thích cho vật nuôi ăn, dọn dẹp chuồng trại và theo dõi sức khỏe của chúng.
+R64. Thích tìm hiểu các kỹ thuật ghép cành, chiết cành để nhân giống cây trồng.
+R65. Thích làm việc trong trang trại nuôi trồng thủy hải sản (tôm, cá, nghêu).
+R66. Thích sử dụng các công cụ làm vườn như xẻng, cuốc, kéo cắt cành lớn.
+R67. Thích lắp đặt và vận hành hệ thống tưới nước tự động cho vườn cây.
+R68. Thích công việc thu hoạch nông sản, trái cây trực tiếp tại nhà vườn.
+R69. Thích tìm hiểu cách phòng trừ sâu bệnh cho cây bằng các phương pháp sinh học cơ học.
+R70. Thích dành thời gian chăm sóc và huấn luyện các loài động vật (như chó, ngựa).
+R71. Thích tham gia các hoạt động trồng rừng, bảo vệ và phát triển mảng xanh tự nhiên.
+R72. Thích làm việc với đất cát, bùn, nước và không ngại cơ thể bị lấm bẩn.
+R73. Thích nuôi và khai thác các sản phẩm từ côn trùng có lợi (như nuôi ong lấy mật).
+R74. Thích tìm hiểu quy trình ủ phân hữu cơ từ rác thải nhà bếp để làm phân bón.
+R75. Thích thu lượm hạt giống từ tự nhiên để tự ươm mầm tại nhà.
+R76. Thích làm việc tại các vườn ươm cây giống hoặc trung tâm cứu hộ động vật hoang dã.
+R77. Thích thiết kế và làm các bể cá thủy sinh, thiết lập hệ thống lọc nước cơ học.
+R78. Thích công việc kiểm tra chất lượng đất và nguồn nước phục vụ nuôi trồng.
+R79. Thích chăm sóc các thảm cỏ tự nhiên ở sân vận động hoặc công viên viên.
+R80. Cảm thấy thư giãn khi được lao động chân tay hòa mình vào môi trường nông nghiệp.
+
+Khía cạnh 5: Xây dựng, Cứu hộ & Hoạt động thể chất ngoài trời (Câu 81 - 100)
+R81. Thích làm việc ngoài trời (như công trường, bãi biển, rừng núi) hơn là ngồi văn phòng.
+R82. Thích tham gia vào các công đoạn xây chát, lát gạch hoặc sơn sửa tường nhà.
+R83. Thích các hoạt động thể thao đòi hỏi sức bền thể chất cao (chạy bộ, leo núi, chèo thuyền).
+R84. Thích học hỏi các kỹ năng sinh tồn, dựng lều trại, nhóm lửa trong rừng.
+R85. Thích tham gia vào các đội ứng phó sự cố khẩn cấp, cứu hộ cứu nạn hoặc phòng cháy chữa cháy.
+R86. Thích công việc khuân vác, sắp xếp và di chuyển các kiện hàng nặng.
+R87. Có khả năng định vị không gian tốt, giỏi nhìn bản đồ địa hình khi di chuyển ngoài trời.
+R88. Thích làm việc ở những độ cao nhất định (như lắp đặt giàn giáo, sửa mái nhà).
+R89. Thích dọn dẹp các chướng ngại vật vật lý, khai thông đường sá sau thiên tai.
+R90. Thích tham gia vào các dự án đo đạc trắc địa, khảo sát địa hình thực địa.
+R91. Thích làm công việc lặn biển để kiểm tra các công trình ngầm dưới nước.
+R92. Thích tự tay thiết kế và dựng các công trình tạm bằng tre, nứa hoặc bạt gỗ ngoài trời.
+R93. Thích công việc kiểm tra an toàn kỹ thuật của các tòa nhà hoặc cầu đường.
+R94. Cảm thấy khỏe khoắn và tỉnh táo khi thực hiện các công việc lao động nặng.
+R95. Thích tham gia các chuyến thám hiểm thực địa vào các vùng hang động, rừng sâu.
+R96. Thích làm việc với la bàn, dây thừng và các nút thắt kỹ thuật.
+R97. Thích công việc bảo vệ an ninh trật tự, tuần tra tại các mục tiêu thực tế.
+R98. Thích học cách sơ cứu vết thương hoặc xử lý các tình huống tai nạn lao động trên công trường.
+R99. Thích trực tiếp leo trèo để bảo trì các cột sóng viễn thông hoặc đường dây điện cao thế.
+R100. Cảm thấy tràn đầy năng lượng khi kết thúc một ngày làm việc tiêu hao nhiều thể lực ngoài trời.
+Nhóm I:
+
+Khía cạnh 1: Toán học, Logic & Khoa học Dữ liệu (I1 - I20)
+I1. Thích giải những bài toán đố hóc búa đòi hỏi tư duy logic cao.
+I2. Thích phân tích các biểu đồ, số liệu thống kê để tìm ra xu hướng ẩn giấu.
+I3. Dành thời gian tự học các thuật toán hoặc cách lập trình một phần mềm máy tính.
+I4. Thích tìm hiểu về xác suất thống kê và ứng dụng của nó trong thực tế.
+I5. Cảm thấy hứng thú khi tối ưu hóa một chuỗi dữ liệu phức tạp thành các chỉ số dễ hiểu.
+I6. Thích sử dụng các phần mềm phân tích số liệu chuyên sâu (như SPSS, R, Python, SQL).
+I7. Thích giải mã các loại mật mã hoặc tìm kẽ hở bảo mật trong hệ thống thông tin.
+I8. Thích kiểm thử (test) để tìm ra các lỗi logic trong một quy trình phần mềm.
+I9. Thích so sánh các mô hình toán học để dự đoán xu hướng tài chính hoặc thời tiết.
+I10. Thích xây dựng các công thức tính toán tự động giúp xử lý công việc nhanh hơn.
+I11. Thích nghiên cứu cấu trúc dữ liệu và cách lưu trữ thông tin của các hệ thống lớn.
+I12. Dành hàng giờ để tìm ra nguyên nhân vì sao một dòng code hoặc một phép tính bị sai lỗi.
+I13. Thích đọc sách về lý thuyết trò chơi (Game Theory) và chiến lược tư duy.
+I14. Thích phân tích các biến số kinh tế vĩ mô để hiểu về sự vận hành của dòng tiền toàn cầu.
+I15. Thích tham gia các cuộc thi về trí tuệ, giải đố hoặc hackathon.
+I16. Thích lập luận mọi vấn đề dựa trên các con số và bằng chứng định lượng thay vì cảm tính.
+I17. Thích nghiên cứu cách trí tuệ nhân tạo (AI) học và xử lý ngôn ngữ tự nhiên.
+I18. Thích tạo ra các thuật toán phân loại dữ liệu để tự động hóa quy trình phân tích.
+I19. Thích nghiên cứu về hình học không gian và các chiều kích vật lý lý thuyết.
+I20. Cảm thấy thỏa mãn khi một bài toán phức tạp được giải quyết bằng một phương thức tinh gọn.
+
+Khía cạnh 2: Khoa học Tự nhiên, Vật chất & Thí nghiệm (I21 - I40)
+I21. Thích sử dụng kính hiển vi để quan sát thế giới vi sinh vật hoặc cấu trúc tế bào.
+I22. Thích thực hiện các thí nghiệm hóa học để xem phản ứng giữa các chất với nhau.
+I23. Thích đọc tài liệu nghiên cứu về các hiện tượng thiên văn, vũ trụ và các vì sao.
+I24. Tìm hiểu về cấu trúc phân tử của vật chất và cách tạo ra các vật liệu mới.
+I25. Thích phân tích các mẫu đất, đá hoặc khoáng sản để xác định thành phần của chúng.
+I26. Thích tìm hiểu sâu về nguyên lý vật lý đằng sau các hiện tượng tự nhiên (sấm sét, lực hấp dẫn).
+I27. Thích làm việc trong môi trường phòng thí nghiệm có đầy đủ thiết bị chuyên dụng.
+I28. Thích nghiên cứu về các nguồn năng lượng sạch (năng lượng hạt nhân, hydro, sóng biển).
+I29. Thích phân tích thành phần hóa học trong thực phẩm hoặc dược phẩm để đánh giá độ an toàn.
+I30. Thích tìm hiểu về di truyền học, cấu trúc DNA và sự tiến hóa của sinh vật.
+I31. Thích quan sát và ghi chép lại các chu kỳ phát triển của một loài thực vật quý hiếm.
+I32. Thích nghiên cứu về tác động của biến đổi khí hậu đối với các hệ sinh thái tự nhiên.
+I33. Thích tìm hiểu cơ chế hoạt động của các loại chất độc và chất kháng độc độc học.
+I34. Thích phân tích cấu trúc của các loại polymer hoặc vật liệu nano.
+I35. Thích nghiên cứu về cơ học lượng tử hoặc vật lý hạt nhân.
+I36. Thích thu thập và phân loại các mẫu hóa thạch hoặc tiêu bản sinh học.
+I37. Thích tìm hiểu về cơ chế quang hợp và trao đổi chất ở thực vật dưới góc độ hóa sinh.
+I38. Thích sử dụng các thiết bị đo quang phổ hoặc đo phóng xạ để thu thập dữ liệu khoa học.
+I39. Thích nghiên cứu về cấu tạo địa chất và các mảng kiến tạo của Trái Đất.
+I40. Cảm thấy hào hứng khi phát hiện ra một chất mới hoặc một hiện tượng tự nhiên chưa có lời giải.
+
+Khía cạnh 3: Y học, Sinh học & Cơ thể người (I41 - I60)
+I41. Thích tìm hiểu cơ chế gây bệnh của các loại virus, vi khuẩn đối với cơ thể người.
+I42. Đọc sách y học để hiểu cách các cơ quan bên trong cơ thể phối hợp hoạt động.
+I43. Thích nghiên cứu sâu về hệ thần kinh và cách não bộ điều khiển hành vi.
+I44. Thích phân tích các kết quả xét nghiệm máu hoặc chẩn đoán hình ảnh (X-quang, MRI).
+I45. Thích tìm hiểu về tác dụng phụ và cơ chế dược lý của các loại thuốc tây y.
+I46. Thích nghiên cứu về các phương pháp điều trị bệnh ung thư hoặc các bệnh nan y mới.
+I47. Thích tìm hiểu sâu về hệ miễn dịch và cách vaccine bảo vệ cơ thể.
+I48. Thích nghiên cứu về chế độ dinh dưỡng và tác động sinh hóa của thức ăn đối với tế bào.
+I49. Thích tìm hiểu về các bệnh lý di truyền và phương pháp chỉnh sửa gen (CRISPR).
+I50. Thích nghiên cứu về quy trình nuôi cấy mô hoặc tế bào gốc trong y học tái tạo.
+I51. Thích tìm hiểu về độc tính của môi trường đối với sức khỏe con người.
+I52. Thích đọc các báo cáo ca bệnh lâm sàng (case studies) hiếm gặp trong ngành y.
+I53. Thích tìm hiểu về cấu trúc giải phẫu học của các cơ quan trên cơ thể người hoặc động vật.
+I54. Thích phân tích cơ chế lão hóa của tế bào và các phương pháp kéo dài tuổi thọ khoa học.
+I55. Thích nghiên cứu các bệnh truyền nhiễm và mô hình dự báo dịch tễ học trong cộng đồng.
+I56. Thích tìm hiểu về các thiết bị y tế công nghệ cao như máy trợ tim, tay chân giả sinh học.
+I57. Thích nghiên cứu tác động của giấc ngủ và nhịp sinh học đối với sức khỏe tâm thần.
+I58. Thích tìm hiểu sâu về các phương pháp phẫu thuật ngoại khoa tiên tiến dưới góc độ kỹ thuật.
+I59. Thích nghiên cứu sự tương tác giữa hệ vi sinh vật đường ruột và sức khỏe tổng thể.
+I60. Cảm thấy bị thu hút bởi việc giải mã các bí ẩn y học để cứu sống con người.
+
+Khía cạnh 4: Tâm lý học, Hành vi & Khoa học Xã hội (I61 - I80)
+I61. Thích quan sát hành vi của mọi người để suy đoán về động cơ và tâm lý của họ.
+I62. Đọc các nghiên cứu sâu về tâm lý học tội phạm hoặc các chứng rối loạn nhân cách.
+I63. Thích thực hiện các cuộc khảo sát xã hội học để tìm ra quy luật hành vi của một nhóm người.
+I64. Thích phân tích cách mà các nền văn hóa hoặc tôn giáo ảnh hưởng đến tư duy con người.
+I65. Thích tìm hiểu sâu về các thuyết tâm lý học nổi tiếng (như của Freud, Jung, hoặc Skinner).
+I66. Thích phân tích các dữ liệu về hành vi tiêu dùng để hiểu tại sao người ta lại mua hàng.
+I67. Thích nghiên cứu về tâm lý học đám đông và cách dư luận xã hội được hình thành.
+I68. Thích tìm hiểu về lịch sử tiến hóa ngôn ngữ và cách con người phát triển tư duy ký hiệu.
+I69. Thích nghiên cứu về tâm lý học trẻ em và các giai đoạn phát triển nhận thức.
+I70. Thích phân tích các nguyên nhân kinh tế - xã hội dẫn đến đói nghèo hoặc bất bình đẳng.
+I71. Thích nghiên cứu về tác động của mạng xã hội đến tâm lý và sự tập trung của giới trẻ.
+I72. Thích đọc các tài liệu nghiên cứu khảo cổ học để khôi phục lại lối sống của người cổ đại.
+I73. Thích phân tích sự thay đổi cấu trúc gia đình qua các thời kỳ lịch sử khác nhau.
+I74. Thích nghiên cứu về các hiện tượng tâm lý học nhận thức (như chứng ảo giác, mất trí nhớ).
+I75. Thích tìm hiểu các phương pháp trị liệu tâm lý dựa trên bằng chứng khoa học (như CBT).
+I76. Thích phân tích các xung đột chính trị quốc tế dưới góc nhìn địa chính trị lịch sử.
+I77. Thích nghiên cứu về sự thích nghi của con người trong môi trường sống khắc nghiệt hoặc biệt lập.
+I78. Thích tìm hiểu về cơ chế hình thành các thói quen xấu và cách bộ não tái cấu trúc thói quen.
+I79. Thích thực hiện các cuộc phỏng vấn sâu để thu thập dữ liệu định tính về một hiện tượng xã hội.
+I80. Cảm thấy hứng thú với việc khám phá ra những góc khuất trong thế giới nội tâm của con người.
+
+Khía cạnh 5: Nghiên cứu Học thuật, Chiến lược & Phê phán (I81 - I100)
+I81. Luôn đặt câu hỏi "Tại sao?" hoặc đòi hỏi bằng chứng trước một nhận định được số đông công nhận.
+I82. Thích viết các bài luận chuyên sâu, báo cáo nghiên cứu hoặc phản biện học thuật.
+I83. Dành thời gian tra cứu, tìm nguồn gốc của các thông tin, tin tức để xác thực độ chính xác.
+I84. Thích đọc sách triết học để rèn luyện tư duy phản biện và góc nhìn đa chiều.
+I85. Thích làm công việc rà soát, đánh giá chất lượng và phương pháp luận của các đề tài nghiên cứu.
+I86. Thích xây dựng các khung lý thuyết mới để giải thích cho một hiện tượng chưa rõ ràng.
+I87. Thích làm việc độc lập trong không gian yên tĩnh để có thể tập trung suy nghĩ sâu sắc.
+I88. Thích tổng hợp thông tin từ nhiều nguồn tài liệu khác nhau để viết thành một báo cáo toàn diện.
+I89. Thích phân tích các lỗ hổng chiến lược của một tổ chức để đề xuất giải pháp tối ưu.
+I90. Thích tìm hiểu về lịch sử phát triển của các ngành khoa học và các phát minh vĩ đại.
+I91. Thích tham gia các câu lạc bộ tranh biện, nơi các lập luận phải dựa trên logic và dữ kiện vững chắc.
+I92. Thích tìm kiếm các điểm mâu thuẫn trong lập luận của người khác để phản biện lại một cách khoa học.
+I93. Thích nghiên cứu sâu về sở hữu trí tuệ, bằng sáng chế và quy trình bảo hộ công nghệ.
+I94. Thích học hỏi từ các giáo sư, cố vấn, chuyên gia đầu ngành để mở rộng tư duy của bản thân.
+I95. Thích phân tích các rủi ro hệ thống trước khi triển khai một dự án lớn nào đó.
+I96. Cảm thấy thoải mái khi đọc các tài liệu học thuật bằng tiếng nước ngoài có nhiều thuật ngữ chuyên ngành.
+I97. Thích nghiên cứu về phương pháp luận nghiên cứu khoa học (Research Methodology).
+I98. Thích tìm ra các giải pháp mang tính bền vững dài hạn thay vì các biện pháp sửa lỗi tạm thời.
+I99. Thích phân tích cách phân bổ tài nguyên tối ưu của một quốc gia hoặc doanh nghiệp.
+I100. Cảm thấy cuộc sống ý nghĩa nhất khi được cống hiến cho việc mở rộng kho tàng tri thức của nhân loại.
+
+
+Khía cạnh 1: Mỹ thuật, Hội họa & Thiết kế thị giác (A1 - A20)
+A1. Thích vẽ, phác thảo ý tưởng bằng bút chì hoặc cọ vẽ trên giấy.
+A2. Thích thiết kế đồ họa, làm các ấn phẩm truyền thông hoặc logo trên máy tính.
+A3. Phối hợp màu sắc của các trang phục hoặc phụ kiện một cách độc đáo, hợp thời trang.
+A4. Thích chụp ảnh phong cảnh, chân dung và tự tay chỉnh sửa màu sắc của bức ảnh.
+A5. Dành thời gian trang trí, sắp xếp lại không gian sống và làm việc theo phong cách riêng.
+A6. Thích đi tham quan các buổi triển lãm tranh, điêu khắc hoặc bảo tàng mỹ thuật.
+A7. Thích tự tay làm ra các sản phẩm thủ công mỹ nghệ (như gốm, đan lát, thêu thùa).
+A8. Thích thiết kế giao diện (UI/UX) cho các ứng dụng điện thoại hoặc trang web.
+A9. Thích vẽ truyện tranh, tạo hình nhân vật hoạt hình hoặc vẽ minh họa cho sách.
+A10. Thích tìm hiểu về lịch sử các trường phái hội họa và phong cách kiến trúc trên thế giới.
+A11. Thích phối cảnh, dựng mô hình 3D cho các công trình hoặc bối cảnh phim game.
+A12. Cảm thấy nhạy bén và dễ bị thu hút bởi những hình khối, đường nét đẹp mắt trong tự nhiên.
+A13. Thích vẽ graffiti hoặc sáng tạo nghệ thuật trên các bức tường đường phố.
+A14. Thích thiết kế bao bì, nhãn mác cho các sản phẩm tiêu dùng một cách bắt mắt.
+A15. Thích tạo ra các font chữ mới (Typography) hoặc tập viết chữ nghệ thuật (Calligraphy).
+A16. Thích thiết kế sân khấu, bối cảnh cho các sự kiện, chương trình ca nhạc.
+A17. Thích sưu tầm các tác phẩm nghệ thuật thị giác độc lạ từ nhiều nền văn hóa.
+A18. Thích tạo ra các bảng tâm trạng (Moodboard) để tìm kiếm cảm hứng hình ảnh cho dự án.
+A19. Thích thiết kế cảnh quan, sân vườn với các điểm nhấn nghệ thuật độc đáo.
+A20. Cảm thấy thỏa mãn khi biến một vật dụng cũ kỹ thành một món đồ trang trí đầy tính thẩm mỹ.
+
+Khía cạnh 2: Âm nhạc, Sáng tác & Trình diễn (A21 - A40)
+A21. Thích chơi một hoặc nhiều loại nhạc cụ khác nhau (như guitar, piano, trống, violin).
+A22. Thích ca hát, luyện giọng hoặc tham gia vào các ban nhạc, ca đoàn, câu lạc bộ âm nhạc.
+A23. Thích tự sáng tác các giai điệu ngẫu hứng hoặc viết lời cho một bài hát mới.
+A24. Thích làm công việc hòa âm phối khí, sản xuất âm nhạc (Music Producer) trên máy tính.
+A25. Thích nghe nhiều thể loại nhạc khác nhau để phân tích cấu trúc, nhạc cụ và cảm xúc bài hát.
+A26. Thích tham gia nhảy hiện đại, múa đương đại hoặc các hoạt động chuyển động cơ thể theo nhạc.
+A27. Thích tham gia đóng kịch, diễn xuất, biểu cảm cơ thể và gương mặt trước ống kính.
+A28. Thích làm công việc thu âm, lồng tiếng cho phim, truyện audio hoặc làm podcast.
+A29. Thích đi xem các buổi hòa nhạc trực tiếp, nhạc kịch (musical) hoặc đêm diễn acoustic.
+A30. Thích chỉnh sửa, cắt ghép và thiết kế âm thanh hiệu ứng (Sound Design) cho video, phim ngắn.
+A31. Thích tìm tòi các nhạc cụ dân tộc hoặc âm nhạc truyền thống của các quốc gia khác nhau.
+A32. Thích chỉ huy một dàn hợp xướng hoặc điều phối màn trình diễn nghệ thuật của một tập thể.
+A33. Thích thử nghiệm việc kết hợp các thể loại âm nhạc khác nhau để tạo ra phong cách mới.
+A34. Thích biểu diễn tài năng của mình trước đám đông mà không cảm thấy rụt rè.
+A35. Thích tìm hiểu về cấu tạo và cách lên dây, bảo dưỡng cho các loại nhạc cụ.
+A36. Thích phân tích thông điệp ẩn ý và bối cảnh lịch sử đằng sau các album nhạc nổi tiếng.
+A37. Thích tự tạo ra các nhạc cụ thô sơ từ vật liệu tái chế để tạo ra những âm thanh lạ tai.
+A38. Thích làm công việc DJ, chọn lọc và kết nối các bản nhạc trong các sự kiện giải trí.
+A39. Cảm thấy âm nhạc là phương tiện tốt nhất để giải tỏa cảm xúc và thể hiện cái tôi cá nhân.
+A40. Thích cống hiến thời gian để rèn luyện kỹ thuật biểu diễn đạt đến độ tinh tế, điêu luyện.
+
+Khía cạnh 3: Văn học, Viết lách & Sáng tạo nội dung (A41 - A60)
+A41. Thích viết truyện ngắn, tiểu thuyết, làm thơ hoặc ghi chép nhật ký hành trình.
+A42. Thích viết blog cá nhân, chia sẻ góc nhìn và trải nghiệm sống qua những bài viết giàu cảm xúc.
+A43. Thích lên ý tưởng kịch bản (Scriptwriting) cho phim ngắn, MV ca nhạc hoặc tiểu phẩm hài.
+A44. Thích viết lời quảng cáo sáng tạo (Copywriting) để thu hút sự chú ý của người xem.
+A45. Thích công việc dịch thuật văn học, chuyển ngữ các tác phẩm truyện thơ nước ngoài một cách mượt mà.
+A46. Thích sáng tạo nội dung chữ (Content Writing) ngắn gọn, hài hước trên các nền tảng mạng xã hội.
+A47. Thích phê bình văn học, viết các bài cảm nhận, review chuyên sâu về các cuốn sách đã đọc.
+A48. Thích sử dụng các biện pháp tu từ, chơi chữ, ẩn dụ để làm cho câu văn trở nên uyển chuyển.
+A49. Thích sưu tầm các trích dẫn hay, các từ ngữ cổ hoặc từ vựng độc lạ từ nhiều vùng miền.
+A50. Thích tham gia các câu lạc bộ viết lách, cùng thảo luận và đóng góp ý kiến cho tác phẩm của nhau.
+A51. Thích phỏng vấn nhân vật và viết thành những bài ký sự, phóng sự giàu tính nhân văn.
+A52. Thích biên kịch cho các trò chơi điện tử (Game Writer), xây dựng cốt truyện và lời thoại cho nhân vật.
+A53. Thích đọc các tác phẩm văn học kinh điển để học hỏi văn phong của các đại văn hào.
+A54. Thích thử sức viết ở nhiều thể loại khác nhau như trinh thám, giả tưởng, kinh dị, lãng mạn.
+A55. Thích làm biên tập viên, chỉnh sửa câu từ và gọt giũa bài viết của người khác cho hay hơn.
+A56. Thích xây dựng thế giới giả tưởng (Worldbuilding) với các quy luật và lịch sử tự chế.
+A57. Thích viết các câu chuyện ngụ ngôn, truyện ngụ ý mang tính giáo dục hoặc triết lý sâu sắc.
+A58. Thích thiết kế bố cục nội dung (Content Layout) kết hợp giữa chữ viết và hình ảnh sao cho cuốn hút.
+A59. Thích tham gia các cuộc thi sáng tác văn học hoặc thơ ca để thử thách bản thân.
+A60. Cảm thấy việc điều khiển ngôn từ có thể thay đổi cảm xúc và suy nghĩ của người đọc.
+
+Khía cạnh 4: Điện ảnh, Sân khấu & Nghệ thuật Truyền thông (A61 - A80)
+A61. Thích lên kế hoạch góc máy, quay các thước phim ngắn nghệ thuật bằng điện thoại hoặc máy ảnh.
+A62. Thích làm công việc hậu kỳ, dựng phim (Video Editing), nhịp dựng theo đúng tiết tấu âm nhạc.
+A63. Thích làm đạo diễn (Director), điều phối diễn viên và hiện thực hóa ý tưởng từ kịch bản lên màn ảnh.
+A64. Thích làm các video hoạt hình ngắn (Animation) hoặc kỹ xảo chuyển động (Motion Graphics).
+A65. Thích phân tích phim (Film Review), bóc tách các tầng nghĩa, biểu tượng nghệ thuật và nghệ thuật ánh sáng của đạo diễn.
+A66. Thích thiết kế phục trang, hóa trang (Makeup Artist) để tạo hình nhân vật theo đúng thời kỳ lịch sử.
+A67. Thích sưu tầm các bộ phim độc lập (Indie phim), phim tài liệu mang tính nghệ thuật cao.
+A68. Thích làm việc với ánh sáng, màu sắc (Color Grading) để tạo ra bầu không khí (mood) cho video.
+A69. Thích tham gia vào các khâu tổ chức sản xuất sự kiện giải trí, lễ hội âm nhạc quy mô lớn.
+A70. Thích làm người mẫu ảnh, tự tin tạo dáng thể hiện các concept nghệ thuật khác nhau.
+A71. Thích nghiên cứu về các góc máy, tiêu cự ống kính và kỹ thuật quay phim điện ảnh (Cinematography).
+A72. Thích lên bảng phân cảnh (Storyboard) bằng hình vẽ để chuẩn bị cho việc bấm máy quay phim.
+A73. Thích tìm kiếm các bối cảnh độc lạ, hoang sơ hoặc có kiến trúc đặc biệt để làm nơi quay phim.
+A74. Thích tham gia các liên hoan phim, cộng đồng làm phim ngắn để giao lưu học hỏi.
+A75. Thích sáng tạo các nội dung video ngắn xu hướng (TikTok/Reels) có tính giải trí hoặc thẩm mỹ cao.
+A76. Thích làm công việc đạo diễn hình ảnh, chịu trách nhiệm về toàn bộ phần nhìn của một dự án truyền thông.
+A77. Thích ứng dụng công nghệ thực tế ảo (VR/AR) để tạo ra các trải nghiệm nghệ thuật tương tác.
+A78. Thích thiết kế các poster phim, áp phích sự kiện nghệ thuật một cách ấn tượng.
+A79. Thích làm việc tại các studio chụp ảnh nghệ thuật hoặc phim trường.
+A80. Cảm thấy việc truyền tải một thông điệp bằng hình ảnh chuyển động có sức lan tỏa mạnh mẽ nhất.
+
+Khía cạnh 5: Tư duy đổi mới, Sáng tạo Tự do & Phong cách Sống (A81 - A100)
+A81. Cảm thấy vô cùng khó chịu và ngột ngạt khi phải làm một công việc lặp đi lặp lại theo quy trình gò bó.
+A82. Thường giải quyết các mâu thuẫn hoặc vấn đề khó khăn bằng trực giác và góc nhìn phá cách.
+A83. Thích làm việc tự do (Freelancer) để có thể chủ động hoàn toàn về thời gian và không gian làm việc.
+A84. Thích cải tiến, thay đổi cấu trúc của một quy trình cũ kỹ thành một phương pháp độc đáo hơn.
+A85. Luôn muốn tạo ra những sản phẩm mang tính biểu tượng độc bản, không trùng lặp với bất kỳ ai.
+A86. Cảm thấy môi trường làm việc lý tưởng nhất phải có tính linh hoạt, cởi mở và khuyến khích cái tôi cá nhân.
+A87. Thích sưu tầm các món đồ cổ, đồ vintage hoặc những vật dụng có thiết kế kỳ lạ.
+A88. Dành thời gian suy nghĩ về những ý tưởng điên rồ, viển vông nhưng tràn đầy cảm hứng sáng tạo.
+A89. Thích du lịch trải nghiệm, khám phá các vùng đất mới chỉ để tìm kiếm chất liệu cho nghệ thuật.
+A90. Thích tham gia các hội nhóm có phong cách sống nghệ sĩ, tự do và phóng khoáng.
+A91. Sẵn sàng bảo vệ quan điểm thẩm mỹ cá nhân ngay cả khi nó đi ngược lại với thị hiếu của số đông.
+A92. Thích trải nghiệm việc thay đổi màu tóc, kiểu tóc hoặc xăm hình nghệ thuật để khẳng định cá tính.
+A93. Thích làm các công việc liên quan đến đổi mới thương hiệu (Rebranding), làm mới diện mạo cho tổ chức.
+A94. Thích đóng vai trò là "người khơi nguồn ý tưởng" (Ideator) trong các buổi thảo luận nhóm (Brainstorming).
+A95. Cảm thấy bản thân dễ bị xúc động và có khả năng đồng cảm sâu sắc với vẻ đẹp hoặc nỗi buồn trong cuộc sống.
+A96. Thích làm việc trong không gian có âm nhạc nhẹ, mùi hương và ngập tràn ánh sáng tự nhiên.
+A97. Thích thử nghiệm những phong cách nghệ thuật kén người xem (như nghệ thuật trừu tượng, sắp đặt).
+A98. Thích tìm kiếm mối liên hệ giữa các lĩnh vực xa nhau (như nghệ thuật và ẩm thực, thời trang và kiến trúc).
+A99. Thường xuyên ghi lại các ý tưởng lóe lên trong đầu vào một cuốn sổ tay nhỏ hoặc ứng dụng ghi chú.
+A100. Cảm thấy giá trị lớn nhất của cuộc sống là được tự do thể hiện bản sắc cá nhân thông qua các sản phẩm sáng tạo.
+
+Khía cạnh 1: Giảng dạy, Đào tạo & Truyền đạt kiến thức (S1 - S20)
+S1. Thích công việc giảng dạy, hướng dẫn bài học cho học sinh hoặc cấp dưới.
+S2. Thích biên soạn giáo án, bài giảng hoặc tài liệu hướng dẫn kỹ năng cho người khác.
+S3. Thích tổ chức các lớp học, workshop chia sẻ kinh nghiệm thực tế về một chủ đề cụ thể.
+S4. Cảm thấy kiên nhẫn khi phải giải thích đi giải thích lại một vấn đề cho người chưa hiểu.
+S5. Thích làm các công việc liên quan đến đào tạo kỹ năng mềm (giao tiếp, thuyết trình, làm việc nhóm).
+S6. Thích thiết kế các trò chơi giáo dục (Gamification) để bài học trở nên sinh động hơn.
+S7. Thích kèm cặp, hỗ trợ các học sinh yếu kém tiến bộ hơn từng ngày.
+S8. Thích tổ chức các buổi câu lạc bộ học thuật để mọi người cùng thảo luận, học hỏi.
+S9. Thích nghiên cứu các phương pháp giáo dục tiên tiến để áp dụng vào thực tế giảng dạy.
+S10. Cảm thấy hạnh phúc khi thấy học trò hoặc người mình hướng dẫn đạt được thành công.
+S11. Thích làm việc tại các trung tâm giáo dục, trường học hoặc viện đào tạo nhân lực.
+S12. Thích giúp người khác khai phá các tiềm năng ẩn giấu của bản thân họ.
+S13. Thích kể các câu chuyện truyền cảm hứng để khuyến khích tinh thần học tập của mọi người.
+S14. Thích đánh giá và đưa ra những phản hồi mang tính xây dựng để giúp người khác hoàn thiện hơn.
+S15. Thích dạy các kỹ năng sống, kỹ năng sinh tồn cho trẻ em hoặc thanh thiếu niên.
+S16. Thích làm việc với các giáo cụ trực quan, sơ đồ tư duy để truyền tải thông tin dễ hiểu nhất.
+S17. Thích hướng dẫn người nước ngoài học ngôn ngữ hoặc tìm hiểu văn hóa nước mình.
+S18. Thích làm việc trong môi trường sư phạm thân thiện, tôn trọng và giàu tình thương.
+S19. Thích tham gia viết sách giáo khoa, truyện tranh giáo dục hoặc nội dung dạy học trực tuyến.
+S20. Cảm thấy việc truyền nghề, truyền kiến thức là một trong những giá trị sống cao đẹp nhất.
+
+Khía cạnh 2: Tư vấn tâm lý, Hướng nghiệp & Chăm sóc tinh thần (S21 - S40)
+S21. Thích làm công việc lắng nghe và đưa ra lời khuyên cho bạn bè khi họ gặp bế tắc.
+S22. Thích tìm hiểu các liệu pháp tư vấn tâm lý để giúp người khác vượt qua khủng hoảng tinh thần.
+S23. Thích làm các bài trắc nghiệm hướng nghiệp để giúp học sinh, sinh viên chọn đúng ngành nghề.
+S24. Có khả năng thấu hiểu cảm xúc và nhận biết những thay đổi tâm trạng nhỏ nhất của người đối diện.
+S25. Thích làm việc tại các phòng tư vấn tâm lý học đường hoặc các trung tâm trị liệu.
+S26. Thích hỗ trợ mọi người giải tỏa các áp lực, stress trong công việc và cuộc sống.
+S27. Thích viết các bài chia sẻ, phân tích về sức khỏe chữa lành, cân bằng thân - tâm - trí.
+S28. Sẵn sàng dành hàng giờ đồng hồ chỉ để im lặng lắng nghe một người đang khóc tâm sự.
+S29. Thích giúp đỡ các cặp vợ chồng hoặc gia đình giải quyết các mâu thuẫn, rạn nứt tình cảm.
+S30. Thích nghiên cứu về tâm lý học hành vi ứng dụng để áp dụng vào việc tư vấn cá nhân.
+S31. Thích làm bạn, đồng hành cùng những người đang mắc các hội chứng tâm lý như trầm cảm, lo âu.
+S32. Có xu hướng đặt mình vào hoàn cảnh của người khác (sự đồng cảm) trước khi đưa ra bất kỳ nhận xét nào.
+S33. Thích hướng dẫn mọi người thực hành thiền định, chánh niệm để tìm lại sự bình an nội tâm.
+S34. Thích hỗ trợ những người nghiện (nghiện game, chất kích thích...) tái hòa nhập cộng đồng.
+S35. Thích làm công việc khai vấn (Coaching), giúp khách hàng tự tìm ra giải pháp cho mục tiêu cuộc đời.
+S36. Thích tạo ra một không gian trò chuyện an toàn, bảo mật và không phán xét cho người khác.
+S37. Thích tư vấn tình yêu, hôn nhân và các mối quan hệ xã hội cho giới trẻ.
+S38. Thích tổ chức các vòng tròn chia sẻ (Healing Circle) nơi mọi người ngồi lại kể câu chuyện của mình.
+S39. Cảm thấy năng lượng bản thân được phục hồi khi giúp một ai đó tìm lại nụ cười và niềm tin sống.
+S40. Muốn trở thành một chỗ dựa tinh thần vững chắc cho những người xung quanh trong những giai đoạn khó khăn.
+
+Khía cạnh 3: Y tế, Điều dưỡng & Chăm sóc sức khỏe vật lý (S41 - S60)
+S41. Thích chăm sóc, hỏi han sức khỏe của người già, trẻ nhỏ hoặc những người đang bị ốm.
+S42. Thích làm các công việc điều dưỡng, y tá tại bệnh viện hoặc các cơ sở y tế.
+S43. Thích học cách sơ cứu vết thương, ép tim ngoài lồng ngực (CPR) hoặc băng bó vết thương cơ bản.
+S44. Thích nhắc nhở, chuẩn bị thuốc uống hoặc chuẩn bị các bữa ăn dinh dưỡng cho người bệnh.
+S45. Không cảm thấy sợ hãi hay e ngại khi phải tiếp xúc với các vết thương, bệnh tật để cứu người.
+S46. Thích làm việc tại các trung tâm phục hồi chức năng, giúp bệnh nhân tập vật lý trị liệu.
+S47. Thích tham gia các chiến dịch tiêm chủng mở rộng hoặc khám chữa bệnh miễn phí cho vùng sâu vùng xa.
+S48. Thích làm công việc tư vấn dinh dưỡng, lên thực đơn ăn kiêng khoa học cho người có bệnh lý.
+S49. Thích hỗ trợ các sản phụ trong quá trình sinh nở và chăm sóc trẻ sơ sinh (nữ hộ sinh).
+S50. Thích làm việc trong môi trường ngành y, nơi mọi hành động đều hướng tới việc giảm bớt nỗi đau thể xác.
+S51. Thích hướng dẫn người cao tuổi tập các bài thể dục dưỡng sinh, duy trì sức khỏe.
+S52. Thích chăm sóc răng miệng, hướng dẫn cộng đồng cách vệ sinh nha khoa đúng cách.
+S53. Thích tìm hiểu về y học cổ truyền, châm cứu, bấm huyệt hoặc các bài thuốc nam lành tính.
+S54. Thích làm công việc chăm sóc giảm nhẹ (Palliative Care) cho những bệnh nhân giai đoạn cuối.
+S55. Sẵn sàng trực đêm, túc trực bên giường bệnh để theo dõi các chỉ số sinh tồn của bệnh nhân.
+S56. Thích làm các công việc liên quan đến bảo hiểm y tế, hỗ trợ thủ tục viện phí cho người nghèo.
+S57. Thích tuyên truyền các kiến thức phòng chống dịch bệnh (như sốt xuất huyết, cúm) cho cộng đồng.
+S58. Thích làm việc tại các viện dưỡng lão, mang lại niềm vui tuổi già cho các cụ cô đơn.
+S59. Thích lau chùi, dọn dẹp vệ sinh phòng bệnh để tạo môi trường hồi phục sạch sẽ nhất cho bệnh nhân.
+S60. Cảm thấy nghề y, nghề chăm sóc sức khỏe con người là sứ mệnh cao cả nhất của bản thân.
+
+Khía cạnh 4: Công tác xã hội, Thiện nguyện & Phúc lợi cộng đồng (S61 - S80)
+S61. Thích tham gia tổ chức các hoạt động tình nguyện, quyên góp từ thiện giúp đỡ người nghèo.
+S62. Thích làm việc trong các tổ chức phi chính phủ (NGO) hoặc các quỹ bảo trợ xã hội.
+S63. Thích đến thăm và tặng quà tại các mái ấm tình thương, trại trẻ mồ côi.
+S64. Thích nghiên cứu và đề xuất các chính sách nhằm cải thiện đời sống cho người lao động nghèo.
+S65. Thích tham gia giải quyết các vấn đề nóng của xã hội như nạn bạo hành gia đình, trẻ em thất học.
+S66. Thích xây dựng các dự án cộng đồng như làm sạch môi trường sống, xây cầu cho trẻ em vùng cao.
+S67. Thích làm công việc hỗ trợ pháp lý miễn phí cho những người yếu thế trong xã hội.
+S68. Thích kêu gọi, kết nối các nhà hảo tâm với những hoàn cảnh ngặt nghèo cần giúp đỡ khẩn cấp.
+S69. Thích tổ chức các lớp học tình thương xóa mù chữ cho trẻ em đường phố.
+S70. Thích làm việc trong các dự án hỗ trợ sinh kế bền vững cho đồng bào dân tộc thiểu số.
+S71. Thích đứng ra vận động, đấu tranh đòi quyền lợi chính đáng cho phụ nữ và trẻ em.
+S72. Thích làm công việc định cư, hỗ trợ người nhập cư hoặc nạn nhân của thiên tai ổn định cuộc sống.
+S73. Thích tổ chức các đêm nhạc, giải chạy từ thiện để gây quỹ cho cộng đồng.
+S74. Thích làm cầu nối hòa giải các tranh chấp đất đai, mâu thuẫn nội bộ tại địa phương.
+S75. Thích nghiên cứu các mô hình doanh nghiệp xã hội (kinh doanh lấy lợi nhuận tái đầu tư cho cộng đồng).
+S76. Thích viết các bài báo phóng sự điều tra, phản ánh các góc khuất, bất công trong xã hội.
+S77. Thích dành toàn bộ kỳ nghỉ của mình để đi tình nguyện ở những vùng biên giới, hải đảo.
+S78. Thích hỗ trợ người khuyết tật học nghề và tìm kiếm việc làm để tự chủ cuộc sống.
+S79. Luôn ưu tiên lợi ích, sự an toàn và hạnh phúc của cộng đồng lên trên lợi ích cá nhân.
+S80. Cảm thấy cuộc sống chỉ thật sự trọn vẹn khi bản thân đóng góp được một phần giá trị cho xã hội.
+
+Khía cạnh 5: Dịch vụ khách hàng, Kết nối & Điều phối nhân sự (S81 - S100)
+S81. Cảm thấy tràn đầy năng lượng khi được trò chuyện, giao tiếp trực tiếp với nhiều người mỗi ngày.
+S82. Thích làm công việc đón tiếp, hướng dẫn và giải đáp thắc mắc cho khách hàng bằng thái độ niềm nở.
+S83. Thích làm việc trong bộ phận Nhân sự (HR), chăm sóc đời sống tinh thần và kết nối các thành viên công ty.
+S84. Luôn đóng vai trò là người hòa giải, xoa dịu không khí căng thẳng khi xảy ra xung đột trong đội nhóm.
+S85. Thích tổ chức các hoạt động nội bộ như sinh nhật tháng, liên hoan, team building cho tập thể.
+S86. Thích làm công việc chăm sóc khách hàng (Customer Service), giải quyết khiếu nại bằng sự nhã nhặn, thấu hiểu.
+S87. Thích tiếp đón khách quý, làm công tác lễ tân tại các sự kiện hoặc khách sạn cao cấp.
+S88. Thích lắng nghe những phản hồi (feedback) của khách hàng để tìm cách cải thiện chất lượng dịch vụ.
+S89. Thích làm công việc tuyển dụng, phỏng vấn để thấu hiểu mong muốn và định hướng của ứng viên.
+S90. Thích làm việc đội nhóm (Teamwork) hơn là phải ngồi làm việc một mình biệt lập trong góc tối.
+S91. Thích hướng dẫn các nhân viên mới hòa nhập với văn hóa và môi trường làm việc của công ty.
+S92. Có khả năng ghi nhớ tên, sở thích và đặc điểm của những người mới gặp một cách nhanh chóng.
+S93. Thích làm các công việc liên quan đến quan hệ công chúng (PR), xây dựng mối quan hệ tốt đẹp với công chúng.
+S94. Thích làm đại sứ thương hiệu gắn liền với các giá trị nhân văn, vì con người của doanh nghiệp.
+S95. Thích tổ chức các buổi khảo sát mức độ hài lòng của nhân viên để đề xuất cải tiến môi trường làm việc.
+S96. Thích công việc điều phối, sắp xếp lịch tiếp đón các đoàn khách, chuyên gia đến làm việc.
+S97. Cảm thấy thoải mái khi trò chuyện, kết giao bạn mới tại các buổi tiệc hoặc không gian công cộng.
+S98. Thích tạo ra một bầu không khí làm việc vui vẻ, tràn ngập tiếng cười và sự sẻ chia trong văn phòng.
+S99. Sẵn sàng đứng ra nhận phần thiệt thòi về mình để giữ gìn sự hòa khí, đoàn kết của cả tập thể.
+S100. Cảm thấy môi trường làm việc lý tưởng nhất là nơi con người được đặt làm trung tâm và yêu thương nhau.
+
+Nhóm E:
+
+Khía cạnh 1: Lãnh đạo, Quản lý & Điều hành tổ chức (E1 - E20)
+E1. Thích đứng ra đảm nhận vị trí trưởng nhóm, điều hành và phân công công việc cho các thành viên.
+E2. Thích chịu trách nhiệm đưa ra các quyết định lớn mang tính định hướng cho cả một tập thể.
+E3. Thích thiết lập các mục tiêu công việc đầy tham vọng cho bản thân và thúc đẩy đội ngũ cùng đạt được.
+E4. Thích điều phối, quản lý ngân sách và nhân sự của một dự án hoặc một phòng ban kinh doanh.
+E5. Cảm thấy tự tin khi đại diện cho một tổ chức để đứng ra giải quyết các vấn đề với bên ngoài.
+E6. Thích đứng ra thành lập một câu lạc bộ, một đội nhóm hoặc một dự án khởi nghiệp mới.
+E7. Thích phân tích năng lực của nhân sự để sắp xếp họ vào vị trí có thể tạo ra doanh thu tốt nhất.
+E8. Thích làm việc trực tiếp với ban quản trị cấp cao hoặc hội đồng quản trị của công ty.
+E9. Thích xây dựng tầm nhìn dài hạn và sơ đồ tổ chức hoạt động cho một doanh nghiệp.
+E10. Cảm thấy phấn khích khi được giao quyền kiểm soát và điều hành một cửa hàng hoặc chi nhánh.
+E11. Thích thúc đẩy, truyền cảm hứng và tạo động lực làm việc cho nhân viên khi tiến độ bị chậm.
+E12. Thích tối ưu hóa các nguồn lực (vốn, con người, thời gian) để mang lại lợi nhuận cao nhất.
+E13. Thích đưa ra các quyết định nhân sự then chốt như đề bạt, tăng lương hoặc thay thế nhân sự yếu kém.
+E14. Thích làm chủ một mô hình kinh doanh nhượng quyền (Franchise) hoặc chuỗi đại lý lẻ.
+E15. Thích thiết lập hệ thống chỉ số đánh giá hiệu suất (KPI/OKRs) để đo lường kết quả công việc của nhóm.
+E16. Thích làm việc trong các ủy ban ra quyết định chiến lược hoặc ban cố vấn quản trị toàn cầu.
+E17. Thích ứng cử vào các vị trí lãnh đạo trong các tổ chức chính trị, xã hội hoặc hiệp hội doanh nghiệp.
+E18. Cảm thấy tự hào khi dẫn dắt một đội ngũ vượt qua khủng hoảng để đạt tới vinh quang.
+E19. Thích nghiên cứu về phong cách lãnh đạo của các CEO hàng đầu thế giới để áp dụng cho bản thân.
+E20. Cảm thấy môi trường làm việc lý tưởng nhất là nơi bản thân có toàn quyền quyết định và chịu trách nhiệm.
+
+Khía cạnh 2: Thuyết phục, Đàm phán & Bán hàng (E21 - E40)
+E21. Thích công việc thuyết phục khách hàng tin tưởng và quyết định xuống tiền mua một sản phẩm.
+E22. Thích đại diện cho công ty tham gia các buổi đàm phán hợp đồng, thương lượng các điều khoản thương mại.
+E23. Thích thuyết phục các nhà đầu tư hoặc đối tác lớn ký kết thỏa thuận hợp tác chiến lược.
+E24. Có khả năng nắm bắt tâm lý người đối diện để chuyển hướng cuộc hội thoại theo ý muốn của mình.
+E25. Thích tham gia vào các chiến dịch bán hàng bùng nổ, trực tiếp cạnh tranh doanh số với các đồng nghiệp.
+E26. Thích nói chuyện trước đám đông, thuyết trình giới thiệu sản phẩm/ý tưởng dự án một cách cuốn hút.
+E27. Thích xử lý các lời từ chối của khách hàng và biến chúng thành cơ hội chốt đơn thành công.
+E28. Thích làm công việc môi giới, kết nối người mua và người bán trong các giao dịch giá trị cao (như bất động sản).
+E29. Thích tham gia các hội chợ thương mại, triển lãm bán hàng để tiếp cận hàng nghìn khách hàng tiềm năng.
+E30. Thích xây dựng kịch bản bán hàng (Sales Script) chuyên nghiệp cho đội ngũ nhân viên cấp dưới.
+E31. Thích đàm phán với nhà cung cấp để có được mức giá chiết khấu tối ưu nhất cho doanh nghiệp.
+E32. Thích tư vấn các gói giải pháp tài chính hoặc đầu tư lớn cho các khách hàng VIP.
+E33. Thích làm công việc đấu thầu, chuẩn bị hồ sơ năng lực để giành được các dự án lớn từ chính phủ hoặc tập đoàn.
+E34. Cảm thấy tràn đầy năng lượng khi vượt qua các chỉ tiêu doanh số (Target) được giao hàng tháng.
+E35. Thích nghiên cứu các đòn bẩy tâm lý trong nghệ thuật thuyết phục và thôi miên ngôn từ.
+E36. Thích giải quyết các tranh chấp thương mại bằng các giải pháp đàm phán đôi bên cùng có lợi (Win - Win).
+E37. Thích xây dựng chính sách hoa hồng, thưởng doanh số hấp dẫn để kích thích tinh thần đội ngũ bán hàng.
+E38. Thích làm việc trong lĩnh vực quan hệ cổ đông (IR), thuyết phục các nhà đầu tư giữ cổ phiếu của công ty.
+E39. Thích tham gia các khóa học nâng cao về nghệ thuật chốt đơn, đàm phán cấp cao.
+E40. Cảm thấy việc thuyết phục thành công một người thay đổi quyết định là một thành tựu to lớn.
+
+Khía cạnh 3: Tiếp thị, Branding & Chiến lược Thị trường (E41 - E60)
+E41. Thích lên ý tưởng cho các chiến dịch quảng cáo, tiếp thị (Marketing) bùng nổ trên truyền thông.
+E42. Thích định vị và xây dựng câu chuyện thương hiệu (Brand Story) cho một sản phẩm mới ra mắt.
+E43. Thích tìm kiếm các thị trường ngách, các tệp khách hàng tiềm năng mà đối thủ chưa khai phá.
+E44. Thích lập chiến lược định giá sản phẩm (Pricing Strategy) để cạnh tranh sòng phẳng trên thị trường.
+E45. Thích làm việc với các đại sứ thương hiệu, người có ảnh hưởng (KOLs/KOCs) để quảng bá doanh nghiệp.
+E46. Thích thiết kế các chương trình khuyến mãi, kích cầu mua sắm vào các dịp lễ lớn.
+E47. Thích nghiên cứu chiến thuật tiếp thị của đối thủ cạnh tranh để tìm ra điểm yếu của họ.
+E48. Thích tổ chức các sự kiện ra mắt sản phẩm (Launching Event) hoành tráng nhằm thu hút truyền thông.
+E49. Thích định hình phong cách truyền thông, thông điệp cốt lõi cho một thương hiệu cao cấp.
+E50. Thích phân tích hành vi người tiêu dùng để đưa ra chiến lược mở rộng điểm bán (Distribution).
+E51. Thích làm công việc quản trị thương hiệu (Brand Manager), chịu trách nhiệm về độ phủ sóng của nhãn hàng.
+E52. Thích lên chiến lược phát triển nội dung đa kênh để thu hút lượt truy cập và tăng tỷ lệ chuyển đổi.
+E53. Thích đánh giá hiệu quả đầu tư quảng cáo (ROI) để điều chỉnh ngân sách tiếp thị hợp lý.
+E54. Thích tìm kiếm các cơ hội tài trợ cho các chương trình truyền hình, gameshow để tăng nhận diện thương hiệu.
+E55. Thích làm việc với các agency sáng tạo để hiện thực hóa các ý tưởng truyền thông táo bạo.
+E56. Thích xây dựng chiến lược xử lý khủng hoảng truyền thông để bảo vệ uy tín của doanh nghiệp.
+E57. Thích dẫn dắt đội ngũ nghiên cứu và phát triển sản phẩm mới đáp ứng đúng thị hiếu thị trường.
+E58. Thích theo dõi xu hướng (Trending) trên mạng xã hội để lồng ghép vào chiến dịch tiếp thị của công ty.
+E59. Thích thiết lập mối quan hệ thân thiết với các cơ quan thông tấn, báo chí để làm tốt công tác PR.
+E60. Cảm thấy phấn khích khi một ý tưởng tiếp thị của mình tạo thành trào lưu lan tỏa mạnh mẽ trong xã hội.
+
+Khía cạnh 4: Khởi nghiệp, Đầu tư & Phát triển Kinh doanh (E61 - E80)
+E61. Thích tự tay lập kế hoạch kinh doanh (Business Plan) chi tiết cho một ý tưởng khởi nghiệp.
+E62. Sẵn sàng chấp nhận rủi ro tài chính cá nhân nếu nhận thấy cơ hội mang lại lợi nhuận đột phá.
+E63. Thích tìm kiếm các nguồn vốn đầu tư, quỹ mạo hiểm để tài trợ cho dự án của mình.
+E64. Thích nghiên cứu các cơ hội đầu tư sinh lời trên thị trường tài chính, chứng khoán hoặc bất động sản.
+E65. Thích làm việc trong lĩnh vực mua bán và sáp nhập doanh nghiệp (M&A).
+E66. Thích phân tích các mô hình kinh doanh mới trên thế giới để tìm cách áp dụng về Việt Nam.
+E67. Thích liên tục tìm kiếm các đối tác chiến lược để mở rộng quy mô hoạt động của doanh nghiệp.
+E68. Không ngại đối mặt với thất bại và coi đó là bài học bắt buộc phải có trên con đường làm giàu.
+E69. Thích tối ưu hóa dòng tiền, tái đầu tư lợi nhuận để doanh nghiệp tăng trưởng liên tục.
+E70. Thích làm công việc phát triển kinh doanh (Business Development), tìm kiếm cơ hội thương mại mới.
+E71. Thích nghiên cứu các chính sách thuế, ưu đãi đầu tư của nhà nước để tối ưu hóa lợi ích doanh nghiệp.
+E72. Thích cấu trúc lại một công ty đang thua lỗ thành một hệ thống vận hành có lãi.
+E73. Thích tham gia các mạng lưới, câu lạc bộ doanh nhân để trao đổi cơ hội hợp tác kinh doanh.
+E74. Thích đầu tư vào các dự án công nghệ mới nổi có tiềm năng tăng trưởng gấp nhiều lần.
+E75. Thích làm việc tại các quỹ đầu tư, chịu trách nhiệm thẩm định năng lực của các dự án startup.
+E76. Thích thiết lập quy trình kiểm soát rủi ro kinh doanh cho một mô hình doanh nghiệp mới.
+E77. Thích tự quyết định mức thu nhập của bản thân dựa trên kết quả kinh doanh thay vì nhận lương cố định.
+E78. Thích tham dự các diễn đàn kinh tế lớn để đón đầu các làn sóng đầu tư toàn cầu.
+E79. Thích xây dựng hệ sinh thái các sản phẩm bổ trợ lẫn nhau để giữ chân khách hàng tối đa.
+E80. Cảm thấy mục tiêu lớn nhất của cuộc đời là tự do tài chính và xây dựng được một đế chế kinh doanh riêng.
+
+Khía cạnh 5: Cạnh tranh, Quyết đoán & Khẳng định Địa vị (E81 - E100)
+E81. Thích tham gia các cuộc thi tranh biện, đấu trí hoặc các giải thưởng kinh doanh để khẳng định bản thân.
+E82. Có khả năng đưa ra quyết định nhanh chóng, quyết đoán ngay cả dưới áp lực thời gian cực hạn.
+E83. Thích đạt được các vị trí thăng tiến cao trong sự nghiệp để có sức ảnh hưởng lớn tới tổ chức.
+E84. Cảm thấy tinh thần làm việc được kích thích mạnh mẽ khi phải đối đầu trực tiếp với một đối thủ mạnh.
+E85. Thích sở hữu những thành tựu vượt trội để người khác nhìn vào với sự ngưỡng mộ và nể trọng.
+E86. Thích làm việc trong môi trường năng động, tốc độ cao, có tính đào thải và cạnh tranh sòng phẳng.
+E87. Thích đặt ra các phần thưởng giá trị cao (như chuyến du lịch xa xỉ, hiện vật đắt giá) để làm mục tiêu phấn đấu.
+E88. Sẵn sàng đối đầu trực diện với những ý kiến trái chiều để bảo vệ chiến lược kinh doanh của mình.
+E89. Thích tham gia vào các thương vụ kinh doanh đầy thách thức, nơi tỷ lệ thành công thấp nhưng phần thưởng lớn.
+E90. Thích xây dựng một hình ảnh cá nhân (Personal Brand) lịch lãm, quyền lực và có uy tín trong giới chuyên môn.
+E91. Thích được giao quyền xử lý những mảng công việc khó khăn nhất mà người khác thường né tránh.
+E92. Thích dẫn đầu xu hướng và là người đầu tiên đưa ra các giải pháp thương mại độc lạ trên thị trường.
+E93. Thích thiết lập mối quan hệ với những người có địa vị cao, quyền lực trong xã hội để học hỏi tư duy.
+E94. Cảm thấy một ngày làm việc tẻ nhạt nhất là khi không có mục tiêu nào để chinh phục hoặc vượt qua.
+E95. Thích làm công việc định hướng chiến lược cho các tập đoàn lớn để thay đổi cục diện thị trường.
+E96. Thích sử dụng các đặc quyền, vị thế lãnh đạo của mình để mở rộng tầm ảnh hưởng của tổ chức.
+E97. Thích được vinh danh trên các bảng xếp hạng doanh nhân xuất sắc hoặc các tạp chí tài chính uy tín.
+E98. Sẵn sàng thay đổi toàn bộ kế hoạch cũ nếu nhận thấy một cơ hội mới mang lại hiệu quả kinh tế vượt trội hơn.
+E99. Thích tổ chức các cuộc họp chiến lược định kỳ để thúc đẩy tinh thần chiến đấu của toàn công ty.
+E100. Cảm thấy cuộc sống ý nghĩa nhất khi không ngừng chinh phục những đỉnh cao mới trong sự nghiệp và danh vọng.
+
+Nhóm C:
+
+Khía cạnh 1: Xử lý Số liệu, Kế toán & Kiểm toán (C1 - C20)
+C1. Thích làm việc trực tiếp với các con số, bảng biểu tính toán Excel phức tạp mỗi ngày.
+C2. Thích thực hiện các công việc kiểm tra tính chính xác của hóa đơn, chứng từ kế toán.
+C3. Thích làm việc trong lĩnh vực kê khai thuế, đối chiếu số liệu tài chính của doanh nghiệp.
+C4. Cảm thấy hứng thú khi cân đối được các dòng thu chi trong một bảng cân đối kế toán.
+C5. Thích rà soát các danh mục chi phí để tìm ra các khoản chi sai lệch hoặc lãng phí.
+C6. Thích làm công việc tính toán tiền lương, thưởng và các chế độ bảo hiểm cho người lao động.
+C7. Thích lập các báo cáo tài chính định kỳ (hàng tuần, hàng tháng) một cách chi tiết và rõ ràng.
+C8. Thích công việc kiểm toán, rà soát lại toàn bộ quy trình tài chính xem có đúng quy định không.
+C9. Thích tính toán phân bổ chi phí giá thành sản xuất cho từng sản phẩm cụ thể.
+C10. Thích áp dụng các công thức toán học, hàm thống kê để tự động hóa bảng dữ liệu số.
+C11. Thích theo dõi tình trạng công nợ, nhắc nhở thời hạn thanh toán của đối tác sòng phẳng.
+C12. Thích kiểm tra mã số hàng hóa, đối chiếu phiếu xuất kho với thực tế kiểm kê trong kho bãi.
+C13. Thích ghi chép, cập nhật liên tục các biến động tài chính dù là nhỏ nhất vào hệ thống.
+C14. Thích làm việc với các phần mềm kế toán chuyên dụng (như MISA, SAP, Fast Accounting).
+C15. Thích phân tích cơ cấu chi phí doanh nghiệp theo các danh mục được phân loại sẵn.
+C16. Thích chuẩn bị hồ sơ quyết toán thuế để làm việc với các cơ quan chức năng.
+C17. Có thói quen lưu trữ biên lai mua sắm và ghi chép chi tiêu cá nhân hằng ngày cực kỳ cẩn thận.
+C18. Thích phân tích các chỉ số tài chính cơ bản để đánh giá mức độ an toàn của một danh mục.
+C19. Cảm thấy an tâm khi các số liệu khớp nhau hoàn toàn đến từng chữ số thập phân nhỏ nhất.
+C20. Cảm thấy việc quản lý số liệu minh bạch là nền tảng quan trọng nhất của một tổ chức.
+
+Khía cạnh 2: Quản trị Dữ liệu, Văn thư & Lưu trữ (C21 - C40)
+C21. Thích sắp xếp, phân loại hồ sơ, giấy tờ văn phòng theo một hệ thống khoa học, dễ tìm kiếm.
+C22. Thích làm công việc nhập liệu (Data Entry), cập nhật thông tin khách hàng vào hệ thống CRM.
+C23. Thích quản lý kho lưu trữ dữ liệu, thiết lập quyền truy cập bảo mật cho các phòng ban.
+C24. Thích số hóa các tài liệu giấy truyền thống thành tập tin lưu trữ trên điện toán đám mây.
+C25. Thích công việc văn thư, tiếp nhận, đóng dấu và phân loại công văn đi - đến trong công ty.
+C26. Thích quản lý thư viện, phân loại sách và tài liệu theo hệ thống mã số tiêu chuẩn (như Dewey).
+C27. Thích thiết lập cấu trúc sơ đồ thư mục trên máy tính một cách đồng nhất, ngăn nắp.
+C28. Thích làm công việc sao lưu (Backup) dữ liệu định kỳ để phòng ngừa sự cố mất mát thông tin.
+C29. Thích dán nhãn, đánh số thứ tự cho các thùng tài liệu, trang thiết bị trong văn phòng.
+C30. Thích kiểm tra tính toàn vẹn của các file dữ liệu khi chuyển giao giữa các bộ phận.
+C31. Thích soạn thảo và định dạng các văn bản hành chính theo đúng thể thức, font chữ quy chuẩn.
+C32. Thích quản lý danh bạ, thông tin liên lạc của đối tác một cách bảo mật và có hệ thống.
+C33. Thích làm công việc rà soát thời hạn hiệu lực của các loại giấy phép, hợp đồng lưu trữ.
+C34. Thích thiết lập các quy tắc đặt tên file (Naming Convention) để toàn công ty áp dụng chung.
+C35. Thích dọn dẹp các dữ liệu rác, tối ưu dung lượng lưu trữ cho hệ thống máy tính.
+C36. Thích lập biên bản ghi chép chi tiết nội dung cuộc họp một cách khách quan, đầy đủ.
+C37. Thích làm việc với các bảng mã, danh mục phân loại tiêu chuẩn của ngành hoặc quốc gia.
+C38. Thích quản lý cấp phát văn phòng phẩm, trang thiết bị làm việc cho nhân viên mới.
+C39. Cảm thấy không gian làm việc sạch sẽ, tài liệu xếp ngay ngắn giúp tăng hiệu suất làm việc.
+C40. Cảm thấy việc bảo mật và lưu trữ thông tin tốt là chìa khóa vận hành an toàn của doanh nghiệp.
+
+Khía cạnh 3: Tuân thủ Pháp lý, Quy trình & Tiêu chuẩn (C41 - C60)
+C41. Cảm thấy thoải mái khi làm việc trong một môi trường có nội quy, giờ giấc cố định rõ ràng.
+C42. Thích làm việc theo một quy trình chuẩn (SOP) có hướng dẫn chi tiết từng bước một.
+C43. Thích rà soát các văn bản pháp lý, hợp đồng thương mại xem có đúng luật định hay không.
+C44. Thích làm công việc kiểm tra chất lượng sản phẩm (QA/QC) theo các tiêu chí khắt khe đã định sẵn.
+C45. Thích biên soạn các tài liệu hướng dẫn vận hành, cẩm nang văn hóa ứng xử cho nhân viên.
+C46. Thích giám sát việc tuân thủ các quy định về an toàn lao động, phòng cháy chữa cháy của cơ quan.
+C47. Luôn tôn trọng quy định về hệ thống cấp bậc và sơ đồ báo cáo rõ ràng trong tổ chức.
+C48. Thích làm việc trong các cơ quan nhà nước, tổ chức có tính ổn định và hệ thống luật lệ chặt chẽ.
+C49. Thích tham gia vào các ban kiểm soát nội bộ, thanh tra việc thực hiện nội quy công ty.
+C50. Thích tìm hiểu các tiêu chuẩn chất lượng quốc tế (như ISO, GMP) để áp dụng vào doanh nghiệp.
+C51. Luôn đi làm đúng giờ và hoàn thành công việc theo đúng tiến độ được giao mà không cần nhắc nhở.
+C52. Thích kiểm tra tính hợp pháp, tính pháp lý của các hồ sơ năng lực, hồ sơ thầu.
+C53. Thích làm công việc rà soát việc thực hiện các cam kết, điều khoản sau khi ký hợp đồng.
+C54. Cảm thấy các quy tắc và luật lệ sinh ra là để bảo vệ và giúp hệ thống vận hành trơn tru hơn.
+C55. Thích làm việc với các chuyên gia pháp lý, luật sư để xây dựng điều lệ hoạt động cho công ty.
+C56. Thích theo dõi và cập nhật liên tục các thay đổi của thông tư, luật định mới ban hành.
+C57. Thích thiết lập các bộ tiêu chí chấm điểm thi đua, khen thưởng minh bạch cho tập thể.
+C58. Thích làm công việc đăng ký sở hữu trí tuệ, nhãn hiệu hàng hóa theo đúng trình tự pháp luật.
+C59. Không thích những thay đổi đột ngột hoặc các quyết định ngẫu hứng thiếu căn cứ của cấp trên.
+C60. Cảm thấy việc thượng tôn pháp luật và kỷ luật là yếu tố cốt lõi tạo nên sự chuyên nghiệp.
+
+Khía cạnh 4: Tỉ mỉ, Rà soát lỗi & Quản lý Deadline (C61 - C80)
+C61. Có khả năng phát hiện ra các lỗi chính tả, lỗi dấu câu nhỏ nhất trong một văn bản dài.
+C62. Thích lập lịch trình làm việc, thời hạn (Deadline) chi tiết cho từng hạng mục công việc nhỏ.
+C63. Thích sử dụng các công cụ quản lý tiến độ (như Trello, Asana, Notion) để theo dõi công việc.
+C64. Thích làm các công việc đòi hỏi sự kiên trì, tập trung cao độ vào các chi tiết nhỏ nhặt.
+C65. Thích đối chiếu, so sánh các bản thảo khác nhau để tìm ra điểm sai lệch, bất nhất.
+C66. Thích kiểm tra lại các liên kết (Link), định dạng hình ảnh trước khi xuất bản một nội dung.
+C67. Thích làm công việc hiệu đính (Proofreading) sách, báo hoặc các tài liệu dịch thuật.
+C68. Luôn kiểm tra kỹ hòm thư điện tử (Email) để đảm bảo không bỏ sót bất kỳ yêu cầu nào từ đối tác.
+C69. Thích thiết lập hệ thống cảnh báo, nhắc nhở công việc tự động để không bao giờ bị trễ hạn.
+C70. Thích phân tích tiến độ thực tế so với kế hoạch ban đầu để đưa ra cảnh báo kịp thời.
+C71. Thích làm việc với các checklist (danh sách việc cần làm) và cảm thấy thỏa mãn khi tích hoàn thành từng mục.
+C72. Thích kiểm tra tính đồng bộ của các slide thuyết trình (font chữ, lề, màu sắc) trước buổi họp.
+C73. Thích làm công việc soát vé, kiểm tra thẻ thành viên hoặc kiểm soát an ninh tại các sự kiện.
+C74. Thích rà soát các điều khoản phạt vi phạm hợp đồng để bảo vệ quyền lợi tổ chức.
+C75. Luôn chuẩn bị sẵn các phương án dự phòng về mặt thời gian để đối phó với sự cố phát sinh.
+C76. Thích kiểm tra các thông số kỹ thuật in ấn (khổ giấy, hệ màu CMYK) trước khi cho chạy máy in.
+C77. Thích làm công việc lập tiến độ chuỗi cung ứng, theo dõi hành trình di chuyển của các đơn hàng.
+C78. Cảm thấy một sai sót nhỏ do bất cẩn có thể dẫn đến hậu quả lớn cho cả hệ thống.
+C79. Thích dành thời gian gọt giũa, tối ưu hóa các biểu mẫu làm việc sao cho tinh gọn nhất.
+C80. Cảm thấy sự cẩn trọng và tỉ mỉ là thước đo giá trị cao nhất cho năng lực làm việc cá nhân.
+
+Khía cạnh 5: Hành chính Văn phòng & Hỗ trợ Hệ thống (C81 - C100)
+C81. Thích làm công việc trợ lý hành chính, thư ký văn phòng hỗ trợ cho ban giám đốc.
+C82. Thích sắp xếp lịch trình cuộc họp, đặt vé máy bay, phòng khách sạn cho các chuyến công tác.
+C83. Thích tiếp nhận, sàng lọc điện thoại và phân phối thông tin đến các phòng ban liên quan.
+C84. Thích điều phối việc sử dụng phòng họp, quản lý tài sản chung của cơ quan.
+C85. Thích làm công việc chuẩn bị hậu cần (nước uống, tài liệu, thiết bị) cho các buổi hội thảo.
+C86. Thích theo dõi, tổng hợp bảng chấm công và duyệt đơn xin nghỉ phép của nhân viên.
+C87. Thích làm công việc quản lý mua sắm nhu yếu phẩm, trà, cà phê phục vụ cho văn phòng.
+C88. Thích hướng dẫn khách thăm quan văn phòng tuân thủ đúng quy trình đăng ký ra vào.
+C89. Thích điều phối công việc của đội ngũ lễ tân, tạp vụ, bảo vệ để văn phòng vận hành ngăn nắp.
+C90. Thích làm các công việc liên quan đến thủ tục bảo hiểm xã hội, công đoàn cho tập thể.
+C91. Thích tổng hợp các báo cáo tuần từ nhiều bộ phận thành một file báo cáo chung gửi cấp trên.
+C92. Thích làm việc với các mẫu tờ khai, biểu mẫu hành chính công trực tuyến.
+C93. Thích quản lý quỹ tiền mặt nhỏ (Petty Cash) của văn phòng để chi trả các khoản vặt.
+C94. Thích hỗ trợ kỹ thuật văn phòng cơ bản (như hướng dẫn dùng máy in, máy photo, máy scan).
+C95. Thích tổ chức các hoạt động lưu trữ hồ sơ nhân sự một cách bảo mật tuyệt đối.
+C96. Thích rà soát định kỳ tình trạng hoạt động của các thiết bị phòng họp để lên lịch bảo trì.
+C97. Thích làm công việc biên soạn các thông báo, quyết định hành chính nội bộ của công ty.
+C98. Cảm thấy thoải mái khi làm công việc hậu phương, hỗ trợ đắc lực cho các bộ phận tuyến đầu phát triển.
+C99. Thích duy trì mọi thứ hoạt động theo đúng quỹ đạo và kế hoạch ổn định lâu dài.
+C100. Cảm thấy sự tận tụy, ngăn nắp trong công tác hành chính là bệ phóng vững chắc cho mọi doanh nghiệp.

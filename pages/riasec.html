@@ -23,8 +23,10 @@
 
           <section class="content-panel riasec-card" id="riasecApp" aria-live="polite">
             <div id="riasecWelcome">
-              <span class="riasec-icon">✦</span>
-              <h2>Trước khi bắt đầu</h2>
+              <div class="riasec-welcome-heading">
+                <h2>Trước khi bắt đầu</h2>
+                <span class="riasec-icon" data-lucide="sparkles" aria-hidden="true"></span>
+              </div>
               <ul class="riasec-rules">
                 <li>Trả lời theo mức độ bạn thấy đúng với mình, không có đáp án đúng hay sai.</li>
                 <li>Mỗi nhóm có 20 câu, phủ đủ 5 khía cạnh; tổng thời gian khoảng 8–12 phút.</li>
@@ -46,10 +48,12 @@
                   <div id="questionList" class="riasec-question-list"></div>
                   <div class="riasec-actions">
                     <span class="form-help" id="draftStatus">Đã lưu nháp</span>
-                    <button class="primary-btn" id="nextGroup" type="button">Lưu nhóm và sang nhóm tiếp theo →</button>
+                    <button class="primary-btn" id="nextGroup" type="button">Lưu nhóm và sang nhóm tiếp theo <span data-lucide="arrow-right" aria-hidden="true"></span></button>
                   </div>
                 </div>
                 <aside class="riasec-control-column" aria-label="Điều khiển bài trắc nghiệm">
+                  <button class="ghost-btn riasec-control-toggle" id="toggleRiasecControls" type="button" aria-expanded="true" aria-controls="riasecControlContent">Ẩn bảng điều khiển</button>
+                  <div id="riasecControlContent">
                   <span class="eyebrow">TIẾN ĐỘ BÀI LÀM</span>
                   <div class="riasec-progress" aria-label="Tiến độ toàn bài">
                     <div id="riasecProgressBar"></div>
@@ -63,6 +67,7 @@
                       <span>Câu hỏi trong nhóm hiện tại</span>
                     </div>
                     <div id="answeredQuestions" class="riasec-question-dots"></div>
+                  </div>
                   </div>
                 </aside>
               </div>
@@ -117,6 +122,6 @@
         </div>
       </section>
     </div>
-    <script src="../js/riasec.js"></script>
+    <script src="../js/riasec.js?v=modal-hardening-1"></script>
   </body>
 </html>

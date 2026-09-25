@@ -32,6 +32,7 @@ request do.
 | Method | Path | Purpose |
 | --- | --- | --- |
 | GET | `/health` | Liveness check |
+| GET | `/health/ready` | Readiness check backed by the database |
 | POST | `/api/v1/auth/register` | Create a user and set the auth cookie |
 | POST | `/api/v1/auth/login` | Authenticate and set the auth cookie |
 | POST | `/api/v1/auth/logout` | Clear the auth cookie |
@@ -48,6 +49,7 @@ request do.
 | POST | `/api/v1/account/documents` | Store a private PDF document for the current user |
 | GET | `/api/v1/account/documents` | List the current user's documents |
 | GET | `/api/v1/account/documents/{id}` | Stream one private document owned by the current user |
+| GET | `/api/v1/account/documents/{id}/download` | Explicit download alias for a private document |
 
 Authentication cookies are `HttpOnly`, `SameSite=Lax`, and use `Secure` when
 `COOKIE_SECURE=true`. CORS accepts only exact origins listed in
@@ -66,3 +68,15 @@ Errors have a consistent JSON shape:
 {"error": {"code": "validation_error", "message": "Request validation failed"}}
 ```
 
+The AI roadmap endpoint is limited per authenticated user (and client address)
+using a rolling in-memory window. Defaults are 5 requests per 60 seconds and
+can be adjusted with `AI_RATE_LIMIT_REQUESTS` and
+`AI_RATE_LIMIT_WINDOW_SECONDS`. A rejected request returns HTTP 429 with
+`Retry-After` and `error.code` set to `rate_limited`. The limiter is
+process-local; deployments with multiple workers should move the counter to a
+shared store.
+
+Each API response includes an `X-Request-ID` header. Production request logs
+record only method, path, status, duration, and request ID; cookies, tokens,
+request bodies, and query strings are never logged. Use `/health` for liveness
+and `/health/ready` for database readiness checks.

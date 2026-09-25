@@ -1,4 +1,4 @@
-# FuturePath Production Readiness Report
+# Axis Production Readiness Report
 
 Date: 2026-09-18
 Loop limit: 3 iterations per phase
@@ -31,7 +31,7 @@ Iterations used: 1
 
 ## Phase 2 — API integration
 
-`js/auth.js` now accepts `window.FUTUREPATH_API_BASE` as an explicit runtime
+`js/auth.js` now accepts `window.AXIS_API_BASE` as an explicit runtime
 override. Existing FastAPI routes remain the default:
 
 - `/api/v1/auth`
@@ -89,7 +89,7 @@ including `/health` and `/api/v1/*`.
 2. Create a Render service from `render.yaml`.
 3. Set `MONGODB_URI` and the exact HTTPS `FRONTEND_ORIGIN` in Render.
 4. Deploy the frontend separately to Vercel.
-5. Set `window.FUTUREPATH_API_BASE` to the FastAPI production URL if it is not
+5. Set `window.AXIS_API_BASE` to the FastAPI production URL if it is not
    served from the same origin.
 6. Start MongoDB and the Node service, then run `npm run test:security`.
 

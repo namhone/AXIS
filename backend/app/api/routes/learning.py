@@ -16,6 +16,7 @@ from ...services.schedule import (
     reconcile_overdue_steps,
 )
 import json
+import re
 from ...services.career_matching import calculate_matches
 from ...services.skill_planner import build_skill_plan
 from ...models.profile import Profile
@@ -24,6 +25,7 @@ router = APIRouter(prefix="/api/v1", tags=["learning-data"])
 
 
 def _goal_dict(goal: Goal) -> dict:
+    match = re.search(r"(?:^|\s)__axis_career_code:([A-Z0-9_-]+)__", goal.note or "")
     return {
         "id": str(goal.id),
         "title": goal.title,
@@ -32,7 +34,21 @@ def _goal_dict(goal: Goal) -> dict:
         "minutes_per_day": goal.minutes_per_day,
         "note": goal.note,
         "category": goal.category,
+        "career_code": match.group(1) if match else None,
     }
+
+
+def _career_note(note: str, career_code: str | None) -> str:
+    if not career_code:
+        return note or ""
+    cleaned = re.sub(r"(?:^|\s)__axis_career_code:[A-Z0-9_-]+__", "", note or "").strip()
+    return f"{cleaned} __axis_career_code:{career_code.upper()}__".strip() if career_code else cleaned
+
+
+def _goal_values(payload: GoalPayload) -> dict:
+    values = payload.model_dump(exclude={"career_code"})
+    values["note"] = _career_note(values.get("note", ""), payload.career_code)
+    return values
 
 
 def _step_dict(step: RoadmapStep) -> dict:
@@ -88,7 +104,16 @@ def list_goals(user: User = Depends(get_current_user), db: Session = Depends(get
 
 @router.post("/goals", status_code=status.HTTP_201_CREATED, response_model=None)
 def create_goal(payload: GoalPayload, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> Goal:
-    goal = Goal(user_id=user.id, **payload.model_dump())
+    if payload.category == "career" and not payload.career_code:
+        raise HTTPException(status_code=422, detail="career_code is required for career goals")
+    if payload.category == "career":
+        existing = db.query(Goal).filter(Goal.user_id == user.id, Goal.category == "career").all()
+        code = payload.career_code.upper()
+        if any(re.search(rf"(?:^|\s)__axis_career_code:{re.escape(code)}__", goal.note or "") for goal in existing):
+            raise HTTPException(status_code=409, detail="Ngành này đã có trong lộ trình.")
+        if len(existing) >= 3:
+            raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 3 ngành vào lộ trình.")
+    goal = Goal(user_id=user.id, **_goal_values(payload))
     db.add(goal)
     db.commit()
     db.refresh(goal)
@@ -100,7 +125,7 @@ def update_goal(goal_id: uuid.UUID, payload: GoalPayload, user: User = Depends(g
     goal = db.query(Goal).filter(Goal.id == goal_id, Goal.user_id == user.id).first()
     if goal is None:
         raise HTTPException(status_code=404, detail="Goal not found")
-    for key, value in payload.model_dump().items():
+    for key, value in _goal_values(payload).items():
         setattr(goal, key, value)
     db.commit()
     db.refresh(goal)
@@ -113,8 +138,14 @@ def replace_goals(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> list[Goal]:
+    career_goals = [item for item in payload if item.category == "career"]
+    career_codes = [item.career_code.upper() for item in career_goals if item.career_code]
+    if len(career_goals) != len(career_codes) or len(career_codes) != len(set(career_codes)):
+        raise HTTPException(status_code=422, detail="Mỗi mục tiêu ngành nghề cần một mã ngành duy nhất.")
+    if len(career_goals) > 3:
+        raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 3 ngành vào lộ trình.")
     db.query(Goal).filter(Goal.user_id == user.id).delete()
-    goals = [Goal(user_id=user.id, **item.model_dump()) for item in payload]
+    goals = [Goal(user_id=user.id, **_goal_values(item)) for item in payload]
     db.add_all(goals)
     db.commit()
     return [_goal_dict(goal) for goal in goals]

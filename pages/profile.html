@@ -33,21 +33,37 @@
             <a class="ghost-btn" href="guide.html#profile">Xem hướng dẫn</a>
           </section>
 
+          <section class="content-panel documents-panel" aria-labelledby="documentsTitle">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">Tài liệu riêng tư</span>
+                <h2 id="documentsTitle">Quản lý tài liệu</h2>
+                <p class="form-help">Chỉ PDF, tối đa 10 MB. Tài liệu chỉ hiển thị với tài khoản của bạn.</p>
+              </div>
+              <label class="primary-btn upload-btn" for="documentUpload">Tải tài liệu lên</label>
+              <input id="documentUpload" type="file" accept="application/pdf,.pdf" hidden />
+            </div>
+            <p id="documentsStatus" class="form-help" role="status" aria-live="polite"></p>
+            <ul id="documentsList" class="documents-list" aria-live="polite">
+              <li class="documents-empty">Chưa có tài liệu nào.</li>
+            </ul>
+          </section>
+
           <section class="content-panel profile-workspace">
             <div>
                       <h2>Trang bìa &amp; Giới thiệu bản thân</h2>
                       <div class="profile-header">
                 <div class="field">
-                  <label>Họ và tên</label>
-                  <input type="text" placeholder="Tên tài khoản" data-profile-field="name" readonly aria-readonly="true" />
+                  <label for="profile-name">Họ và tên</label>
+                  <input id="profile-name" type="text" placeholder="Tên tài khoản" data-profile-field="name" readonly aria-readonly="true" />
                   <div class="profile-meta">
                     <div class="meta-field">
-                      <label class="meta-label">Năm sinh</label>
-                      <input type="text" placeholder="2006" class="meta-input" data-profile-field="birthYear" />
+                      <label class="meta-label" for="profile-birth-year">Năm sinh</label>
+                      <input id="profile-birth-year" type="text" placeholder="2006" class="meta-input" data-profile-field="birthYear" />
                     </div>
                     <div class="meta-field">
-                      <label class="meta-label">Khối lớp</label>
-                      <select class="meta-input" data-profile-field="className">
+                      <label class="meta-label" for="class-select">Khối lớp</label>
+                      <select id="class-select" class="meta-input" data-profile-field="className">
                         <option value="">Chọn lớp</option>
                         <option value="Lớp 10">Lớp 10</option>
                         <option value="Lớp 11">Lớp 11</option>
@@ -66,24 +82,24 @@
 
                       <div class="form-grid">
                         <div class="field">
-                          <label>Email</label>
-                          <input type="email" placeholder="nguyenminhanh@gmail.com" data-profile-field="email" readonly aria-readonly="true" />
+                          <label for="profile-email">Email</label>
+                          <input id="profile-email" type="email" name="email" autocomplete="email" placeholder="nguyenminhanh@gmail.com" data-profile-field="email" readonly aria-readonly="true" />
                         </div>
                         <div class="field">
-                          <label>Số điện thoại</label>
-                          <input type="tel" placeholder="+84 912 345 678" data-profile-field="phone" />
+                          <label for="profile-phone">Số điện thoại</label>
+                          <input id="profile-phone" type="tel" name="tel" autocomplete="tel" placeholder="+84 912 345 678" data-profile-field="phone" />
                         </div>
                         <div class="field">
-                          <label>LinkedIn</label>
-                          <input type="url" placeholder="linkedin.com/in/nguyenminhanh" data-profile-field="linkedin" />
+                          <label for="profile-linkedin">LinkedIn</label>
+                          <input id="profile-linkedin" type="url" placeholder="linkedin.com/in/nguyenminhanh" data-profile-field="linkedin" />
                         </div>
                         <div class="field">
-                          <label>Mục tiêu du học / ngành học</label>
-                          <input type="text" placeholder="Ví dụ: Khoa học dữ liệu, ngành Công nghệ thông tin" data-profile-field="goal" />
+                          <label for="profile-goal">Mục tiêu du học / ngành học</label>
+                          <input id="profile-goal" type="text" placeholder="Ví dụ: Khoa học dữ liệu, ngành Công nghệ thông tin" data-profile-field="goal" />
                         </div>
                         <div class="field wide">
-                          <label>Giới thiệu cá nhân</label>
-                          <textarea rows="5" placeholder="Mô tả ngắn gọn về bản thân, đam mê, điểm mạnh và mục tiêu học tập của bạn..." data-profile-field="introduction"></textarea>
+                          <label for="profile-introduction">Giới thiệu cá nhân</label>
+                          <textarea id="profile-introduction" rows="5" placeholder="Mô tả ngắn gọn về bản thân, đam mê, điểm mạnh và mục tiêu học tập của bạn..." data-profile-field="introduction"></textarea>
                         </div>
                       </div>
 
@@ -91,12 +107,12 @@
                         <div class="mini-form">
                           <h3>Thành tích học tập xuất sắc</h3>
                           <div class="mini-grid">
-                            <div class="field grade-detail-field" data-grade-field="entranceScore"><label>Điểm tuyển sinh</label><input type="number" data-profile-field="entranceScore" placeholder="Tự tính" readonly /></div>
-                            <div class="field grade-detail-field" data-grade-field="entranceCombination"><label>Tổ hợp xét tuyển</label><select data-profile-field="entranceCombination"><option value="">Chọn tổ hợp</option><option value="A00">A00 · Toán, Lý, Hóa</option><option value="A01">A01 · Toán, Lý, Anh</option><option value="B00">B00 · Toán, Hóa, Sinh</option><option value="C00">C00 · Văn, Sử, Địa</option><option value="D01">D01 · Toán, Văn, Anh</option></select></div>
-                            <div class="field grade-detail-field" data-grade-field="gpa9"><label>GPA năm lớp 9</label><input type="number" data-profile-field="gpa9" placeholder="Tự tính" readonly /></div>
-                            <div class="field grade-detail-field" data-grade-field="gpa10"><label>GPA cả năm 10</label><input type="number" data-profile-field="gpa10" placeholder="Tự tính" readonly /></div>
-                            <div class="field grade-detail-field" data-grade-field="gpa11"><label>GPA cả năm 11</label><input type="number" data-profile-field="gpa11" placeholder="Tự tính" readonly /></div>
-                            <div class="field grade-detail-field" data-grade-field="gpa12"><label>GPA cả năm 12</label><input type="number" data-profile-field="gpa12" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="entranceScore"><label for="entrance-score">Điểm tuyển sinh</label><input id="entrance-score" type="number" data-profile-field="entranceScore" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="entranceCombination"><label for="entrance-combination">Tổ hợp xét tuyển</label><select id="entrance-combination" data-profile-field="entranceCombination"><option value="">Chọn tổ hợp</option><option value="A00">A00 · Toán, Lý, Hóa</option><option value="A01">A01 · Toán, Lý, Anh</option><option value="B00">B00 · Toán, Hóa, Sinh</option><option value="C00">C00 · Văn, Sử, Địa</option><option value="D01">D01 · Toán, Văn, Anh</option></select></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa9"><label for="gpa-9">GPA năm lớp 9</label><input id="gpa-9" type="number" data-profile-field="gpa9" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa10"><label for="gpa-10">GPA cả năm 10</label><input id="gpa-10" type="number" data-profile-field="gpa10" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa11"><label for="gpa-11">GPA cả năm 11</label><input id="gpa-11" type="number" data-profile-field="gpa11" placeholder="Tự tính" readonly /></div>
+                            <div class="field grade-detail-field" data-grade-field="gpa12"><label for="gpa-12">GPA cả năm 12</label><input id="gpa-12" type="number" data-profile-field="gpa12" placeholder="Tự tính" readonly /></div>
                           </div>
                           <div class="subject-score-panel">
                             <h4>Điểm từng môn theo năm</h4>
@@ -177,7 +193,7 @@
                             <p class="form-help">Dùng điểm môn Ngoại ngữ trong học bạ thay cho chứng chỉ quốc tế.</p>
                           </div>
                           <p class="form-help" id="certificateHelp">Chọn chứng chỉ để áp dụng đúng thang điểm.</p>
-                          <p class="form-help certificate-warning hidden" id="certificateExpiryWarning">⚠️ Lưu ý: Chứng chỉ đã hết hạn 2 năm tính đến thời điểm xét tuyển đại học.</p>
+                          <p class="form-help certificate-warning hidden" id="certificateExpiryWarning"><span data-lucide="triangle-alert" aria-hidden="true"></span> Lưu ý: Chứng chỉ đã hết hạn 2 năm tính đến thời điểm xét tuyển đại học.</p>
                         </div>
 
                         <div class="mini-form achievement-form">
@@ -227,7 +243,72 @@
                             </div>
                             <div class="field hidden" id="provinceField">
                               <label for="examProvince">Tỉnh / Thành phố</label>
-                              <input type="text" id="examProvince" data-profile-field="examProvince" placeholder="Ví dụ: Hà Nội, Đà Nẵng..." />
+                              <select id="examProvince" data-profile-field="examProvince">
+                                <option value="">Chọn tỉnh / thành phố</option>
+                                <option>Hà Nội</option>
+                                <option>Hồ Chí Minh</option>
+                                <option>Đà Nẵng</option>
+                                <option>Hải Phòng</option>
+                                <option>Cần Thơ</option>
+                                <option>An Giang</option>
+                                <option>Bà Rịa - Vũng Tàu</option>
+                                <option>Bắc Giang</option>
+                                <option>Bắc Kạn</option>
+                                <option>Bạc Liêu</option>
+                                <option>Bắc Ninh</option>
+                                <option>Bến Tre</option>
+                                <option>Bình Định</option>
+                                <option>Bình Dương</option>
+                                <option>Bình Phước</option>
+                                <option>Bình Thuận</option>
+                                <option>Cà Mau</option>
+                                <option>Cao Bằng</option>
+                                <option>Đắk Lắk</option>
+                                <option>Đắk Nông</option>
+                                <option>Điện Biên</option>
+                                <option>Đồng Nai</option>
+                                <option>Đồng Tháp</option>
+                                <option>Gia Lai</option>
+                                <option>Hà Giang</option>
+                                <option>Hà Nam</option>
+                                <option>Hà Tĩnh</option>
+                                <option>Hải Dương</option>
+                                <option>Hậu Giang</option>
+                                <option>Hòa Bình</option>
+                                <option>Hưng Yên</option>
+                                <option>Khánh Hòa</option>
+                                <option>Kiên Giang</option>
+                                <option>Kon Tum</option>
+                                <option>Lai Châu</option>
+                                <option>Lâm Đồng</option>
+                                <option>Lạng Sơn</option>
+                                <option>Lào Cai</option>
+                                <option>Long An</option>
+                                <option>Nam Định</option>
+                                <option>Nghệ An</option>
+                                <option>Ninh Bình</option>
+                                <option>Ninh Thuận</option>
+                                <option>Phú Thọ</option>
+                                <option>Phú Yên</option>
+                                <option>Quảng Bình</option>
+                                <option>Quảng Nam</option>
+                                <option>Quảng Ngãi</option>
+                                <option>Quảng Ninh</option>
+                                <option>Quảng Trị</option>
+                                <option>Sóc Trăng</option>
+                                <option>Sơn La</option>
+                                <option>Tây Ninh</option>
+                                <option>Thái Bình</option>
+                                <option>Thái Nguyên</option>
+                                <option>Thanh Hóa</option>
+                                <option>Thừa Thiên Huế</option>
+                                <option>Tiền Giang</option>
+                                <option>Trà Vinh</option>
+                                <option>Tuyên Quang</option>
+                                <option>Vĩnh Long</option>
+                                <option>Vĩnh Phúc</option>
+                                <option>Yên Bái</option>
+                              </select>
                             </div>
                             <div class="field"><label for="examYear">Năm đạt thành tích</label><input type="text" id="examYear" data-profile-field="examYear" placeholder="2025" inputmode="numeric" /></div>
                             <div class="field wide"><label for="examDescription">Mô tả thêm <span class="field-optional">(không bắt buộc)</span></label><input type="text" id="examDescription" data-profile-field="examDescription" placeholder="Ví dụ: Đạt giải Nhì Tỉnh môn Toán, dự án STEM cấp trường..." /></div>
@@ -256,6 +337,16 @@
                         </div>
                       </div>
 
+                      <section class="upload-box profile-riasec-box" aria-labelledby="riasecProfileTitle">
+                        <div class="profile-riasec-copy">
+                          <span class="eyebrow">RIASEC · HOLLAND</span>
+                          <h3 id="riasecProfileTitle">Định hướng tính cách cá nhân</h3>
+                          <p id="riasecProfileSummary">Làm trắc nghiệm RIASEC để hiểu nhóm tính cách nổi bật và khám phá các hướng nghề phù hợp với bạn.</p>
+                          <div class="profile-riasec-code is-empty" id="profileHollandCode">Chưa có mã Holland</div>
+                          <p class="form-help" id="profileRiasecDetails">Kết quả sẽ được đồng bộ tự động vào hồ sơ sau khi bạn hoàn thành bài làm.</p>
+                        </div>
+                        <a class="primary-btn profile-riasec-cta" href="riasec.html"><span data-lucide="sparkles" aria-hidden="true"></span> Làm trắc nghiệm tính cách</a>
+                      </section>
                       <div class="upload-box profile-completion-actions" style="margin-top: 18px;">
                         <div class="mini-form profile-core-details">
                           <h3>Định hướng cá nhân</h3>
@@ -279,7 +370,7 @@
                         <div class="profile-save-actions action-row">
                           <button class="primary-btn" type="button" id="saveProfileBtn">Lưu thông tin hồ sơ</button>
                           <span id="profileSaveStatus" role="status" aria-live="polite"></span>
-                          <a class="primary-btn" href="cv-builder-editor.html">✦ Chuẩn hóa hồ sơ →</a>
+                          <a class="primary-btn" href="cv-builder-editor.html"><span data-lucide="sparkles" aria-hidden="true"></span> Chuẩn hóa hồ sơ <span data-lucide="arrow-right" aria-hidden="true"></span></a>
                         </div>
                       </div>
                     </div>
@@ -311,9 +402,108 @@
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous"></script>
+    <script src="../js/profile-riasec.js"></script>
     <script>
       (function(){
+        const documentUpload = document.getElementById('documentUpload');
+        const documentsList = document.getElementById('documentsList');
+        const documentsStatus = document.getElementById('documentsStatus');
+        const formatBytes = (bytes) => {
+          if (!bytes) return '0 B';
+          const units = ['B', 'KB', 'MB'];
+          const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+          return (bytes / Math.pow(1024, index)).toFixed(index ? 1 : 0) + ' ' + units[index];
+        };
+        const setDocumentsStatus = (message, error) => {
+          if (documentsStatus) {
+            documentsStatus.textContent = message || '';
+            documentsStatus.classList.toggle('calendar-error', Boolean(error));
+          }
+        };
+        const renderDocuments = (documents) => {
+          if (!documentsList) return;
+          documentsList.textContent = '';
+          if (!documents || !documents.length) {
+            const empty = document.createElement('li');
+            empty.className = 'documents-empty';
+            empty.textContent = 'Chưa có tài liệu nào.';
+            documentsList.appendChild(empty);
+            return;
+          }
+          documents.forEach((item) => {
+            const row = document.createElement('li');
+            row.className = 'document-row';
+            const details = document.createElement('div');
+            const name = document.createElement('strong');
+            name.textContent = item.filename;
+            const meta = document.createElement('small');
+            meta.textContent = [item.document_type, formatBytes(item.size_bytes)].join(' · ');
+            details.append(name, meta);
+            const actions = document.createElement('div');
+            actions.className = 'document-actions';
+            const download = document.createElement('button');
+            download.className = 'ghost-btn';
+            download.type = 'button';
+            download.textContent = 'Tải xuống';
+            download.addEventListener('click', async () => {
+              try {
+                const blob = await window.AXISAuth.downloadDocument(item.id);
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = item.filename;
+                link.click();
+                URL.revokeObjectURL(url);
+              } catch (error) {
+                setDocumentsStatus(error.message, true);
+              }
+            });
+            const remove = document.createElement('button');
+            remove.className = 'ghost-btn';
+            remove.type = 'button';
+            remove.textContent = 'Xóa';
+            remove.addEventListener('click', async () => {
+              if (!window.confirm('Xóa tài liệu này khỏi tài khoản?')) return;
+              try {
+                await window.AXISAuth.deleteDocument(item.id);
+                await loadDocuments();
+              } catch (error) {
+                setDocumentsStatus(error.message, true);
+              }
+            });
+            actions.append(download, remove);
+            row.append(details, actions);
+            documentsList.appendChild(row);
+          });
+        };
+        const loadDocuments = async () => {
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return;
+          try {
+            renderDocuments(await window.AXISAuth.listDocuments());
+            setDocumentsStatus('');
+          } catch (error) {
+            setDocumentsStatus(error.message, true);
+          }
+        };
+        if (documentUpload) {
+          documentUpload.addEventListener('change', async () => {
+            const file = documentUpload.files && documentUpload.files[0];
+            documentUpload.value = '';
+            if (!file) return;
+            try {
+              setDocumentsStatus('Đang tải lên...');
+              await window.AXISAuth.uploadDocument(file, 'profile_pdf');
+              await loadDocuments();
+              setDocumentsStatus('Đã lưu tài liệu.');
+            } catch (error) {
+              setDocumentsStatus(error.message, true);
+            }
+          });
+        }
+        document.addEventListener('axis:auth-state', loadDocuments);
+        if (window.AXISAuth && window.AXISAuth.isSignedIn()) loadDocuments();
+
         const authArea = document.getElementById('authArea');
         const userPanel = document.getElementById('userPanel');
         const userChip = document.getElementById('userChip');
@@ -471,7 +661,7 @@
         const type = option && option.value;
         const numeric = window.AxisCertificates.NUMERIC[type];
         if (numeric && certificateScore.tagName === 'SELECT') {
-          certificateScore.outerHTML = '<input id="certificateScore" type="text" inputmode="decimal" data-profile-field="certificateScore">';
+          certificateScore.outerHTML = '<input id="certificateScore" type="number" inputmode="decimal" data-profile-field="certificateScore">';
           certificateScore = document.getElementById('certificateScore');
         }
         if (!numeric && type && certificateScore.tagName !== 'SELECT') {
@@ -479,15 +669,15 @@
           certificateScore.outerHTML = '<select id="certificateScore" data-profile-field="certificateScore"><option value="">Chọn cấp độ</option>' + levels.map(function (level) { return '<option value="' + level[1] + '">' + level[0] + '</option>'; }).join('') + '</select>';
           certificateScore = document.getElementById('certificateScore');
         }
-        certificateScore.type = numeric ? 'text' : 'text';
+        certificateScore.type = numeric ? 'number' : 'text';
         if (numeric) certificateScore.inputMode = 'decimal';
         certificateScore.removeAttribute('min');
         certificateScore.removeAttribute('max');
         certificateScore.removeAttribute('step');
         if (numeric) {
-          certificateScore.min = numeric[0];
-          certificateScore.max = numeric[1];
-          certificateScore.step = numeric[2];
+          certificateScore.min = String(numeric[0]);
+          certificateScore.max = String(numeric[1]);
+          certificateScore.step = String(numeric[2]);
           certificateScore.placeholder = numeric[3];
           certificateHelp.textContent = 'Thang điểm: ' + numeric[0] + '–' + numeric[1] + ', bước ' + numeric[2];
         } else if (type) {
@@ -560,7 +750,7 @@
       if (certificateName) certificateName.addEventListener('change', updateCertificateValidation);
       if (certificateIssueDate) certificateIssueDate.addEventListener('change', updateCertificateExpiry);
       if (certificateUseHighSchool) certificateUseHighSchool.addEventListener('change', updateCertificateValidation);
-      document.addEventListener('futurepath:profile-hydrated', function () {
+      document.addEventListener('axis:profile-hydrated', function () {
         fillCertificateLanguages();
         fillCertificateTypes();
         const profile = window.AXISData && window.AXISData.getProfile ? window.AXISData.getProfile() : {};
@@ -568,7 +758,7 @@
         renderCertificateList();
         updateCertificateExpiry();
       });
-      document.addEventListener('futurepath:profile-changed', syncHighSchoolEnglishScore);
+      document.addEventListener('axis:profile-changed', syncHighSchoolEnglishScore);
 
       function updateAcademicGradeFields() {
         if (!gradeSelect) return;
@@ -829,7 +1019,7 @@
 
         });
       }
-      document.addEventListener('futurepath:profile-hydrated', function () {
+      document.addEventListener('axis:profile-hydrated', function () {
         renderExamSubjects();
         updateAcademicGradeFields();
       });
@@ -929,7 +1119,7 @@
           const link = document.createElement('a');
           const url = URL.createObjectURL(blobToDownload);
           link.href = url;
-          link.download = 'futurepath-profile.pdf';
+          link.download = 'axis-profile.pdf';
           document.body.appendChild(link);
           link.click();
           link.remove();

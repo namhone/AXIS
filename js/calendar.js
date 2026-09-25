@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   var state = { month: new Date(new Date().getFullYear(), new Date().getMonth(), 1), tasks: [], selected: new Date() };
-  function api(path, options) { return window.FuturePathAuth.apiRequest(path, options); }
+  function api(path, options) { return window.AxisAuth.apiRequest(path, options); }
   function dateKey(value) {
     var date = value instanceof Date ? value : new Date(value);
     if (Number.isNaN(date.getTime())) return '';
@@ -56,8 +56,8 @@
     document.getElementById('generatePlan').onclick = function () { api('/tasks/generate', { method: 'POST', body: '{}' }).then(function () { setMessage('Đã tạo kế hoạch 3 ngày.'); return load(); }).catch(function (error) { setMessage(error.message, true); }); };
     form.scheduled_date.value = dateKey(new Date());
     form.onsubmit = function (event) { event.preventDefault(); var data = Object.fromEntries(new FormData(form)); data.estimated_time_minutes = Number(data.estimated_time_minutes); api('/tasks', { method: 'POST', body: JSON.stringify(data) }).then(function () { form.reset(); form.scheduled_date.value = dateKey(new Date()); setMessage('Đã thêm task thủ công.'); return load(); }).catch(function (error) { setMessage(error.message, true); }); };
-    if (!window.FuturePathAuth || !window.FuturePathAuth.isSignedIn()) { setMessage('Vui lòng đăng nhập để sử dụng lịch.', true); return; }
+    if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) { setMessage('Vui lòng đăng nhập để sử dụng lịch.', true); return; }
     load().catch(function (error) { setMessage(error.message, true); });
   }
-  window.FuturePathCalendar = { init: init };
+  window.AxisCalendar = { init: init };
 }());

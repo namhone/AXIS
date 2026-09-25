@@ -8,22 +8,44 @@
     <script src="../js/axis-brand.js"></script>
     <script src="../js/auth.js?v=session-cookie-fix-20260921"></script>
     <style>
-      .guide-hero { padding: 48px 8px 28px; max-width: 760px; }
-      .guide-hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin: 12px 0 20px; color: var(--purple-deep); }
-      .guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 24px 0 72px; }
-      /* Bento card */
-      .guide-step { border: 1px solid var(--line); border-radius: 12px; padding: 18px; background: var(--panel); box-shadow: 0 12px 30px var(--shadow); display: flex; flex-direction: column; gap: 8px; }
-      /* Premium serif for step headings (matches project editorial style) */
-      .guide-step h2 { letter-spacing: -0.02em; line-height: 1.2; color: var(--text); font-weight: 700; font-size: 1.65rem; margin: 8px 0 8px; }
-      .guide-step p { color: var(--text-soft); line-height: 1.6; margin: 0; }
-      .guide-tag { display: inline-block; padding: 7px 12px; border-radius: 999px; background: var(--purple-soft); color: var(--purple); font-size: .78rem; font-weight: 700; }
-      .guide-step:nth-child(2) .guide-tag { background: #E8F5EF; color: #35745B; }
-      .guide-step:nth-child(3) .guide-tag { background: #FFF1DC; color: #9B6528; }
-      .guide-step:nth-child(4) .guide-tag { background: #F3EAFB; color: #73508F; }
-      /* Giữ nguyên hình ảnh toàn bộ, không cắt theo khung 16:9. */
-      .guide-image { display: block; width: 100%; height: auto; max-height: 280px; object-fit: contain; object-position: center; border-radius: 12px; margin: 12px 0 4px; background: rgba(11, 61, 102, 0.04); }
-      .guide-credit { display: block; color: var(--text-soft); font-size: .72rem; margin-top: 8px; }
-      @media (max-width: 700px) { .guide-grid { grid-template-columns: 1fr; } }
+      .guide-hero { max-width: 780px; }
+      .guide-hero .lead { line-height: 1.7; }
+      .guide-hero .action-row { margin-top: 28px; gap: 12px; }
+      .guide-detail { padding: 0 0 88px; }
+      .guide-playbook { border: 1px solid var(--line); border-radius: 16px; padding: 28px 32px; background: var(--panel); box-shadow: 0 12px 30px var(--shadow); }
+      .guide-playbook-header { max-width: 720px; margin-bottom: 26px; }
+      .guide-playbook-header h2 { margin: 8px 0 10px; color: var(--text); font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.2; }
+      .guide-playbook-header p { margin: 0; color: var(--text-soft); line-height: 1.75; }
+      .guide-flow { display: grid; gap: 0; }
+      .guide-flow-step { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 18px; padding: 32px 0; border-top: 1px solid var(--line); }
+      .guide-flow-step:first-child { border-top: 0; padding-top: 0; }
+      .guide-flow-number { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--purple-soft); color: var(--purple-deep); font-weight: 800; }
+      .guide-flow-step h3 { margin: 0 0 8px; color: var(--text); font-size: 1.2rem; line-height: 1.35; }
+      .guide-flow-step p, .guide-flow-step li { color: var(--text-soft); line-height: 1.7; }
+      .guide-flow-step p { margin: 0; }
+      .guide-flow-image { display: block; width: min(100%, 360px) !important; height: 210px !important; margin: 20px auto 0; padding: 10px; border: 1px solid rgba(11, 61, 102, 0.08); border-radius: 16px; object-fit: contain; object-position: center; background: linear-gradient(145deg, rgba(245, 247, 255, 0.96), rgba(236, 242, 249, 0.9)); }
+      .guide-flow-image--chart { width: min(100%, 220px) !important; height: 220px !important; aspect-ratio: 1; padding: 12px; object-fit: contain; object-position: 50% 50%; }
+      .guide-flow-step ol { margin: 8px 0 0; padding-left: 20px; }
+      .guide-flow-step li + li { margin-top: 7px; }
+      .guide-callout { margin-top: 16px; padding: 16px 18px; border-left: 4px solid var(--purple); border-radius: 8px; background: var(--purple-soft); color: var(--text); line-height: 1.7; }
+      .guide-checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; margin: 20px 0 0; padding: 0 !important; list-style: none; }
+      .guide-checklist li { min-width: 0; padding: 10px 12px; border: 1px solid rgba(11, 61, 102, 0.08); border-radius: 10px; background: rgba(245, 247, 255, 0.7); line-height: 1.45; }
+      .guide-checklist li::before { content: "✓"; color: var(--purple); font-weight: 800; margin-right: 8px; }
+      .guide-faq { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--line); }
+      .guide-faq > .eyebrow { display: block; margin-bottom: 12px; }
+      .guide-faq > h3 { margin: 0 0 22px; line-height: 1.4; }
+      .guide-faq details:first-of-type { margin-top: 20px; }
+      .guide-faq details { border-top: 1px solid var(--line); padding: 22px 4px; }
+      .guide-faq summary { cursor: pointer; color: var(--text); font-weight: 700; }
+      .guide-faq p { max-width: 760px; margin: 14px 0 0; color: var(--text-soft); line-height: 1.75; }
+      @media (max-width: 700px) {
+        .guide-checklist { grid-template-columns: 1fr; gap: 10px; }
+        .guide-playbook { padding: 22px 18px; }
+        .guide-flow-step { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; padding: 26px 0; }
+        .guide-flow-number { width: 34px; height: 34px; }
+        .guide-flow-image { width: min(100%, 320px) !important; height: 180px !important; margin-top: 16px; padding: 8px; }
+        .guide-flow-image--chart { width: min(100%, 200px) !important; height: 200px !important; }
+      }
     </style>
       <script src="../js/components.js?v=mobile-nav-2" defer></script>
 </head>
@@ -32,48 +54,110 @@
       <div class="workspace">
         <app-header class="topbar"></app-header>
 
-        <main>
-          <section class="guide-hero">
+        <main class="main-column">
+          <section class="page-hero guide-hero">
             <span class="eyebrow">Hướng dẫn sử dụng</span>
             <h1>Bắt đầu thật rõ ràng.</h1>
-            <p class="lead">Bốn bước ngắn để biến dữ liệu cá nhân thành một hướng đi học tập phù hợp cho kỳ thi KHKT và hành trình sau THPT.</p>
+            <p class="lead">Năm bước rõ ràng để biến dữ liệu cá nhân thành một hướng đi học tập phù hợp cho kỳ thi TN THPTQG và hành trình sau THPT.</p>
             <div class="action-row">
               <a class="primary-btn" href="dashboard.html">Mở Dashboard</a>
               <a class="ghost-btn" href="profile.html">Cập nhật hồ sơ</a>
             </div>
           </section>
-          <section class="guide-grid" aria-label="Các bước sử dụng AXIS">
-            <article class="guide-step">
-              <span class="guide-tag">Bước 1</span>
-              <h2>Khởi tạo hồ sơ năng lực</h2>
-              <p>Điền thông tin học tập, chứng chỉ, thành tích, hoạt động và dự án. Bấm "Lưu thông tin hồ sơ" để dữ liệu được đồng bộ riêng theo tài khoản.</p>
-              <img class="guide-image" src="../assets/hero-3.png" alt="Học sinh cùng học tập">
-              <small class="guide-credit">Ảnh minh họa AXIS</small>
-              <a class="ghost-btn" href="profile.html">Mở hồ sơ →</a>
-            </article>
-            <article class="guide-step">
-              <span class="guide-tag">Bước 2</span>
-              <h2>Khám phá thư viện nghề nghiệp</h2>
-              <p>Đọc các nhóm ngành, xem mô tả năng lực cần thiết và thêm hướng đi phù hợp vào kế hoạch cá nhân.</p>
-              <img class="guide-image" src="../assets/hero-4.png" alt="Bàn làm việc và kế hoạch học tập">
-              <small class="guide-credit">Ảnh minh họa AXIS</small>
-              <a class="ghost-btn" href="careers.html">Khám phá ngành →</a>
-            </article>
-            <article class="guide-step">
-              <span class="guide-tag">Bước 3</span>
-              <h2>Lập mục tiêu &amp; gọi trợ lý AI</h2>
-              <p>Thêm mục tiêu học tập, sau đó dùng AI để sinh lộ trình 3–5 bước cá nhân hóa. Lộ trình và trạng thái hoàn thành sẽ được lưu theo tài khoản.</p>
-              <img class="guide-image" src="../assets/hero-5.png" alt="Lập kế hoạch học tập trên máy tính">
-              <small class="guide-credit">Ảnh minh họa AXIS</small>
-              <a class="ghost-btn" href="development.html">Mở lộ trình →</a>
-            </article>
-            <article class="guide-step">
-              <span class="guide-tag">Bước 4</span>
-              <h2>Luyện tập &amp; phát triển bản thân</h2>
-              <p>Thực hiện các bước trong lộ trình, theo dõi tiến độ và cập nhật hồ sơ khi có thêm kỹ năng, thành tích hoặc dự án mới.</p>
-              <img class="guide-image" src="../assets/hero-6.png" alt="Học sinh cùng luyện tập và phát triển kỹ năng">
-              <small class="guide-credit">Ảnh minh họa AXIS</small>
-              <a class="ghost-btn" href="development.html">Theo dõi tiến độ →</a>
+          <section class="guide-detail" aria-label="Hướng dẫn chi tiết">
+            <article class="guide-playbook">
+              <div class="guide-playbook-header">
+                <span class="eyebrow">Lộ trình sử dụng</span>
+                <h2>Đi theo 5 bước, không bị ngợp</h2>
+                <p>Đọc từ trên xuống. Mỗi bước có một việc chính và một điểm kiểm tra để bạn biết khi nào nên chuyển sang bước tiếp theo.</p>
+              </div>
+              <div class="guide-flow">
+                <div class="guide-flow-step">
+                  <span class="guide-flow-number">1</span>
+                  <div>
+                    <h3>Tạo tài khoản và chuẩn bị dữ liệu</h3>
+                    <p>Chọn <strong>Đăng ký</strong>, nhập email và mật khẩu. Sau đó chuẩn bị điểm học tập, chứng chỉ, thành tích, hoạt động và dự án. Nên đăng nhập trước khi nhập dữ liệu để mọi thay đổi được lưu theo tài khoản.</p>
+                    <img class="guide-flow-image" src="../assets/hero-1.png" alt="Chuẩn bị dữ liệu cá nhân để bắt đầu" loading="lazy" decoding="async">
+                  </div>
+                </div>
+                <div class="guide-flow-step">
+                  <span class="guide-flow-number">2</span>
+                  <div>
+                    <h3>Hoàn thiện hồ sơ năng lực</h3>
+                    <p>Vào <strong>Hồ sơ năng lực</strong>, điền thông tin cá nhân, thêm chứng chỉ/thành tích/hoạt động/dự án và tải PDF minh chứng nếu có. Bấm <strong>Lưu thông tin hồ sơ</strong> rồi kiểm tra lại phần trăm hoàn thiện.</p>
+                    <ul class="guide-checklist">
+                      <li>Điểm học tập</li>
+                      <li>Ngoại ngữ</li>
+                      <li>Thành tích</li>
+                      <li>Hoạt động</li>
+                      <li>Dự án</li>
+                      <li>Minh chứng</li>
+                    </ul>
+                    <img class="guide-flow-image" src="../assets/hero-3.png" alt="Xây dựng hồ sơ năng lực" loading="lazy" decoding="async">
+                  </div>
+                </div>
+                <div class="guide-flow-step" id="assessment">
+                  <span class="guide-flow-number">3</span>
+                  <div>
+                    <h3>Chạy đánh giá và đọc gợi ý</h3>
+                    <p>Ở <strong>Bảng điều khiển</strong>, nhập điểm học thuật, chọn chứng chỉ ngoại ngữ và thành tích. Xem <strong>Ngành nghề tương thích</strong> cùng <strong>Khoảng trống năng lực</strong>. Mở <strong>Đánh giá &amp; Gợi ý</strong> để xem Top ngành, lưu gợi ý hoặc xuất báo cáo PDF.</p>
+                    <img class="guide-flow-image guide-flow-image--chart" src="../assets/radar-chart.png" alt="Biểu đồ kết quả đánh giá năng lực" loading="lazy" decoding="async">
+                    <div class="guide-callout">Kết quả là gợi ý hỗ trợ ra quyết định, không phải kết luận bắt buộc. Hãy đối chiếu thêm với sở thích và trải nghiệm thực tế.</div>
+                  </div>
+                </div>
+                <div class="guide-flow-step">
+                  <span class="guide-flow-number">4</span>
+                  <div>
+                    <h3>Khám phá ngành và chọn hướng</h3>
+                    <p>Vào <strong>Thư viện nghề nghiệp</strong>, tìm theo từ khóa, mở chi tiết và so sánh 2–3 ngành. Khi thấy hướng phù hợp, bấm <strong>Thêm vào lộ trình</strong> để chuyển sang phần phát triển bản thân.</p>
+                    <img class="guide-flow-image" src="../assets/hero-4.png" alt="Khám phá thư viện nghề nghiệp" loading="lazy" decoding="async">
+                  </div>
+                </div>
+                <div class="guide-flow-step">
+                  <span class="guide-flow-number">5</span>
+                  <div>
+                    <h3>Tạo kế hoạch, luyện tập và xuất CV</h3>
+                    <p>Trong <strong>Phát triển bản thân</strong>, bấm <strong>Tạo lộ trình bằng AI</strong>, dùng <strong>Bắt đầu</strong>/<strong>Đã học</strong> để cập nhật tiến độ và thêm mục tiêu theo ngày. Khi hồ sơ đủ dữ liệu, chọn <strong>Chuẩn hóa hồ sơ</strong>, kiểm tra CV rồi <strong>In / lưu PDF</strong>.</p>
+                    <img class="guide-flow-image" src="../assets/hero-6.png" alt="Lập kế hoạch phát triển và hoàn thiện CV" loading="lazy" decoding="async">
+                  </div>
+                </div>
+              </div>
+              <div class="guide-faq">
+                <span class="eyebrow">Kiểm tra nhanh</span>
+                <h3>Phiên đầu tiên đã đủ khi bạn có:</h3>
+                <ul class="guide-checklist">
+                  <li>Tài khoản</li>
+                  <li>Hồ sơ đã lưu</li>
+                  <li>Kết quả đánh giá</li>
+                  <li>2–3 ngành đã đọc</li>
+                  <li>Một mục tiêu học tập</li>
+                  <li>CV đã kiểm tra</li>
+                </ul>
+                <details>
+                  <summary>Kết quả chưa sát với mong muốn thì làm gì?</summary>
+                  <p>Kiểm tra hồ sơ đã đủ điểm, ngoại ngữ, thành tích và dự án chưa; cập nhật phần còn thiếu, lưu lại rồi chạy đánh giá lại.</p>
+                </details>
+                <details>
+                  <summary>Chưa muốn nhập hồ sơ có xem nghề được không?</summary>
+                  <p>Có. Bạn vẫn có thể dùng <strong>Thư viện nghề nghiệp</strong>, nhưng cần hoàn thiện hồ sơ để nhận gợi ý cá nhân hóa.</p>
+                </details>
+                <details>
+                  <summary>Nhập điểm hoặc chứng chỉ như thế nào để kết quả chính xác?</summary>
+                  <p>Nhập đúng thang điểm được yêu cầu trên màn hình, không tự quy đổi nếu website chưa hướng dẫn. Với chứng chỉ ngoại ngữ, chọn đúng loại chứng chỉ và nhập điểm theo giấy chứng nhận.</p>
+                </details>
+                <details>
+                  <summary>Có thể thay đổi mục tiêu sau khi đã tạo lộ trình không?</summary>
+                  <p>Có. Bạn có thể thêm mục tiêu mới, cập nhật ngày và thời lượng, đánh dấu nhiệm vụ đã học hoặc xóa mục tiêu không còn phù hợp trong phần <strong>Phát triển bản thân</strong>.</p>
+                </details>
+                <details>
+                  <summary>Ảnh hưởng thế nào nếu chưa có thành tích hoặc dự án?</summary>
+                  <p>Không sao. Hãy để trống phần chưa có và cập nhật dần khi bạn tham gia hoạt động mới. Kết quả lúc đầu chỉ phản ánh dữ liệu hiện có, không phải đánh giá cố định về khả năng của bạn.</p>
+                </details>
+                <details>
+                  <summary>CV do AI tạo có cần kiểm tra lại không?</summary>
+                  <p>Có. Hãy kiểm tra tên, thời gian, điểm số, vai trò và mô tả dự án trước khi lưu hoặc gửi CV. AI chỉ hỗ trợ trình bày, bạn vẫn là người chịu trách nhiệm về thông tin cuối cùng.</p>
+                </details>
+              </div>
             </article>
           </section>
         </main>

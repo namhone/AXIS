@@ -15,7 +15,7 @@
   }
 
   function profileStorageKey(userId) {
-    return userId ? 'futurepath_profile:' + userId : '';
+    return userId ? 'axis_profile:' + userId : '';
   }
 
   function readLocalProfile(userId) {
@@ -143,19 +143,19 @@
         if (key.indexOf('score') === 0 || key === 'className' || key === 'entranceCombination') recalculateAcademic();
         persistLocalProfile();
         hasUnsavedChanges = true;
-        document.dispatchEvent(new CustomEvent('futurepath:profile-changed'));
+        document.dispatchEvent(new CustomEvent('axis:profile-changed'));
         syncCompletion();
       }
       field.addEventListener('input', updateValue);
       field.addEventListener('change', updateValue);
     });
     recalculateAcademic();
-    document.dispatchEvent(new CustomEvent('futurepath:profile-hydrated'));
+    document.dispatchEvent(new CustomEvent('axis:profile-hydrated'));
     syncCompletion();
   }
 
   async function saveProfile() {
-    if (!window.FuturePathAuth || !window.FuturePathAuth.isSignedIn()) {
+    if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) {
       throw new Error('Vui lòng đăng nhập để lưu hồ sơ.');
     }
     if (!accountId) {
@@ -169,36 +169,36 @@
       if (field.tagName === 'SELECT' && !value && profile[key]) value = profile[key];
       profile[key] = value;
     });
-    profile = normalizeProfile(await window.FuturePathAuth.apiRequest('/profile', {
+    profile = normalizeProfile(await window.AxisAuth.apiRequest('/profile', {
       method: 'PUT',
       body: JSON.stringify(profile)
     }));
     hasUnsavedChanges = false;
     persistLocalProfile();
-    document.dispatchEvent(new CustomEvent('futurepath:profile-changed'));
+    document.dispatchEvent(new CustomEvent('axis:profile-changed'));
     initProfile();
-    if (window.FuturePathAuth.refreshUser) await window.FuturePathAuth.refreshUser();
+    if (window.AxisAuth.refreshUser) await window.AxisAuth.refreshUser();
     return profile;
   }
 
   async function hydrateProfile() {
-    if (!window.FuturePathAuth || !window.FuturePathAuth.isSignedIn()) return;
+    if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) return;
     var version = ++hydrationVersion;
     var expectedAccountId = accountId;
-    var serverProfile = normalizeProfile(await window.FuturePathAuth.apiRequest('/profile'));
+    var serverProfile = normalizeProfile(await window.AxisAuth.apiRequest('/profile'));
     if (
       version !== hydrationVersion ||
       accountId !== expectedAccountId ||
-      !window.FuturePathAuth.isSignedIn()
+      !window.AxisAuth.isSignedIn()
     ) return;
     profile = serverProfile;
     hasUnsavedChanges = false;
     persistLocalProfile();
-    document.dispatchEvent(new CustomEvent('futurepath:profile-changed'));
+    document.dispatchEvent(new CustomEvent('axis:profile-changed'));
     initProfile();
   }
 
-  window.FuturePathData = {
+  window.AxisData = {
     getProfileCompletion: function () { return completion(profile); },
     getProfile: function () { return Object.assign({}, profile); },
     setProfileValue: function (key, value) {
@@ -206,12 +206,12 @@
       profile[key] = value;
       persistLocalProfile();
       hasUnsavedChanges = true;
-      document.dispatchEvent(new CustomEvent('futurepath:profile-changed'));
+      document.dispatchEvent(new CustomEvent('axis:profile-changed'));
     },
     hasUnsavedChanges: function () { return hasUnsavedChanges; },
     markProfileDirty: function () {
       hasUnsavedChanges = true;
-      document.dispatchEvent(new CustomEvent('futurepath:profile-changed'));
+      document.dispatchEvent(new CustomEvent('axis:profile-changed'));
     },
     syncProfileCompletion: syncCompletion,
     initProfilePersistence: initProfile,
@@ -219,11 +219,11 @@
     saveProfile: saveProfile
   };
   // Keep the legacy global available for page-level scripts during the migration.
-  window.AXISData = window.FuturePathData;
+  window.AXISData = window.AxisData;
 
   document.addEventListener('DOMContentLoaded', function () {
     initProfile();
-    document.addEventListener('futurepath:auth-state', function (event) {
+    document.addEventListener('axis:auth-state', function (event) {
       if (event.detail.signedIn) {
         hydrationVersion += 1;
         accountId = event.detail.user && event.detail.user.id ? String(event.detail.user.id) : '';
@@ -245,7 +245,7 @@
         hasUnsavedChanges = false;
         profile = {};
         try {
-          localStorage.removeItem('futurepath_profile');
+          localStorage.removeItem('axis_profile');
         } catch (error) {
           // Ignore unavailable browser storage while clearing the signed-out state.
         }

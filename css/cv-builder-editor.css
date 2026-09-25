@@ -47,6 +47,8 @@
 .cv-panel__hint, .cv-pipeline-state { color: var(--cv-muted); font-size: 11px; font-weight: 800; }
 .cv-panel__intro, .cv-status, .form-help { color: var(--cv-muted); font-size: 12px; line-height: 1.55; }
 .cv-panel__intro { margin: 12px 0 14px; }
+.cv-language-control { color: var(--cv-muted); display: grid; font-size: 11px; font-weight: 800; gap: 6px; margin-top: 12px; }
+.cv-language-control select { background: #fff; border: 1px solid var(--cv-line); border-radius: 8px; color: var(--cv-ink); font: inherit; min-height: 36px; padding: 7px 9px; }
 .cv-agent-list { list-style: none; margin: 0 0 16px; padding: 0; }
 .cv-agent { align-items: center; border-bottom: 1px solid #edf1f5; display: flex; gap: 10px; min-height: 55px; padding: 8px 0; }
 .cv-agent:last-child { border-bottom: 0; }
@@ -62,6 +64,9 @@
 .cv-agent.is-done .cv-agent__status::after { content: "✓"; }
 .cv-agent.is-error .cv-agent__status { color: #c34444; }
 .cv-status { margin: 10px 0 0; min-height: 18px; }
+.cv-status[data-tone="working"] { color: var(--cv-accent); }
+.cv-status[data-tone="error"] { color: #b42318; font-weight: 700; }
+.cv-status[data-tone="success"] { color: #087443; }
 .cv-template-picker { display: grid; gap: 7px; margin-top: 14px; }
 .cv-editor .cv-template-option { align-items: center; background: #fff; border: 1px solid var(--cv-line); border-radius: 10px; cursor: pointer; display: flex; gap: 10px; padding: 9px; text-align: left; width: 100%; }
 .cv-editor .cv-template-option:hover, .cv-editor .cv-template-option.is-selected { background: var(--cv-accent-soft); border-color: var(--cv-accent); }
