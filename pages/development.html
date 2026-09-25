@@ -25,29 +25,27 @@
 
           <section class="content-panel">
             <h2>01 · Mục tiêu hiện tại</h2>
-            <div class="info-grid">
-              <article class="stat-card">
-                <h3>Python</h3>
-                <div class="progress-row">
-                  <div class="label"><span>Tiến độ</span><strong>62%</strong></div>
-                  <div class="progress-bar"><span class="progress-fill" data-progress="62"></span></div>
-                </div>
-              </article>
-              <article class="stat-card">
-                <h3>Tiếng Anh</h3>
-                <div class="progress-row">
-                  <div class="label"><span>Tiến độ</span><strong>67%</strong></div>
-                  <div class="progress-bar"><span class="progress-fill" data-progress="67"></span></div>
-                </div>
-              </article>
-              <div id="careerGoalsCurrent" class="info-grid" aria-live="polite"></div>
+            <div id="careerGoalsCurrent" class="info-grid current-goals-grid" aria-live="polite"></div>
+          </section>
+
+          <section class="content-panel development-progress-panel">
+            <div class="section-heading-row">
+              <div>
+                <span class="eyebrow">Progress over time</span>
+                <h2>02 · Tiến bộ theo thời gian</h2>
+              </div>
+              <span class="plan-progress" id="developmentProgressSummary">Chưa có dữ liệu</span>
             </div>
+            <div class="development-progress-chart-wrap">
+              <canvas id="developmentProgressChart" width="900" height="280" aria-label="Biểu đồ tiến bộ theo thời gian"></canvas>
+            </div>
+            <p class="section-note development-progress-note" id="developmentProgressNote">Chạy đánh giá ở trang Đánh giá &amp; Gợi ý để bắt đầu lưu lịch sử tiến bộ.</p>
           </section>
 
           <section class="content-panel skill-plan-panel">
             <div class="section-heading-row">
               <div>
-                <h2>02 · Bản đồ kỹ năng trước lớp 12</h2>
+                <h2>03 · Bản đồ kỹ năng trước lớp 12</h2>
                 <p class="section-note">Không học dồn toàn bộ một lĩnh vực. Chọn thứ tự ưu tiên, học từng module nhỏ và kiểm tra đầu ra trước khi chuyển tiếp.</p>
               </div>
               <span class="plan-progress" id="skillPlanSummary">Đang tải...</span>
@@ -59,7 +57,7 @@
           </section>
 
           <section class="content-panel">
-            <h2 id="todayRoadmapHeading">03 · Nhiệm vụ ngày hôm nay</h2>
+            <h2 id="todayRoadmapHeading">04 · Nhiệm vụ ngày hôm nay</h2>
             <div class="action-row">
               <button class="primary-btn" id="generateRoadmapBtn" type="button">Tạo lộ trình bằng AI</button>
               <span id="roadmapStatus" role="status" aria-live="polite"></span>
@@ -67,37 +65,40 @@
             <p class="section-note">Mỗi ngày gồm kỹ năng ngành, bài tập có đầu ra và một hoạt động bổ trợ. Hãy đánh dấu sau khi hoàn thành đủ nhiệm vụ.</p>
             <div class="timeline roadmap-list">
               <div class="timeline-item roadmap-item" data-roadmap-id="python" data-default-state="done">
-                <div class="timeline-badge">01</div>
-                <div>
-                  <strong>Nhiệm vụ 1 · Python: biến và kiểu dữ liệu</strong>
-                  <p>Học 45 phút, làm 5 bài tập biến/kiểu dữ liệu và nộp 1 file bài làm.</p>
+                <div class="roadmap-task-list">
+                  <article class="roadmap-task-card is-completed">
+                    <div class="roadmap-task-heading"><span class="roadmap-task-number">01</span><strong>Nhiệm vụ 1 · Python: biến và kiểu dữ liệu</strong></div>
+                    <div class="roadmap-task-description">Học 45 phút, làm 5 bài tập biến/kiểu dữ liệu và nộp 1 file bài làm.</div>
+                    <div class="roadmap-task-meta"><span class="status">Đã học</span><span>Thời lượng: 45 phút</span></div>
+                    <div class="roadmap-task-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button" disabled>Đã học</button></div>
+                  </article>
                 </div>
-                <span class="status">Đã học</span>
-                <div class="roadmap-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
               </div>
               <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="project" data-default-state="pending">
-                <div class="timeline-badge">02</div>
-                <div>
-                  <strong>Nhiệm vụ 2 · Python: điều kiện và vòng lặp</strong>
-                  <p>Học 45 phút, giải 5 bài if/for/while và viết 1 chương trình tính điểm.</p>
+                <div class="roadmap-task-list">
+                  <article class="roadmap-task-card">
+                    <div class="roadmap-task-heading"><span class="roadmap-task-number">02</span><strong>Nhiệm vụ 2 · Python: điều kiện và vòng lặp</strong></div>
+                    <div class="roadmap-task-description">Học 45 phút, giải 5 bài if/for/while và viết 1 chương trình tính điểm.</div>
+                    <div class="roadmap-task-meta"><span class="status pending">Chưa học</span><span>Thời lượng: 45 phút</span></div>
+                    <div class="roadmap-task-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
+                  </article>
                 </div>
-                <span class="status pending">Chưa học</span>
-                <div class="roadmap-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
               </div>
               <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="english" data-default-state="pending">
-                <div class="timeline-badge">03</div>
-                <div>
-                  <strong>Nhiệm vụ 3 · C++: cú pháp nền tảng</strong>
-                  <p>Học 40 phút, viết 3 chương trình nhập/xuất dữ liệu và đọc 10 thuật ngữ kỹ thuật.</p>
+                <div class="roadmap-task-list">
+                  <article class="roadmap-task-card">
+                    <div class="roadmap-task-heading"><span class="roadmap-task-number">03</span><strong>Nhiệm vụ 3 · C++: cú pháp nền tảng</strong></div>
+                    <div class="roadmap-task-description">Học 40 phút, viết 3 chương trình nhập/xuất dữ liệu và đọc 10 thuật ngữ kỹ thuật.</div>
+                    <div class="roadmap-task-meta"><span class="status pending">Chưa học</span><span>Thời lượng: 40 phút</span></div>
+                    <div class="roadmap-task-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
+                  </article>
                 </div>
-                <span class="status pending">Chưa học</span>
-                <div class="roadmap-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
               </div>
             </div>
           </section>
 
           <section class="content-panel" id="developmentWorkspace">
-            <h2>04 · Kế hoạch &amp; Mục tiêu (Nhật ký hành động)</h2>
+            <h2>05 · Kế hoạch &amp; Mục tiêu (Nhật ký hành động)</h2>
             <div class="plan-progress" id="planProgress">Tiến độ kế hoạch: 0%</div>
 
             <div class="controls-row plan-input-row plan-primary-row">
@@ -267,6 +268,9 @@
         const skillPlanList = document.getElementById('skillPlanList');
         const skillPlanSummary = document.getElementById('skillPlanSummary');
         const grade12Mode = document.getElementById('grade12Mode');
+        const developmentProgressChart = document.getElementById('developmentProgressChart');
+        const developmentProgressSummary = document.getElementById('developmentProgressSummary');
+        const developmentProgressNote = document.getElementById('developmentProgressNote');
         let accountPlanReady = false;
 
         function loadGoals() { return goalsCache; }
@@ -302,10 +306,21 @@
           const goals = loadGoals();
           const careerGoalsCurrent = document.getElementById('careerGoalsCurrent');
           if (careerGoalsCurrent) {
-            const careers = goals.filter(function (goal) { return goal.category === 'career'; });
-            careerGoalsCurrent.innerHTML = careers.map(function (goal) {
-              return '<article class="stat-card"><h3>' + escapeHtml(goal.title.replace(/^Tìm hiểu nghề:\s*/i, '')) + '</h3><div class="progress-row"><div class="label"><span>Trạng thái</span><strong>' + (goal.done ? 'Đã hoàn thành' : 'Đang theo dõi') + '</strong></div><div class="progress-bar"><span class="progress-fill" data-progress="' + (goal.done ? '100' : '0') + '"></span></div></div></article>';
-            }).join('');
+            const currentGoals = goals.filter(function (goal) {
+              return goal.status !== 'cancelled';
+            }).slice(0, 4);
+            careerGoalsCurrent.innerHTML = currentGoals.length
+              ? currentGoals.map(function (goal) {
+                const done = goal.done || goal.status === 'completed';
+                const schedule = [goal.date || goal.target_date, goal.minutes || goal.minutes_per_day ? (goal.minutes || goal.minutes_per_day) + ' phút/ngày' : '']
+                  .filter(Boolean).join(' · ');
+                return '<article class="stat-card current-goal-card' + (done ? ' is-completed' : '') + '">' +
+                  '<div class="current-goal-heading"><h3>' + escapeHtml(goal.title.replace(/^Tìm hiểu nghề:\s*/i, '')) + '</h3><span class="goal-category">' + escapeHtml(goal.category || 'Chung') + '</span></div>' +
+                  (schedule ? '<p class="current-goal-meta">' + escapeHtml(schedule) + '</p>' : '') +
+                  '<div class="progress-row"><div class="label"><span>Trạng thái</span><strong>' + (done ? 'Đã hoàn thành' : 'Đang theo dõi') + '</strong></div><div class="progress-bar"><span class="progress-fill" data-progress="' + (done ? '100' : '0') + '"></span></div></div>' +
+                '</article>';
+              }).join('')
+              : '<div class="current-goals-empty"><strong>Chưa có mục tiêu nào</strong><span>Thêm mục tiêu trong phần kế hoạch để nội dung hiển thị ở đây.</span></div>';
           }
           listEl.innerHTML = '';
           if (!goals.length) {
@@ -363,7 +378,7 @@
             const label = todaySchedule && todaySchedule.date
               ? new Date(todaySchedule.date + 'T00:00:00').toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })
               : new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
-            heading.textContent = '03 · Nhiệm vụ ngày hôm nay — ' + label;
+            heading.textContent = '04 · Nhiệm vụ ngày hôm nay — ' + label;
           }
           let taskNumber = 0;
           list.innerHTML = displaySteps.map(function (step, index) {
@@ -619,6 +634,89 @@
           });
         }
 
+        function assessmentScore(item) {
+          const suggestions = item && item.career_suggestions_json;
+          const results = suggestions && Array.isArray(suggestions.results) ? suggestions.results : [];
+          const top = results[0];
+          const scores = top && top.scores ? Object.keys(top.scores).map(function (key) {
+            return Number(top.scores[key]);
+          }).filter(Number.isFinite) : [];
+          return scores.length ? scores.reduce(function (sum, value) { return sum + value; }, 0) / scores.length : 0;
+        }
+
+        function drawDevelopmentProgress(history) {
+          if (!developmentProgressChart) return;
+          const ctx = developmentProgressChart.getContext('2d');
+          const entries = history.slice().reverse().map(function (item) {
+            const date = new Date(item.created_at);
+            return { date: date, score: assessmentScore(item) };
+          }).filter(function (item) {
+            return Number.isFinite(item.date.getTime());
+          });
+          const width = developmentProgressChart.width;
+          const height = developmentProgressChart.height;
+          ctx.clearRect(0, 0, width, height);
+          ctx.font = '12px Inter, sans-serif';
+          ctx.strokeStyle = '#d8e0e8';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(52, 24);
+          ctx.lineTo(52, height - 48);
+          ctx.lineTo(width - 28, height - 48);
+          ctx.stroke();
+          if (!entries.length) return;
+          const points = entries.map(function (entry, index) {
+            const x = entries.length === 1 ? width / 2 : 66 + index * ((width - 112) / (entries.length - 1));
+            const y = height - 52 - (Math.max(0, Math.min(10, entry.score)) / 10) * (height - 92);
+            return { entry: entry, x: x, y: y };
+          });
+          ctx.strokeStyle = '#0b3d66';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          points.forEach(function (point, index) {
+            if (index === 0) ctx.moveTo(point.x, point.y); else ctx.lineTo(point.x, point.y);
+          });
+          ctx.stroke();
+          points.forEach(function (point) {
+            ctx.fillStyle = '#0b3d66';
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#0b1220';
+            ctx.fillText(point.entry.score.toFixed(1) + '/10', point.x - 15, point.y - 12);
+            ctx.fillText(point.entry.date.toLocaleDateString('vi-VN'), point.x - 28, height - 22);
+          });
+          const first = entries[0].score;
+          const last = entries[entries.length - 1].score;
+          const delta = last - first;
+          if (developmentProgressSummary) {
+            developmentProgressSummary.textContent = entries.length + ' lần đánh giá · ' + last.toFixed(1) + '/10';
+          }
+          if (developmentProgressNote) {
+            developmentProgressNote.textContent = entries.length === 1
+              ? 'Đây là mốc đầu tiên. Chạy đánh giá lại sau khi cập nhật hồ sơ để theo dõi thay đổi.'
+              : (delta >= 0 ? 'Tăng ' : 'Giảm ') + Math.abs(delta).toFixed(1) + ' điểm năng lực so với lần đánh giá đầu tiên.';
+          }
+        }
+
+        async function loadDevelopmentProgress() {
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
+            if (developmentProgressSummary) developmentProgressSummary.textContent = 'Đăng nhập để theo dõi';
+            if (developmentProgressNote) developmentProgressNote.textContent = 'Đăng nhập và chạy đánh giá ở trang Đánh giá & Gợi ý để lưu lịch sử tiến bộ.';
+            return;
+          }
+          try {
+            const history = await window.AXISAuth.apiRequest('/assessments');
+            drawDevelopmentProgress(Array.isArray(history) ? history : []);
+            if (Array.isArray(history) && !history.length && developmentProgressNote) {
+              developmentProgressNote.textContent = 'Chưa có lịch sử đánh giá. Hãy chạy đánh giá để tạo mốc đầu tiên.';
+            }
+          } catch (error) {
+            if (developmentProgressSummary) developmentProgressSummary.textContent = 'Không thể tải dữ liệu';
+            if (developmentProgressNote) developmentProgressNote.textContent = error.message || 'Không thể tải lịch sử tiến bộ.';
+          }
+        }
+
         function attachListHandlers() {
           listEl.querySelectorAll('.toggle-complete').forEach(function(btn){
             btn.addEventListener('click', function(){
@@ -834,14 +932,17 @@
           if (event.detail.signedIn) {
             loadAccountPlan();
             loadSkillPlan();
+            loadDevelopmentProgress();
           } else {
             goalsCache = [];
             render();
+            loadDevelopmentProgress();
           }
         });
         loadAccountPlan();
         initRoadmap();
         loadSkillPlan();
+        loadDevelopmentProgress();
       })();
 
     </script>

@@ -56,3 +56,30 @@ test("profile exposes private document management", async () => {
   assert.match(html, /listDocuments/);
   assert.match(html, /deleteDocument/);
 });
+
+test("development page renders real goals and keeps roadmap card structure consistent", async () => {
+  const html = await read("pages/development.html");
+  const css = await read("css/global.css");
+
+  assert.match(html, /id="careerGoalsCurrent" class="info-grid current-goals-grid"/);
+  assert.match(html, /currentGoals\.map/);
+  assert.match(html, /current-goals-empty/);
+  assert.doesNotMatch(html, /<h3>Python<\/h3>/);
+  assert.doesNotMatch(html, /<h3>Tiếng Anh<\/h3>/);
+  assert.match(html, /roadmap-task-card is-completed/);
+  assert.match(css, /roadmap-item > \.roadmap-task-list > \.roadmap-task-card/);
+  assert.match(css, /grid-template-columns: minmax\(0, 1fr\) !important/);
+});
+
+test("development progress and assessment use persisted evaluation history", async () => {
+  const development = await read("pages/development.html");
+  const assessment = await read("pages/assessment.html");
+
+  assert.match(development, /id="developmentProgressChart"/);
+  assert.match(development, /apiRequest\('\/assessments'\)/);
+  assert.match(development, /drawDevelopmentProgress/);
+  assert.match(assessment, /id="runAssessment"/);
+  assert.match(assessment, /apiRequest\('\/assessments\/run'/);
+  assert.match(assessment, /id="assessmentActionStatus"/);
+  assert.match(assessment, /Đã chạy đánh giá và lưu mốc tiến bộ/);
+});

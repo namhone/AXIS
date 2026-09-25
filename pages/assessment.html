@@ -30,6 +30,7 @@
               <button class="ghost-btn" id="saveSuggestions">Lưu gợi ý vào hồ sơ</button>
               <button class="ghost-btn" id="exportReport">Xuất báo cáo (PDF)</button>
               <button class="ghost-btn" id="exportJson">Tải dữ liệu (JSON)</button>
+              <span class="assessment-action-status" id="assessmentActionStatus" role="status" aria-live="polite"></span>
             </div>
 
             <div class="assessment-visual">
@@ -154,6 +155,7 @@
         const exportJsonBtn = document.getElementById('exportJson');
         const skillChart = document.getElementById('skillChart');
         const progressChart = document.getElementById('progressChart');
+        const actionStatus = document.getElementById('assessmentActionStatus');
 
         let latestResult = null;
         let assessmentRequest = null;
@@ -366,12 +368,15 @@
         }
 
         async function runAssessment() {
-          if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
+          if (!window.AXISAuth) return;
+          await window.AXISAuth.checkSession();
+          if (!window.AXISAuth.requireAuth()) return;
           if (assessmentRequest) return assessmentRequest;
           assessmentRequest = (async function () {
           try {
             runBtn.disabled = true;
             runBtn.textContent = 'Đang tính...';
+            if (actionStatus) actionStatus.textContent = 'Đang lấy hồ sơ và tính điểm...';
             if (window.AxisData && window.AxisData.hasUnsavedChanges && window.AxisData.hasUnsavedChanges()) {
               await window.AxisData.saveProfile();
             }
@@ -380,9 +385,10 @@
             updateStats(latestResult);
             renderResults(latestResult);
             drawChart(latestResult);
+            if (actionStatus) actionStatus.textContent = 'Đã chạy đánh giá và lưu mốc tiến bộ.';
             return latestResult;
           } catch (error) {
-            alert(error.message || 'Không thể chạy đánh giá.');
+            if (actionStatus) actionStatus.textContent = error.message || 'Không thể chạy đánh giá.';
           } finally {
             runBtn.disabled = false;
             runBtn.textContent = 'Chạy đánh giá lại';

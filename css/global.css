@@ -145,6 +145,33 @@ textarea,
   height: auto;
 }
 
+.development-progress-chart-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid rgba(91, 61, 142, 0.14);
+  border-radius: 16px;
+  background: #fff;
+}
+
+#developmentProgressChart {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  height: auto;
+}
+
+.development-progress-note {
+  margin-bottom: 0;
+}
+
+.assessment-action-status {
+  flex: 1 1 100%;
+  min-height: 1.4em;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
 .calendar-weekdays,
 .calendar-grid {
   display: grid;
@@ -3546,6 +3573,82 @@ body.has-search .search-box { display: block !important; }
   white-space: nowrap;
 }
 
+.development-page .roadmap-item {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.development-page .roadmap-item > .roadmap-task-list {
+  width: 100%;
+  margin-top: 0;
+}
+
+.development-page .roadmap-item > .roadmap-task-list > .roadmap-task-card {
+  margin: 0;
+}
+
+.current-goals-grid {
+  align-items: stretch;
+}
+
+.current-goal-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.current-goal-card .progress-row {
+  margin-top: auto;
+}
+
+.current-goal-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.current-goal-heading h3 {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.current-goal-heading .goal-category {
+  flex: 0 0 auto;
+  margin-left: 0;
+}
+
+.current-goal-meta {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.current-goal-card.is-completed {
+  border-color: rgba(70, 162, 139, 0.34);
+}
+
+.current-goals-empty {
+  display: grid;
+  min-height: 112px;
+  align-content: center;
+  gap: 6px;
+  grid-column: 1 / -1;
+  padding: 18px;
+  border: 1px dashed rgba(91, 61, 142, 0.3);
+  border-radius: 14px;
+  color: var(--text-soft);
+}
+
+.current-goals-empty strong {
+  color: var(--text);
+}
+
 .roadmap-task-list {
   margin-top: 12px;
 }
@@ -3685,6 +3788,21 @@ body.has-search .search-box { display: block !important; }
 .roadmap-item.roadmap-done .roadmap-done:hover,
 .roadmap-item.roadmap-done .roadmap-done:active {
   transform: none;
+}
+
+/* Keep legacy and normalized roadmap data inside the same task-card shell. */
+.development-page .roadmap-item,
+.development-page .roadmap-item.roadmap-pending,
+.development-page .roadmap-item.roadmap-active,
+.development-page .roadmap-item.roadmap-done {
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.development-page .roadmap-item.roadmap-pending:hover {
+  animation: none;
 }
 
 @keyframes roadmap-nudge {
@@ -5848,6 +5966,26 @@ a.button-like:active {
   .development-page .plan-actions-row {
     grid-template-columns: 1fr !important;
     gap: 10px !important;
+  }
+}
+
+/* The normalized task list is the only child of each roadmap item on mobile. */
+@media (max-width: 720px) {
+  .development-page .roadmap-item,
+  .development-page .roadmap-item.roadmap-pending,
+  .development-page .roadmap-item.roadmap-active,
+  .development-page .roadmap-item.roadmap-done {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    min-width: 0;
+    gap: 0;
+    padding: 0 !important;
+  }
+  .development-page .roadmap-item > .roadmap-task-list,
+  .development-page .roadmap-item > .roadmap-task-list > .roadmap-task-card {
+    min-width: 0;
+    width: 100%;
   }
 }
 /* RIASEC assessment */
