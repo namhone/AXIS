@@ -5589,6 +5589,52 @@ button.ghost:hover {
   max-width: 1200px;
 }
 
+/* Keep the semantic header/footer wrappers layout-neutral for the shared shell. */
+.topbar > .site-header {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+  width: 100%;
+  min-width: 0;
+}
+
+.site-footer .site-footer-content {
+  display: block;
+  width: 100%;
+}
+
+.site-footer {
+  color: #52606d;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+@media (max-width: 320px) {
+  .page-shell {
+    padding-inline: 6px;
+  }
+
+  .topbar {
+    padding-inline: 2px;
+  }
+
+  .content-panel,
+  .hero-card,
+  .page-hero {
+    border-radius: 14px;
+  }
+
+  .content-panel {
+    padding-inline: 10px;
+  }
+
+  .brand-copy small {
+    display: none;
+  }
+}
+
 .axis-dashboard-page .axis-hero,
 .axis-dashboard-page .page-hero {
   border-left: 0;

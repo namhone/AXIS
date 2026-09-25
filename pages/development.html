@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Phát triển bản thân — AXIS — Nền tảng khám phá năng lực, ngành nghề và lộ trình phát triển dành cho học sinh THPT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Phát triển bản thân — AXIS" />
+  <meta property="og:description" content="Khám phá năng lực và định hướng tương lai cùng AXIS." />
+  <meta property="og:site_name" content="AXIS" />
+  <meta name="twitter:card" content="summary" />
     <title>Phát triển bản thân — AXIS</title>
     <link rel="stylesheet" href="../css/global.css?v=task-cards-20260921" />
     <script src="../js/axis-brand.js"></script>
@@ -102,6 +108,7 @@
             <div class="plan-progress" id="planProgress">Tiến độ kế hoạch: 0%</div>
 
             <div class="controls-row plan-input-row plan-primary-row">
+              <label class="sr-only" for="goalTitle">Mục tiêu hoặc nhiệm vụ</label>
               <input type="text" id="goalTitle" class="input-compact" placeholder="Mục tiêu / Nhiệm vụ (ví dụ: Hoàn thành bài tập Python)" />
               <input type="date" id="goalDate" class="input-compact input-compact--fixed" aria-label="Ngày thực hiện" />
               <input type="number" id="goalMinutes" class="input-compact input-compact--fixed" min="1" max="1440" placeholder="Phút mỗi ngày" aria-label="Số phút mỗi ngày" />
@@ -114,6 +121,7 @@
             </div>
 
             <div class="controls-row plan-note-row">
+              <label class="sr-only" for="goalNote">Ghi chú ngắn</label>
               <input type="text" id="goalNote" class="input-compact" placeholder="Ghi chú ngắn (ví dụ: xem kênh học, trang tập)" />
             </div>
 

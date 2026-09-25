@@ -83,3 +83,30 @@ test("development progress and assessment use persisted evaluation history", asy
   assert.match(assessment, /id="assessmentActionStatus"/);
   assert.match(assessment, /Đã chạy đánh giá và lưu mốc tiến bộ/);
 });
+
+test("shared shell is semantic and every page exposes basic SEO metadata", async () => {
+  const header = await read("components/header.html");
+  const footer = await read("components/footer.html");
+  assert.match(header, /^<header class="site-header"/);
+  assert.match(header, /<nav class="header-nav"/);
+  assert.match(footer, /^<footer class="site-footer-content"/);
+  assert.match(footer, /for="contactEmail"/);
+
+  const pages = ["index.html", ...["about", "assessment", "calendar", "career-detail", "careers", "cv-builder-editor", "dashboard", "development", "guide", "profile", "riasec"].map((name) => `pages/${name}.html`)];
+  for (const page of pages) {
+    const html = await read(page);
+    assert.match(html, /<title>[^<]+<\/title>/, page);
+    assert.match(html, /<meta name="description"/, page);
+    assert.match(html, /<meta property="og:title"/, page);
+  }
+});
+
+test("heavy PDF scripts are deferred and narrow viewports have a fallback", async () => {
+  const assessment = await read("pages/assessment.html");
+  const profile = await read("pages/profile.html");
+  const css = await read("css/global.css");
+  assert.match(assessment, /jspdf\.umd\.min\.js[^>]+defer/);
+  assert.match(profile, /jspdf\.umd\.min\.js[^>]+defer/);
+  assert.match(css, /@media \(max-width: 320px\)/);
+  assert.match(css, /@view-transition/);
+});

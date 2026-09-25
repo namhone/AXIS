@@ -1,3 +1,4 @@
+<footer class="site-footer-content">
 <div class="footer-container">
   <div class="footer-contact">
     <h4>Liên hệ</h4>
@@ -9,8 +10,10 @@
     <h4>Nhận thông tin &amp; tư vấn</h4>
     <form class="contact-form" id="contactForm" action="#">
       <div class="field-row">
-        <input type="email" name="email" placeholder="Email của bạn" required />
-        <input type="tel" name="phone" placeholder="Số điện thoại (tùy chọn)" />
+        <label class="sr-only" for="contactEmail">Email</label>
+        <input id="contactEmail" type="email" name="email" placeholder="Email của bạn" required />
+        <label class="sr-only" for="contactPhone">Số điện thoại</label>
+        <input id="contactPhone" type="tel" name="phone" placeholder="Số điện thoại (tùy chọn)" />
       </div>
       <div class="field-row">
         <button type="submit" class="primary-btn">Gửi</button>
@@ -20,3 +23,4 @@
   </div>
 </div>
 <div class="footer-bottom">© 2026 AXIS — Nghiên cứu Khoa học Kỹ thuật Học sinh THPT.</div>
+</footer>
