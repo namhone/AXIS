@@ -94,7 +94,7 @@ def test_profile_put_persists_nested_cv_payload() -> None:
         "summary": "Tôi là một lập trình viên full-stack",
         "skills": ["Python", "FastAPI", "React"],
         "project": {
-            "name": "FuturePath",
+            "name": "AXIS",
             "meta": "2025",
             "description": "Xây dựng nền tảng định hướng nghề nghiệp"
         },
@@ -124,5 +124,19 @@ def test_profile_put_persists_nested_cv_payload() -> None:
         assert session.profile is not None
         assert session.profile.data["summary"] == payload["summary"]
         assert session.profile.data["project"]["description"] == payload["project"]["description"]
+
+        textarea_response = client.put(
+            "/api/v1/profile",
+            json={
+                "interests": "lập trình, dữ liệu\nthiết kế",
+                "skills": "Python; SQL",
+                "certificates": "IELTS 6.5, MOS",
+            },
+        )
+        assert textarea_response.status_code == 200
+        textarea_body = textarea_response.json()
+        assert textarea_body["interests"] == ["lập trình", "dữ liệu", "thiết kế"]
+        assert textarea_body["skills"] == ["Python", "SQL"]
+        assert textarea_body["certificates"] == ["IELTS 6.5", "MOS"]
     finally:
         app.dependency_overrides.clear()

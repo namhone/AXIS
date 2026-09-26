@@ -47,6 +47,14 @@ class ProfileUpdate(BaseModel):
             return value
 
         values = dict(value)
+        for key in ("skills", "interests", "certificates"):
+            raw_items = values.get(key)
+            if isinstance(raw_items, str):
+                values[key] = [
+                    item.strip()
+                    for item in re.split(r"[,;\n]+", raw_items)
+                    if item.strip()
+                ]
         exam_subject = values.get("examSubject")
         subject = values.get("subject")
         # examSubject is the newer name, but accept the original subject key.
