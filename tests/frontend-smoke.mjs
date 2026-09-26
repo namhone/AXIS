@@ -110,3 +110,14 @@ test("heavy PDF scripts are deferred and narrow viewports have a fallback", asyn
   assert.match(css, /@media \(max-width: 320px\)/);
   assert.match(css, /@view-transition/);
 });
+
+test("registration validates required identity fields before requesting the API", async () => {
+  const auth = await read("js/auth.js");
+
+  assert.match(auth, /nameField\.required = signUp/);
+  assert.match(auth, /Vui lòng nhập họ và tên/);
+  assert.match(auth, /Mật khẩu phải có ít nhất 8 ký tự/);
+  assert.match(auth, /Không thể kết nối máy chủ/);
+  assert.match(auth, /Email này đã được đăng ký/);
+  assert.match(auth, /Thông tin đăng ký chưa hợp lệ/);
+});

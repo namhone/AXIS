@@ -344,7 +344,7 @@
       '<h3 id="authModalTitle">Đăng nhập</h3>',
       '<p class="auth-modal-note">Tiếp tục hành trình định hướng cùng Axis.</p>',
       '<form id="authForm">',
-      '<label class="auth-field hidden" id="authNameField">Họ và tên<input name="name" type="text" autocomplete="name" placeholder="Nguyễn Văn A"></label>',
+      '<label class="auth-field hidden" id="authNameField">Họ và tên<input name="name" type="text" autocomplete="name" minlength="1" maxlength="120" placeholder="Nguyễn Văn A"></label>',
       '<label class="auth-field">Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>',
       '<label class="auth-field">Mật khẩu<input name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Tối thiểu 8 ký tự"></label>',
       '<button class="primary-btn full" type="submit">Tiếp tục</button>',
@@ -385,6 +385,13 @@
     const modal = createModal();
     modal.dataset.mode = signUp ? 'signup' : 'signin';
     modal.querySelector('#authModalTitle').textContent = signUp ? 'Đăng ký' : 'Đăng nhập';
+    const nameField = modal.querySelector('input[name="name"]');
+    if (nameField) {
+      nameField.required = signUp;
+      nameField.setAttribute('aria-required', String(signUp));
+    }
+    const passwordField = modal.querySelector('input[name="password"]');
+    if (passwordField) passwordField.autocomplete = signUp ? 'new-password' : 'current-password';
     modal.querySelector('#authNameField').classList.toggle('hidden', !signUp);
     modal.querySelector('#authSwitch').textContent = signUp
       ? 'Đã có tài khoản? Đăng nhập'
@@ -403,10 +410,18 @@
   }
 
   async function request(path, options) {
-    const response = await fetchWithTimeout(apiBase(activeApiHost) + path, Object.assign({
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-    }, options || {}), 8000);
+    let response;
+    try {
+      response = await fetchWithTimeout(apiBase(activeApiHost) + path, Object.assign({
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+      }, options || {}), 8000);
+    } catch (error) {
+      const message = error && error.name === 'AbortError'
+        ? 'Kết nối quá thời gian. Vui lòng thử lại.'
+        : 'Không thể kết nối máy chủ. Vui lòng thử lại.';
+      throw new Error(message);
+    }
     let body = null;
     try {
       body = await response.json();
@@ -414,9 +429,27 @@
       body = null;
     }
     if (!response.ok) {
-      const message = body && body.error && body.error.message
-        ? body.error.message
-        : 'Không thể kết nối máy chủ. Vui lòng thử lại.';
+      let message = 'Không thể kết nối máy chủ. Vui lòng thử lại.';
+      if (response.status === 409) {
+        message = 'Email này đã được đăng ký. Vui lòng đăng nhập hoặc dùng email khác.';
+      } else if (response.status === 422) {
+        const details = body && body.error && Array.isArray(body.error.details)
+          ? body.error.details
+          : [];
+        const detail = details[0] || {};
+        const location = Array.isArray(detail.loc) ? detail.loc.join('.') : '';
+        if (location.includes('email')) {
+          message = 'Vui lòng nhập email hợp lệ.';
+        } else if (location.includes('password')) {
+          message = 'Mật khẩu phải có từ 8 đến 128 ký tự.';
+        } else if (location.includes('full_name')) {
+          message = 'Vui lòng nhập họ và tên.';
+        } else {
+          message = 'Thông tin đăng ký chưa hợp lệ. Vui lòng kiểm tra lại.';
+        }
+      } else if (body && body.error && body.error.message) {
+        message = body.error.message;
+      }
       const error = new Error(message);
       error.status = response.status;
       throw error;
@@ -477,6 +510,18 @@
       password: String(passwordField ? passwordField.value : '')
     };
     if (!signUp) delete payload.full_name;
+    if (signUp && !payload.full_name) {
+      showNotice('Vui lòng nhập họ và tên.', true);
+      return;
+    }
+    if (!payload.email) {
+      showNotice('Vui lòng nhập email hợp lệ.', true);
+      return;
+    }
+    if (payload.password.length < 8) {
+      showNotice('Mật khẩu phải có ít nhất 8 ký tự.', true);
+      return;
+    }
     if (submit) submit.disabled = true;
     try {
       const user = await request(signUp ? '/register' : '/login', {
