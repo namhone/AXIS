@@ -121,3 +121,13 @@ test("registration validates required identity fields before requesting the API"
   assert.match(auth, /Email này đã được đăng ký/);
   assert.match(auth, /Thông tin đăng ký chưa hợp lệ/);
 });
+
+test("CV list fields create editable rows and remove empty rows", async () => {
+  const editor = await read("js/cv-builder-editor.js");
+
+  assert.match(editor, /data\.cvListPath/);
+  assert.match(editor, /insertNewListItem/);
+  assert.match(editor, /removeEmptyListItem/);
+  assert.match(editor, /syncListFromDom/);
+  assert.match(editor, /node\.dataset\.cvMode === 'list-item'/);
+});

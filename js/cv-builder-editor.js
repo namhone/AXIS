@@ -209,10 +209,11 @@
     return node;
   }
 
-  function createListItemNode(text) {
+  function createListItemNode(text, key) {
     var item = document.createElement('li');
     item.dataset.cvEditable = 'true';
     item.dataset.cvMode = 'list-item';
+    if (key) item.dataset.cvBind = key;
     item.contentEditable = 'true';
     item.spellcheck = true;
     item.textContent = text || '';
@@ -221,11 +222,15 @@
 
   function insertNewListItem(currentItem) {
     var list = currentItem.parentElement;
-    var nextItem = createListItemNode('');
     if (!list || !list.matches('ul,ol')) {
       return;
     }
+    var listPath = list.dataset.cvListPath || '';
+    var nextIndex = list.children.length;
+    var nextItem = createListItemNode('', listPath ? listPath + '[' + nextIndex + ']' : '');
     list.insertBefore(nextItem, currentItem.nextSibling || null);
+    bindEditableNode(nextItem);
+    bindEditableInput(nextItem);
     nextItem.focus();
     var selection = window.getSelection();
     if (!selection) return;
@@ -296,8 +301,9 @@
   function list(prefix, items, className) {
     var ul = document.createElement('ul');
     ul.className = className || '';
+    ul.dataset.cvListPath = 'data.' + prefix;
     items.forEach(function (entry, index) {
-      var li = element('li', '', 'data.' + prefix + '[' + index + ']', entry);
+      var li = createListItemNode(value('data.' + prefix + '[' + index + ']', entry), 'data.' + prefix + '[' + index + ']');
       ul.appendChild(li);
     });
     return ul;
@@ -828,12 +834,7 @@
     if (label) label.textContent = TEMPLATE_LABELS[currentTemplate];
     preview.querySelectorAll('[data-cv-editable]').forEach(function (node) {
       bindEditableNode(node);
-      node.addEventListener('input', function () {
-        var key = node.dataset.cvBind;
-        if (key) model.overrides[key] = node.textContent.trim();
-        fitPreviewToViewport();
-        setStatus('Đã cập nhật nội dung. Bạn có thể lưu bản nhách.', 'neutral');
-      });
+      bindEditableInput(node);
     });
     fitPreviewToViewport();
   }
@@ -871,6 +872,43 @@
       status.textContent = message;
       status.dataset.tone = tone || 'neutral';
     }
+  }
+
+  function syncListFromDom(listNode) {
+    var path = (listNode.dataset.cvListPath || '').replace(/^data\./, '');
+    if (!path || !model || !model.data) return;
+    var values = Array.prototype.map.call(listNode.children, function (item) {
+      return item.textContent.trim();
+    }).filter(Boolean);
+    model.data[path] = values;
+    Object.keys(model.overrides || {}).forEach(function (key) {
+      if (key.indexOf('data.' + path + '[') === 0) delete model.overrides[key];
+    });
+  }
+
+  function removeEmptyListItem(node) {
+    var list = node.parentElement;
+    if (!list || !list.matches('ul,ol') || node.textContent.trim()) return;
+    node.remove();
+    syncListFromDom(list);
+    fitPreviewToViewport();
+  }
+
+  function bindEditableInput(node) {
+    node.addEventListener('input', function () {
+      if (node.dataset.cvMode === 'list-item') {
+        var list = node.parentElement;
+        removeEmptyListItem(node);
+        if (list) syncListFromDom(list);
+        setStatus('Đã cập nhật danh sách. Bạn có thể lưu bản nháp.', 'neutral');
+        fitPreviewToViewport();
+        return;
+      }
+      var key = node.dataset.cvBind;
+      if (key) model.overrides[key] = node.textContent.trim();
+      fitPreviewToViewport();
+      setStatus('Đã cập nhật nội dung. Bạn có thể lưu bản nháp.', 'neutral');
+    });
   }
 
   function currentCvData() {
