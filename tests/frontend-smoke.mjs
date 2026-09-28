@@ -149,6 +149,14 @@ test("CV renders labeled academic scores and avoids invented resume details", as
   assert.match(css, /\.cv-academic-score__value[^}]*font-size: 14px[^}]*font-weight: 900/s);
 });
 
+test("CV A4 preview scales to the available mobile width", async () => {
+  const editor = await read("js/cv-builder-editor.js");
+
+  assert.match(editor, /var availableWidth = Math\.max\(0, scroll\.clientWidth - 16\)/);
+  assert.match(editor, /Math\.min\(1, availableWidth \/ pageWidth\)/);
+  assert.doesNotMatch(editor, /Math\.max\(scale,\s*0\.56\)/);
+});
+
 test("decimal score fields preserve in-progress comma and period input", async () => {
   const app = await read("js/app.js");
   const profile = await read("pages/profile.html");
