@@ -125,9 +125,42 @@ test("registration validates required identity fields before requesting the API"
 test("CV list fields create editable rows and remove empty rows", async () => {
   const editor = await read("js/cv-builder-editor.js");
 
-  assert.match(editor, /data\.cvListPath/);
+  assert.match(editor, /list\.dataset\.cvListPath/);
   assert.match(editor, /insertNewListItem/);
   assert.match(editor, /removeEmptyListItem/);
   assert.match(editor, /syncListFromDom/);
   assert.match(editor, /node\.dataset\.cvMode === 'list-item'/);
+});
+
+test("CV renders labeled academic scores and avoids invented resume details", async () => {
+  const editor = await read("js/cv-builder-editor.js");
+  const css = await read("css/cv-builder-editor.css");
+
+  assert.match(editor, /KẾT QUẢ HỌC TẬP/);
+  assert.match(editor, /GPA lớp /);
+  assert.match(editor, /Điểm tuyển sinh/);
+  assert.match(editor, /formatScore/);
+  assert.match(editor, /appendAcademicScores\(wrapper, entry\)/);
+  assert.match(editor, /model\.data\.education\.academicScores = extractProfile\(profileFromAxis\(\)\)\.education\.academicScores/);
+  assert.match(editor, /nextModel\.data = mergeAiEditableSection\(nextModel\.data, aiPayload \|\| \{\}\)/);
+  assert.match(editor, /model\.data = mergeAiEditableSection\(currentCvData\(\), data\)/);
+  assert.doesNotMatch(editor, /2021 – 2025|2024 – PRESENT|REFERENCES/);
+  assert.doesNotMatch(editor, /dotIndex < 4|i < 4/);
+  assert.match(css, /\.cv-academic-score__value[^}]*font-size: 14px[^}]*font-weight: 900/s);
+});
+
+test("decimal score fields preserve in-progress comma and period input", async () => {
+  const app = await read("js/app.js");
+  const profile = await read("pages/profile.html");
+  const css = await read("css/global.css");
+
+  assert.match(app, /function sanitizeDecimalInput/);
+  assert.match(app, /isDecimalScoreField\(key, field\)/);
+  assert.match(app, /profile\[key\] = sanitizeDecimalInput\(field\.value\)/);
+  assert.match(app, /document\.addEventListener\('input', handleProfileFieldEvent\)/);
+  assert.match(app, /key === 'certificateScore' && field\.tagName !== 'SELECT'/);
+  assert.match(profile, /id="certificateScore" type="text" inputmode="decimal"/);
+  assert.match(profile, /certificateScore\.outerHTML = '<input id="certificateScore" type="text" inputmode="decimal"/);
+  assert.match(profile, /certificateScore\.type = 'text'/);
+  assert.match(css, /subject-score-row input\[data-profile-field\^="score"\][^{]*\{[^}]*font-weight: 700/s);
 });

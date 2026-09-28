@@ -64,15 +64,30 @@
     return /^score(?:9|10|11|12)[A-Za-z]+$/.test(key);
   }
 
+  function isDecimalScoreField(key, field) {
+    return isSubjectScoreKey(key) ||
+      key === 'highSchoolLanguageScore' ||
+      (key === 'certificateScore' && field.tagName !== 'SELECT');
+  }
+
+  function sanitizeDecimalInput(value) {
+    var cleaned = String(value == null ? '' : value).replace(/[^\d.,]/g, '');
+    var separator = cleaned.search(/[.,]/);
+    if (separator < 0) return cleaned;
+    return cleaned.slice(0, separator + 1) + cleaned.slice(separator + 1).replace(/[.,]/g, '');
+  }
+
   function normalizeScoreField(field, value) {
     var key = field.getAttribute('data-profile-field') || '';
     var isSubjectScore = isSubjectScoreKey(key);
     var isTenPointScore = isSubjectScore || key === 'highSchoolLanguageScore' || /^gpa(?:9|10|11|12)$/.test(key);
     var isEntranceScore = key === 'entranceScore';
-    if (!isTenPointScore && !isEntranceScore) return value;
+    var isCertificateScore = key === 'certificateScore' && field.tagName !== 'SELECT';
+    if (!isTenPointScore && !isEntranceScore && !isCertificateScore) return value;
     if (value === '' || value == null) return value;
     var parsed = numeric(value);
     if (!Number.isFinite(parsed)) return '';
+    if (isCertificateScore) return String(parsed);
     var step = isEntranceScore ? 0.01 : 0.1;
     var maximum = isEntranceScore ? 30 : 10;
     parsed = Math.min(maximum, Math.max(0, parsed));
@@ -113,7 +128,7 @@
     fields.forEach(function (field) {
       var key = field.getAttribute('data-profile-field');
       if (key.indexOf('score') === 0 || key.indexOf('gpa') === 0 || key === 'entranceScore' || key === 'highSchoolLanguageScore') {
-        if (isSubjectScoreKey(key)) {
+        if (isDecimalScoreField(key, field)) {
           field.type = 'text';
           field.inputMode = 'decimal';
         }
@@ -127,27 +142,6 @@
         field.readOnly = true;
         field.setAttribute('aria-readonly', 'true');
       }
-      if (field.dataset.profileBound === 'true') return;
-      field.dataset.profileBound = 'true';
-      function updateValue(event) {
-        var isTypingSubjectScore = isSubjectScoreKey(key) && event.type === 'input';
-        if (field.type === 'checkbox') {
-          profile[key] = field.checked;
-        } else if (isTypingSubjectScore) {
-          // Keep an unfinished decimal such as "9," while the user is typing.
-          profile[key] = field.value.replace(/[^\d.,]/g, '');
-        } else {
-          profile[key] = normalizeScoreField(field, field.value);
-          field.value = profile[key];
-        }
-        if (key.indexOf('score') === 0 || key === 'className' || key === 'entranceCombination') recalculateAcademic();
-        persistLocalProfile();
-        hasUnsavedChanges = true;
-        document.dispatchEvent(new CustomEvent('axis:profile-changed'));
-        syncCompletion();
-      }
-      field.addEventListener('input', updateValue);
-      field.addEventListener('change', updateValue);
     });
     recalculateAcademic();
     document.dispatchEvent(new CustomEvent('axis:profile-hydrated'));
@@ -223,6 +217,28 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initProfile();
+    function handleProfileFieldEvent(event) {
+      var field = event.target;
+      if (!field || !field.matches || !field.matches('[data-profile-field]')) return;
+      var key = field.getAttribute('data-profile-field') || '';
+      var isTypingDecimalScore = isDecimalScoreField(key, field) && event.type === 'input';
+      if (field.type === 'checkbox') {
+        profile[key] = field.checked;
+      } else if (isTypingDecimalScore) {
+        profile[key] = sanitizeDecimalInput(field.value);
+        field.value = profile[key];
+      } else {
+        profile[key] = normalizeScoreField(field, field.value);
+        field.value = profile[key];
+      }
+      if (key.indexOf('score') === 0 || key === 'className' || key === 'entranceCombination') recalculateAcademic();
+      persistLocalProfile();
+      hasUnsavedChanges = true;
+      document.dispatchEvent(new CustomEvent('axis:profile-changed'));
+      syncCompletion();
+    }
+    document.addEventListener('input', handleProfileFieldEvent);
+    document.addEventListener('change', handleProfileFieldEvent);
     document.addEventListener('axis:auth-state', function (event) {
       if (event.detail.signedIn) {
         hydrationVersion += 1;

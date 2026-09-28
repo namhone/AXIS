@@ -8,6 +8,7 @@ from app.core.database import get_db
 from app.main import app
 from app.models.profile import Profile
 from app.models.user import User
+from app.services.ai import AIService
 
 
 def _user() -> User:
@@ -50,10 +51,15 @@ def test_auth_and_profile_require_authentication() -> None:
     assert response.json()["error"]["code"] == "http_error"
 
 
-def test_ai_rate_limit_returns_standard_error_response() -> None:
+def test_ai_rate_limit_returns_standard_error_response(monkeypatch) -> None:
     user = _user()
     app.dependency_overrides[get_current_user] = lambda: user
     app.dependency_overrides[get_db] = lambda: EmptySession()
+
+    def unavailable(self, **kwargs):
+        raise RuntimeError("AI service unavailable")
+
+    monkeypatch.setattr(AIService, "generate_roadmap", unavailable)
     _ai_limiter.reset()
     old_limit = _ai_limiter.limit
     _ai_limiter.limit = 1

@@ -48,13 +48,15 @@
       summary: 'GIỚI THIỆU', experience: 'KINH NGHIỆM & DỰ ÁN', education: 'HỌC VẤN',
       achievements: 'THÀNH TÍCH', skills: 'KỸ NĂNG', certificates: 'CHỨNG CHỈ',
       interests: 'SỞ THÍCH', contact: 'THÔNG TIN CÁ NHÂN', focus: 'MỤC TIÊU',
-      phone: 'Điện thoại', email: 'Email', linkedin: 'Liên kết', location: 'Địa điểm'
+      phone: 'Điện thoại', email: 'Email', linkedin: 'Liên kết', location: 'Địa điểm',
+      academicScores: 'KẾT QUẢ HỌC TẬP'
     },
     en: {
       summary: 'PROFILE', experience: 'EXPERIENCE & PROJECTS', education: 'EDUCATION',
       achievements: 'ACHIEVEMENTS', skills: 'SKILLS', certificates: 'CERTIFICATES',
       interests: 'INTERESTS', contact: 'CONTACT', focus: 'FOCUS',
-      phone: 'Phone', email: 'Email', linkedin: 'Website', location: 'Location'
+      phone: 'Phone', email: 'Email', linkedin: 'Website', location: 'Location',
+      academicScores: 'ACADEMIC RESULTS'
     }
   };
   var SAMPLE_PROFILE = {
@@ -94,6 +96,40 @@
       .slice(0, 8);
   }
 
+  function formatScore(value, maximum) {
+    var parsed = Number.parseFloat(String(value == null ? '' : value).trim().replace(',', '.'));
+    if (!Number.isFinite(parsed)) return '';
+    var locale = currentLanguage === 'en' ? 'en-US' : 'vi-VN';
+    return new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }).format(parsed) + ' / ' + maximum;
+  }
+
+  function academicScores(profile) {
+    var scores = [];
+    ['9', '10', '11', '12'].forEach(function (year) {
+      var key = 'gpa' + year;
+      if (profile[key] !== undefined && profile[key] !== null && profile[key] !== '') {
+        scores.push({
+          label: currentLanguage === 'en' ? 'Grade ' + year + ' GPA' : 'GPA lớp ' + year,
+          value: formatScore(profile[key], 10)
+        });
+      }
+    });
+    if (profile.entranceScore !== undefined && profile.entranceScore !== null && profile.entranceScore !== '') {
+      var combination = profile.entranceCombination ? ' · ' + profile.entranceCombination : '';
+      scores.push({
+        label: (currentLanguage === 'en' ? 'Entrance exam' : 'Điểm tuyển sinh') + combination,
+        value: formatScore(profile.entranceScore, 30)
+      });
+    }
+    if (profile.highSchoolLanguageScore !== undefined && profile.highSchoolLanguageScore !== null && profile.highSchoolLanguageScore !== '') {
+      scores.push({
+        label: currentLanguage === 'en' ? 'High school English' : 'Tiếng Anh THPT',
+        value: formatScore(profile.highSchoolLanguageScore, 10)
+      });
+    }
+    return scores.filter(function (score) { return score.value; });
+  }
+
   function initials(name) {
     return text(name, 'FP').split(/\s+/).filter(Boolean).slice(-2).map(function (part) {
       return part.charAt(0).toUpperCase();
@@ -128,7 +164,13 @@
   }
 
   function extractProfile(profile) {
-    var source = Object.assign({}, SAMPLE_PROFILE, profile || {});
+    var profileData = profile && typeof profile === 'object' ? profile : {};
+    var hasProfileContent = Object.keys(profileData).some(function (key) {
+      var field = profileData[key];
+      return Array.isArray(field) ? field.length > 0 : field !== null && field !== undefined && String(field).trim() !== '';
+    });
+    var sampleMode = !hasProfileContent;
+    var source = Object.assign({}, sampleMode ? SAMPLE_PROFILE : {}, profileData);
     var records = Array.isArray(source.certificateRecords) ? source.certificateRecords : [];
     var certificates = records.map(function (record) {
       return [record.name, record.score, record.issueDate].filter(Boolean).join(' · ');
@@ -137,39 +179,38 @@
       certificates.push([source.certificateName, source.certificateScore, source.certificateIssueDate].filter(Boolean).join(' · '));
     }
     var educationMeta = [source.className, source.birthYear].filter(Boolean).join(' · ');
-    var gpa = [source.gpa9, source.gpa10, source.gpa11, source.gpa12].filter(Boolean);
-    if (gpa.length) educationMeta += (educationMeta ? ' · ' : '') + ' GPA ' + gpa[gpa.length - 1];
     return {
-      name: text(source.name, SAMPLE_PROFILE.name),
-      role: text(source.goal, SAMPLE_PROFILE.goal),
-      email: text(source.email, SAMPLE_PROFILE.email),
-      phone: text(source.phone, SAMPLE_PROFILE.phone),
-      linkedin: text(source.linkedin, SAMPLE_PROFILE.linkedin),
-      location: text(source.location, 'Việt Nam'),
-      summary: text(source.introduction, SAMPLE_PROFILE.introduction),
-      skills: splitList(source.skills || source.supportingSkills).length ? splitList(source.skills || source.supportingSkills) : splitList(SAMPLE_PROFILE.skills),
-      interests: splitList(source.interests).length ? splitList(source.interests) : splitList(SAMPLE_PROFILE.interests),
+      name: text(source.name, sampleMode ? SAMPLE_PROFILE.name : ''),
+      role: text(source.goal, sampleMode ? SAMPLE_PROFILE.goal : ''),
+      email: text(source.email, sampleMode ? SAMPLE_PROFILE.email : ''),
+      phone: text(source.phone, sampleMode ? SAMPLE_PROFILE.phone : ''),
+      linkedin: text(source.linkedin, sampleMode ? SAMPLE_PROFILE.linkedin : ''),
+      location: text(source.location, sampleMode ? 'Việt Nam' : ''),
+      summary: text(source.introduction, sampleMode ? SAMPLE_PROFILE.introduction : ''),
+      skills: splitList(source.skills || source.supportingSkills).length ? splitList(source.skills || source.supportingSkills) : sampleMode ? splitList(SAMPLE_PROFILE.skills) : [],
+      interests: splitList(source.interests).length ? splitList(source.interests) : sampleMode ? splitList(SAMPLE_PROFILE.interests) : [],
       project: {
-        name: text(source.projectName, SAMPLE_PROFILE.projectName),
-        meta: text(source.projectType, SAMPLE_PROFILE.projectType),
-        description: text(source.projectDescription, SAMPLE_PROFILE.projectDescription)
+        name: text(source.projectName, sampleMode ? SAMPLE_PROFILE.projectName : ''),
+        meta: text(source.projectType, sampleMode ? SAMPLE_PROFILE.projectType : ''),
+        description: text(source.projectDescription, sampleMode ? SAMPLE_PROFILE.projectDescription : '')
       },
       activity: {
-        name: text(source.activityName, SAMPLE_PROFILE.activityName),
-        meta: text(source.activityRole, 'Thành viên'),
-        description: text(source.activityImpact, SAMPLE_PROFILE.activityImpact)
+        name: text(source.activityName, sampleMode ? 'CLB Khoa học kỹ thuật' : ''),
+        meta: text(source.activityRole, sampleMode ? 'Trưởng ban nội dung' : ''),
+        description: text(source.activityImpact, sampleMode ? SAMPLE_PROFILE.activityImpact : '')
       },
       education: {
-        name: text(source.schoolName, 'THPT AXIS'),
-        meta: text(educationMeta, 'Lớp 12 · GPA 9.2'),
-        description: text(source.educationDescription, 'Tập trung vào Toán, Tin học và các dự án nghiên cứu ứng dụng.')
+        name: text(source.schoolName, sampleMode ? 'THPT AXIS' : ''),
+        meta: text(educationMeta, ''),
+        description: text(source.educationDescription, sampleMode ? 'Tập trung vào Toán, Tin học và các dự án nghiên cứu ứng dụng.' : ''),
+        academicScores: academicScores(Object.keys(profileData).length ? profileData : SAMPLE_PROFILE)
       },
       achievement: {
-        name: text(source.examType || source.awardRank, 'Thành tích học tập'),
-        meta: [source.examSubject, source.examYear, source.awardRank].filter(Boolean).join(' · ') || '2024',
-        description: text(source.examDescription, 'Chủ động tham gia các hoạt động học thuật và chia sẻ kiến thức trong cộng đồng.')
+        name: text(source.examType || source.awardRank, ''),
+        meta: [source.examSubject, source.examYear, source.awardRank].filter(Boolean).join(' · '),
+        description: text(source.examDescription, '')
       },
-      certificates: certificates.length ? certificates : ['IELTS Academic · 6.5 · 2024']
+      certificates: certificates.length ? certificates : sampleMode ? ['IELTS Academic · 6.5 · 2024'] : []
     };
   }
 
@@ -295,7 +336,40 @@
     wrapper.appendChild(element('h3', '', 'data.' + prefix + '.name', entry.name));
     wrapper.appendChild(element('p', 'cv-page__meta', 'data.' + prefix + '.meta', entry.meta));
     wrapper.appendChild(element('p', '', 'data.' + prefix + '.description', entry.description));
+    if (prefix === 'education') appendAcademicScores(wrapper, entry);
     return wrapper;
+  }
+
+  function appendAcademicScores(parent, education) {
+    var scores = education && Array.isArray(education.academicScores) ? education.academicScores : [];
+    if (!scores.length) return;
+    var group = document.createElement('div');
+    group.className = 'cv-academic-scores';
+    var title = document.createElement('h4');
+    title.className = 'cv-academic-scores__title';
+    title.textContent = CV_LABELS[model.language || currentLanguage].academicScores;
+    group.appendChild(title);
+    var rows = document.createElement('div');
+    rows.className = 'cv-academic-scores__grid';
+    scores.forEach(function (score, index) {
+      var card = document.createElement('div');
+      card.className = 'cv-academic-score';
+      var label = document.createElement('span');
+      label.className = 'cv-academic-score__label';
+      label.textContent = score.label;
+      card.appendChild(label);
+      card.appendChild(element('strong', 'cv-academic-score__value',
+        'data.education.academicScores[' + index + '].value', score.value));
+      rows.appendChild(card);
+    });
+    group.appendChild(rows);
+    parent.appendChild(group);
+  }
+
+  function hasEntryContent(entry) {
+    if (!entry) return false;
+    return Boolean(entry.name || entry.meta || entry.description ||
+      (Array.isArray(entry.academicScores) && entry.academicScores.length));
   }
 
   function list(prefix, items, className) {
@@ -312,18 +386,20 @@
   function addCommonMain(main, includeAchievements) {
     var summary = document.createElement('div');
     summary.appendChild(element('p', '', 'data.summary', model.data.summary));
-    main.appendChild(section('summary', 'PROFILE', summary));
-
-    var projects = document.createElement('div');
-    projects.appendChild(item('project', model.data.project, 0));
-    projects.appendChild(item('activity', model.data.activity, 0));
-    main.appendChild(section('experience', 'EXPERIENCE & PROJECTS', projects));
+    if (model.data.summary) main.appendChild(section('summary', 'PROFILE', summary));
 
     var education = document.createElement('div');
-    education.appendChild(item('education', model.data.education, 0));
-    main.appendChild(section('education', 'EDUCATION', education));
+    if (hasEntryContent(model.data.education)) {
+      education.appendChild(item('education', model.data.education, 0));
+      main.appendChild(section('education', 'EDUCATION', education));
+    }
 
-    if (includeAchievements) {
+    var projects = document.createElement('div');
+    if (hasEntryContent(model.data.project)) projects.appendChild(item('project', model.data.project, 0));
+    if (hasEntryContent(model.data.activity)) projects.appendChild(item('activity', model.data.activity, 0));
+    if (projects.children.length) main.appendChild(section('experience', 'EXPERIENCE & PROJECTS', projects));
+
+    if (includeAchievements && (model.data.achievement.name || model.data.achievement.meta || model.data.achievement.description)) {
       var achievement = document.createElement('div');
       achievement.appendChild(item('achievement', model.data.achievement, 0));
       main.appendChild(section('achievements', 'ACHIEVEMENTS', achievement));
@@ -367,9 +443,6 @@
     mainHeader.className = 'cv-modern-main-header';
     mainHeader.appendChild(element('h1', '', 'data.name', model.data.name));
     mainHeader.appendChild(element('p', 'cv-page__meta', 'data.role', model.data.role));
-    mainHeader.appendChild(element('p', 'cv-page__contact', 'data.email', [model.data.email, model.data.phone, model.data.location].filter(Boolean).join(' · ')));
-    mainHeader.appendChild(element('p', 'cv-page__summary', 'data.summary', model.data.summary));
-
     var contact = document.createElement('div');
     contact.className = 'cv-modern-contact-list';
     ['phone', 'email', 'linkedin', 'location'].forEach(function (key) {
@@ -423,7 +496,7 @@
       return wrapper;
     }
 
-    function professionalEntry(prefix, entry, numbered) {
+    function professionalEntry(prefix, entry) {
       var wrapper = document.createElement('article');
       wrapper.className = 'cv-professional-entry';
       var top = document.createElement('div');
@@ -431,20 +504,8 @@
       top.appendChild(element('h3', '', 'data.' + prefix + '.name', entry.name));
       top.appendChild(element('span', 'cv-professional-entry-date', 'data.' + prefix + '.meta', entry.meta));
       wrapper.appendChild(top);
-      if (prefix === 'activity') {
-        wrapper.appendChild(element('p', 'cv-professional-entry-role', 'data.' + prefix + '.meta', entry.meta));
-      }
-      var description = element('p', 'cv-professional-entry-description', 'data.' + prefix + '.description', entry.description);
-      wrapper.appendChild(description);
-      if (numbered) {
-        var list = document.createElement('ol');
-        list.className = 'cv-professional-responsibilities';
-        [entry.description, 'Phối hợp với các bên liên quan để hoàn thành mục tiêu đúng tiến độ.', 'Theo dõi kết quả và cải thiện quy trình dựa trên dữ liệu.'].forEach(function (item, index) {
-          list.appendChild(element('li', '', 'data.' + prefix + '.responsibility' + index, item));
-        });
-        description.remove();
-        wrapper.appendChild(list);
-      }
+      wrapper.appendChild(element('p', 'cv-professional-entry-description', 'data.' + prefix + '.description', entry.description));
+      if (prefix === 'education') appendAcademicScores(wrapper, entry);
       return wrapper;
     }
 
@@ -479,47 +540,48 @@
       icon.className = 'cv-professional-info-icon';
       icon.appendChild(lucideIcon(entry[1]));
       row.appendChild(icon);
-      row.appendChild(element('span', '', 'data.' + entry[0], model.data[entry[0]] || 'Thông tin bổ sung'));
-      contact.appendChild(row);
+      if (model.data[entry[0]]) {
+        row.appendChild(element('span', '', 'data.' + entry[0], model.data[entry[0]]));
+        contact.appendChild(row);
+      }
     });
-    sidebar.appendChild(professionalSection('contact', 'contact', contact));
+    if (contact.children.length) sidebar.appendChild(professionalSection('contact', 'contact', contact));
 
-    var objective = document.createElement('div');
-    objective.appendChild(element('p', 'cv-professional-objective-text', 'data.summary', model.data.summary));
-    sidebar.appendChild(professionalSection('focus', 'sparkles', objective));
+    if (model.data.summary) {
+      var objective = document.createElement('div');
+      objective.appendChild(element('p', 'cv-professional-objective-text', 'data.summary', model.data.summary));
+      sidebar.appendChild(professionalSection('focus', 'sparkles', objective));
+    }
 
-    main.appendChild(professionalSection('education', 'graduation-cap', professionalEntry('education', model.data.education, false)));
+    if (hasEntryContent(model.data.education)) {
+      main.appendChild(professionalSection('education', 'graduation-cap', professionalEntry('education', model.data.education)));
+    }
     var experience = document.createElement('div');
-    experience.appendChild(professionalEntry('project', model.data.project, true));
-    experience.appendChild(professionalEntry('activity', model.data.activity, true));
-    main.appendChild(professionalSection('experience', 'briefcase', experience));
+    if (hasEntryContent(model.data.project)) experience.appendChild(professionalEntry('project', model.data.project));
+    if (hasEntryContent(model.data.activity)) experience.appendChild(professionalEntry('activity', model.data.activity));
+    if (experience.children.length) main.appendChild(professionalSection('experience', 'briefcase', experience));
 
     var skills = document.createElement('div');
     model.data.skills.forEach(function (skill, index) {
       var row = document.createElement('div');
       row.className = 'cv-professional-skill';
       row.appendChild(element('span', '', 'data.skills[' + index + ']', skill));
-      var bar = document.createElement('span');
-      bar.className = 'cv-professional-skill-bar';
-      bar.appendChild(document.createElement('i'));
-      row.appendChild(bar);
       skills.appendChild(row);
     });
-    main.appendChild(professionalSection('skills', 'sparkles', skills));
+    if (skills.children.length) main.appendChild(professionalSection('skills', 'sparkles', skills));
 
     var certificates = document.createElement('div');
     model.data.certificates.forEach(function (certificate, index) {
       var row = document.createElement('div');
       row.className = 'cv-professional-line-item';
       row.appendChild(element('span', '', 'data.certificates[' + index + ']', certificate));
-      var year = document.createElement('span');
-      year.textContent = '2024';
-      row.appendChild(year);
       certificates.appendChild(row);
     });
-    main.appendChild(professionalSection('certificates', 'badge-check', certificates));
+    if (certificates.children.length) main.appendChild(professionalSection('certificates', 'badge-check', certificates));
 
-    main.appendChild(professionalSection('achievements', 'trophy', professionalEntry('achievement', model.data.achievement, false)));
+    if (model.data.achievement.name || model.data.achievement.meta || model.data.achievement.description) {
+      main.appendChild(professionalSection('achievements', 'trophy', professionalEntry('achievement', model.data.achievement)));
+    }
     columns.appendChild(main);
     columns.appendChild(sidebar);
     page.appendChild(columns);
@@ -559,6 +621,7 @@
     sidebar.appendChild(contact);
 
     function simpleSideSection(title, key, entries) {
+      if (!entries.length) return;
       var block = document.createElement('section');
       block.className = 'cv-simple-side-section';
       block.appendChild(element('h2', '', 'labels.' + key, title));
@@ -578,26 +641,26 @@
       var row = document.createElement('div');
       row.className = 'cv-simple-skill';
       row.appendChild(element('span', '', 'data.skills[' + index + ']', skill));
-      var dots = document.createElement('span');
-      dots.className = 'cv-simple-rating';
-      for (var dotIndex = 0; dotIndex < 5; dotIndex += 1) {
-        var dot = document.createElement('i');
-        if (dotIndex < 4) dot.className = 'is-filled';
-        dots.appendChild(dot);
-      }
-      row.appendChild(dots);
       skillBlock.appendChild(row);
     });
-    sidebar.appendChild(skillBlock);
-    simpleSideSection('CERTIFICATES', 'certificates', model.data.certificates);
-    simpleSideSection('AWARDS', 'achievements', [model.data.achievement.name]);
+    if (model.data.skills.length) sidebar.appendChild(skillBlock);
+    simpleSideSection('certificates', 'certificates', model.data.certificates);
+    if (model.data.achievement.name || model.data.achievement.meta || model.data.achievement.description) {
+      var awards = document.createElement('section');
+      awards.className = 'cv-simple-side-section';
+      awards.appendChild(element('h2', '', 'labels.achievements', 'AWARDS'));
+      awards.appendChild(element('div', 'cv-simple-side-item', 'data.achievement.name', model.data.achievement.name));
+      sidebar.appendChild(awards);
+    }
 
     var main = document.createElement('main');
     main.className = 'cv-simple-main';
     var header = document.createElement('header');
     header.className = 'cv-simple-head';
     header.appendChild(element('p', 'cv-simple-kicker', 'labels.summary', 'PROFILE'));
-    header.appendChild(element('p', 'cv-page__contact', 'data.email', model.data.email + ' · ' + model.data.phone));
+    if (model.data.email || model.data.phone) {
+      header.appendChild(element('p', 'cv-page__contact', 'data.email', [model.data.email, model.data.phone].filter(Boolean).join(' · ')));
+    }
     main.appendChild(header);
 
     function timelineSection(key, title, content) {
@@ -614,29 +677,18 @@
 
     var objective = document.createElement('p');
     objective.appendChild(element('span', '', 'data.summary', model.data.summary));
-    main.appendChild(timelineSection('summary', 'CAREER OBJECTIVE', objective));
+    if (model.data.summary) main.appendChild(timelineSection('summary', 'PROFILE', objective));
 
     var education = document.createElement('div');
-    education.appendChild(element('p', 'cv-simple-date', '', '2021 – 2025', { editable: false }));
-    education.appendChild(item('education', model.data.education, 0));
-    main.appendChild(timelineSection('education', 'EDUCATION', education));
+    if (hasEntryContent(model.data.education)) {
+      education.appendChild(item('education', model.data.education, 0));
+      main.appendChild(timelineSection('education', 'EDUCATION', education));
+    }
 
     var experience = document.createElement('div');
-    experience.appendChild(element('p', 'cv-simple-date', '', '2024 – PRESENT', { editable: false }));
-    experience.appendChild(item('project', model.data.project, 0));
-    experience.appendChild(item('activity', model.data.activity, 0));
-    main.appendChild(timelineSection('experience', 'WORK EXPERIENCE', experience));
-
-    var activities = document.createElement('div');
-    activities.appendChild(element('p', 'cv-simple-date', '', '2023 – 2024', { editable: false }));
-    activities.appendChild(item('activity', model.data.activity, 0));
-    main.appendChild(timelineSection('activities', 'ACTIVITIES', activities));
-
-    var references = document.createElement('div');
-    references.appendChild(element('h3', '', 'data.name', model.data.name));
-    references.appendChild(element('p', 'cv-page__meta', 'data.role', model.data.role));
-    references.appendChild(element('p', '', 'data.email', model.data.email));
-    main.appendChild(timelineSection('references', 'REFERENCES', references));
+    if (hasEntryContent(model.data.project)) experience.appendChild(item('project', model.data.project, 0));
+    if (hasEntryContent(model.data.activity)) experience.appendChild(item('activity', model.data.activity, 0));
+    if (experience.children.length) main.appendChild(timelineSection('experience', 'PROJECTS & ACTIVITIES', experience));
 
     page.appendChild(sidebar);
     page.appendChild(main);
@@ -681,13 +733,8 @@
       item.className = 'cv-creative-entry';
       item.appendChild(element('p', 'cv-creative-date', 'data.' + prefix + '.meta', entry.meta));
       item.appendChild(element('h3', '', 'data.' + prefix + '.name', entry.name));
-      item.appendChild(element('p', 'cv-creative-entry-role', 'data.' + prefix + '.meta', entry.meta));
-      var description = document.createElement('ul');
-      description.className = 'cv-creative-bullets';
-      description.appendChild(element('li', '', 'data.' + prefix + '.description', entry.description));
-      description.appendChild(element('li', '', 'data.' + prefix + '.descriptionExtra', 'Phối hợp triển khai và theo dõi kết quả thực tế.'));
-      description.appendChild(element('li', '', 'data.' + prefix + '.achievement', 'Đề xuất cải tiến dựa trên phản hồi và dữ liệu.'));
-      item.appendChild(description);
+      item.appendChild(element('p', 'cv-creative-entry-text', 'data.' + prefix + '.description', entry.description));
+      if (prefix === 'education') appendAcademicScores(item, entry);
       return item;
     }
 
@@ -702,7 +749,7 @@
     var identity = document.createElement('div');
     identity.className = 'cv-creative-identity';
     identity.appendChild(element('h1', '', 'data.name', model.data.name));
-    identity.appendChild(element('p', 'cv-creative-role', 'data.role', model.data.role));
+    if (model.data.role) identity.appendChild(element('p', 'cv-creative-role', 'data.role', model.data.role));
     profile.appendChild(identity);
     page.appendChild(profile);
 
@@ -716,57 +763,51 @@
       var icon = document.createElement('span');
       icon.appendChild(lucideIcon(entry[1]));
       row.appendChild(icon);
-      row.appendChild(element('span', '', 'data.' + entry[0], model.data[entry[0]] || 'Thông tin bổ sung'));
-      contact.appendChild(row);
+      if (model.data[entry[0]]) {
+        row.appendChild(element('span', '', 'data.' + entry[0], model.data[entry[0]]));
+        contact.appendChild(row);
+      }
     });
-    sidebar.appendChild(card('PERSONAL INFORMATION', 'cv-creative-info-card', contact));
+    if (contact.children.length) sidebar.appendChild(card('PERSONAL INFORMATION', 'cv-creative-info-card', contact));
 
-    var objective = document.createElement('div');
-    objective.appendChild(element('p', '', 'data.summary', model.data.summary));
-    sidebar.appendChild(card('CAREER OBJECTIVE', 'cv-creative-objective-card', objective));
+    if (model.data.summary) {
+      var objective = document.createElement('div');
+      objective.appendChild(element('p', '', 'data.summary', model.data.summary));
+      sidebar.appendChild(card('PROFILE', 'cv-creative-objective-card', objective));
+    }
 
     var skills = document.createElement('div');
     model.data.skills.forEach(function (skill, index) {
       var item = document.createElement('div');
       item.className = 'cv-creative-skill';
       item.appendChild(element('span', '', 'data.skills[' + index + ']', skill));
-      var dots = document.createElement('span');
-      dots.className = 'cv-creative-rating';
-      for (var i = 0; i < 5; i += 1) {
-        var dot = document.createElement('i');
-        if (i < 4) dot.className = 'is-filled';
-        dots.appendChild(dot);
-      }
-      item.appendChild(dots);
       skills.appendChild(item);
     });
-    sidebar.appendChild(card('SKILLS', 'cv-creative-skills-card', skills));
+    if (skills.children.length) sidebar.appendChild(card('SKILLS', 'cv-creative-skills-card', skills));
 
-    var awards = document.createElement('div');
-    awards.appendChild(element('p', 'cv-creative-date', 'data.achievement.meta', model.data.achievement.meta));
-    awards.appendChild(element('h3', '', 'data.achievement.name', model.data.achievement.name));
-    awards.appendChild(element('p', 'cv-creative-entry-text', 'data.achievement.description', model.data.achievement.description));
-    sidebar.appendChild(card('AWARDS & ACHIEVEMENTS', 'cv-creative-awards-card', awards));
+    if (hasEntryContent(model.data.achievement)) {
+      var awards = document.createElement('div');
+      if (model.data.achievement.meta) awards.appendChild(element('p', 'cv-creative-date', 'data.achievement.meta', model.data.achievement.meta));
+      if (model.data.achievement.name) awards.appendChild(element('h3', '', 'data.achievement.name', model.data.achievement.name));
+      if (model.data.achievement.description) awards.appendChild(element('p', 'cv-creative-entry-text', 'data.achievement.description', model.data.achievement.description));
+      sidebar.appendChild(card('AWARDS & ACHIEVEMENTS', 'cv-creative-awards-card', awards));
+    }
 
     var certificates = document.createElement('div');
     model.data.certificates.forEach(function (certificate, index) {
       certificates.appendChild(element('p', 'cv-creative-certificate-item', 'data.certificates[' + index + ']', certificate));
     });
-    sidebar.appendChild(card('CERTIFICATES', 'cv-creative-certificates-card', certificates));
+    if (certificates.children.length) sidebar.appendChild(card('CERTIFICATES', 'cv-creative-certificates-card', certificates));
 
     var main = document.createElement('main');
     main.className = 'cv-creative-main';
-    main.appendChild(timelineSection('EDUCATION', creativeEntry('education', model.data.education)));
+    if (hasEntryContent(model.data.education)) {
+      main.appendChild(timelineSection('EDUCATION', creativeEntry('education', model.data.education)));
+    }
     var experience = document.createElement('div');
-    experience.appendChild(creativeEntry('project', model.data.project));
-    experience.appendChild(creativeEntry('activity', model.data.activity));
-    main.appendChild(timelineSection('WORK EXPERIENCE', experience));
-    main.appendChild(timelineSection('ACTIVITIES', creativeEntry('activity', model.data.activity)));
-    var references = document.createElement('div');
-    references.appendChild(element('h3', '', 'data.name', model.data.name));
-    references.appendChild(element('p', 'cv-creative-entry-text', 'data.role', model.data.role));
-    references.appendChild(element('p', 'cv-creative-entry-text', 'data.email', model.data.email));
-    main.appendChild(timelineSection('REFERENCES', references));
+    if (hasEntryContent(model.data.project)) experience.appendChild(creativeEntry('project', model.data.project));
+    if (hasEntryContent(model.data.activity)) experience.appendChild(creativeEntry('activity', model.data.activity));
+    if (experience.children.length) main.appendChild(timelineSection('PROJECTS & ACTIVITIES', experience));
 
     var columns = document.createElement('div');
     columns.className = 'cv-creative-columns';
@@ -1085,7 +1126,7 @@
     setAgent('content', 'running');
     try {
       var aiPayload = await requestCvAI(aiEditableSection(nextModel.data), currentLanguage, 'normalize');
-      nextModel.data = Object.assign({}, nextModel.data, aiPayload || {});
+      nextModel.data = mergeAiEditableSection(nextModel.data, aiPayload || {});
     } catch (error) {
       if (run !== pipelineRun) return;
       ['structure', 'content', 'review'].forEach(function (agent) { setAgent(agent, 'error'); });
@@ -1164,6 +1205,15 @@
       currentTemplate = TEMPLATE_LABELS[saved.template] ? saved.template : 'modern';
       currentLanguage = saved.language === 'en' ? 'en' : 'vi';
       model.language = currentLanguage;
+      if (model.data.education) {
+        if (!Array.isArray(model.data.education.academicScores) || !model.data.education.academicScores.length) {
+          model.data.education.academicScores = extractProfile(profileFromAxis()).education.academicScores;
+        }
+        model.data.education.meta = String(model.data.education.meta || '')
+          .replace(/\s*[·|,]\s*GPA\s*[\d.,]+\s*/i, ' ')
+          .replace(/\bGPA\s*[\d.,]+/gi, '')
+          .trim();
+      }
       return true;
     } catch (error) {
       return false;
@@ -1215,7 +1265,7 @@
         setStatus('Đang dịch nội dung CV bằng AI server…', 'working');
         languageSelect.disabled = true;
         requestCvAI(currentCvData(), currentLanguage, 'translate').then(function (data) {
-          model.data = data;
+          model.data = mergeAiEditableSection(currentCvData(), data);
           renderPreview();
           setStatus(currentLanguage === 'vi' ? 'Đã dịch nội dung CV sang tiếng Việt.' : 'CV content translated to English.', 'success');
         }).catch(function (error) {

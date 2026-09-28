@@ -4824,6 +4824,17 @@ body.mobile-nav-open { overflow: hidden; }
   scrollbar-width: thin;
 }
 
+.profile-workspace .subject-score-row input[data-profile-field^="score"] {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.profile-workspace input[data-profile-field="certificateScore"],
+.profile-workspace input[data-profile-field="highSchoolLanguageScore"] {
+  font-variant-numeric: tabular-nums;
+}
+
 .profile-workspace .upload-box {
   gap: 14px;
   margin-top: 24px !important;
