@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import test from "node:test";
+import vm from "node:vm";
 
 const root = resolve(import.meta.dirname, "..");
 
@@ -101,14 +102,78 @@ test("shared shell is semantic and every page exposes basic SEO metadata", async
   }
 });
 
-test("heavy PDF scripts are deferred and narrow viewports have a fallback", async () => {
+test("page scripts defer parsing and PDF generation loads only on request", async () => {
   const assessment = await read("pages/assessment.html");
   const profile = await read("pages/profile.html");
+  const pdfLoader = await read("js/pdf-loader.js");
   const css = await read("css/global.css");
-  assert.match(assessment, /jspdf\.umd\.min\.js[^>]+defer/);
-  assert.match(profile, /jspdf\.umd\.min\.js[^>]+defer/);
+  assert.match(assessment, /js\/pdf-loader\.js[^>]+defer/);
+  assert.match(profile, /js\/pdf-loader\.js[^>]+defer/);
+  assert.doesNotMatch(assessment, /<script[^>]+jspdf\.umd\.min\.js/);
+  assert.doesNotMatch(profile, /<script[^>]+jspdf\.umd\.min\.js/);
+  assert.match(pdfLoader, /script\.integrity = integrity/);
+  assert.match(pdfLoader, /window\.jspdf\.jsPDF/);
+  assert.match(assessment, /await window\.AxisPdf\.load\(\)/);
+  assert.match(profile, /await window\.AxisPdf\.load\(\)/);
   assert.match(css, /@media \(max-width: 320px\)/);
   assert.match(css, /@view-transition/);
+});
+
+test("shared component loaders are deferred on every HTML page", async () => {
+  const pages = ["index.html", ...["about", "assessment", "calendar", "career-detail", "careers", "cv-builder-editor", "dashboard", "development", "guide", "profile", "riasec"].map((name) => `pages/${name}.html`)];
+
+  for (const page of pages) {
+    const html = await read(page);
+    const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? "";
+    const componentLoader = head.match(/<script\b[^>]*src=["'][^"']*components\.js[^"']*["'][^>]*>/i)?.[0];
+    assert.ok(componentLoader, `${page} is missing the shared component loader`);
+    assert.match(componentLoader, /\bdefer\b/i, `${page} loads shared components as a parser-blocking script`);
+  }
+});
+
+test("every page loads Inter directly instead of through a CSS import waterfall", async () => {
+  const pages = ["index.html", ...["about", "assessment", "calendar", "career-detail", "careers", "cv-builder-editor", "dashboard", "development", "guide", "profile", "riasec"].map((name) => `pages/${name}.html`)];
+  const css = await read("css/global.css");
+
+  assert.doesNotMatch(css, /@import\s+url\([^)]*fonts\.googleapis\.com/i);
+  for (const page of pages) {
+    const html = await read(page);
+    assert.match(html, /rel=["']preconnect["'][^>]+fonts\.googleapis\.com/i, `${page} should preconnect to Google Fonts`);
+    assert.match(html, /rel=["']stylesheet["'][^>]+fonts\.googleapis\.com/i, `${page} should load Inter directly`);
+  }
+});
+
+test("PDF loader downloads the library once on demand and retries failures", async () => {
+  const source = await read("js/pdf-loader.js");
+  const scripts = [];
+  const context = {
+    window: {
+      setTimeout: () => 1,
+      clearTimeout: () => {},
+    },
+    document: {
+      createElement: () => ({
+        remove() {},
+      }),
+      head: {
+        appendChild(script) {
+          scripts.push(script);
+        },
+      },
+    },
+  };
+  vm.runInNewContext(source, context);
+
+  const firstLoad = context.window.AxisPdf.load();
+  const secondLoad = context.window.AxisPdf.load();
+  assert.equal(firstLoad, secondLoad);
+  assert.equal(scripts.length, 1);
+  assert.equal(scripts[0].integrity, "sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk");
+
+  scripts[0].onerror();
+  await assert.rejects(firstLoad, /Unable to load PDF library/);
+  context.window.AxisPdf.load();
+  assert.equal(scripts.length, 2);
 });
 
 test("registration validates required identity fields before requesting the API", async () => {

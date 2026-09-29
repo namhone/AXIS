@@ -52,7 +52,8 @@ Axis/
 ├── js/                         Browser modules and API integration
 │   ├── app.js                  Shared frontend data/UI behavior
 │   ├── auth.js                 FastAPI auth, account data, HttpOnly-cookie session
-│   └── dashboard.js             AXIS dashboard presentation and evaluation flow
+│   ├── dashboard.js            AXIS dashboard presentation and evaluation flow
+│   └── pdf-loader.js           On-demand jsPDF loader for report and portfolio export
 ├── assets/                     Images and illustrations
 ├── src/                        Small React/TypeScript icon components
 ├── package.json                TypeScript type-check/build and test shortcuts
@@ -159,6 +160,14 @@ npm install
 npm run build
 ```
 
+The static pages load Inter directly from Google Fonts with connection hints,
+and defer the jsPDF library until a user requests a PDF export. Run the frontend
+smoke suite after changing page markup, shared assets, or these loading paths:
+
+```powershell
+npm run test:frontend
+```
+
 Run the focused backend tests from the project root:
 
 ```powershell
@@ -191,7 +200,11 @@ The current suite covers career-match score bounds and representative S2 convers
 
 ## Contributing
 
-Issues and pull requests are welcome. Please keep changes focused, add or update tests for calculation or API behavior, avoid committing secrets or runtime data, and document any changes to the scoring model or benchmark catalog. Before opening a pull request, run `npm run build` and `npm test`.
+Issues and pull requests are welcome. Please keep changes focused, add or update
+tests for calculation or API behavior, avoid committing secrets or runtime
+data, and document any changes to the scoring model or benchmark catalog.
+Before opening a pull request, run `npm run build`, `npm run test:frontend`, and
+`npm test`.
 
 ## License
 
