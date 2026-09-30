@@ -13,6 +13,9 @@ api.md
 # Runtime form submissions
 data/submissions.json
 
+# Local development database snapshot
+/backend/dev.db
+
 # Dependencies and build output
 node_modules/
 dist/
