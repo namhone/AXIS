@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any
 
 
@@ -65,6 +66,46 @@ SKILL_TRACKS: dict[str, list[dict[str, Any]]] = {
         },
     ],
 }
+
+
+def assessment_career_matches(assessment: Any | None) -> list[dict[str, Any]]:
+    if assessment is None:
+        return []
+    score_data = assessment.score_json if isinstance(assessment.score_json, dict) else {}
+    suggestions = (
+        assessment.career_suggestions_json
+        if isinstance(assessment.career_suggestions_json, dict)
+        else {}
+    )
+    matches = (
+        score_data.get("top3")
+        or suggestions.get("top3")
+        or suggestions.get("top5")
+    )
+    if not isinstance(matches, list):
+        return []
+    return [item for item in matches[:3] if isinstance(item, dict)]
+
+
+def selected_career_context(goals: list[Any]) -> list[dict[str, Any]]:
+    selected: list[dict[str, Any]] = []
+    for goal in goals:
+        if goal.category != "career" or goal.status == "cancelled":
+            continue
+        note = str(goal.note or "")
+        code_match = re.search(r"(?:^|\s)__axis_career_code:([A-Z0-9_-]+)__", note)
+        note = re.sub(r"(?:^|\s)__axis_career_code:[A-Z0-9_-]+__", "", note).strip()
+        selected.append(
+            {
+                "code": code_match.group(1) if code_match else None,
+                "name": re.sub(r"^Tìm hiểu nghề:\s*", "", goal.title, flags=re.IGNORECASE),
+                "status": goal.status,
+                "note": note,
+            }
+        )
+        if len(selected) == 2:
+            break
+    return selected
 
 
 def _top_career_code(profile: dict[str, Any]) -> str:

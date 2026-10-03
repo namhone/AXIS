@@ -2,7 +2,7 @@ from datetime import date, datetime, time, timedelta, timezone
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from ..deps import get_current_user
 from ...core.database import get_db
@@ -91,7 +91,7 @@ def list_tasks(
         query = query.filter(Task.scheduled_date >= from_date)
     if to_date:
         query = query.filter(Task.scheduled_date <= to_date)
-    tasks = query.order_by(Task.scheduled_date, Task.created_at).all()
+    tasks = query.options(selectinload(Task.tags)).order_by(Task.scheduled_date, Task.created_at).all()
     return {
         "user_id": user.id,
         "generated_at": datetime.now(timezone.utc),
@@ -132,6 +132,7 @@ def generate_plan(
     created: list[Task] = []
     for index, name in enumerate(names[:12]):
         day = date.today() + timedelta(days=index // 2)
+        _ensure_capacity(db, user.id, day, 45)
         task = Task(
             user_id=user.id,
             task_name=name.strip() or f"Nhiệm vụ ngày {index // 2 + 1}",
@@ -144,7 +145,8 @@ def generate_plan(
             generated_at=now,
         )
         created.append(task)
-    db.add_all(created)
+        db.add(task)
+        db.flush()
     db.commit()
     for task in created:
         db.refresh(task)
@@ -179,6 +181,14 @@ def update_task_status(
     task = db.query(Task).filter(Task.id == task_id, Task.user_id == user.id).first()
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
+    if payload.status in ACTIVE_STATUSES:
+        _ensure_capacity(
+            db,
+            user.id,
+            task.scheduled_date,
+            task.estimated_time_minutes,
+            task_id=task.id,
+        )
     task.status = payload.status
     db.commit()
     db.refresh(task)

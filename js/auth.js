@@ -298,6 +298,14 @@
         : fallbackMessage;
     const error = new Error(message);
     error.status = response.status;
+    const detail = body && body.error && body.error.details;
+    const retryAfter = detail && Number(detail.retry_after);
+    const headerRetryAfter = Number(response.headers.get('Retry-After'));
+    if (Number.isFinite(retryAfter) && retryAfter > 0) {
+      error.retryAfter = retryAfter;
+    } else if (Number.isFinite(headerRetryAfter) && headerRetryAfter > 0) {
+      error.retryAfter = headerRetryAfter;
+    }
     return error;
   }
 

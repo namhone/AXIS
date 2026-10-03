@@ -81,22 +81,55 @@ def _clamp(value: float) -> float:
     return max(0.0, min(10.0, value))
 
 
-def _gpa(profile: dict[str, Any]) -> float:
-    values = [_number(profile.get(key)) for key in ("gpa10", "gpa11", "gpa12")]
+def aggregate_gpa(profile: dict[str, Any]) -> float:
+    grade = _number(profile.get("grade"))
+    values = [
+        _number(profile.get(key))
+        for key in ("gpa9", "gpa10", "gpa11", "gpa12")
+        if grade is None or int(key[3:]) <= grade
+    ]
     values = [value for value in values if value is not None]
     return _clamp(sum(values) / len(values)) if values else 0.0
 
 
-def _subject_score(profile: dict[str, Any], subject: str) -> float | None:
-    for key in SUBJECT_KEYS[subject]:
+def _gpa(profile: dict[str, Any]) -> float:
+    return aggregate_gpa(profile)
+
+
+def aggregate_subject_score(profile: dict[str, Any], subject: str) -> float | None:
+    keys = SUBJECT_KEYS[subject]
+    grade = _number(profile.get("grade"))
+    yearly_scores = []
+    for key in keys:
+        if not key.startswith("score"):
+            continue
+        year = re.match(r"score(\d+)", key)
+        if grade is not None and year is not None and int(year.group(1)) > grade:
+            continue
+        value = _number(profile.get(key))
+        if value is not None:
+            yearly_scores.append(_clamp(value))
+    if yearly_scores:
+        return sum(yearly_scores) / len(yearly_scores)
+
+    for key in keys:
+        if key.startswith("score"):
+            continue
         value = _number(profile.get(key))
         if value is not None:
             return _clamp(value)
     return None
 
 
+def _subject_score(profile: dict[str, Any], subject: str) -> float | None:
+    return aggregate_subject_score(profile, subject)
+
+
 def _s1(profile: dict[str, Any], industry: Industry) -> float:
-    first, second = (_subject_score(profile, subject) for subject in industry.subjects)
+    first, second = (
+        aggregate_subject_score(profile, subject)
+        for subject in industry.subjects
+    )
     gpa = _gpa(profile)
     if first is None and second is None:
         return gpa
@@ -109,7 +142,10 @@ def _s1(profile: dict[str, Any], industry: Industry) -> float:
 
 def _has_valid_core_subjects(profile: dict[str, Any], industry: Industry) -> bool:
     """Require both core subjects before recommending an industry."""
-    return all(_subject_score(profile, subject) is not None for subject in industry.subjects)
+    return all(
+        aggregate_subject_score(profile, subject) is not None
+        for subject in industry.subjects
+    )
 
 
 def _score_language_certificate(cert_name: str | None, cert_score: Any, *, expired: bool = False) -> float:

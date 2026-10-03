@@ -33,8 +33,11 @@
           </section>
 
           <section class="content-panel">
-            <h2>01 · Mục tiêu hiện tại</h2>
-            <div id="careerGoalsCurrent" class="info-grid current-goals-grid" aria-live="polite"></div>
+            <h2>01 · Ngành phù hợp &amp; ưu tiên phát triển</h2>
+            <p class="section-note">Top 3 được xếp theo điểm phù hợp gần nhất. Hai vị trí cuối hiển thị ngành em đã thêm vào lộ trình từ trang Ngành; AI sẽ dùng các lựa chọn đó để cá nhân hóa nhiệm vụ.</p>
+            <div id="careerGoalsCurrent" class="info-grid current-goals-grid career-focus-grid" aria-live="polite"></div>
+            <div id="careerSelectedGoals" class="info-grid current-goals-grid career-focus-grid career-focus-selected" aria-label="Ngành đã thêm vào lộ trình"></div>
+            <a class="ghost-btn career-focus-browse" href="careers.html">Khám phá ngành để thêm vào lộ trình</a>
           </section>
 
           <section class="content-panel development-progress-panel">
@@ -72,37 +75,8 @@
               <span id="roadmapStatus" role="status" aria-live="polite"></span>
             </div>
             <p class="section-note">Mỗi ngày gồm kỹ năng ngành, bài tập có đầu ra và một hoạt động bổ trợ. Hãy đánh dấu sau khi hoàn thành đủ nhiệm vụ.</p>
-            <div class="timeline roadmap-list">
-              <div class="timeline-item roadmap-item" data-roadmap-id="python" data-default-state="done">
-                <div class="roadmap-task-list">
-                  <article class="roadmap-task-card is-completed">
-                    <div class="roadmap-task-heading"><span class="roadmap-task-number">01</span><strong>Nhiệm vụ 1 · Python: biến và kiểu dữ liệu</strong></div>
-                    <div class="roadmap-task-description">Học 45 phút, làm 5 bài tập biến/kiểu dữ liệu và nộp 1 file bài làm.</div>
-                    <div class="roadmap-task-meta"><span class="status">Đã học</span><span>Thời lượng: 45 phút</span></div>
-                    <div class="roadmap-task-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button" disabled>Đã học</button></div>
-                  </article>
-                </div>
-              </div>
-              <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="project" data-default-state="pending">
-                <div class="roadmap-task-list">
-                  <article class="roadmap-task-card">
-                    <div class="roadmap-task-heading"><span class="roadmap-task-number">02</span><strong>Nhiệm vụ 2 · Python: điều kiện và vòng lặp</strong></div>
-                    <div class="roadmap-task-description">Học 45 phút, giải 5 bài if/for/while và viết 1 chương trình tính điểm.</div>
-                    <div class="roadmap-task-meta"><span class="status pending">Chưa học</span><span>Thời lượng: 45 phút</span></div>
-                    <div class="roadmap-task-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
-                  </article>
-                </div>
-              </div>
-              <div class="timeline-item roadmap-item roadmap-pending" data-roadmap-id="english" data-default-state="pending">
-                <div class="roadmap-task-list">
-                  <article class="roadmap-task-card">
-                    <div class="roadmap-task-heading"><span class="roadmap-task-number">03</span><strong>Nhiệm vụ 3 · C++: cú pháp nền tảng</strong></div>
-                    <div class="roadmap-task-description">Học 40 phút, viết 3 chương trình nhập/xuất dữ liệu và đọc 10 thuật ngữ kỹ thuật.</div>
-                    <div class="roadmap-task-meta"><span class="status pending">Chưa học</span><span>Thời lượng: 40 phút</span></div>
-                    <div class="roadmap-task-actions"><button class="ghost-btn roadmap-start" type="button">Bắt đầu</button><button class="ghost-btn roadmap-done" type="button">Đã học</button></div>
-                  </article>
-                </div>
-              </div>
+            <div class="timeline roadmap-list" aria-live="polite">
+              <div class="timeline-item"><em>Chưa có nhiệm vụ. Hãy tạo lộ trình để bắt đầu.</em></div>
             </div>
           </section>
 
@@ -315,24 +289,6 @@
 
         function render() {
           const goals = loadGoals();
-          const careerGoalsCurrent = document.getElementById('careerGoalsCurrent');
-          if (careerGoalsCurrent) {
-            const currentGoals = goals.filter(function (goal) {
-              return goal.status !== 'cancelled';
-            }).slice(0, 4);
-            careerGoalsCurrent.innerHTML = currentGoals.length
-              ? currentGoals.map(function (goal) {
-                const done = goal.done || goal.status === 'completed';
-                const schedule = [goal.date || goal.target_date, goal.minutes || goal.minutes_per_day ? (goal.minutes || goal.minutes_per_day) + ' phút/ngày' : '']
-                  .filter(Boolean).join(' · ');
-                return '<article class="stat-card current-goal-card' + (done ? ' is-completed' : '') + '">' +
-                  '<div class="current-goal-heading"><h3>' + escapeHtml(goal.title.replace(/^Tìm hiểu nghề:\s*/i, '')) + '</h3><span class="goal-category">' + escapeHtml(goal.category || 'Chung') + '</span></div>' +
-                  (schedule ? '<p class="current-goal-meta">' + escapeHtml(schedule) + '</p>' : '') +
-                  '<div class="progress-row"><div class="label"><span>Trạng thái</span><strong>' + (done ? 'Đã hoàn thành' : 'Đang theo dõi') + '</strong></div><div class="progress-bar"><span class="progress-fill" data-progress="' + (done ? '100' : '0') + '"></span></div></div>' +
-                '</article>';
-              }).join('')
-              : '<div class="current-goals-empty"><strong>Chưa có mục tiêu nào</strong><span>Thêm mục tiêu trong phần kế hoạch để nội dung hiển thị ở đây.</span></div>';
-          }
           listEl.innerHTML = '';
           if (!goals.length) {
             listEl.innerHTML = '<div class="timeline-item"><div><em>Chưa có mục tiêu nào. Thêm mục tiêu phía trên để bắt đầu.</em></div></div>';
@@ -375,7 +331,11 @@
         function roadmapState() { return window.__axisRoadmap || {}; }
         function renderRoadmapSteps(steps) {
           const list = document.querySelector('.roadmap-list');
-          if (!list || !steps.length) return;
+          if (!list) return;
+          if (!steps.length) {
+            list.innerHTML = '<div class="timeline-item"><em>Chưa có nhiệm vụ. Hãy tạo lộ trình để bắt đầu.</em></div>';
+            return;
+          }
           const today = new Date().toISOString().slice(0, 10);
           const visibleSteps = steps.filter(function (step) {
             try { return JSON.parse(step.content).date === today; } catch (error) { return false; }
@@ -521,7 +481,7 @@
           function close() { clearInterval(timer); modal.remove(); }
           modal.querySelector('.pomodoro-close').addEventListener('click', close);
           modal.querySelector('.settings-modal-backdrop').addEventListener('click', close);
-          modal.querySelector('.pomodoro-finish').addEventListener('click', function () { close(); alert('Đã ghi nhận phiên học. Hãy đánh dấu "Đã học" khi hoàn tất nhiệm vụ.'); });
+          modal.querySelector('.pomodoro-finish').addEventListener('click', function () { close(); alert('Phiên tập trung đã kết thúc. Hãy đánh dấu "Đã học" nếu bạn đã hoàn tất nhiệm vụ.'); });
         }
         function initRoadmap() {
           const state = roadmapState();
@@ -765,8 +725,31 @@
 
         function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"]+/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
+        function renderCareerFocus(focus) {
+          const container = document.getElementById('careerGoalsCurrent');
+          const selectedContainer = document.getElementById('careerSelectedGoals');
+          if (!container || !selectedContainer) return;
+          const recommended = focus && Array.isArray(focus.recommended) ? focus.recommended.slice(0, 3) : [];
+          container.innerHTML = (recommended.length ? recommended.map(function (career, index) {
+            const score = Math.max(0, Math.min(100, Number(career.score) || 0));
+            return '<article class="stat-card career-focus-card">' +
+              '<div class="career-focus-heading"><span class="career-focus-rank">Top ' + (index + 1) + '</span><span class="career-focus-score">' + score.toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + '%</span></div>' +
+              '<h3>' + escapeHtml(career.name || 'Ngành nghề chưa xác định') + '</h3>' +
+              '<div class="career-focus-scorebar" role="img" aria-label="Mức độ phù hợp ' + score.toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + '%"><span style="width:' + score + '%"></span></div>' +
+            '</article>';
+          }).join('') : '<div class="current-goals-empty"><strong>Chưa có kết quả phù hợp</strong><span>Hãy hoàn thành đánh giá ở trang <a href="assessment.html">Đánh giá &amp; Gợi ý</a> để xem top 3 ngành tại đây.</span></div>';
+          const selected = focus && Array.isArray(focus.selected) ? focus.selected.slice(0, 2) : [];
+          selectedContainer.innerHTML = [0, 1].map(function (index) {
+            const career = selected[index];
+            return career
+              ? '<article class="stat-card career-focus-card career-focus-selected-card"><div class="career-focus-heading"><span class="career-focus-rank">Đã thêm vào lộ trình · ' + (index + 1) + '</span></div><h3>' + escapeHtml(career.name || 'Ngành nghề') + '</h3><span class="career-focus-selected-note">' + escapeHtml(career.status === 'completed' ? 'Đã hoàn thành mục tiêu tìm hiểu' : 'Đang theo dõi trong lộ trình') + '</span></article>'
+              : '<article class="stat-card career-focus-card career-focus-empty-slot"><div class="career-focus-heading"><span class="career-focus-rank">Ngành trong lộ trình · ' + (index + 1) + '</span></div><strong>Chưa chọn ngành</strong><span>Thêm ngành từ trang Ngành để lấp đầy vị trí này.</span></article>';
+          }).join('');
+        }
+
         function renderSkillPlan(plan) {
           if (!skillPlanList || !plan || !Array.isArray(plan.tracks)) return;
+          renderCareerFocus(plan.career_focus);
           if (skillPlanSummary) {
             skillPlanSummary.textContent = plan.weeks_until_grade_12 + ' tuần · ' + plan.daily_minutes + ' phút/ngày';
           }
@@ -821,6 +804,7 @@
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
             if (skillPlanSummary) skillPlanSummary.textContent = 'Đăng nhập để cá nhân hóa';
             if (skillPlanList) skillPlanList.innerHTML = '<div class="timeline-item"><em>Hãy đăng nhập để hệ thống tính khoảng thời gian trước lớp 12 và lưu thứ tự kỹ năng của bạn.</em></div>';
+            renderCareerFocus({ recommended: [], selected: [] });
             return;
           }
           try {
@@ -909,9 +893,9 @@
         if (generateRoadmapBtn) {
           generateRoadmapBtn.addEventListener('click', generateRoadmap);
         }
-
         async function loadAccountPlan() {
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
+            renderRoadmapSteps([]);
             render();
             initRoadmap();
             return;
@@ -929,11 +913,13 @@
             steps.forEach(function (step) {
               window.__axisRoadmap['step-' + step.step_number] = step.is_completed ? 'done' : 'pending';
             });
-            if (steps.length) renderRoadmapSteps(steps);
+            renderRoadmapSteps(steps);
             accountPlanReady = true;
             render();
           } catch (error) {
             accountPlanReady = false;
+            const list = document.querySelector('.roadmap-list');
+            if (list) list.innerHTML = '<div class="timeline-item"><em>Không thể tải lộ trình. Vui lòng thử lại.</em></div>';
             render();
           }
         }

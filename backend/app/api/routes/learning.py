@@ -18,7 +18,7 @@ from ...services.schedule import (
 import json
 import re
 from ...services.career_matching import calculate_matches
-from ...services.skill_planner import build_skill_plan
+from ...services.skill_planner import assessment_career_matches, build_skill_plan, selected_career_context
 from ...models.profile import Profile
 
 router = APIRouter(prefix="/api/v1", tags=["learning-data"])
@@ -71,9 +71,28 @@ def get_skill_plan(user: User = Depends(get_current_user), db: Session = Depends
         .order_by(Assessment.created_at.desc())
         .first()
     )
-    if latest_assessment:
-        profile_data["career_matches"] = latest_assessment.career_suggestions_json.get("top3", [])
-    return build_skill_plan(profile_data)
+    career_matches = assessment_career_matches(latest_assessment)
+    profile_data["career_matches"] = career_matches
+    selected_goals = (
+        db.query(Goal)
+        .filter(Goal.user_id == user.id, Goal.category == "career")
+        .order_by(Goal.target_date, Goal.title)
+        .all()
+    )
+    plan = build_skill_plan(profile_data)
+    plan["career_focus"] = {
+        "recommended": [
+            {
+                "code": item.get("code"),
+                "name": item.get("name", ""),
+                "score": item.get("score", 0),
+            }
+            for item in career_matches
+            if isinstance(item, dict)
+        ],
+        "selected": selected_career_context(selected_goals),
+    }
+    return plan
 
 
 @router.put("/skill-plan/order", response_model=None)
@@ -108,11 +127,12 @@ def create_goal(payload: GoalPayload, user: User = Depends(get_current_user), db
         raise HTTPException(status_code=422, detail="career_code is required for career goals")
     if payload.category == "career":
         existing = db.query(Goal).filter(Goal.user_id == user.id, Goal.category == "career").all()
+        active_existing = [goal for goal in existing if goal.status != "cancelled"]
         code = payload.career_code.upper()
         if any(re.search(rf"(?:^|\s)__axis_career_code:{re.escape(code)}__", goal.note or "") for goal in existing):
             raise HTTPException(status_code=409, detail="Ngành này đã có trong lộ trình.")
-        if len(existing) >= 3:
-            raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 3 ngành vào lộ trình.")
+        if len(active_existing) >= 2:
+            raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 2 ngành vào lộ trình.")
     goal = Goal(user_id=user.id, **_goal_values(payload))
     db.add(goal)
     db.commit()
@@ -125,6 +145,24 @@ def update_goal(goal_id: uuid.UUID, payload: GoalPayload, user: User = Depends(g
     goal = db.query(Goal).filter(Goal.id == goal_id, Goal.user_id == user.id).first()
     if goal is None:
         raise HTTPException(status_code=404, detail="Goal not found")
+    if payload.category == "career":
+        existing = db.query(Goal).filter(Goal.user_id == user.id, Goal.category == "career").all()
+        code = payload.career_code.upper() if payload.career_code else None
+        if any(
+            item.id != goal.id
+            and code
+            and re.search(rf"(?:^|\s)__axis_career_code:{re.escape(code)}__", item.note or "")
+            for item in existing
+        ):
+            raise HTTPException(status_code=409, detail="Ngành này đã có trong lộ trình.")
+        active_after_update = sum(
+            item.id != goal.id and item.status != "cancelled"
+            for item in existing
+        ) + (payload.status != "cancelled")
+        if active_after_update > 2:
+            raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 2 ngành vào lộ trình.")
+        if not payload.career_code:
+            raise HTTPException(status_code=422, detail="career_code is required for career goals")
     for key, value in _goal_values(payload).items():
         setattr(goal, key, value)
     db.commit()
@@ -142,8 +180,8 @@ def replace_goals(
     career_codes = [item.career_code.upper() for item in career_goals if item.career_code]
     if len(career_goals) != len(career_codes) or len(career_codes) != len(set(career_codes)):
         raise HTTPException(status_code=422, detail="Mỗi mục tiêu ngành nghề cần một mã ngành duy nhất.")
-    if len(career_goals) > 3:
-        raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 3 ngành vào lộ trình.")
+    if len(career_goals) > 2:
+        raise HTTPException(status_code=409, detail="Bạn chỉ có thể thêm tối đa 2 ngành vào lộ trình.")
     db.query(Goal).filter(Goal.user_id == user.id).delete()
     goals = [Goal(user_id=user.id, **_goal_values(item)) for item in payload]
     db.add_all(goals)
@@ -216,10 +254,7 @@ def defer_roadmap_task(
         target = parse_step_content(steps[source_index + 1].content)
         target_tasks = target.get("tasks", [])
         if len(target_tasks) >= DAILY_TASK_LIMIT:
-            removable = next((i for i, item in enumerate(target_tasks) if isinstance(item, dict) and not item.get("user_priority")), None)
-            if removable is None:
-                removable = len(target_tasks) - 1
-            target_tasks.pop(removable)
+            raise HTTPException(status_code=409, detail="Next day is full; no task was deferred")
         target_tasks.insert(0, task)
         target["tasks"] = target_tasks
         steps[source_index + 1].content = json.dumps(target, ensure_ascii=False)

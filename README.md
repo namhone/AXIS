@@ -147,7 +147,7 @@ In a second terminal, from the project directory:
 python -m http.server 5500
 ```
 
-Open <http://127.0.0.1:5500/>. The frontend's local API configuration targets FastAPI at port `8000`; ensure the frontend origin is included in `backend/.env` under `CORS_ORIGINS`. Do not use `file://` for authenticated or cross-origin flows.
+Open <http://127.0.0.1:5500/>. The frontend's local API configuration targets FastAPI at port `8000`; development automatically allows the loopback frontend origins on ports `5500` and `5501`. Add any other frontend origin explicitly in `backend/.env` under `CORS_ORIGINS`. Do not use `file://` for authenticated or cross-origin flows.
 
 For a quick, unauthenticated static preview, the bundled Flask demo can also be run with `python server.py` and opened at <http://127.0.0.1:5000/>. It is not a substitute for FastAPI and its contact endpoint has intentionally permissive demo CORS; do not deploy it as-is.
 

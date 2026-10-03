@@ -199,23 +199,41 @@
     if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) return;
     var payload = JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) });
     if (payload === lastEvaluationPayload || evaluationRequest) return;
+    var status = document.getElementById('axisEvaluationStatus');
+    if (status) status.textContent = 'Đang tính kết quả bằng hệ thống AXIS...';
     window.clearTimeout(renderTimer);
     renderTimer = window.setTimeout(function () {
       evaluationRequest = window.AxisAuth.apiRequest('/axis/evaluate', {
         method: 'POST',
         body: payload
-      }).then(function () {
+      }).then(function (response) {
         lastEvaluationPayload = payload;
-      }).catch(function () {
-        // A later input change can retry the failed evaluation.
+        if (JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) !== payload) return;
+        if (status) status.textContent = 'Kết quả được tính từ máy chủ AXIS.';
+        render(response.results);
+      }).catch(function (error) {
+        lastEvaluationPayload = payload;
+        if (JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) !== payload) return;
+        if (status) status.textContent = error.message || 'Không thể tính kết quả từ máy chủ AXIS.';
+        document.getElementById('axisCareerResults').innerHTML = '';
+        document.getElementById('axisGapResults').innerHTML = '';
+        document.getElementById('axisOverallScore').textContent = '—';
       }).finally(function () {
         evaluationRequest = null;
+        if (JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) !== lastEvaluationPayload) {
+          syncServerEvaluation();
+        }
       });
     }, 350);
   }
-  function render() {
+  function render(serverResults) {
     var values = inputValues();
-    var ranked = benchmarks.map(function (benchmark) { return { benchmark: benchmark, score: scoreFor(values, benchmark), gap: gapFor(values, benchmark) }; }).sort(function (a, b) { return b.score - a.score; });
+    var ranked = Array.isArray(serverResults)
+      ? serverResults.map(function (result) {
+        var benchmark = benchmarks.find(function (item) { return item.code === result.code; });
+        return benchmark ? { benchmark: benchmark, score: result.match_score, gap: result.gap_risk } : null;
+      }).filter(Boolean).sort(function (a, b) { return b.score - a.score; })
+      : benchmarks.map(function (benchmark) { return { benchmark: benchmark, score: scoreFor(values, benchmark), gap: gapFor(values, benchmark) }; }).sort(function (a, b) { return b.score - a.score; });
     var average = ranked.length ? ranked.reduce(function (sum, item) { return sum + item.score; }, 0) / ranked.length : 0;
     document.getElementById('axisOverallScore').textContent = Math.round(average) + '%';
     document.getElementById('axisSummaryList').innerHTML = dimensions.map(function (item) { return '<div><span><b>' + item.key + '</b> ' + item.label + '</span><strong>' + item.value.toFixed(1) + '/10</strong></div>'; }).join('');

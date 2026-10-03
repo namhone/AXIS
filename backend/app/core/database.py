@@ -1,7 +1,8 @@
 from collections.abc import Generator
 from pathlib import Path
+import sqlite3
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from .config import get_settings
@@ -15,6 +16,16 @@ def _engine_options(database_url: str) -> dict[str, object]:
     if database_url.startswith("sqlite"):
         return {"connect_args": {"check_same_thread": False}}
     return {"pool_pre_ping": True}
+
+
+def _enable_sqlite_foreign_keys(
+    dbapi_connection: sqlite3.Connection, _: object
+) -> None:
+    cursor = dbapi_connection.cursor()
+    try:
+        cursor.execute("PRAGMA foreign_keys=ON")
+    finally:
+        cursor.close()
 
 
 def _resolve_database_url(database_url: str) -> str:
@@ -40,6 +51,8 @@ engine = create_engine(
     future=True,
     **_engine_options(database_url),
 )
+if engine.dialect.name == "sqlite":
+    event.listen(engine, "connect", _enable_sqlite_foreign_keys)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 

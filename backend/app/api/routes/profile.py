@@ -55,16 +55,17 @@ class ProfileUpdate(BaseModel):
                     for item in re.split(r"[,;\n]+", raw_items)
                     if item.strip()
                 ]
-        exam_subject = values.get("examSubject")
-        subject = values.get("subject")
-        # examSubject is the newer name, but accept the original subject key.
-        if isinstance(exam_subject, str):
-            exam_subject = exam_subject.strip() or None
-        if isinstance(subject, str):
-            subject = subject.strip() or None
-        canonical = exam_subject if exam_subject is not None else subject
-        values["examSubject"] = canonical
-        values["subject"] = canonical
+        if "examSubject" in values or "subject" in values:
+            exam_subject = values.get("examSubject")
+            subject = values.get("subject")
+            # examSubject is the newer name, but accept the original subject key.
+            if isinstance(exam_subject, str):
+                exam_subject = exam_subject.strip() or None
+            if isinstance(subject, str):
+                subject = subject.strip() or None
+            canonical = exam_subject if exam_subject is not None else subject
+            values["examSubject"] = canonical
+            values["subject"] = canonical
         return values
 
 
@@ -109,6 +110,10 @@ def _canonical_subject(data: dict[str, Any], stored_subject: str | None = None) 
 def get_profile(user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> dict:
     profile = db.get(Profile, user.id)
     data = dict(profile.data) if profile else {}
+    if user.is_synthetic:
+        data["dataProvenance"] = "Synthetic"
+    else:
+        data.pop("dataProvenance", None)
     subject = _canonical_subject(data, profile.subject if profile else None)
     if subject:
         data["examSubject"] = subject
@@ -130,11 +135,18 @@ def update_profile(
     # Merge payload into profile data, preserving nested CV structures
     payload_dict = payload.model_dump(exclude_unset=True)
     data.update(_normalize_score_values(payload_dict))
+    if user.is_synthetic:
+        data["dataProvenance"] = "Synthetic"
+    else:
+        data.pop("dataProvenance", None)
     
     # Preserve user's identity
     data["name"] = user.full_name
     data["email"] = user.email
-    subject = payload.examSubject or payload.subject or _canonical_subject(data)
+    subject_provided = "examSubject" in payload.model_fields_set or "subject" in payload.model_fields_set
+    subject = (
+        payload.examSubject if payload.examSubject is not None else payload.subject
+    ) if subject_provided else _canonical_subject(data)
     data["examSubject"] = subject
     data["subject"] = subject
     

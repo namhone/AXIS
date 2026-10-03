@@ -27,7 +27,7 @@
           <section class="page-hero">
             <span class="eyebrow">RIASEC · HOLLAND</span>
             <h1>Hiểu mình, chọn hướng đi phù hợp.</h1>
-            <p class="lead">Bộ câu hỏi gồm 6 nhóm tính cách. Mỗi nhóm có 20 câu được chọn đều từ 5 khía cạnh để kết quả cân bằng và sát với bạn hơn.</p>
+            <p class="lead">Bộ câu hỏi gồm 6 nhóm tính cách. Mỗi nhóm có 10 câu, với 2 câu cho mỗi khía cạnh; tổng cộng 60 câu.</p>
           </section>
 
           <section class="content-panel riasec-card" id="riasecApp" aria-live="polite">
@@ -38,8 +38,9 @@
               </div>
               <ul class="riasec-rules">
                 <li>Trả lời theo mức độ bạn thấy đúng với mình, không có đáp án đúng hay sai.</li>
-                <li>Mỗi nhóm có 20 câu, phủ đủ 5 khía cạnh; tổng thời gian khoảng 8–12 phút.</li>
+                <li>Mỗi nhóm có 10 câu, gồm 2 câu cho mỗi khía cạnh; tổng thời gian khoảng 4–6 phút.</li>
                 <li>Câu trả lời được tự động lưu trên thiết bị để bạn có thể quay lại.</li>
+                <li>Đăng nhập để nhận đủ ba nhận xét AI và đồng bộ kết quả vào hồ sơ.</li>
               </ul>
               <button class="primary-btn" id="startRiasec" type="button">Xác nhận bắt đầu làm trắc nghiệm</button>
               <p class="form-help" id="riasecLoadStatus" role="status">Đang tải ngân hàng câu hỏi...</p>
@@ -88,6 +89,12 @@
               <h2 id="resultTitle">Hồ sơ tính cách Holland</h2>
               <p class="lead" id="resultSummary"></p>
               <div class="riasec-evaluation-notice hidden" id="riasecEvaluationNotice" role="status"></div>
+              <section class="riasec-ai-evaluation hidden" id="riasecAiEvaluation" aria-labelledby="riasecAiTitle">
+                <h3 id="riasecAiTitle">Nhận xét AI về điểm số và khía cạnh</h3>
+                <p><strong>Tình hình chung:</strong> <span id="riasecAiOverall">Chưa có nhận xét.</span></p>
+                <p><strong>Định hướng:</strong> <span id="riasecAiDirection"></span></p>
+                <p><strong>Tóm tắt:</strong> <span id="riasecAiSummary"></span></p>
+              </section>
               <section class="riasec-career-matches hidden" id="riasecCareerMatches">
                 <div class="riasec-section-heading">
                   <div>
@@ -131,6 +138,6 @@
         </div>
       </section>
     </div>
-    <script src="../js/riasec.js?v=modal-hardening-1"></script>
+    <script src="../js/riasec.js?v=assessment-endpoint-fix-1"></script>
   </body>
 </html>

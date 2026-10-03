@@ -5,6 +5,7 @@
   var accountId = '';
   var hydrationVersion = 0;
   var hasUnsavedChanges = false;
+  var userEditedFields = Object.create(null);
   var completionFields = ['name', 'birthYear', 'className', 'email', 'phone', 'linkedin', 'goal', 'introduction'];
 
   function normalizeProfile(data) {
@@ -87,7 +88,14 @@
     if (value === '' || value == null) return value;
     var parsed = numeric(value);
     if (!Number.isFinite(parsed)) return '';
-    if (isCertificateScore) return String(parsed);
+    if (isCertificateScore) {
+      var certificateApi = window.AxisCertificates;
+      var certificateType = field.dataset.certificateType;
+      if (certificateApi && certificateType) {
+        return certificateApi.formatScore(certificateType, value);
+      }
+      return String(parsed);
+    }
     var step = isEntranceScore ? 0.01 : 0.1;
     var maximum = isEntranceScore ? 30 : 10;
     parsed = Math.min(maximum, Math.max(0, parsed));
@@ -157,10 +165,19 @@
     }
     document.querySelectorAll('[data-profile-field]').forEach(function (field) {
       var key = field.getAttribute('data-profile-field');
+      if (key === 'certificateScore' && field.value && field.dataset.certificateType && window.AxisCertificates) {
+        var scoreError = window.AxisCertificates.validateScore(field.dataset.certificateType, field.value);
+        if (scoreError) {
+          field.setCustomValidity(scoreError);
+          field.setAttribute('aria-invalid', 'true');
+          field.reportValidity();
+          throw new Error(scoreError);
+        }
+      }
       var value = field.type === 'checkbox' ? field.checked : normalizeScoreField(field, field.value);
       if (field.type !== 'checkbox') field.value = value;
       // A dynamic select can briefly have no matching option while it is hydrated.
-      if (field.tagName === 'SELECT' && !value && profile[key]) value = profile[key];
+      if (field.tagName === 'SELECT' && !value && profile[key] && !userEditedFields[key]) value = profile[key];
       profile[key] = value;
     });
     profile = normalizeProfile(await window.AxisAuth.apiRequest('/profile', {
@@ -168,6 +185,7 @@
       body: JSON.stringify(profile)
     }));
     hasUnsavedChanges = false;
+    userEditedFields = Object.create(null);
     persistLocalProfile();
     document.dispatchEvent(new CustomEvent('axis:profile-changed'));
     initProfile();
@@ -221,15 +239,34 @@
       var field = event.target;
       if (!field || !field.matches || !field.matches('[data-profile-field]')) return;
       var key = field.getAttribute('data-profile-field') || '';
+      userEditedFields[key] = true;
       var isTypingDecimalScore = isDecimalScoreField(key, field) && event.type === 'input';
       if (field.type === 'checkbox') {
         profile[key] = field.checked;
       } else if (isTypingDecimalScore) {
-        profile[key] = sanitizeDecimalInput(field.value);
+        var certificateApi = window.AxisCertificates;
+        var certificateType = field.dataset.certificateType;
+        profile[key] = key === 'certificateScore' && certificateApi && certificateType
+          ? certificateApi.sanitizeScoreInput(certificateType, field.value)
+          : sanitizeDecimalInput(field.value);
         field.value = profile[key];
       } else {
         profile[key] = normalizeScoreField(field, field.value);
         field.value = profile[key];
+      }
+      if (key === 'certificateScore' && field.dataset.certificateType) {
+        var scoreApi = window.AxisCertificates;
+        var scoreError = event.type === 'change' && field.value && scoreApi
+          ? scoreApi.validateScore(field.dataset.certificateType, field.value)
+          : '';
+        field.setCustomValidity(scoreError);
+        if (scoreError) field.setAttribute('aria-invalid', 'true');
+        else field.removeAttribute('aria-invalid');
+        var scoreHelp = document.getElementById('certificateHelp');
+        if (scoreHelp) {
+          scoreHelp.textContent = scoreError || scoreHelp.dataset.defaultMessage || '';
+          scoreHelp.dataset.tone = scoreError ? 'error' : 'neutral';
+        }
       }
       if (key.indexOf('score') === 0 || key === 'className' || key === 'entranceCombination') recalculateAcademic();
       persistLocalProfile();
@@ -244,6 +281,7 @@
         hydrationVersion += 1;
         accountId = event.detail.user && event.detail.user.id ? String(event.detail.user.id) : '';
         hasUnsavedChanges = false;
+        userEditedFields = Object.create(null);
         profile = readLocalProfile(accountId);
         if (event.detail.user) {
           profile.name = event.detail.user.full_name || '';
@@ -259,6 +297,7 @@
         hydrationVersion += 1;
         accountId = '';
         hasUnsavedChanges = false;
+        userEditedFields = Object.create(null);
         profile = {};
         try {
           localStorage.removeItem('axis_profile');

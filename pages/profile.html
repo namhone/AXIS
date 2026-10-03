@@ -360,18 +360,18 @@
                       <div class="upload-box profile-completion-actions" style="margin-top: 18px;">
                         <div class="mini-form profile-core-details">
                           <h3>Định hướng cá nhân</h3>
-                          <div class="mini-grid">
+                          <div class="mini-grid profile-core-fields">
                             <div class="field">
-                              <label>Sở thích</label>
-                              <textarea rows="3" data-profile-field="interests" placeholder="Ví dụ: đọc sách, nghiên cứu khoa học, học công nghệ mới..."></textarea>
+                              <label for="profile-interests">Sở thích</label>
+                              <textarea id="profile-interests" rows="3" data-profile-field="interests" placeholder="Ví dụ: đọc sách, nghiên cứu khoa học, học công nghệ mới..."></textarea>
                             </div>
                             <div class="field">
-                              <label>Tính cách</label>
-                              <textarea rows="3" data-profile-field="personality" placeholder="Ví dụ: chủ động, cẩn thận, thích hợp tác..."></textarea>
+                              <label for="profile-personality">Tính cách</label>
+                              <textarea id="profile-personality" rows="3" data-profile-field="personality" placeholder="Ví dụ: chủ động, cẩn thận, thích hợp tác..."></textarea>
                             </div>
-                            <div class="field wide">
-                              <label>Kỹ năng</label>
-                              <textarea rows="3" data-profile-field="skills" placeholder="Ví dụ: giao tiếp, làm việc nhóm, phân tích, Excel, Python, design..."></textarea>
+                            <div class="field profile-core-skills">
+                              <label for="profile-skills">Kỹ năng</label>
+                              <textarea id="profile-skills" rows="3" data-profile-field="skills" placeholder="Ví dụ: giao tiếp, làm việc nhóm, phân tích, Excel, Python, design..."></textarea>
                             </div>
                           </div>
                         </div>
@@ -684,17 +684,33 @@
         certificateScore.removeAttribute('max');
         certificateScore.removeAttribute('step');
         if (numeric) {
+          certificateScore.dataset.certificateType = type;
+          certificateScore.setAttribute('aria-describedby', 'certificateHelp');
+          certificateScore.setAttribute('aria-label', 'Điểm ' + (option.textContent || 'chứng chỉ'));
+          certificateScore.setCustomValidity('');
+          certificateScore.removeAttribute('aria-invalid');
           certificateScore.min = String(numeric[0]);
           certificateScore.max = String(numeric[1]);
           certificateScore.step = String(numeric[2]);
           certificateScore.placeholder = numeric[3];
-          certificateHelp.textContent = 'Thang điểm: ' + numeric[0] + '–' + numeric[1] + ', bước ' + numeric[2];
+          certificateHelp.dataset.defaultMessage = numeric[2] === 0.5
+            ? 'Thang điểm ' + numeric[0] + '–' + numeric[1] + ', chỉ nhận bước 0,5. Có thể nhập 6,5 hoặc 6.5.'
+            : 'Thang điểm ' + numeric[0] + '–' + numeric[1] + ', bước ' + numeric[2] + '. Không nhập phần lẻ.';
+          certificateHelp.textContent = certificateHelp.dataset.defaultMessage;
         } else if (type) {
+          delete certificateScore.dataset.certificateType;
+          certificateScore.setCustomValidity('');
+          certificateScore.removeAttribute('aria-invalid');
           certificateScore.placeholder = 'Chọn cấp độ';
-          certificateHelp.textContent = 'Chọn cấp độ tương ứng với chứng chỉ.';
+          certificateHelp.dataset.defaultMessage = 'Chọn cấp độ tương ứng với chứng chỉ.';
+          certificateHelp.textContent = certificateHelp.dataset.defaultMessage;
         } else {
+          delete certificateScore.dataset.certificateType;
+          certificateScore.setCustomValidity('');
+          certificateScore.removeAttribute('aria-invalid');
           certificateScore.placeholder = 'Chọn chứng chỉ trước';
-          certificateHelp.textContent = 'Chọn ngôn ngữ và chứng chỉ để áp dụng đúng quy đổi.';
+          certificateHelp.dataset.defaultMessage = 'Chọn ngôn ngữ và chứng chỉ để áp dụng đúng quy đổi.';
+          certificateHelp.textContent = certificateHelp.dataset.defaultMessage;
         }
         const useHighSchool = Boolean(certificateUseHighSchool && certificateUseHighSchool.checked);
         if (certificateName) certificateName.disabled = !certificateLanguage.value || useHighSchool;
@@ -745,6 +761,17 @@
           if (window.AXISAuth && window.AXISAuth.showNotice) window.AXISAuth.showNotice('Hãy chọn ngôn ngữ, chứng chỉ và điểm trước khi thêm.');
           return;
         }
+        const scoreError = window.AxisCertificates.validateScore(draft.name, draft.score);
+        if (scoreError) {
+          certificateScore.setCustomValidity(scoreError);
+          certificateScore.setAttribute('aria-invalid', 'true');
+          certificateHelp.textContent = scoreError;
+          certificateScore.reportValidity();
+          return;
+        }
+        certificateScore.setCustomValidity('');
+        certificateScore.removeAttribute('aria-invalid');
+        draft.score = window.AxisCertificates.formatScore(draft.name, draft.score);
         certificateRecords.push(draft);
         renderCertificateList();
         if (window.AXISData && window.AXISData.setProfileValue) {
@@ -756,7 +783,10 @@
       });
       fillCertificateLanguages();
       if (certificateLanguage) certificateLanguage.addEventListener('change', fillCertificateTypes);
-      if (certificateName) certificateName.addEventListener('change', updateCertificateValidation);
+      if (certificateName) certificateName.addEventListener('change', function () {
+        certificateScore.value = '';
+        updateCertificateValidation();
+      });
       if (certificateIssueDate) certificateIssueDate.addEventListener('change', updateCertificateExpiry);
       if (certificateUseHighSchool) certificateUseHighSchool.addEventListener('change', updateCertificateValidation);
       document.addEventListener('axis:profile-hydrated', function () {

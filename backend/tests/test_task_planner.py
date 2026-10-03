@@ -4,15 +4,21 @@ import uuid
 from types import SimpleNamespace
 
 from sqlalchemy import create_engine
+from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import Session
+from fastapi.testclient import TestClient
 
 from app.core.config import Settings
-from app.core.database import Base
+from app.core.database import Base, get_db
+from app.api.deps import get_current_user
+from app.main import app
+from app.models.learning import RoadmapStep
 from app.models.tasks import Task
 from app.schemas.tasks import TaskPayload
 from app.services.ai import AIService
 from app.services.schedule import _expand_tasks
 from app.services.task_planner import reconcile_overdue_tasks
+from app.models.user import User
 
 
 def _session() -> Session:
@@ -93,9 +99,11 @@ def test_expand_tasks_keeps_subtasks_as_independent_titles():
 
 
 def test_ai_service_accepts_vietjack_reference_tasks(monkeypatch):
+    calls = []
+
     class DummyCompletions:
-        @staticmethod
-        def create(**kwargs):
+        def create(self, **kwargs):
+            calls.append(kwargs)
             payload = {
                 "steps": [
                     {
@@ -128,7 +136,152 @@ def test_ai_service_accepts_vietjack_reference_tasks(monkeypatch):
     )
 
     service = AIService(Settings(groq_api_key="test-key", groq_model="test-model"))
-    roadmap = service.generate_roadmap({"goal": "Học tốt"}, [{"title": "Toán học"}])
+    profile = {
+        "career_matches": [{"code": "N01", "name": "Máy tính & Công nghệ thông tin", "score": 91.5}],
+        "career_focus": {
+            "recommended": [{"code": "N01", "name": "Máy tính & Công nghệ thông tin", "score": 91.5}],
+            "selected": [
+                {"code": "N10", "name": "Thiết kế đồ họa", "note": "Tư duy thị giác"},
+                {"code": "N12", "name": "Tâm lý học", "note": "Kỹ năng lắng nghe"},
+            ],
+        },
+        "skill_plan": {"tracks": [{"name": "Python nền tảng"}]},
+    }
+    roadmap = service.generate_roadmap(profile, [{"title": "Toán học"}])
 
     assert len(roadmap) == 7
     assert roadmap[0]["tasks"][0]["resources"][0]["title"] == "VietJack"
+    prompt = calls[0]["messages"]
+    input_payload = json.loads(prompt[1]["content"])
+    assert input_payload["profile"]["career_focus"]["recommended"][0]["score"] == 91.5
+    assert input_payload["profile"]["career_focus"]["selected"][0]["name"] == "Thiết kế đồ họa"
+    assert "career_focus.selected" in prompt[0]["content"]
+    assert "career_focus.recommended" in prompt[0]["content"]
+
+
+def _client_with_tasks():
+    engine = create_engine(
+        "sqlite://",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
+    Base.metadata.create_all(engine)
+    db = Session(engine)
+    user = User(
+        id=uuid.uuid4(),
+        email="task-capacity@example.com",
+        full_name="Task Capacity",
+        password_hash="unused",
+    )
+    db.add(user)
+    db.commit()
+    app.dependency_overrides[get_current_user] = lambda: user
+    app.dependency_overrides[get_db] = lambda: db
+    return TestClient(app), db, engine, user
+
+
+def _close_task_client(db, engine):
+    app.dependency_overrides.clear()
+    db.close()
+    Base.metadata.drop_all(engine)
+    engine.dispose()
+
+
+def test_generate_plan_rejects_when_today_has_no_capacity():
+    client, db, engine, user = _client_with_tasks()
+    try:
+        db.add_all([
+            Task(
+                user_id=user.id,
+                task_name=f"Existing {index}",
+                description="",
+                estimated_time_minutes=30,
+                scheduled_date=date.today(),
+                status="PENDING",
+            )
+            for index in range(4)
+        ])
+        db.commit()
+
+        response = client.post("/api/v1/tasks/generate")
+
+        assert response.status_code == 409
+        assert db.query(Task).count() == 4
+    finally:
+        _close_task_client(db, engine)
+
+
+def test_reactivating_task_rejects_when_day_is_full():
+    client, db, engine, user = _client_with_tasks()
+    try:
+        completed = Task(
+            user_id=user.id,
+            task_name="Completed",
+            description="",
+            estimated_time_minutes=30,
+            scheduled_date=date.today(),
+            status="COMPLETED",
+        )
+        db.add(completed)
+        db.add_all([
+            Task(
+                user_id=user.id,
+                task_name=f"Active {index}",
+                description="",
+                estimated_time_minutes=30,
+                scheduled_date=date.today(),
+                status="PENDING",
+            )
+            for index in range(4)
+        ])
+        db.commit()
+
+        response = client.patch(
+            f"/api/v1/tasks/{completed.id}/status",
+            json={"status": "PENDING"},
+        )
+
+        assert response.status_code == 409
+        db.refresh(completed)
+        assert completed.status == "COMPLETED"
+    finally:
+        _close_task_client(db, engine)
+
+
+def test_deferring_task_keeps_target_day_tasks_when_full():
+    client, db, engine, user = _client_with_tasks()
+    try:
+        db.add_all([
+            RoadmapStep(
+                user_id=user.id,
+                step_number=1,
+                title="Day 1",
+                content=json.dumps({"tasks": [{"title": "Move me", "defer_count": 0}]}),
+                is_completed=False,
+            ),
+            RoadmapStep(
+                user_id=user.id,
+                step_number=2,
+                title="Day 2",
+                content=json.dumps({
+                    "tasks": [
+                        {"title": f"Priority {index}", "user_priority": True}
+                        for index in range(4)
+                    ]
+                }),
+                is_completed=False,
+            ),
+        ])
+        db.commit()
+
+        response = client.post(
+            "/api/v1/roadmap/tasks/defer",
+            json={"day_number": 1, "task_index": 0},
+        )
+
+        assert response.status_code == 409
+        steps = db.query(RoadmapStep).order_by(RoadmapStep.step_number).all()
+        assert json.loads(steps[0].content)["tasks"][0]["title"] == "Move me"
+        assert len(json.loads(steps[1].content)["tasks"]) == 4
+    finally:
+        _close_task_client(db, engine)

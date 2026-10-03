@@ -1,0 +1,368 @@
+{
+  "audit_date": "2026-09-29",
+  "scope": {
+    "deployment_performed": false,
+    "production_migration_performed": false,
+    "production_database_accessed": false,
+    "workbook_modified_during_audit": false,
+    "career_matching_modified_during_audit": false,
+    "application_code_modified_during_audit": false
+  },
+  "verdict": "NOT READY FOR DEPLOY",
+  "executive_summary": {
+    "p0_count": 3,
+    "p1_count": 3,
+    "p2_count": 3,
+    "primary_blockers": [
+      "Vercel production environment lacks ENVIRONMENT, COOKIE_SECURE, and CORS_ORIGINS; development defaults are activated.",
+      "Production schema revision is unverified; migration 0011 is untracked and required by code using User.is_synthetic.",
+      "The tested worktree has 37 modified tracked paths and 179 pre-existing untracked paths; HEAD does not represent the tested changes."
+    ]
+  },
+  "git": {
+    "branch": "main",
+    "head": "bb9a8a9e9c3e825e57650475bf4682bc51df7179",
+    "staged_before_audit_reports": 0,
+    "modified_tracked_before_audit_reports": 37,
+    "untracked_before_audit_reports": 179,
+    "modified_paths": [
+      ".vercelignore",
+      "README.md",
+      "backend/README.md",
+      "backend/app/api/routes/ai.py",
+      "backend/app/api/routes/learning.py",
+      "backend/app/api/routes/profile.py",
+      "backend/app/api/routes/tasks.py",
+      "backend/app/core/config.py",
+      "backend/app/core/database.py",
+      "backend/app/core/rate_limit.py",
+      "backend/app/main.py",
+      "backend/app/models/user.py",
+      "backend/app/schemas/user.py",
+      "backend/app/services/ai.py",
+      "backend/app/services/career_matching.py",
+      "backend/app/services/skill_planner.py",
+      "backend/tests/test_ai_cv.py",
+      "backend/tests/test_api_integration.py",
+      "backend/tests/test_career_matching.py",
+      "backend/tests/test_config.py",
+      "backend/tests/test_documents.py",
+      "backend/tests/test_goal_append.py",
+      "backend/tests/test_task_planner.py",
+      "components/header.html",
+      "css/global.css",
+      "js/app.js",
+      "js/auth.js",
+      "js/certificates.js",
+      "js/cv-builder-editor.js",
+      "js/dashboard.js",
+      "js/riasec.js",
+      "pages/cv-builder-editor.html",
+      "pages/dashboard.html",
+      "pages/development.html",
+      "pages/profile.html",
+      "pages/riasec.html",
+      "tests/frontend-smoke.mjs"
+    ],
+    "untracked_groups": {
+      ".agents/skills/vercel-react-best-practices/": 75,
+      ".claude/skills/vercel-react-best-practices/": 75
+    },
+    "other_untracked_paths": [
+      ".qa/AXIS_PRODUCTION_EXCEL_AUDIT.md",
+      ".qa/COVERAGE.md",
+      ".qa/FINAL_VERIFICATION_REPORT.md",
+      ".qa/FINAL_VERIFICATION_RESULTS.json",
+      ".qa/FINDINGS.md",
+      ".qa/FULL_SYSTEM_AUDIT.md",
+      ".qa/FULL_SYSTEM_MAP.md",
+      ".qa/FULL_SYSTEM_RESULTS.json",
+      ".qa/FUNCTIONALITY_MATRIX.md",
+      ".qa/LAST_RUN.md",
+      ".qa/REGRESSION_COVERAGE.md",
+      ".qa/SYSTEM_MAP.md",
+      ".qa/WORKBOOK_PARITY_VALIDATION.json",
+      ".qa/WORKBOOK_PARITY_VALIDATION.md",
+      ".qa/accounts_created_since_2026-09-29-1600.xlsx",
+      ".qa/axis_audit_results.json",
+      ".qa/test_mobile_cv_layout.py",
+      "backend/alembic/versions/0011_add_user_synthetic_marker.py",
+      "backend/tests/test_database.py",
+      "backend/tests/test_riasec_evaluation.py",
+      "data/validation_calculations.csv",
+      "data/validation_report.md",
+      "data/validation_students.csv",
+      "skills-lock.json",
+      "students_anonymized_30.xlsx",
+      "students_anonymized_30_FIXED.xlsx",
+      "students_anonymized_30_rebuilt.xlsx",
+      "tools/synthetic_students.py",
+      "validate_workbook.py"
+    ],
+    "audit_created_files": [
+      ".qa/PRE_DEPLOYMENT_AUDIT.md",
+      ".qa/PRE_DEPLOYMENT_AUDIT.json"
+    ],
+    "secret_scan": {
+      "tracked_environment_files_found": false,
+      "obvious_committed_secret_patterns_found": false,
+      "values_printed": false,
+      "notes": "Local .env.local and backend/.env are ignored; Vercel .vercelignore excludes environment files."
+    }
+  },
+  "backend": {
+    "authentication_and_authorization": "Reviewed protected profile/recommendation routes; no obvious missing authentication check found in reviewed paths.",
+    "error_handling": "Generic client-facing server errors; stack traces not returned.",
+    "avatar_upload": "MIME/signature and 5 MB checks present.",
+    "cors_wildcard": "Rejected by settings validation.",
+    "ai_rate_limit": {
+      "requests": 5,
+      "window_seconds": 60,
+      "scope": "process-local",
+      "global_across_serverless_instances": false
+    },
+    "readiness": "SELECT 1 only; does not verify schema revision.",
+    "ai_sdk": {
+      "configured_override": false,
+      "default_timeout_seconds": 600,
+      "default_retries": 2,
+      "production_function_timeout_compatibility": "not verified"
+    }
+  },
+  "production_environment": {
+    "source": "Vercel production environment variable name listing; values intentionally suppressed.",
+    "present_names": [
+      "DATABASE_URL",
+      "GROQ_API_KEY",
+      "JWT_SECRET_KEY"
+    ],
+    "missing_names": [
+      "ENVIRONMENT",
+      "COOKIE_SECURE",
+      "CORS_ORIGINS"
+    ],
+    "values_or_validity_inspected": false,
+    "effect": "Missing ENVIRONMENT selects development defaults, including COOKIE_SECURE=false and development CORS origins; production JWT/cookie validation is not activated."
+  },
+  "database": {
+    "repository_alembic_head": "0011_add_user_synthetic_marker",
+    "local_revision": "0010_create_tasks",
+    "production_revision": "not verified",
+    "migration_0011": {
+      "tracked": false,
+      "effect": "Adds users.is_synthetic BOOLEAN NOT NULL DEFAULT false.",
+      "required_by_profile_api": true
+    },
+    "vercel_migration_hook": false,
+    "render_pre_deploy_command": "alembic -c alembic.ini upgrade head",
+    "production_migration_executed": false,
+    "production_database_changed": false
+  },
+  "recommendation": {
+    "approved_specification_changed": false,
+    "subject_average_all_valid_populated_years": true,
+    "matching_gpa_average_all_valid_populated_years_including_gpa9": true,
+    "infer_grade_from_className": false,
+    "s1_weights": {
+      "subject1": 0.35,
+      "subject2": 0.35,
+      "gpa": 0.30
+    },
+    "historical_assessment_replay": {
+      "profiles_checked": 30,
+      "exact_top3": 8,
+      "different_top3": 22,
+      "cause_counts": {
+        "multi_year_subject_aggregation": 22,
+        "gpa_changed_profiles": 0
+      },
+      "interpretation": "Expected consequence of the approved current specification; not a regression."
+    },
+    "current_engine_to_workbook": {
+      "profiles_checked": 30,
+      "top1_matches": 30,
+      "top2_matches": 30,
+      "top3_matches": 30,
+      "score_comparisons": 90,
+      "score_matches": 90
+    }
+  },
+  "workbook": {
+    "path": "students_anonymized_30.xlsx",
+    "opened_successfully": true,
+    "changed_during_audit": false,
+    "profiles": 30,
+    "recommendation_slots": 90,
+    "sheet_count": 3,
+    "sheets": [
+      {
+        "name": "Tổng hợp",
+        "dimensions": "A1:I31",
+        "autofilter": "A1:I31",
+        "freeze_panes": "A2",
+        "merged_ranges": 0,
+        "formulas": 30,
+        "cached_formulas": 30,
+        "formula_errors": 0
+      },
+      {
+        "name": "Môn học",
+        "dimensions": "A1:Z31",
+        "autofilter": "A1:Z31",
+        "freeze_panes": "E2",
+        "merged_ranges": 0,
+        "formulas": 52,
+        "cached_formulas": 52,
+        "formula_errors": 0
+      },
+      {
+        "name": "Hồ sơ",
+        "dimensions": "A1:L31",
+        "autofilter": "A1:L31",
+        "freeze_panes": "A2",
+        "merged_ranges": 0,
+        "formulas": 0,
+        "cached_formulas": 0,
+        "formula_errors": 0
+      }
+    ],
+    "academic_input_reconciliation": {
+      "prior_reported_touches_total": 553,
+      "components": {
+        "grade10_11_subject_cells_updated": 417,
+        "grade12_values_not_representable": 84,
+        "gpa_formulas_written_or_updated": 52
+      },
+      "current_grade10_11_subject_cells_match": 600,
+      "remaining_canonical_values_not_representable": 84,
+      "grade12_values": {
+        "subject_scores": 72,
+        "gpa": 12,
+        "profiles_affected": 12
+      },
+      "limitation": "No Grade 12 subject/GPA columns; numeric RIASEC and some skills/activity inputs are also absent."
+    }
+  },
+  "frontend": {
+    "frontend_smoke_tests": "24 passed",
+    "typescript_build": "passed",
+    "api_url": "same-origin /api/v1 outside local development",
+    "production_browser_runtime_checked": false,
+    "vercel_production_build": {
+      "status": "not_run",
+      "reason": "The non-interactive CLI requested confirmation to pull production environment variables; the audit stopped to avoid storing production secrets locally."
+    }
+  },
+  "security": {
+    "focused_review": "No other obvious high-risk vulnerability or committed-secret pattern found in reviewed scope; not a penetration test.",
+    "production_cookie_default": "insecure when ENVIRONMENT is absent",
+    "sql_injection": "No obvious issue in reviewed paths.",
+    "stack_trace_disclosure": "No obvious client disclosure found.",
+    "upload_validation": "MIME/signature and 5 MB limit present."
+  },
+  "dependencies_and_build": {
+    "root_npm_ls": "passed",
+    "node_backend_npm_ls": "passed",
+    "npm_lock_manifest_consistency": "passed",
+    "python_pip_check": "passed",
+    "dependency_vulnerability_database_scan": "not run",
+    "backend_deprecation_warnings": 2,
+    "node_auth_security_integration": {
+      "result": "connection refused at 127.0.0.1:3001",
+      "classification": "environment/service unavailable; not demonstrated application regression"
+    }
+  },
+  "tests": {
+    "backend_full": "77 passed",
+    "focused_recommendation": "31 passed",
+    "frontend_smoke": "24 passed",
+    "typescript_build": "passed",
+    "synthetic_profiles": {
+      "replayed": 30,
+      "engine_workbook_top1_top2_top3": "30/30 each",
+      "dedicated_generator_unit_test": "not found"
+    },
+    "workbook_validator": {
+      "exit_code": 1,
+      "status": "completed_with_source_differences",
+      "runtime_error": false,
+      "engine_workbook_rank_parity": "30/30 for each rank",
+      "historical_assessment_exact_top3": "8/30",
+      "classification": "expected historical-reference differences under approved multi-year rule"
+    },
+    "alembic_check": "local DB is 0010 while head is 0011; no migration was applied",
+    "git_diff_check": "passed; manual whitespace check of both new untracked audit reports also passed"
+  },
+  "findings": [
+    {
+      "id": "P0-1",
+      "severity": "P0",
+      "title": "Vercel production security environment is incomplete",
+      "evidence": "Production variable names do not include ENVIRONMENT, COOKIE_SECURE, or CORS_ORIGINS; missing ENVIRONMENT selects development defaults and cookie_secure=false.",
+      "action": "Set production environment, secure cookies and explicit production CORS; verify secret length without disclosing values."
+    },
+    {
+      "id": "P0-2",
+      "severity": "P0",
+      "title": "Production schema/migration state is unverified",
+      "evidence": "Production revision was not queried; local DB is 0010, head is 0011, migration file is untracked, Vercel has no migration hook, and profile API uses User.is_synthetic.",
+      "action": "Include migration in reviewed release and verify/apply it through the approved production migration process before serving schema-dependent code."
+    },
+    {
+      "id": "P0-3",
+      "severity": "P0",
+      "title": "No deployable release corresponds to the tested worktree",
+      "evidence": "HEAD is bb9a8a9e9c3e825e57650475bf4682bc51df7179 with 37 modified and 179 pre-existing untracked paths.",
+      "action": "Review intended paths, create a release commit, and rerun tests against that exact commit."
+    },
+    {
+      "id": "P1-1",
+      "severity": "P1",
+      "title": "AI rate limiting is process-local",
+      "evidence": "Configured request limiter is not shared across serverless instances/workers.",
+      "action": "Use a shared limiter or explicitly accept the residual cost-abuse risk."
+    },
+    {
+      "id": "P1-2",
+      "severity": "P1",
+      "title": "AI SDK timeout vs function duration is unverified",
+      "evidence": "SDK defaults to a 600-second timeout and two retries; no application override or verified Vercel duration was found.",
+      "action": "Validate production duration and configure an explicit timeout/retry budget if needed."
+    },
+    {
+      "id": "P1-3",
+      "severity": "P1",
+      "title": "Production build/provider verification remains incomplete",
+      "evidence": "Production values and production migration status were not validated; local Vercel build was not run to avoid pulling secrets.",
+      "action": "Run a controlled build and provider configuration/schema checks without logging secret values."
+    },
+    {
+      "id": "P2-1",
+      "severity": "P2",
+      "title": "Readiness check does not validate schema revision",
+      "action": "Consider checking required migration/schema state in readiness."
+    },
+    {
+      "id": "P2-2",
+      "severity": "P2",
+      "title": "README migration head is stale",
+      "action": "Update after selecting the release revision."
+    },
+    {
+      "id": "P2-3",
+      "severity": "P2",
+      "title": "No dedicated synthetic generator unit test found",
+      "action": "Consider adding a non-regenerating/fixture-based generator test."
+    }
+  ],
+  "final_actions_required": [
+    "Configure Vercel production ENVIRONMENT=production, COOKIE_SECURE=true, and explicit CORS_ORIGINS; verify JWT secret validity without printing it.",
+    "Include migration 0011 in the reviewed release and verify production schema through the approved process; no migration was run by this audit.",
+    "Review and selectively commit intended changes; build and test that exact release commit.",
+    "Run controlled production build and post-deploy smoke tests."
+  ],
+  "files_created_by_this_audit": [
+    ".qa/PRE_DEPLOYMENT_AUDIT.md",
+    ".qa/PRE_DEPLOYMENT_AUDIT.json"
+  ]
+}

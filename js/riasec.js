@@ -9,11 +9,13 @@
     { code: 'E', name: 'Quản lý', description: 'Thích dẫn dắt, thuyết phục, tổ chức nguồn lực và biến ý tưởng thành kết quả.' },
     { code: 'C', name: 'Nghiệp vụ', description: 'Thích hệ thống, quy trình, sự chính xác và cách làm rõ ràng.' }
   ];
-  var QUESTIONS_PER_GROUP = 20;
+  var QUESTIONS_PER_ASPECT = 2;
+  var ASPECTS_PER_GROUP = 5;
+  var QUESTIONS_PER_GROUP = QUESTIONS_PER_ASPECT * ASPECTS_PER_GROUP;
   var TOTAL_QUESTIONS = GROUPS.length * QUESTIONS_PER_GROUP;
   var MIN_EVALUATION_COMPLETION = 0.6;
   var state = { bank: {}, sourceBank: {}, groupIndex: 0, answers: {}, result: null, draftLoaded: false };
-  var storageKey = 'axis_riasec_draft';
+  var storageKey = 'axis_riasec_draft_v2';
   var usedQuestionsKey = 'axis_riasec_used_questions';
   var submitTimer = null;
   var accountSyncTimer = null;
@@ -66,7 +68,8 @@
         answers: state.answers,
         progress: progress,
         groupIndex: state.groupIndex,
-        questions: state.bank
+        questions: state.bank,
+        version: 2
       }));
     } catch (error) {}
     if (accountSyncTimer) window.clearTimeout(accountSyncTimer);
@@ -92,18 +95,34 @@
       if (!draft.answers && window.AxisData && window.AxisData.getProfile) {
         draft = window.AxisData.getProfile().riasecDraft || {};
       }
-      state.answers = draft.answers || {};
-      state.groupIndex = Number.isInteger(draft.groupIndex) ? Math.min(5, Math.max(0, draft.groupIndex)) : 0;
-      if (draft.questions && GROUPS.every(function (group) {
-        return Array.isArray(draft.questions[group.code]) && draft.questions[group.code].length === QUESTIONS_PER_GROUP;
-      })) {
+      var compatibleDraft = draft.version === 2 && draft.questions && GROUPS.every(function (group) {
+        return Array.isArray(draft.questions[group.code]) &&
+          draft.questions[group.code].length === QUESTIONS_PER_GROUP &&
+          Array.from({ length: ASPECTS_PER_GROUP }, function (_, index) {
+            return draft.questions[group.code].filter(function (question) { return question.aspect === index + 1; }).length;
+          }).every(function (count) { return count === QUESTIONS_PER_ASPECT; });
+      });
+      if (compatibleDraft) {
+        state.answers = draft.answers || {};
+        state.groupIndex = Number.isInteger(draft.groupIndex) ? Math.min(5, Math.max(0, draft.groupIndex)) : 0;
         state.bank = draft.questions;
         state.draftLoaded = true;
+      } else {
+        state.answers = {};
+        state.groupIndex = 0;
+        try { localStorage.removeItem(keyForUser()); } catch (error) {}
       }
     } catch (error) {}
   }
   function randomSample(items, count) {
-    return items.slice().sort(function () { return Math.random() - 0.5; }).slice(0, count);
+    var shuffled = items.slice();
+    for (var index = shuffled.length - 1; index > 0; index -= 1) {
+      var swapIndex = Math.floor(Math.random() * (index + 1));
+      var current = shuffled[index];
+      shuffled[index] = shuffled[swapIndex];
+      shuffled[swapIndex] = current;
+    }
+    return shuffled.slice(0, count);
   }
   function parseQuestionBank(text) {
     var bank = {};
@@ -144,13 +163,13 @@
       for (var aspect = 1; aspect <= 5; aspect += 1) {
         var aspectQuestions = source.filter(function (question) { return question.aspect === aspect; });
         var unused = aspectQuestions.filter(function (question) { return !usedLookup[question.id]; });
-        var aspectSelection = randomSample(unused, Math.min(4, unused.length));
-        if (aspectSelection.length < 4) {
+        var aspectSelection = randomSample(unused, Math.min(QUESTIONS_PER_ASPECT, unused.length));
+        if (aspectSelection.length < QUESTIONS_PER_ASPECT) {
           var selectedLookup = {};
           aspectSelection.forEach(function (question) { selectedLookup[question.id] = true; });
           aspectSelection = aspectSelection.concat(randomSample(
             aspectQuestions.filter(function (question) { return !selectedLookup[question.id]; }),
-            4 - aspectSelection.length
+            QUESTIONS_PER_ASPECT - aspectSelection.length
           ));
         }
         selected = selected.concat(aspectSelection);
@@ -288,11 +307,20 @@
     var aspects = {};
     GROUPS.forEach(function (group) {
       var groupQuestions = state.bank[group.code];
-      scores[group.code] = groupQuestions.reduce(function (sum, question) { return sum + Number(state.answers[question.id] || 0); }, 0);
+      var answeredGroupQuestions = groupQuestions.filter(function (question) { return state.answers[question.id]; });
+      var groupTotal = answeredGroupQuestions.reduce(function (sum, question) { return sum + Number(state.answers[question.id]); }, 0);
+      scores[group.code] = answeredGroupQuestions.length
+        ? Math.round(groupTotal / answeredGroupQuestions.length * 20)
+        : 0;
       aspects[group.code] = {};
       for (var aspect = 1; aspect <= 5; aspect += 1) {
-        var actual = groupQuestions.filter(function (question) { return question.aspect === aspect; }).reduce(function (sum, question) { return sum + Number(state.answers[question.id] || 0); }, 0);
-        aspects[group.code][aspect] = { actual: actual, converted: actual * 5 };
+        var aspectQuestions = groupQuestions.filter(function (question) { return question.aspect === aspect && state.answers[question.id]; });
+        var actual = aspectQuestions.reduce(function (sum, question) { return sum + Number(state.answers[question.id]); }, 0);
+        aspects[group.code][aspect] = {
+          actual: actual,
+          answered: aspectQuestions.length,
+          converted: aspectQuestions.length ? Math.round(actual / aspectQuestions.length * 20) : 0
+        };
       }
     });
     var ranking = GROUPS.map(function (group) { return group.code; }).sort(function (a, b) { return scores[b] - scores[a] || a.localeCompare(b); });
@@ -322,7 +350,7 @@
         completedAt: result.completedAt
       });
       if (window.AxisData.saveProfile && window.AxisAuth && window.AxisAuth.isSignedIn()) {
-        window.AxisData.saveProfile().then(function () {
+        return window.AxisData.saveProfile().then(function () {
           return syncCareerMatches();
         }).catch(function (error) {
           var status = $('draftStatus');
@@ -330,6 +358,7 @@
         });
       }
     }
+    return Promise.resolve();
   }
   function buildPersonality(result) {
     return result.code.split('').map(function (code) {
@@ -340,11 +369,13 @@
   function showResult() {
     var result = calculateResult();
     state.result = result;
-    persistResult(result);
+    var isEligible = renderEvaluationState(result);
+    persistResult(result).then(function () {
+      if (isEligible && state.result === result) requestRiasecEvaluation(result);
+    });
     $('hollandCode').textContent = result.code;
     $('resultTitle').textContent = 'Bạn nổi bật ở nhóm ' + result.code;
     $('resultSummary').textContent = result.code.split('').map(function (code) { return GROUPS.find(function (group) { return group.code === code; }).description; }).join(' ');
-    var isEligible = renderEvaluationState(result);
     if (!isEligible) {
       $('hollandCode').textContent = '—';
       $('resultTitle').textContent = 'Chưa đủ dữ liệu để đánh giá';
@@ -364,22 +395,75 @@
   function renderEvaluationState(result) {
     var notice = $('riasecEvaluationNotice');
     var matches = $('riasecCareerMatches');
+    var aiEvaluation = $('riasecAiEvaluation');
     if (result.completion < MIN_EVALUATION_COMPLETION * 100) {
       notice.className = 'riasec-evaluation-notice';
       notice.textContent = 'Chưa thể đánh giá đáng tin cậy vì bạn mới hoàn thành ' + result.completion + '% bài làm. Hãy trả lời thêm ít nhất ' + Math.ceil(MIN_EVALUATION_COMPLETION * TOTAL_QUESTIONS) + '/' + TOTAL_QUESTIONS + ' câu để nhận phân tích tính cách và mức độ phù hợp ngành.';
       matches.classList.add('hidden');
+      if (aiEvaluation) aiEvaluation.classList.add('hidden');
       $('riasecResultDetails').classList.add('hidden');
       return false;
     }
     notice.className = 'riasec-evaluation-notice is-ready';
-    notice.textContent = 'Dữ liệu đã đủ để phân tích. AXIS đang đối chiếu kết quả RIASEC với công thức S4 và hồ sơ học tập của bạn.';
+    notice.textContent = 'Điểm Holland đã được tính từ câu trả lời. Đang chuẩn bị nhận xét AI về điểm số và các khía cạnh.';
+    if (aiEvaluation) aiEvaluation.classList.remove('hidden');
     matches.classList.remove('hidden');
     $('riasecResultDetails').classList.remove('hidden');
     return true;
   }
+  function requestRiasecEvaluation(result) {
+    var overall = $('riasecAiOverall');
+    var direction = $('riasecAiDirection');
+    var summary = $('riasecAiSummary');
+    if (direction) direction.textContent = '';
+    if (summary) summary.textContent = '';
+    if (!window.AxisAuth || !window.AxisAuth.isSignedIn() || !window.AxisAuth.apiRequest) {
+      $('riasecEvaluationNotice').textContent = 'Mã Holland đã được tính. Đăng nhập để nhận nhận xét AI về điểm số và các khía cạnh.';
+      return;
+    }
+    if (overall) overall.textContent = 'Đang phân tích điểm số và khía cạnh...';
+    window.AxisAuth.apiRequest('/ai/riasec-evaluation', {
+      method: 'POST',
+      body: JSON.stringify({
+        scores: result.scores,
+        aspect_scores: Object.keys(result.aspects).reduce(function (groups, code) {
+          groups[code] = Object.keys(result.aspects[code]).reduce(function (aspects, aspect) {
+            aspects[aspect] = result.aspects[code][aspect].converted;
+            return aspects;
+          }, {});
+          return groups;
+        }, {}),
+        aspect_answered: Object.keys(result.aspects).reduce(function (groups, code) {
+          groups[code] = Object.keys(result.aspects[code]).reduce(function (aspects, aspect) {
+            aspects[aspect] = result.aspects[code][aspect].answered;
+            return aspects;
+          }, {});
+          return groups;
+        }, {}),
+        completion: result.completion
+      })
+    }).then(function (evaluation) {
+      if (state.result !== result) return;
+      if (overall) overall.textContent = evaluation.overall;
+      if (direction) direction.textContent = evaluation.direction;
+      if (summary) summary.textContent = evaluation.summary;
+      result.aiEvaluation = evaluation;
+      try { localStorage.setItem('axis_riasec_result:' + signedInId(), JSON.stringify(result)); } catch (error) {}
+      if (window.AxisData && window.AxisData.setProfileValue) {
+        window.AxisData.setProfileValue('riasecResult', result);
+        return window.AxisData.saveProfile ? window.AxisData.saveProfile() : undefined;
+      }
+      return undefined;
+    }).catch(function (error) {
+      if (state.result !== result) return;
+      if (overall) overall.textContent = 'Chưa thể tạo nhận xét AI: ' + error.message;
+      if (direction) direction.textContent = '';
+      if (summary) summary.textContent = '';
+    });
+  }
   function syncCareerMatches() {
     if (!window.AxisAuth || !window.AxisAuth.isSignedIn() || !window.AxisAuth.apiRequest) return Promise.resolve();
-    return window.AxisAuth.apiRequest('/learning/assessments/run', { method: 'POST' }).then(function (matchResult) {
+    return window.AxisAuth.apiRequest('/assessments/run', { method: 'POST' }).then(function (matchResult) {
       var matches = matchResult && (matchResult.top5 || matchResult.results);
       if (!Array.isArray(matches)) return;
       state.result.careerMatches = matches.slice(0, 5);
@@ -439,7 +523,12 @@
       var parsedBank = parseQuestionBank(await response.text());
       state.sourceBank = parsedBank.source;
       state.bank = parsedBank.selected;
-      var valid = GROUPS.every(function (group) { return state.bank[group.code].length === 20; });
+      var valid = GROUPS.every(function (group) {
+        return state.bank[group.code].length === QUESTIONS_PER_GROUP &&
+          Array.from({ length: ASPECTS_PER_GROUP }, function (_, index) {
+            return state.bank[group.code].filter(function (question) { return question.aspect === index + 1; }).length;
+          }).every(function (count) { return count === QUESTIONS_PER_ASPECT; });
+      });
       if (!valid) throw new Error('Ngân hàng câu hỏi chưa đủ 6 nhóm RIASEC.');
       $('riasecLoadStatus').textContent = 'Đã sẵn sàng. Bạn có thể bắt đầu bất cứ lúc nào.';
       $('startRiasec').disabled = false;

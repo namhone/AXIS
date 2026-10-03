@@ -38,3 +38,54 @@ def test_production_accepts_strong_secret_and_secure_cookies() -> None:
     )
 
     assert settings.signing_key() == "x" * 64
+
+
+def test_development_allows_loopback_live_server_origins() -> None:
+    settings = Settings(
+        _env_file=None,
+        environment="development",
+        cors_origins=None,
+    )
+
+    assert "http://localhost:5501" in settings.cors_origins
+    assert "http://127.0.0.1:5501" in settings.cors_origins
+
+
+def test_production_defaults_to_same_origin_without_localhost_origins() -> None:
+    settings = Settings(
+        _env_file=None,
+        environment="production",
+        jwt_secret_key="x" * 64,
+        cookie_secure=True,
+        cors_origins=None,
+    )
+
+    assert settings.cors_origins == ["https://axis-career-app.vercel.app"]
+
+
+def test_development_adds_live_server_origins_to_custom_allowlist() -> None:
+    settings = Settings(
+        _env_file=None,
+        environment="development",
+        cors_origins=["https://preview.example"],
+    )
+
+    assert settings.cors_origins == [
+        "https://preview.example",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "http://localhost:5501",
+        "http://127.0.0.1:5501",
+    ]
+
+
+def test_production_preserves_explicit_cors_allowlist_without_dev_origins() -> None:
+    settings = Settings(
+        _env_file=None,
+        environment="production",
+        jwt_secret_key="x" * 64,
+        cookie_secure=True,
+        cors_origins=["https://preview.example"],
+    )
+
+    assert settings.cors_origins == ["https://preview.example"]

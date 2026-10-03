@@ -8,6 +8,13 @@
   var pipelineRun = 0;
   var model = null;
   var previewResizeObserver;
+  var draftSaveTimer;
+  var lastNormalizedFingerprint = '';
+  var normalizationRunning = false;
+  var normalizeCooldownUntil = 0;
+  var normalizeCooldownTimer;
+  var restoredDraftState = false;
+  var userHasEditedContent = false;
   var TEMPLATE_COLORS = {
     modern: [
       { name: 'Navy gốc', accent: '#0b3d66', ink: '#14202e', paper: '#ffffff' },
@@ -245,6 +252,7 @@
       node.contentEditable = 'true';
       node.dataset.cvEditable = 'true';
       node.spellcheck = true;
+      node.lang = currentLanguage;
     }
     if (options && options.role) node.setAttribute('role', options.role);
     return node;
@@ -257,6 +265,7 @@
     if (key) item.dataset.cvBind = key;
     item.contentEditable = 'true';
     item.spellcheck = true;
+    item.lang = currentLanguage;
     item.textContent = text || '';
     return item;
   }
@@ -282,13 +291,60 @@
     selection.addRange(range);
   }
 
+  function isCaretAtStart(node) {
+    var selection = window.getSelection();
+    if (!selection || !selection.rangeCount || !node.contains(selection.anchorNode)) return false;
+    var range = selection.getRangeAt(0).cloneRange();
+    range.selectNodeContents(node);
+    range.setEnd(selection.anchorNode, selection.anchorOffset);
+    return range.toString().length === 0;
+  }
+
+  function focusListItemAtEnd(node) {
+    if (!node) return;
+    node.focus();
+    var selection = window.getSelection();
+    if (!selection) return;
+    var range = document.createRange();
+    range.selectNodeContents(node);
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
+  function removeListItem(node, moveFocus) {
+    var list = node.parentElement;
+    if (!list || !list.matches('ul,ol') || list.children.length <= 1) return false;
+    var target = node.previousElementSibling || node.nextElementSibling;
+    node.dataset.cvRemoving = 'true';
+    node.remove();
+    syncListFromDom(list);
+    if (moveFocus) focusListItemAtEnd(target);
+    fitPreviewToViewport();
+    updateNormalizeButton();
+    return true;
+  }
+
   function bindEditableNode(node) {
     var mode = node.dataset.cvMode || 'paragraph';
     if (node.dataset.cvBoundEnter === 'true') return;
     node.dataset.cvBoundEnter = 'true';
 
     node.addEventListener('keydown', function (event) {
-      if (event.key !== 'Enter') return;
+      if (mode === 'list-item' && event.key === 'Backspace' &&
+          !event.isComposing && event.keyCode !== 229 &&
+          !event.ctrlKey && !event.metaKey && node.textContent.trim() === '' &&
+          isCaretAtStart(node)) {
+        var previousItem = node.previousElementSibling || node.nextElementSibling;
+        if (previousItem) {
+          event.preventDefault();
+          removeListItem(node, false);
+          focusListItemAtEnd(previousItem);
+          scheduleLocalDraftSave();
+        }
+        return;
+      }
+      if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229) return;
       if (mode === 'paragraph') {
         if (!event.ctrlKey && !event.metaKey && !event.shiftKey) {
           event.preventDefault();
@@ -861,6 +917,7 @@
         activePalette = index;
         syncColorControls();
         renderPreview();
+        scheduleLocalDraftSave();
       });
       container.appendChild(button);
     });
@@ -914,6 +971,36 @@
     }
   }
 
+  function writeLocalDraft() {
+    if (!model) return;
+    localStorage.setItem(draftStorageKey(), JSON.stringify({
+      template: currentTemplate,
+      language: currentLanguage,
+      model: model,
+      savedAt: new Date().toISOString()
+    }));
+  }
+
+  function draftStorageKey() {
+    var user = window.AxisAuth && window.AxisAuth.getCurrentUser
+      ? window.AxisAuth.getCurrentUser()
+      : null;
+    return user && user.id ? 'axis_cv_draft:' + user.id : 'axis_cv_draft:guest';
+  }
+
+  function scheduleLocalDraftSave() {
+    window.clearTimeout(draftSaveTimer);
+    setStatus('Đang lưu bản nháp trên thiết bị…', 'working');
+    draftSaveTimer = window.setTimeout(function () {
+      try {
+        writeLocalDraft();
+        setStatus('Đã tự lưu bản nháp trên thiết bị. Bấm “Lưu bản nháp” để đồng bộ tài khoản.', 'success');
+      } catch (error) {
+        setStatus('Không thể tự lưu bản nháp trên thiết bị này.', 'error');
+      }
+    }, 600);
+  }
+
   function syncListFromDom(listNode) {
     var path = (listNode.dataset.cvListPath || '').replace(/^data\./, '');
     if (!path || !model || !model.data) return;
@@ -926,36 +1013,41 @@
     });
   }
 
-  function removeEmptyListItem(node) {
-    var list = node.parentElement;
-    if (!list || !list.matches('ul,ol') || node.textContent.trim()) return;
-    node.remove();
-    syncListFromDom(list);
-    fitPreviewToViewport();
+  function removeEmptyListItem(node, moveFocus) {
+    if (node.textContent.trim()) return false;
+    return removeListItem(node, moveFocus);
   }
 
   function bindEditableInput(node) {
     node.addEventListener('input', function () {
+      userHasEditedContent = true;
       if (node.dataset.cvMode === 'list-item') {
         var list = node.parentElement;
-        removeEmptyListItem(node);
+        removeEmptyListItem(node, true);
         if (list) syncListFromDom(list);
-        setStatus('Đã cập nhật danh sách. Bạn có thể lưu bản nháp.', 'neutral');
+        scheduleLocalDraftSave();
         fitPreviewToViewport();
+        updateNormalizeButton();
         return;
       }
       var key = node.dataset.cvBind;
       if (key) model.overrides[key] = node.textContent.trim();
       fitPreviewToViewport();
-      setStatus('Đã cập nhật nội dung. Bạn có thể lưu bản nháp.', 'neutral');
+      scheduleLocalDraftSave();
+      updateNormalizeButton();
     });
+    if (node.dataset.cvMode === 'list-item') {
+      node.addEventListener('blur', function () {
+        if (node.isConnected && node.dataset.cvRemoving !== 'true') removeEmptyListItem(node, false);
+      });
+    }
   }
 
   function currentCvData() {
     if (!model || !model.data) return {};
     var data = JSON.parse(JSON.stringify(model.data));
     Object.keys(model.overrides || {}).forEach(function (key) {
-      var parts = key.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+      var parts = key.replace(/^data\./, '').replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
       if (!parts.length) return;
       var target = data;
       for (var index = 0; index < parts.length - 1; index += 1) {
@@ -996,6 +1088,82 @@
       description: text(data.achievement && data.achievement.description, '')
     };
     return payload;
+  }
+
+  function contentFingerprint(data) {
+    var source = JSON.stringify({
+      email: text(data && data.email, ''),
+      content: aiEditableSection(data)
+    });
+    var hash = 2166136261;
+    for (var index = 0; index < source.length; index += 1) {
+      hash ^= source.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+    return (hash >>> 0).toString(36) + '-' + source.length;
+  }
+
+  function updateNormalizeButton() {
+    var fingerprint = model ? contentFingerprint(currentCvData()) : '';
+    var button = document.querySelector('[data-action="normalize"]');
+    if (button) {
+      button.disabled = normalizationRunning ||
+        (normalizeCooldownUntil > Date.now()) ||
+        Boolean(lastNormalizedFingerprint && fingerprint === lastNormalizedFingerprint);
+    }
+    var languageSelect = document.querySelector('[data-cv-language]');
+    if (languageSelect) languageSelect.disabled = normalizationRunning || normalizeCooldownUntil > Date.now();
+  }
+
+  function setContentEditingEnabled(enabled) {
+    if (!preview) return;
+    preview.querySelectorAll('[data-cv-editable]').forEach(function (node) {
+      node.contentEditable = enabled ? 'true' : 'false';
+    });
+  }
+
+  function setNormalizeCooldown(seconds) {
+    normalizeCooldownUntil = Date.now() + Math.max(1, seconds) * 1000;
+    window.clearTimeout(normalizeCooldownTimer);
+    try {
+      localStorage.setItem('axis_cv_normalize_cooldown_until', String(normalizeCooldownUntil));
+    } catch (error) {
+      console.warn('Unable to persist the CV AI cooldown:', error);
+    }
+    updateNormalizeButton();
+    setStatus('Đã đạt giới hạn AI. Tạm khóa chuẩn hóa trong ' +
+      Math.ceil((normalizeCooldownUntil - Date.now()) / 60000) + ' phút để tránh phát sinh thêm yêu cầu.', 'warning');
+    normalizeCooldownTimer = window.setTimeout(function () {
+      normalizeCooldownUntil = 0;
+      try {
+        localStorage.removeItem('axis_cv_normalize_cooldown_until');
+      } catch (error) {
+        console.warn('Unable to clear the CV AI cooldown:', error);
+      }
+      updateNormalizeButton();
+      setStatus('Có thể chuẩn hóa lại sau khi nội dung CV thay đổi.', 'neutral');
+    }, Math.max(0, normalizeCooldownUntil - Date.now()));
+  }
+
+  function restoreNormalizeCooldown() {
+    try {
+      var savedUntil = Number(localStorage.getItem('axis_cv_normalize_cooldown_until'));
+      if (Number.isFinite(savedUntil) && savedUntil > Date.now()) {
+        setNormalizeCooldown((savedUntil - Date.now()) / 1000);
+      } else {
+        localStorage.removeItem('axis_cv_normalize_cooldown_until');
+      }
+    } catch (error) {
+      console.warn('Unable to restore the CV AI cooldown:', error);
+    }
+  }
+
+  function restoreLastNormalizedFingerprint() {
+    try {
+      lastNormalizedFingerprint = localStorage.getItem('axis_cv_last_normalized_fingerprint') || '';
+    } catch (error) {
+      console.warn('Unable to restore the last CV AI fingerprint:', error);
+    }
   }
 
   function mergeAiEditableSection(target, aiPayload) {
@@ -1067,10 +1235,16 @@
     };
 
     if (!window.AxisAuth || typeof window.AxisAuth.apiRequest !== 'function') {
+      if (operation === 'normalize') {
+        return Promise.reject(new Error('Đăng nhập để dùng AI chuẩn hóa hồ sơ.'));
+      }
       return fallbackRequest();
     }
 
     if (!window.AxisAuth.isSignedIn()) {
+      if (operation === 'normalize') {
+        return Promise.reject(new Error('Đăng nhập để dùng AI chuẩn hóa hồ sơ.'));
+      }
       return fallbackRequest();
     }
 
@@ -1090,7 +1264,7 @@
       var message = error && (error.message || '');
       var shouldFallback = /không thể kết nối|hết thời gian|not configured|ai is not configured|đã hết hạn|Không thể đồng bộ dữ liệu tài khoản|500|502|503|401|403/i.test(message || '') ||
         (error && typeof error.status === 'number' && error.status >= 401);
-      if (shouldFallback) {
+      if (shouldFallback && operation === 'translate') {
         return fallbackCvTransform(data, language, operation);
       }
       throw error;
@@ -1105,58 +1279,101 @@
   }
 
   async function runPipeline() {
+    if (normalizationRunning || !model) return;
     var run = ++pipelineRun;
-    var normalizeButton = document.querySelector('[data-action="normalize"]');
-    if (normalizeButton) normalizeButton.disabled = true;
+    normalizationRunning = true;
+    updateNormalizeButton();
+    setContentEditingEnabled(false);
     var state = document.querySelector('[data-pipeline-state]');
     if (state) state.textContent = 'Đang chạy';
     ['extract', 'structure', 'content', 'review'].forEach(function (agent) { setAgent(agent, null); });
     setStatus('Đang đọc và cấu trúc hồ sơ CV…', 'working');
     setAgent('extract', 'running');
-    var extracted = extractProfile(profileFromAxis());
+    var content = currentCvData();
+    var nextModel = {
+      data: content,
+      labels: Object.assign({}, CV_LABELS[currentLanguage]),
+      overrides: {},
+      language: currentLanguage
+    };
     setAgent('extract', 'done');
-    setStatus('Đang lọc nội dung AI chỉ cho phần mô tả và kỹ năng…', 'working');
+    setStatus('Đang chọn các trường văn bản cần rà soát…', 'working');
     setAgent('structure', 'running');
-    var nextModel = makeModel({}, currentLanguage);
-    nextModel.data = extracted;
-    nextModel.language = currentLanguage;
     setAgent('structure', 'done');
-    setStatus('Đang tối ưu đoạn văn, skill, abstract bằng AI…', 'working');
+    setStatus('AI đang kiểm tra chính tả và tối ưu nội dung CV có thể chỉnh sửa…', 'working');
     setAgent('content', 'running');
     try {
       var aiPayload = await requestCvAI(aiEditableSection(nextModel.data), currentLanguage, 'normalize');
       nextModel.data = mergeAiEditableSection(nextModel.data, aiPayload || {});
     } catch (error) {
-      if (run !== pipelineRun) return;
+      if (run !== pipelineRun) {
+        normalizationRunning = false;
+        setContentEditingEnabled(true);
+        updateNormalizeButton();
+        return;
+      }
       ['structure', 'content', 'review'].forEach(function (agent) { setAgent(agent, 'error'); });
       if (state) state.textContent = 'AI lỗi';
-      if (normalizeButton) normalizeButton.disabled = false;
+      normalizationRunning = false;
+      setContentEditingEnabled(true);
+      updateNormalizeButton();
       setStatus(error.message || 'Không thể kết nối AI. Nội dung hiện tại vẫn được giữ nguyên.', 'error');
+      if (error && error.status === 429) setNormalizeCooldown(error.retryAfter || 600);
       return;
     }
-    if (run !== pipelineRun) return;
+    if (run !== pipelineRun) {
+      normalizationRunning = false;
+      setContentEditingEnabled(true);
+      updateNormalizeButton();
+      return;
+    }
     setAgent('content', 'done');
     setStatus('Đang kiểm tra dữ liệu CV…', 'working');
     setAgent('review', 'running');
     model = nextModel;
+    lastNormalizedFingerprint = contentFingerprint(currentCvData());
+    userHasEditedContent = false;
+    restoredDraftState = true;
+    try {
+      localStorage.setItem('axis_cv_last_normalized_fingerprint', lastNormalizedFingerprint);
+    } catch (error) {
+      console.warn('Unable to persist the last CV AI fingerprint:', error);
+    }
     setAgent('review', 'done');
     renderPreview();
-    
+    updateNormalizeButton();
+
+    var localDraftSaved = true;
+    try {
+      writeLocalDraft();
+    } catch (error) {
+      localDraftSaved = false;
+      console.error('Unable to save the normalized CV draft locally:', error);
+    }
+
     setStatus('Đang lưu dữ liệu CV đã chuẩn hóa…', 'working');
     try {
       await persistCvToProfile(nextModel.data);
     } catch (persistError) {
       if (run === pipelineRun) {
         if (state) state.textContent = 'Đã sẵn sàng';
-        if (normalizeButton) normalizeButton.disabled = false;
+        normalizationRunning = false;
+        setContentEditingEnabled(true);
+        updateNormalizeButton();
+        scheduleLocalDraftSave();
         setStatus('⚠ Dữ liệu CV đã cập nhật trên màn hình nhưng chưa lưu trên server: ' + (persistError.message || 'Lỗi không xác định.'), 'warning');
       }
       return;
     }
     
     if (state) state.textContent = 'Đã sẵn sàng';
-    if (normalizeButton) normalizeButton.disabled = false;
-    setStatus('AI chỉ tác động vào các phần mô tả và kỹ năng. Thông tin dạng số, chứng chỉ, mục tiêu, thành tích vẫn giữ nguyên. Dữ liệu đã lưu thành công.', 'success');
+    normalizationRunning = false;
+    updateNormalizeButton();
+    setStatus(
+      'AI đã rà soát chính tả và tối ưu phần giới thiệu, vai trò, dự án, hoạt động, học vấn, thành tích, kỹ năng và sở thích. Thông tin liên hệ, điểm số, chứng chỉ và dữ liệu gốc khác được giữ nguyên.' +
+        (localDraftSaved ? '' : ' Bản nháp đã lưu lên server nhưng không thể lưu trên thiết bị.'),
+      localDraftSaved ? 'success' : 'warning'
+    );
   }
 
   function persistCvToProfile(cvData) {
@@ -1176,12 +1393,8 @@
   function saveDraft() {
     if (!model) return;
     try {
-      localStorage.setItem('axis_cv_draft', JSON.stringify({
-        template: currentTemplate,
-        language: currentLanguage,
-        model: model,
-        savedAt: new Date().toISOString()
-      }));
+      window.clearTimeout(draftSaveTimer);
+      writeLocalDraft();
       
       if (window.AxisAuth && window.AxisAuth.isSignedIn()) {
         persistCvToProfile(currentCvData()).catch(function (error) {
@@ -1198,7 +1411,7 @@
 
   function snapshotDraft() {
     try {
-      var saved = JSON.parse(localStorage.getItem('axis_cv_draft') || 'null');
+      var saved = JSON.parse(localStorage.getItem(draftStorageKey()) || 'null');
       if (!saved || !saved.model || !saved.model.data) return false;
       model = saved.model;
       currentTemplate = TEMPLATE_LABELS[saved.template] ? saved.template : 'modern';
@@ -1258,6 +1471,7 @@
         var nextLanguage = languageSelect.value === 'en' ? 'en' : 'vi';
         var previousLanguage = currentLanguage;
         currentLanguage = nextLanguage;
+        document.documentElement.lang = currentLanguage;
         if (!model) return;
         model.language = currentLanguage;
         model.labels = Object.assign({}, CV_LABELS[currentLanguage]);
@@ -1267,20 +1481,29 @@
           model.data = mergeAiEditableSection(currentCvData(), data);
           renderPreview();
           setStatus(currentLanguage === 'vi' ? 'Đã dịch nội dung CV sang tiếng Việt.' : 'CV content translated to English.', 'success');
+          scheduleLocalDraftSave();
         }).catch(function (error) {
           currentLanguage = previousLanguage;
+          document.documentElement.lang = previousLanguage;
           model.language = previousLanguage;
           model.labels = Object.assign({}, CV_LABELS[previousLanguage]);
           languageSelect.value = previousLanguage;
           renderPreview();
           setStatus(error.message || 'Không thể dịch CV; nội dung ban đầu vẫn được giữ nguyên.', 'error');
+          if (error && error.status === 429) setNormalizeCooldown(error.retryAfter || 600);
         }).finally(function () {
-          languageSelect.disabled = false;
+          languageSelect.disabled = normalizationRunning || normalizeCooldownUntil > Date.now();
         });
       });
     }
     document.querySelectorAll('[data-action="save"]').forEach(function (button) {
       button.addEventListener('click', saveDraft);
+    });
+    document.addEventListener('keydown', function (event) {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+        event.preventDefault();
+        saveDraft();
+      }
     });
     document.querySelectorAll('[data-action="print"]').forEach(function (button) {
       button.addEventListener('click', function () {
@@ -1288,9 +1511,29 @@
         window.setTimeout(function () { window.print(); }, 40);
       });
     });
-    document.addEventListener('axis:profile-hydrated', function () { runPipeline(); });
-    document.addEventListener('axis:auth-state', function (event) {
-      if (event.detail && event.detail.signedIn) runPipeline();
+    document.addEventListener('axis:profile-hydrated', function () {
+      if (!model || normalizationRunning || restoredDraftState || userHasEditedContent) return;
+      var nextModel = makeModel(profileFromAxis(), currentLanguage);
+      nextModel.language = currentLanguage;
+      model = nextModel;
+      renderPreview();
+      updateNormalizeButton();
+    });
+    document.addEventListener('axis:auth-state', function () {
+      userHasEditedContent = false;
+      restoredDraftState = snapshotDraft();
+      if (!restoredDraftState) {
+        model = makeModel(profileFromAxis(), currentLanguage);
+        model.language = currentLanguage;
+      }
+      renderPreview();
+      setStatus(
+        restoredDraftState
+          ? 'Đã khôi phục bản nháp gần nhất cho tài khoản này.'
+          : 'Nội dung hồ sơ đã sẵn sàng.',
+        restoredDraftState ? 'success' : 'neutral'
+      );
+      updateNormalizeButton();
     });
   }
 
@@ -1304,6 +1547,8 @@
     previewResizeObserver.observe(document.querySelector('.cv-editor__workspace'));
     window.addEventListener('resize', fitPreviewToViewport);
     var restoredDraft = snapshotDraft();
+    restoredDraftState = restoredDraft;
+    document.documentElement.lang = currentLanguage;
     if (!restoredDraft) {
       model = makeModel(profileFromAxis(), currentLanguage);
       model.language = currentLanguage;
@@ -1312,11 +1557,13 @@
     if (languageSelect) languageSelect.value = currentLanguage;
     syncColorControls();
     renderPreview();
+    restoreLastNormalizedFingerprint();
     if (restoredDraft) {
       setStatus('Đã khôi phục bản nháp gần nhất. Bấm AI chuẩn hóa để cập nhật theo hồ sơ.', 'success');
     } else {
-      setStatus('Đang dùng dữ liệu mẫu. Bấm AI chuẩn hóa để đọc hồ sơ hiện tại.', 'neutral');
-      runPipeline();
+      setStatus('Nội dung hồ sơ đã sẵn sàng. Bấm AI chuẩn hóa khi bạn muốn rà soát và tối ưu.', 'neutral');
     }
+    restoreNormalizeCooldown();
+    updateNormalizeButton();
   });
 })();

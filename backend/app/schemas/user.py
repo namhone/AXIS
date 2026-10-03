@@ -11,4 +11,5 @@ class UserResponse(BaseModel):
     email: EmailStr
     full_name: str
     is_active: bool
+    is_synthetic: bool
     created_at: datetime

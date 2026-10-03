@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
-
 :root {
   --transition-menu: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   --bg: #f6f7f9;
@@ -3593,6 +3591,90 @@ body.has-search .search-box { display: block !important; }
   align-items: stretch;
 }
 
+.career-focus-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.career-focus-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.career-focus-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.career-focus-rank,
+.career-focus-score {
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.career-focus-rank {
+  color: var(--text-soft);
+}
+
+.career-focus-score {
+  color: var(--accent, #376fdb);
+}
+
+.career-focus-card h3 {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.career-focus-scorebar {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(90, 105, 125, 0.14);
+}
+
+.career-focus-scorebar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent, #376fdb);
+}
+
+.career-focus-selected {
+  margin-top: 12px;
+}
+
+.career-focus-selected-note,
+.career-focus-empty-slot > span {
+  color: var(--text-soft);
+  font-size: 0.88rem;
+}
+
+.career-focus-empty-slot {
+  border-style: dashed;
+}
+
+.career-focus-browse {
+  display: inline-flex;
+  margin-top: 12px;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .career-focus-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .career-focus-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .current-goal-card {
   display: flex;
   min-width: 0;
@@ -5216,6 +5298,16 @@ body.mobile-nav-open { overflow: hidden; }
   margin: 0;
 }
 
+.profile-workspace #certificateScore[aria-invalid="true"] {
+  border-color: #c43d4b;
+  box-shadow: 0 0 0 3px rgba(196, 61, 75, .12);
+}
+
+#certificateHelp[data-tone="error"] {
+  color: #a42c38;
+  font-weight: 650;
+}
+
 .profile-workspace .certificate-issue-date {
   margin-top: 14px;
 }
@@ -5231,6 +5323,28 @@ body.mobile-nav-open { overflow: hidden; }
 
 .profile-workspace .achievement-form .mini-grid {
   row-gap: 16px;
+}
+
+.profile-workspace .profile-core-details .profile-core-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.profile-workspace .profile-core-details .profile-core-fields > .field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profile-workspace .profile-core-details .profile-core-fields > .profile-core-skills {
+  grid-column: 1 / -1;
+}
+
+.profile-workspace .profile-core-details .profile-core-fields textarea {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 132px;
+  resize: vertical;
 }
 
 .profile-workspace [data-profile-field="certificateScore"]:disabled,
@@ -6151,6 +6265,9 @@ a.button-like:active {
 .riasec-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin: 28px 0; }
 .riasec-evaluation-notice { margin: 20px 0; padding: 16px 18px; border: 1px solid #f0c7a3; border-radius: 14px; background: #fff7ed; color: #8a4b16; line-height: 1.55; }
 .riasec-evaluation-notice.is-ready { border-color: #b9dfd1; background: #effaf6; color: #17624f; }
+.riasec-ai-evaluation { margin: 24px 0; padding: 18px; border: 1px solid #dce5ef; border-radius: 16px; background: #f8fbff; line-height: 1.65; }
+.riasec-ai-evaluation h3 { margin: 0 0 12px; }
+.riasec-ai-evaluation p { margin: 10px 0 0; }
 .riasec-career-matches { margin: 26px 0; padding: 22px; border: 1px solid #dce8ef; border-radius: 18px; background: #f8fbfd; }
 .riasec-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
 .riasec-section-heading > * { min-width: 0; }

@@ -15,7 +15,12 @@ class DocumentQuery:
     def __init__(self, document=None):
         self.document = document
 
-    def filter(self, *args, **kwargs):
+    def filter(self, *criteria, **kwargs):
+        if self.document is not None and any(
+            getattr(self.document, criterion.left.key, None) != criterion.right.value
+            for criterion in criteria
+        ):
+            self.document = None
         return self
 
     def order_by(self, *args, **kwargs):
@@ -108,6 +113,33 @@ def test_document_download_returns_not_found_for_unknown_document() -> None:
         response = TestClient(app).get(f"/api/v1/account/documents/{uuid.uuid4()}")
         assert response.status_code == 404
         assert response.json()["error"]["message"] == "Document not found"
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_document_list_and_download_are_scoped_to_current_user() -> None:
+    owner = _user()
+    other_user = _user()
+    document = SimpleNamespace(
+        id=uuid.uuid4(),
+        user_id=owner.id,
+        filename="private.pdf",
+        document_type="certificate",
+        mime_type="application/pdf",
+        data=b"%PDF-1.7 private",
+        created_at=datetime.now(timezone.utc),
+    )
+    app.dependency_overrides[get_current_user] = lambda: other_user
+    app.dependency_overrides[get_db] = lambda: DocumentSession(document)
+    try:
+        client = TestClient(app)
+        listed = client.get("/api/v1/account/documents")
+        assert listed.status_code == 200
+        assert listed.json() == []
+
+        downloaded = client.get(f"/api/v1/account/documents/{document.id}")
+        assert downloaded.status_code == 404
+        assert downloaded.json()["error"]["message"] == "Document not found"
     finally:
         app.dependency_overrides.clear()
 

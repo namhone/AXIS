@@ -53,7 +53,10 @@ request do.
 
 Authentication cookies are `HttpOnly`, `SameSite=Lax`, and use `Secure` when
 `COOKIE_SECURE=true`. CORS accepts only exact origins listed in
-`CORS_ORIGINS`; do not use `*` with credentialed requests.
+`CORS_ORIGINS`; do not use `*` with credentialed requests. In development,
+loopback origins on ports `5500` and `5501` are added automatically, including
+when a custom allowlist is configured. Production defaults to the AXIS
+application origin and never adds local origins.
 For local `file://` testing only, `null` may be added to `CORS_ORIGINS`; remove
 it before deployment and prefer serving the frontend through an HTTP server.
 

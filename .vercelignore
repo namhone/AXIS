@@ -1,4 +1,7 @@
 data/
+.agents/
+.claude/
+skills-lock.json
 .qa/
 **/.qa/
 tools/

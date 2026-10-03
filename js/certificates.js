@@ -35,6 +35,60 @@
     BJT: [0, 800, 1, 'Nhập điểm BJT'],
     NAT_TEST: [0, 180, 1, 'Nhập điểm NAT-TEST'],
   };
+  function decimalPlaces(value) {
+    var text = String(value);
+    return text.indexOf('.') < 0 ? 0 : text.length - text.indexOf('.') - 1;
+  }
+  function sanitizeScoreInput(certType, value) {
+    var config = NUMERIC[certType];
+    if (!config) return String(value == null ? '' : value);
+    var precision = Math.max(decimalPlaces(config[0]), decimalPlaces(config[2]));
+    var cleaned = String(value == null ? '' : value).replace(/[^\d.,]/g, '');
+    var separatorIndex = cleaned.search(/[.,]/);
+    if (separatorIndex < 0) return cleaned;
+    var whole = cleaned.slice(0, separatorIndex);
+    if (precision === 0) return whole;
+    var separator = cleaned.charAt(separatorIndex);
+    var fraction = cleaned.slice(separatorIndex + 1).replace(/[.,]/g, '').slice(0, precision);
+    if (fraction) {
+      var possibleParts = new Set();
+      var scale = Math.pow(10, precision);
+      var minimum = Math.round(config[0] * scale);
+      var step = Math.round(config[2] * scale);
+      var maximum = Math.round(config[1] * scale);
+      for (var score = minimum; score <= maximum; score += step) {
+        var part = String(score % scale).padStart(precision, '0');
+        possibleParts.add(part);
+      }
+      var isAllowedPrefix = Array.from(possibleParts).some(function (part) {
+        return part.indexOf(fraction) === 0;
+      });
+      if (!isAllowedPrefix) fraction = '';
+    }
+    return whole + separator + fraction;
+  }
+  function validateScore(certType, value) {
+    var config = NUMERIC[certType];
+    if (!config) return '';
+    var text = String(value == null ? '' : value).trim();
+    if (!/^\d+(?:[.,]\d+)?$/.test(text)) return 'Nhập điểm theo đúng định dạng của chứng chỉ.';
+    var score = Number(text.replace(',', '.'));
+    if (!Number.isFinite(score)) return 'Điểm không hợp lệ.';
+    if (score < config[0] || score > config[1]) {
+      return 'Điểm phải nằm trong khoảng ' + config[0] + '–' + config[1] + '.';
+    }
+    var steps = (score - config[0]) / config[2];
+    if (Math.abs(steps - Math.round(steps)) > 1e-8) {
+      var example = config[2] === 0.5 ? ' (ví dụ: 6,5 hoặc 6.5)' : '';
+      return 'Điểm cần theo bước ' + config[2] + example + '.';
+    }
+    return '';
+  }
+  function formatScore(certType, value) {
+    var text = String(value == null ? '' : value).trim();
+    if (!text || validateScore(certType, text)) return text;
+    return String(Number(text.replace(',', '.')));
+  }
   var LEVEL_SCORES = {
     B1: 6, B2: 8, C1: 9, C2: 10,
     VSTEP_B1: 6.5, VSTEP_B2: 8, VSTEP_C1: 9, VSTEP_C2: 10,
@@ -81,5 +135,14 @@
     expiry.setFullYear(expiry.getFullYear() + 2);
     return Number.isFinite(issued.getTime()) && expiry < current;
   }
-  global.AxisCertificates = { LANGUAGES: LANGUAGES, LEVELS: LEVELS, NUMERIC: NUMERIC, convertCertificateToNormalizedScore: convertCertificateToNormalizedScore, isExpired: isExpired };
+  global.AxisCertificates = {
+    LANGUAGES: LANGUAGES,
+    LEVELS: LEVELS,
+    NUMERIC: NUMERIC,
+    sanitizeScoreInput: sanitizeScoreInput,
+    validateScore: validateScore,
+    formatScore: formatScore,
+    convertCertificateToNormalizedScore: convertCertificateToNormalizedScore,
+    isExpired: isExpired
+  };
 })(window);

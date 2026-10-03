@@ -7,6 +7,27 @@ from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
+PRODUCTION_CORS_ORIGINS = ("https://axis-career-app.vercel.app",)
+DEVELOPMENT_CORS_ORIGINS = (
+    "https://axis-career-app.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:5501",
+    "http://127.0.0.1:5501",
+)
+LOCAL_DEVELOPMENT_ORIGINS = (
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:5501",
+    "http://127.0.0.1:5501",
+)
+
+
 class Settings(BaseSettings):
     """Application settings loaded from environment variables or ``.env``."""
 
@@ -25,16 +46,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
     cookie_name: str = "axis_access_token"
     cookie_secure: bool = False
-    cors_origins: Annotated[list[str], NoDecode] = [
-        "https://axis-career-app.vercel.app",
-        "http://localhost:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "http://localhost:4173",
-        "http://127.0.0.1:4173",
-        "http://localhost:5500",
-        "http://127.0.0.1:5500",
-    ]
+    cors_origins: Annotated[list[str] | None, NoDecode] = None
     groq_api_key: str = ""
     groq_model: str = "openai/gpt-oss-120b"
     ai_rate_limit_requests: int = 5
@@ -43,6 +55,8 @@ class Settings(BaseSettings):
     @field_validator("cors_origins", mode="before")
     @classmethod
     def parse_cors_origins(cls, value: object) -> object:
+        if value is None:
+            return None
         if isinstance(value, str):
             raw = value.strip()
             if not raw or raw.lower() in {"null", "none", "undefined"}:
@@ -63,26 +77,26 @@ class Settings(BaseSettings):
 
     @field_validator("cors_origins")
     @classmethod
-    def validate_cors_origins(cls, value: list[str]) -> list[str]:
-        if "*" in value:
+    def validate_cors_origins(cls, value: list[str] | None) -> list[str] | None:
+        if value is not None and "*" in value:
             raise ValueError("CORS_ORIGINS must contain explicit origins, not '*'")
-        if not value:
-            return [
-                "https://axis-career-app.vercel.app",
-                "http://localhost:3000",
-                "http://localhost:4173",
-                "http://127.0.0.1:4173",
-                "http://localhost:8000",
-                "http://127.0.0.1:8000",
-                "http://localhost:5500",
-                "http://127.0.0.1:5500",
-            ]
         return value
 
     @model_validator(mode="after")
     def validate_production_security(self) -> "Settings":
         environment = self.environment.strip().lower()
-        if environment in {"production", "prod"}:
+        is_production = environment in {"production", "prod"}
+        if not self.cors_origins:
+            self.cors_origins = list(
+                PRODUCTION_CORS_ORIGINS if is_production else DEVELOPMENT_CORS_ORIGINS
+            )
+        elif not is_production:
+            self.cors_origins.extend(
+                origin
+                for origin in LOCAL_DEVELOPMENT_ORIGINS
+                if origin not in self.cors_origins
+            )
+        if is_production:
             if len(self.jwt_secret_key.strip()) < 32:
                 raise ValueError(
                     "JWT_SECRET_KEY must be at least 32 characters in production"
