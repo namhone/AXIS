@@ -89,3 +89,42 @@ def test_production_preserves_explicit_cors_allowlist_without_dev_origins() -> N
     )
 
     assert settings.cors_origins == ["https://preview.example"]
+
+
+def test_vercel_production_system_environment_enables_strict_defaults(monkeypatch) -> None:
+    monkeypatch.setenv("VERCEL", "1")
+    monkeypatch.setenv("VERCEL_ENV", "production")
+    monkeypatch.setenv("VERCEL_URL", "axis-career-app.vercel.app")
+    for key in ("ENVIRONMENT", "COOKIE_SECURE", "CORS_ORIGINS"):
+        monkeypatch.delenv(key, raising=False)
+
+    settings = Settings(_env_file=None, jwt_secret_key="x" * 64)
+
+    assert settings.environment == "production"
+    assert settings.cookie_secure is True
+    assert settings.cors_origins == ["https://axis-career-app.vercel.app"]
+
+
+def test_vercel_preview_uses_deployment_origin_and_secure_cookie(monkeypatch) -> None:
+    monkeypatch.setenv("VERCEL", "1")
+    monkeypatch.setenv("VERCEL_ENV", "preview")
+    monkeypatch.setenv("VERCEL_URL", "axis-preview-123.vercel.app")
+    for key in ("ENVIRONMENT", "COOKIE_SECURE", "CORS_ORIGINS"):
+        monkeypatch.delenv(key, raising=False)
+
+    settings = Settings(_env_file=None, jwt_secret_key="x" * 64)
+
+    assert settings.environment == "preview"
+    assert settings.cookie_secure is True
+    assert settings.cors_origins == ["https://axis-preview-123.vercel.app"]
+
+
+def test_vercel_preview_rejects_weak_secret(monkeypatch) -> None:
+    monkeypatch.setenv("VERCEL", "1")
+    monkeypatch.setenv("VERCEL_ENV", "preview")
+    monkeypatch.setenv("VERCEL_URL", "axis-preview-123.vercel.app")
+    for key in ("ENVIRONMENT", "COOKIE_SECURE", "CORS_ORIGINS"):
+        monkeypatch.delenv(key, raising=False)
+
+    with pytest.raises(ValidationError, match="JWT_SECRET_KEY"):
+        Settings(_env_file=None, jwt_secret_key="short")

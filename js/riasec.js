@@ -56,7 +56,7 @@
       ));
     } catch (error) {}
   }
-  function saveDraft() {
+  function saveDraft(syncAccount) {
     var progress = {
       answered: totalAnswered(),
       total: TOTAL_QUESTIONS,
@@ -72,19 +72,27 @@
         version: 2
       }));
     } catch (error) {}
-    if (accountSyncTimer) window.clearTimeout(accountSyncTimer);
-    accountSyncTimer = window.setTimeout(function () {
-      if (!window.AxisAuth || !window.AxisAuth.isSignedIn() || !window.AxisData) return;
-      window.AxisData.setProfileValue('riasecDraft', {
-        answers: Object.assign({}, state.answers),
-        groupIndex: state.groupIndex,
-        progress: progress
-      });
-      window.AxisData.setProfileValue('riasecProgress', progress);
-      if (window.AxisData.saveProfile) {
-        window.AxisData.saveProfile().catch(function () {});
-      }
-    }, 900);
+    if (syncAccount) {
+      if (accountSyncTimer) window.clearTimeout(accountSyncTimer);
+      accountSyncTimer = window.setTimeout(function () {
+        accountSyncTimer = null;
+        if (!window.AxisAuth || !window.AxisAuth.isSignedIn() || !window.AxisData) return;
+        var answered = totalAnswered();
+        var latestProgress = {
+          answered: answered,
+          total: TOTAL_QUESTIONS,
+          completion: Math.round(answered / TOTAL_QUESTIONS * 100),
+          updatedAt: new Date().toISOString()
+        };
+        window.AxisData.setProfileValue('riasecDraft', {
+          answers: Object.assign({}, state.answers),
+          groupIndex: state.groupIndex,
+          progress: latestProgress
+        });
+        window.AxisData.setProfileValue('riasecProgress', latestProgress);
+        if (window.AxisData.saveProfile) window.AxisData.saveProfile().catch(function () {});
+      }, 900);
+    }
     var status = $('draftStatus');
     if (status) status.textContent = 'Đã tự động lưu nháp';
   }
@@ -186,7 +194,7 @@
     $('groupTabs').querySelectorAll('[data-group-index]').forEach(function (button) {
       button.addEventListener('click', function () {
         state.groupIndex = Number(button.dataset.groupIndex);
-        saveDraft();
+        saveDraft(true);
         renderQuestion();
       });
     });
@@ -369,10 +377,13 @@
   function showResult() {
     var result = calculateResult();
     state.result = result;
-    var isEligible = renderEvaluationState(result);
     persistResult(result).then(function () {
-      if (isEligible && state.result === result) requestRiasecEvaluation(result);
+      if (result.completion >= MIN_EVALUATION_COMPLETION * 100 && state.result === result) requestRiasecEvaluation(result);
     });
+    renderResult(result);
+  }
+  function renderResult(result) {
+    var isEligible = renderEvaluationState(result);
     $('hollandCode').textContent = result.code;
     $('resultTitle').textContent = 'Bạn nổi bật ở nhóm ' + result.code;
     $('resultSummary').textContent = result.code.split('').map(function (code) { return GROUPS.find(function (group) { return group.code === code; }).description; }).join(' ');
@@ -389,8 +400,52 @@
       var best = Object.keys(result.aspects[code]).sort(function (a, b) { return result.aspects[code][b].converted - result.aspects[code][a].converted; })[0];
       return '<div class="riasec-aspect-row"><strong>' + code + ' · Khía cạnh ' + best + '</strong><span>' + result.aspects[code][best].converted + '/100 quy đổi</span></div>';
     }).join('');
+    if (result.aiEvaluation) {
+      $('riasecAiOverall').textContent = result.aiEvaluation.overall || '';
+      $('riasecAiDirection').textContent = result.aiEvaluation.direction || '';
+      $('riasecAiSummary').textContent = result.aiEvaluation.summary || '';
+      $('riasecEvaluationNotice').textContent = 'Đã khôi phục kết quả đánh giá đã lưu.';
+    } else if (!isEligible) {
+      $('riasecAiOverall').textContent = '';
+      $('riasecAiDirection').textContent = '';
+      $('riasecAiSummary').textContent = '';
+    }
+    renderCareerMatches(Array.isArray(result.careerMatches) ? result.careerMatches : []);
     setVisibility('riasecQuestionnaire', false);
     setVisibility('riasecResult', true);
+  }
+  function readSavedResult() {
+    try {
+      var result = JSON.parse(localStorage.getItem('axis_riasec_result:' + signedInId()) || 'null');
+      if (!result && signedInId() !== 'guest' && window.AxisData && window.AxisData.getProfile) {
+        result = window.AxisData.getProfile().riasecResult || null;
+      }
+      if (!result || !/^[RIASEC]{3}$/.test(result.code || '') || !result.scores || !result.aspects) return null;
+      if (!GROUPS.every(function (group) {
+        return Number.isFinite(Number(result.scores[group.code])) &&
+          result.aspects[group.code] && Array.from({ length: ASPECTS_PER_GROUP }, function (_, index) {
+            return result.aspects[group.code][String(index + 1)] && Number.isFinite(Number(result.aspects[group.code][String(index + 1)].converted));
+          }).every(Boolean);
+      })) return null;
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+  function restoreSavedResult() {
+    var savedResult = readSavedResult();
+    if (savedResult) {
+      if (state.result && state.result.completedAt === savedResult.completedAt) return;
+      state.result = savedResult;
+      renderResult(savedResult);
+      return;
+    }
+    if (state.result) {
+      state.result = null;
+      setVisibility('riasecResult', false);
+      setVisibility('riasecWelcome', true);
+      setVisibility('riasecQuestionnaire', false);
+    }
   }
   function renderEvaluationState(result) {
     var notice = $('riasecEvaluationNotice');
@@ -442,7 +497,7 @@
         }, {}),
         completion: result.completion
       })
-    }).then(function (evaluation) {
+    }, 65000).then(function (evaluation) {
       if (state.result !== result) return;
       if (overall) overall.textContent = evaluation.overall;
       if (direction) direction.textContent = evaluation.direction;
@@ -507,7 +562,7 @@
     }
     if (state.groupIndex < 5) {
       state.groupIndex += 1;
-      saveDraft();
+      saveDraft(true);
       renderQuestion();
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
@@ -555,6 +610,9 @@
       try { localStorage.removeItem(keyForUser()); } catch (error) {}
       start();
     });
+    restoreSavedResult();
+    document.addEventListener('axis:auth-state', restoreSavedResult);
+    document.addEventListener('axis:profile-hydrated', restoreSavedResult);
   }
   document.addEventListener('DOMContentLoaded', init);
 }());

@@ -35,17 +35,25 @@
           </section>
 
           <section class="assessment-controls content-panel">
+            <div class="assessment-account-summary" id="assessmentAccountSummary" hidden>
+              <div><span class="eyebrow">Hồ sơ của bạn</span><strong id="assessmentAccountName"></strong><span id="assessmentAccountMeta"></span></div>
+              <a class="ghost-btn" href="profile.html">Cập nhật hồ sơ</a>
+            </div>
             <div class="controls-row">
-              <button class="primary-btn" id="runAssessment">Chạy đánh giá lại</button>
-              <button class="ghost-btn" id="saveSuggestions">Lưu gợi ý vào hồ sơ</button>
-              <button class="ghost-btn" id="exportReport">Xuất báo cáo (PDF)</button>
-              <button class="ghost-btn" id="exportJson">Tải dữ liệu (JSON)</button>
+              <button class="primary-btn" id="runAssessment">Chạy đánh giá</button>
+              <button class="ghost-btn" id="saveSuggestions" disabled>Lưu gợi ý vào hồ sơ</button>
+              <button class="ghost-btn" id="exportReport" disabled>Xuất báo cáo (PDF)</button>
+              <button class="ghost-btn" id="exportJson" disabled>Tải dữ liệu (JSON)</button>
               <span class="assessment-action-status" id="assessmentActionStatus" role="status" aria-live="polite"></span>
             </div>
 
             <div class="assessment-visual">
-              <canvas id="skillChart" width="600" height="240" aria-hidden="true"></canvas>
-              <div class="assessment-note">Biểu đồ hiển thị điểm kỹ năng ước tính. Chạy đánh giá để cập nhật dữ liệu.</div>
+              <canvas id="skillChart" width="600" height="240" aria-hidden="true" hidden></canvas>
+              <div class="assessment-empty-state" id="assessmentEmptyState">
+                <strong>Chưa có kết quả đánh giá</strong>
+                <p>AXIS sẽ dùng hồ sơ hiện tại để tính mức phù hợp và khoảng năng lực cần bồi đắp.</p>
+                <a class="ghost-btn" href="profile.html">Kiểm tra hồ sơ trước</a>
+              </div>
             </div>
           </section>
 
@@ -53,7 +61,11 @@
             <div class="panel-heading">
               <div><span class="eyebrow">Progress over time</span><h2>Tiến bộ theo thời gian</h2></div>
             </div>
-            <canvas id="progressChart" width="900" height="260" aria-label="Biểu đồ tiến bộ theo thời gian"></canvas>
+            <canvas id="progressChart" width="900" height="260" aria-label="Biểu đồ tiến bộ theo thời gian" hidden></canvas>
+            <div class="assessment-empty-state" id="progressEmptyState">
+              <strong>Tiến trình sẽ xuất hiện sau lần đánh giá đầu tiên</strong>
+              <p>Mỗi lần chạy đánh giá sẽ lưu một mốc để bạn theo dõi thay đổi theo thời gian.</p>
+            </div>
             <p class="assessment-note" id="progressSummary">Chưa có lịch sử đánh giá.</p>
           </section>
 
@@ -70,16 +82,12 @@
 
             <article class="stat-card">
               <h3>Điểm mạnh</h3>
-              <p>• Tư duy logic</p>
-              <p>• Giải quyết vấn đề</p>
-              <p>• Sáng tạo</p>
+              <div id="assessmentStrengths"><p>Chưa có dữ liệu — hãy chạy đánh giá để xem điểm nổi bật.</p></div>
             </article>
 
             <article class="stat-card">
               <h3>Điểm cần cải thiện</h3>
-              <p>• Tiếng Anh</p>
-              <p>• Giao tiếp</p>
-              <p>• Thuyết trình</p>
+              <div id="assessmentWeaknesses"><p>Chưa có dữ liệu — gợi ý sẽ dựa trên hồ sơ của bạn.</p></div>
             </article>
           </section>
 
@@ -171,6 +179,7 @@
         let assessmentHistory = [];
         let benchmarks = [];
         let historyLoadRequest = null;
+        let activeAccountId = null;
         const careerDescriptions = {
           N01: 'Phát triển phần mềm, dữ liệu và hệ thống số; phù hợp với người thích giải quyết vấn đề bằng tư duy logic.',
           N02: 'Tổ chức vận hành, chiến lược và nguồn lực để doanh nghiệp tăng trưởng bền vững.',
@@ -204,10 +213,23 @@
           });
         }
 
+        function clearAccountAssessment() {
+          latestResult = null;
+          assessmentHistory = [];
+          historyLoadRequest = null;
+          [saveBtn, exportBtn, exportJsonBtn].forEach(function (button) { if (button) button.disabled = true; });
+          runBtn.textContent = 'Chạy đánh giá';
+          document.getElementById('assessmentEmptyState').hidden = false;
+          document.getElementById('careerRecommendationSection').hidden = true;
+          document.getElementById('assessmentResults').hidden = true;
+          skillChart.hidden = true;
+          drawProgressChart([]);
+          document.getElementById('assessmentStrengths').innerHTML = '<p>Chưa có dữ liệu — hãy chạy đánh giá để xem điểm nổi bật.</p>';
+          document.getElementById('assessmentWeaknesses').innerHTML = '<p>Chưa có dữ liệu — gợi ý sẽ dựa trên hồ sơ của bạn.</p>';
+        }
+
         function updateStats(result) {
           const items = result.results || [];
-          const strengthsCard = document.querySelectorAll('.stats-grid .stat-card')[1];
-          const weakCard = document.querySelectorAll('.stats-grid .stat-card')[2];
           const top = items[0];
           const scores = top ? top.scores : {};
           const labels = {S1:'Học thuật', S2:'Ngoại ngữ', S3:'Thành tích', S4:'RIASEC', S5:'Ngoại khóa'};
@@ -216,12 +238,18 @@
           }).sort(function (a, b) { return b.value - a.value; });
           const strengths = rankedScores.slice(0, 3);
           const weaknesses = rankedScores.slice().sort(function (a, b) { return a.value - b.value; }).slice(0, 3);
-          if (strengthsCard) strengthsCard.innerHTML = '<h3>Điểm mạnh</h3>' + strengths.map(function (item) {
+          const strengthsCard = document.getElementById('assessmentStrengths');
+          const weakCard = document.getElementById('assessmentWeaknesses');
+          if (strengthsCard) strengthsCard.innerHTML = strengths.map(function (item) {
             return '<p>• ' + labels[item.key] + ' · <strong>' + item.value.toFixed(1) + '/10</strong></p>';
           }).join('');
-          if (weakCard) weakCard.innerHTML = '<h3>Điểm cần cải thiện</h3>' + weaknesses.map(function (item) {
+          if (weakCard) weakCard.innerHTML = weaknesses.map(function (item) {
             return '<p>• ' + labels[item.key] + ' · <strong>' + item.value.toFixed(1) + '/10</strong></p>';
           }).join('');
+          [saveBtn, exportBtn, exportJsonBtn].forEach(function (button) { if (button) button.disabled = false; });
+          document.getElementById('assessmentEmptyState').hidden = true;
+          skillChart.hidden = false;
+          runBtn.textContent = 'Đánh giá lại';
           const careerEls = document.querySelectorAll('[data-career-card]');
           const recommendationSection = document.getElementById('careerRecommendationSection');
           if (recommendationSection) recommendationSection.hidden = !(result.top5 && result.top5.length);
@@ -308,6 +336,12 @@
             return { date: new Date(item.created_at), score: score };
           }).filter(function (item) { return Number.isFinite(item.date.getTime()); });
           ctx.clearRect(0, 0, progressChart.width, progressChart.height);
+          document.getElementById('progressEmptyState').hidden = entries.length > 0;
+          progressChart.hidden = entries.length === 0;
+          if (!entries.length) {
+            document.getElementById('progressSummary').textContent = 'Chưa có lịch sử đánh giá.';
+            return;
+          }
           ctx.strokeStyle = '#d8e0e8';
           ctx.lineWidth = 1;
           ctx.beginPath();
@@ -342,10 +376,16 @@
         async function loadAssessmentHistory() {
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return;
           if (historyLoadRequest) return historyLoadRequest;
+          const requestAccountId = String((window.AXISAuth.getCurrentUser() || {}).id || '');
           historyLoadRequest = (async function () {
           try {
-            assessmentHistory = await window.AXISAuth.apiRequest('/assessments');
+            const history = await window.AXISAuth.apiRequest('/assessments');
+            if (String((window.AXISAuth.getCurrentUser() || {}).id || '') !== requestAccountId) return;
+            assessmentHistory = history;
             if (!Array.isArray(assessmentHistory)) assessmentHistory = [];
+            runBtn.textContent = assessmentHistory.length || latestResult ? 'Đánh giá lại' : 'Chạy đánh giá';
+            const accountMeta = document.getElementById('assessmentAccountMeta');
+            if (accountMeta) accountMeta.textContent = assessmentHistory.length + ' lần đánh giá đã lưu';
             drawProgressChart(assessmentHistory);
             if (!latestResult && assessmentHistory[0]) {
               const saved = assessmentHistory[0];
@@ -390,6 +430,9 @@
               await window.AxisData.saveProfile();
             }
             latestResult = await window.AXISAuth.apiRequest('/assessments/run', { method: 'POST' });
+            [saveBtn, exportBtn, exportJsonBtn].forEach(function (button) { if (button) button.disabled = false; });
+            document.getElementById('assessmentEmptyState').hidden = true;
+            skillChart.hidden = false;
             await loadAssessmentHistory();
             updateStats(latestResult);
             renderResults(latestResult);
@@ -400,7 +443,7 @@
             if (actionStatus) actionStatus.textContent = error.message || 'Không thể chạy đánh giá.';
           } finally {
             runBtn.disabled = false;
-            runBtn.textContent = 'Chạy đánh giá lại';
+            runBtn.textContent = assessmentHistory.length || latestResult ? 'Đánh giá lại' : 'Chạy đánh giá';
             assessmentRequest = null;
           }
           })();
@@ -455,6 +498,24 @@
         });
 
         function initializeAssessmentData() {
+          const summary = document.getElementById('assessmentAccountSummary');
+          const user = window.AXISAuth && window.AXISAuth.getCurrentUser ? window.AXISAuth.getCurrentUser() : null;
+          const accountId = user && user.id ? String(user.id) : null;
+          if (accountId !== activeAccountId) {
+            clearAccountAssessment();
+            activeAccountId = accountId;
+          }
+          if (summary) summary.hidden = !user;
+          if (user) {
+            document.getElementById('assessmentAccountName').textContent = 'Xin chào, ' + (user.full_name || user.email);
+            const profile = window.AxisData && window.AxisData.getProfile ? window.AxisData.getProfile() : {};
+            const completion = document.querySelector('[data-profile-completion]');
+            document.getElementById('assessmentAccountMeta').textContent = (profile.className || 'Chưa cập nhật lớp') + ' · Hồ sơ hoàn thiện ' + (completion ? completion.textContent : '0%');
+            window.setTimeout(function () {
+              const currentCompletion = document.querySelector('[data-profile-completion]');
+              document.getElementById('assessmentAccountMeta').textContent = (profile.className || 'Chưa cập nhật lớp') + ' · Hồ sơ hoàn thiện ' + (currentCompletion ? currentCompletion.textContent : '0%');
+            }, 0);
+          }
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return;
           window.AXISAuth.apiRequest('/axis/benchmarks').then(function (items) {
             benchmarks = Array.isArray(items) ? items : [];
@@ -468,9 +529,9 @@
 
         document.addEventListener('axis:auth-state', function (event) {
           if (!event.detail.signedIn) {
-            latestResult = null;
-            assessmentHistory = [];
-            document.getElementById('careerRecommendationSection').hidden = true;
+            clearAccountAssessment();
+            activeAccountId = null;
+            document.getElementById('assessmentAccountSummary').hidden = true;
           } else {
             initializeAssessmentData();
           }

@@ -79,10 +79,14 @@ async function runSecurityTests() {
   assert(loginResponse.status === 200, `login returned ${loginResponse.status}`);
   assert(accessToken, 'access token was not returned');
   assert(loginCookie?.toLowerCase().includes('httponly'), 'refresh cookie is not HttpOnly');
-  assert(loginCookie?.toLowerCase().includes('samesite=strict'), 'refresh cookie is not SameSite=Strict');
+  const expectedSameSite = process.env.AUTH_TEST_SECURE_COOKIE === '1' ? 'samesite=none' : 'samesite=strict';
+  assert(loginCookie?.toLowerCase().includes(expectedSameSite), `refresh cookie is not ${expectedSameSite}`);
+  if (process.env.AUTH_TEST_SECURE_COOKIE === '1') {
+    assert(/(?:^|;\s*)secure(?:;|$)/i.test(loginCookie), 'production refresh cookie is missing Secure');
+  }
 
   const oldCookie = cookieValue(loginCookie);
-  console.log('   Access token and secure cookie received');
+  console.log('   Access token and expected cookie flags received');
 
   console.log('[3] Valid refresh and rotation');
   const refreshResponse = await request('/refresh-token', {

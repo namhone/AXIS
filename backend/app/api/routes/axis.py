@@ -1,7 +1,7 @@
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from sqlalchemy.orm import Session
 
 from ..deps import get_current_user
@@ -15,9 +15,13 @@ router = APIRouter(prefix="/api/v1/axis", tags=["axis"])
 
 
 class AxisEvaluatePayload(BaseModel):
-    scores: dict[str, float] = Field(min_length=5, max_length=5)
-    benchmarks: list[dict[str, Any]] = Field(min_length=1, max_length=50)
-    ahp_blend: float = Field(default=0.5, ge=0, le=1)
+    scores: dict[str, Annotated[float, Field(ge=0, le=10)]] = Field(min_length=5, max_length=5)
+
+    @model_validator(mode="after")
+    def validate_score_keys(self):
+        if set(self.scores) != {"S1", "S2", "S3", "S4", "S5"}:
+            raise ValueError("scores must contain S1, S2, S3, S4 and S5")
+        return self
 
 
 def _benchmark(industry: Any) -> dict[str, Any]:
@@ -72,7 +76,7 @@ def list_benchmarks(db: Session = Depends(get_db)) -> list[dict[str, Any]]:
     return [
         {
             "code": row.code,
-            "name": row.name,
+            "name": industry_metadata[row.code].name,
             "requirements": row.requirements_json,
             "roc_order": row.roc_order_json,
             "ahp_matrix": row.ahp_matrix_json,
@@ -90,21 +94,42 @@ def evaluate_axis(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> dict[str, Any]:
-    expected = {"S1", "S2", "S3", "S4", "S5"}
-    if set(payload.scores) != expected:
-        raise HTTPException(status_code=422, detail="scores must contain S1, S2, S3, S4 and S5")
-    scores = {key: max(0.0, min(10.0, value)) for key, value in payload.scores.items()}
+    scores = payload.scores
+    _seed_benchmarks(db)
+    industry_metadata = {industry.code: industry for industry in INDUSTRIES}
+    benchmark_rows = db.query(CareerBenchmark).order_by(CareerBenchmark.code).all()
     results = []
-    for benchmark in payload.benchmarks:
-        result = calculate_hybrid(scores, benchmark, ahp_blend=payload.ahp_blend)
+    for row in benchmark_rows:
+        industry = industry_metadata.get(row.code)
+        if industry is None:
+            continue
+        benchmark = {
+            "code": row.code,
+            "name": row.name,
+            "requirements": row.requirements_json,
+            "ahp_matrix": row.ahp_matrix_json,
+            "roc_order": row.roc_order_json,
+        }
+        result = calculate_hybrid(scores, benchmark)
+        explanations = {
+            key: {
+                "score": scores[key],
+                "normalized": round(result.normalized[key], 4),
+                "weight": round(result.hybrid_weights[key], 4),
+                "contribution": round(result.normalized[key] * result.hybrid_weights[key] * 100, 2),
+                "target": float(row.requirements_json.get(key, {}).get("target", 10)),
+            }
+            for key in scores
+        }
         results.append(
             {
-                "code": benchmark.get("code"),
-                "name": benchmark.get("name"),
+                "code": row.code,
+                "name": industry.name,
                 "match_score": round(result.match_percent, 2),
                 "gap_risk": round(result.gap_risk, 2),
                 "normalized": result.normalized,
                 "weights": result.hybrid_weights,
+                "explanation": explanations,
                 "ahp_consistency_ratio": round(result.ahp_consistency_ratio, 4),
                 "used_roc_fallback": result.used_roc_fallback,
             }
@@ -124,6 +149,9 @@ def evaluate_axis(
     )
     db.add(competency)
     db.flush()
+    results.sort(key=lambda item: (-item["match_score"], item["code"]))
+    for rank, item in enumerate(results, 1):
+        item["rank"] = rank
     db.add(MatchLog(user_id=user.id, competency_score_id=competency.id, results_json={"results": results}))
     db.commit()
     return {"scores": scores, "results": results}

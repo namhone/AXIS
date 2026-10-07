@@ -564,7 +564,7 @@
   .cv-editor__layout { grid-template-columns: 1fr; padding-top: 76px; }
   .cv-editor__sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cv-panel--pipeline { grid-column: 1 / -1; }
-  .cv-editor__workspace { min-height: calc(100vh - 110px); }
+  .cv-editor__workspace { min-height: 0; }
   .cv-preview-scroll { justify-content: flex-start; }
   .cv-preview { margin: 0; transform-origin: top left; }
 }

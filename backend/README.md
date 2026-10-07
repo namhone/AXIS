@@ -74,7 +74,14 @@ Errors have a consistent JSON shape:
 The AI roadmap endpoint is limited per authenticated user (and client address)
 using a rolling in-memory window. Defaults are 5 requests per 60 seconds and
 can be adjusted with `AI_RATE_LIMIT_REQUESTS` and
-`AI_RATE_LIMIT_WINDOW_SECONDS`. A rejected request returns HTTP 429 with
+`AI_RATE_LIMIT_WINDOW_SECONDS`. Login is locked for 15 minutes after five
+failed attempts for the same normalized email within a 15-minute window;
+`AUTH_LOGIN_FAILURE_LIMIT`, `AUTH_LOGIN_WINDOW_SECONDS`, and
+`AUTH_LOGIN_LOCKOUT_SECONDS` adjust those defaults. Login limiter keys are
+hashed in memory. Both limiters are process-local, so they do not enforce one
+shared quota across serverless invocations or replicas; verify deployment
+topology and configure a shared limiter before relying on these controls in a
+multi-instance production deployment. A rejected request returns HTTP 429 with
 `Retry-After` and `error.code` set to `rate_limited`. The limiter is
 process-local; deployments with multiple workers should move the counter to a
 shared store.

@@ -64,7 +64,11 @@ app.use((error, _req, res, _next) => {
   if (error?.type === 'entity.parse.failed') {
     return res.status(400).json({ status: 'error', code: 'INVALID_JSON', message: 'Request body is invalid JSON' });
   }
-  console.error(error);
+  console.error(
+    'request_error name=%s code=%s',
+    typeof error?.name === 'string' ? error.name : 'Error',
+    typeof error?.code === 'string' ? error.code : 'unknown'
+  );
   return res.status(500).json({ status: 'error', code: 'INTERNAL_ERROR', message: 'An unexpected error occurred' });
 });
 

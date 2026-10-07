@@ -19,6 +19,7 @@
   let avatarRequestVersion = 0;
   let sessionCheckVersion = 0;
   let sessionInvalidationPromise = null;
+  let authReturnFocus = null;
 
   function normalizeAuthUser(payload) {
     if (!payload || typeof payload !== 'object') return null;
@@ -261,13 +262,13 @@
     return response.status === 204 ? null : response.json();
   }
 
-  async function apiRequest(path, options) {
+  async function apiRequest(path, options, timeoutMs) {
     let response;
     try {
       response = await fetchWithTimeout(rootApiBase(activeApiHost) + path, Object.assign({
         credentials: 'include',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-      }, options || {}), 10000);
+      }, options || {}), timeoutMs || 10000);
     } catch (error) {
       throw new Error('Không thể kết nối máy chủ. Vui lòng thử lại.');
     }
@@ -347,7 +348,7 @@
     modal.setAttribute('aria-hidden', 'true');
     modal.innerHTML = [
       '<div class="settings-modal-backdrop" data-close-auth="true"></div>',
-      '<div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">',
+      '<div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" tabindex="-1">',
       '<button type="button" class="settings-close" data-close-auth="true" aria-label="Đóng">×</button>',
       '<h3 id="authModalTitle">Đăng nhập</h3>',
       '<p class="auth-modal-note">Tiếp tục hành trình định hướng cùng Axis.</p>',
@@ -356,6 +357,7 @@
       '<label class="auth-field">Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>',
       '<label class="auth-field">Mật khẩu<input name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Tối thiểu 8 ký tự"></label>',
       '<button class="primary-btn full" type="submit">Tiếp tục</button>',
+      '<p class="auth-form-message hidden" id="authFormMessage" role="status"></p>',
       '</form>',
       '<button class="auth-switch" type="button" id="authSwitch">Chưa có tài khoản? Đăng ký</button>',
       '</div>'
@@ -367,9 +369,29 @@
   function closeModal() {
     const modal = document.getElementById('authModal');
     if (modal) {
+      if (modal.classList.contains('hidden')) return;
       modal.classList.add('hidden');
       modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('auth-modal-open');
+      const returnFocus = authReturnFocus;
+      authReturnFocus = null;
+      if (returnFocus && returnFocus.isConnected && typeof returnFocus.focus === 'function') {
+        returnFocus.focus();
+      }
     }
+  }
+
+  function setAuthFeedback(form, message, isError) {
+    const feedback = form && form.querySelector('#authFormMessage');
+    if (!feedback) {
+      if (message) showNotice(message, isError);
+      return;
+    }
+    feedback.textContent = message || '';
+    feedback.classList.toggle('hidden', !message);
+    feedback.classList.toggle('is-error', Boolean(message && isError));
+    feedback.classList.toggle('is-success', Boolean(message && !isError));
+    feedback.setAttribute('role', isError ? 'alert' : 'status');
   }
 
   function fetchWithTimeout(url, options, timeoutMs) {
@@ -391,6 +413,7 @@
 
   function openModal(signUp) {
     const modal = createModal();
+    if (modal.classList.contains('hidden')) authReturnFocus = document.activeElement;
     modal.dataset.mode = signUp ? 'signup' : 'signin';
     modal.querySelector('#authModalTitle').textContent = signUp ? 'Đăng ký' : 'Đăng nhập';
     const nameField = modal.querySelector('input[name="name"]');
@@ -404,10 +427,13 @@
     modal.querySelector('#authSwitch').textContent = signUp
       ? 'Đã có tài khoản? Đăng nhập'
       : 'Chưa có tài khoản? Đăng ký';
+    const form = modal.querySelector('#authForm');
+    setAuthFeedback(form, '', false);
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');
-    const email = modal.querySelector('input[name="email"]');
-    if (email) email.focus();
+    document.body.classList.add('auth-modal-open');
+    const firstField = signUp ? nameField : modal.querySelector('input[name="email"]');
+    if (firstField) firstField.focus();
   }
 
   function requireAuth() {
@@ -508,6 +534,7 @@
   }
 
   async function submitAuth(form, signUp) {
+    if (form.dataset.submitting === 'true') return;
     const submit = form.querySelector('button[type="submit"]');
     const emailField = form.querySelector('input[name="email"], input[type="email"]');
     const passwordField = form.querySelector('input[name="password"], input[type="password"]');
@@ -519,18 +546,25 @@
     };
     if (!signUp) delete payload.full_name;
     if (signUp && !payload.full_name) {
-      showNotice('Vui lòng nhập họ và tên.', true);
+      setAuthFeedback(form, 'Vui lòng nhập họ và tên.', true);
       return;
     }
     if (!payload.email) {
-      showNotice('Vui lòng nhập email hợp lệ.', true);
+      setAuthFeedback(form, 'Vui lòng nhập email hợp lệ.', true);
       return;
     }
     if (payload.password.length < 8) {
-      showNotice('Mật khẩu phải có ít nhất 8 ký tự.', true);
+      setAuthFeedback(form, 'Mật khẩu phải có ít nhất 8 ký tự.', true);
       return;
     }
-    if (submit) submit.disabled = true;
+    form.dataset.submitting = 'true';
+    form.setAttribute('aria-busy', 'true');
+    setAuthFeedback(form, '', false);
+    if (submit) {
+      submit.disabled = true;
+      submit.dataset.idleLabel = submit.textContent;
+      submit.textContent = ' Đang xử lý…';
+    }
     try {
       const user = await request(signUp ? '/register' : '/login', {
         method: 'POST',
@@ -541,9 +575,15 @@
       closeModal();
       showNotice(signUp ? 'Đăng ký thành công. Bạn đã được đăng nhập.' : 'Đăng nhập thành công.');
     } catch (error) {
-      showNotice(error.message, true);
+      setAuthFeedback(form, error.message, true);
     } finally {
-      if (submit) submit.disabled = false;
+      form.dataset.submitting = 'false';
+      form.removeAttribute('aria-busy');
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = submit.dataset.idleLabel || 'Tiếp tục';
+        delete submit.dataset.idleLabel;
+      }
     }
   }
 
@@ -623,6 +663,10 @@
     });
     document.addEventListener('click', handleClick, true);
     document.addEventListener('submit', handleSubmit, true);
+    document.addEventListener('input', function (event) {
+      const form = event.target.closest && event.target.closest('#authForm');
+      if (form) setAuthFeedback(form, '', false);
+    });
     document.addEventListener('click', function (event) {
       const target = event.target.closest(
         '#addGoal, #savePlan, #clearPlan, .toggle-complete, .delete-goal, ' +
@@ -648,7 +692,31 @@
       }
     }, true);
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') closeModal();
+      const modal = document.getElementById('authModal');
+      if (!modal || modal.classList.contains('hidden')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeModal();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const focusable = Array.from(modal.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )).filter(function (element) { return element.getClientRects().length > 0; });
+      if (!focusable.length) {
+        event.preventDefault();
+        modal.querySelector('[role="dialog"]').focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !modal.contains(document.activeElement))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !modal.contains(document.activeElement))) {
+        event.preventDefault();
+        first.focus();
+      }
     });
     document.addEventListener('change', function (event) {
       if (event.target.id === 'portraitUpload') uploadAvatar(event.target.files && event.target.files[0]);

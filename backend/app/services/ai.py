@@ -83,6 +83,8 @@ class AIService:
             self._client = OpenAI(
                 api_key=settings.groq_api_key,
                 base_url="https://api.groq.com/openai/v1",
+                timeout=55.0,
+                max_retries=0,
             )
         self._model = settings.groq_model or "llama-3.1-8b-instant"
 
@@ -110,6 +112,22 @@ class AIService:
         if not isinstance(text, str):
             return text
         return " ".join(text.strip().split())
+
+    @staticmethod
+    def _same_json_shape(expected: Any, actual: Any) -> bool:
+        if isinstance(expected, dict):
+            return (
+                isinstance(actual, dict)
+                and expected.keys() == actual.keys()
+                and all(AIService._same_json_shape(expected[key], actual[key]) for key in expected)
+            )
+        if isinstance(expected, list):
+            return (
+                isinstance(actual, list)
+                and len(expected) == len(actual)
+                and all(AIService._same_json_shape(left, right) for left, right in zip(expected, actual))
+            )
+        return type(expected) is type(actual)
 
     @classmethod
     def _fallback_cv_transform(cls, value: Any, language: str, operation: str) -> Any:
@@ -179,6 +197,8 @@ class AIService:
         result = json.loads(content)
         if not isinstance(result, dict):
             raise ValueError("AI returned invalid CV content")
+        if not self._same_json_shape(cv_data, result):
+            raise ValueError("AI returned invalid CV structure")
         return result
 
     def generate_roadmap(self, profile: dict[str, Any], goals: list[dict[str, Any]]) -> list[dict[str, Any]]:

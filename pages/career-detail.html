@@ -14,9 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap">
   <link rel="stylesheet" href="../css/global.css?v=career-images-1">
-  <script src="../js/axis-brand.js"></script>
-  <script src="../js/app.js"></script>
-  <script src="../js/auth.js?v=session-cookie-fix-20260921"></script>
+  <script src="../js/axis-brand.js" defer></script>
+  <script src="../js/app.js" defer></script>
+  <script src="../js/auth.js?v=session-cookie-fix-20260921" defer></script>
     <script src="../js/components.js?v=mobile-nav-2" defer></script>
 </head>
 <body class="career-detail-page">
@@ -33,7 +33,7 @@
           <p class="lead">Khám phá vai trò, kỹ năng cần thiết và lộ trình phát triển cho nghề nghiệp này.</p>
         </section>
         <div class="career-detail-hero-image" role="img" aria-label="Minh họa môi trường nghề nghiệp">
-          <img id="careerHeroImage" src="../assets/hero-1.png" alt="" loading="eager" decoding="async">
+          <img id="careerHeroImage" src="../assets/hero-1.webp" alt="" width="786" height="800" fetchpriority="high" loading="eager" decoding="async">
         </div>
 
       <section class="content-grid">
@@ -83,8 +83,8 @@
             </section>
 
             <section class="career-section academic-sources">
-              <h3>Nguồn tham khảo học thuật</h3>
-              <p class="source-intro">Thông tin được diễn giải ngắn gọn từ chương trình học và tài nguyên mở của các trường đại học; hãy xem nguồn gốc để tìm hiểu sâu hơn.</p>
+              <h3>Nguồn đối chiếu danh mục đào tạo</h3>
+              <p class="source-intro">Các nguồn này dùng để đối chiếu tên và phân loại ngành/nghề đào tạo. Chúng không xác nhận riêng kỹ năng, lộ trình, RIASEC, tiêu chí matching hoặc mức lương đang hiển thị; các nội dung đó cần được kiểm chứng riêng.</p>
               <ul class="checklist" id="careerSources"></ul>
             </section>
           </div>
@@ -101,10 +101,8 @@
           </div>
 
           <div class="mini-panel">
-            <div class="panel-heading"><h3>Mức lương tham khảo</h3></div>
-            <div class="score-row"><div class="score-tag">Fresh / Intern</div><div class="score-value">5–12 triệu</div></div>
-            <div class="score-row"><div class="score-tag">Junior</div><div class="score-value">12–25 triệu</div></div>
-            <div class="score-row"><div class="score-tag">Intermediate</div><div class="score-value">25–45 triệu</div></div>
+            <div class="panel-heading"><h3>Dữ liệu thị trường</h3></div>
+            <p class="summary-body">Mức lương chưa hiển thị vì danh mục hiện tại chưa có nguồn dữ liệu Việt Nam, thời điểm khảo sát và phạm vi kinh nghiệm để kiểm chứng.</p>
           </div>
         </aside>
         </section>
@@ -127,62 +125,13 @@
   const careerParam = qs('career') || '';
   const careerName = careerParam.trim();
   const careerCode = (qs('code') || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-  const coverImages = {
-    N01: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=85',
-    N02: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=85',
-    N03: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85',
-    N04: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1400&q=85',
-    N05: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1400&q=85',
-    N06: 'https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1400&q=85',
-    N07: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85',
-    N08: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1400&q=85',
-    N09: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=85',
-    N10: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=85',
-    N11: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1400&q=85',
-    N12: 'https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1400&q=85',
-    N13: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=85',
-    N14: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1400&q=85',
-    N15: 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?auto=format&fit=crop&w=1400&q=85',
-    N16: 'https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=1400&q=85',
-    N17: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=85',
-    N18: 'https://images.unsplash.com/photo-1521292270410-a8c4d716d518?auto=format&fit=crop&w=1400&q=85',
-    N19: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85',
-    N20: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1400&q=85',
-    N21: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=85',
-    N22: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1400&q=85',
-    N23: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1400&q=85',
-    N24: 'https://images.unsplash.com/photo-1580130379624-3a069adbffc5?auto=format&fit=crop&w=1400&q=85'
-  };
-
-  const sourceMap = {
-    N01: ['MIT OpenCourseWare — Electrical Engineering and Computer Science', 'https://ocw.mit.edu/search/?d=Electrical%20Engineering%20and%20Computer%20Science'],
-    N02: ['MIT Sloan — Undergraduate management education', 'https://mitsloan.mit.edu/undergraduate'],
-    N03: ['Harvard Medical School — Medical education', 'https://meded.hms.harvard.edu/'],
-    N04: ['MIT OpenCourseWare — Global Studies and Languages', 'https://ocw.mit.edu/search/?d=Global%20Studies%20and%20Languages'],
-    N05: ['RISD — Undergraduate programs', 'https://www.risd.edu/academics'],
-    N06: ['MIT OpenCourseWare — Mechanical Engineering', 'https://ocw.mit.edu/search/?d=Mechanical%20Engineering'],
-    N07: ['MIT OpenCourseWare — Architecture', 'https://ocw.mit.edu/search/?d=Architecture'],
-    N08: ['Harvard Law School — Academics', 'https://hls.harvard.edu/academics/'],
-    N09: ['Harvard Graduate School of Education — Learning and teaching', 'https://www.gse.harvard.edu/'],
-    N10: ['Cornell Nolan — School of Hotel Administration', 'https://sha.cornell.edu/'],
-    N11: ['USC Annenberg — Communication and journalism', 'https://annenberg.usc.edu/'],
-    N12: ['MIT OpenCourseWare — Economics', 'https://ocw.mit.edu/search/?d=Economics'],
-    N13: ['MIT OpenCourseWare — Environment', 'https://ocw.mit.edu/search/?d=Environment'],
-    N14: ['MIT OpenCourseWare — Biology', 'https://ocw.mit.edu/search/?d=Biology'],
-    N15: ['MIT OpenCourseWare — Materials Science and Engineering', 'https://ocw.mit.edu/search/?d=Materials%20Science%20and%20Engineering'],
-    N16: ['Cornell CALS — Agriculture and life sciences', 'https://cals.cornell.edu/'],
-    N17: ['Harvard Faculty of Arts and Sciences', 'https://www.fas.harvard.edu/'],
-    N18: ['Harvard Kennedy School — International affairs', 'https://www.hks.harvard.edu/educational-programs'],
-    N19: ['MIT OpenCourseWare — Supply chain management', 'https://ocw.mit.edu/search/?q=supply%20chain%20management'],
-    N20: ['MIT OpenCourseWare — Aeronautics and Astronautics', 'https://ocw.mit.edu/search/?d=Aeronautics%20and%20Astronautics'],
-    N21: ['MIT OpenCourseWare — Mathematics', 'https://ocw.mit.edu/search/?d=Mathematics'],
-    N22: ['MIT OpenCourseWare — Physics', 'https://ocw.mit.edu/search/?d=Physics'],
-    N23: ['University of Michigan — School of Kinesiology', 'https://www.kines.umich.edu/'],
-    N24: ['Harvard Kennedy School — Public policy', 'https://www.hks.harvard.edu/educational-programs']
-  };
+  const officialSources = [
+    ['Thông tư 74/2026/TT-BGDĐT — danh mục đào tạo đại học (hiệu lực 12/10/2026)', 'https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160'],
+    ['Thông tư 77/2026/TT-BGDĐT — danh mục giáo dục nghề nghiệp (hiệu lực 01/12/2026)', 'https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160']
+  ];
 
   const industryData = {
-    N01: ['Máy tính & CNTT', 'Xây dựng phần mềm, hệ thống số và hạ tầng công nghệ.', ['Lập trình', 'Cấu trúc dữ liệu', 'Cơ sở dữ liệu'], ['Học nền tảng máy tính', 'Làm ứng dụng nhỏ', 'Thực hành Git và triển khai'], '8–25 triệu'],
+    N01: ['Máy tính & Công nghệ thông tin', 'Xây dựng phần mềm, hệ thống số và hạ tầng công nghệ.', ['Lập trình', 'Cấu trúc dữ liệu', 'Cơ sở dữ liệu'], ['Học nền tảng máy tính', 'Làm ứng dụng nhỏ', 'Thực hành Git và triển khai'], '8–25 triệu'],
     N02: ['Kinh doanh & Quản lý', 'Phân tích tổ chức, thị trường và nguồn lực để vận hành doanh nghiệp.', ['Kinh tế', 'Phân tích dữ liệu', 'Giao tiếp'], ['Học nguyên lý kinh doanh', 'Phân tích một doanh nghiệp', 'Thử lập kế hoạch vận hành'], '7–25 triệu'],
     N03: ['Y dược & Khoa học Sức khỏe', 'Ứng dụng sinh học, hóa học và khoa học lâm sàng để bảo vệ sức khỏe.', ['Sinh học', 'Hóa học', 'Đạo đức nghề'], ['Củng cố Sinh–Hóa', 'Đọc tài liệu y sinh', 'Tìm hiểu môi trường thực hành'], '7–30 triệu'],
     N04: ['Ngôn ngữ, Văn hóa & Ngoại ngữ', 'Nghiên cứu ngôn ngữ, giao tiếp liên văn hóa và cách con người tạo nghĩa.', ['Ngữ âm', 'Viết', 'Liên văn hóa'], ['Học ngữ pháp nền', 'Dịch hoặc viết thử', 'Thực hành giao tiếp đa văn hóa'], '6–20 triệu'],
@@ -192,7 +141,7 @@
     N08: ['Luật & An ninh - Quốc phòng', 'Phân tích quy định, quyền và nghĩa vụ để bảo vệ trật tự và lợi ích hợp pháp.', ['Tư duy pháp lý', 'Đọc văn bản', 'Lập luận'], ['Đọc văn bản pháp luật', 'Viết bản phân tích', 'Tìm hiểu đạo đức và quy trình'], '7–30 triệu'],
     N09: ['Sư phạm & Giáo dục', 'Thiết kế trải nghiệm học tập và hỗ trợ người học phát triển năng lực.', ['Tâm lý học', 'Thiết kế bài học', 'Trình bày'], ['Quan sát lớp học', 'Soạn một bài học', 'Thử dạy và nhận phản hồi'], '6–22 triệu'],
     N10: ['Du lịch, Khách sạn & Nhà hàng', 'Tổ chức dịch vụ và trải nghiệm hiếu khách cho khách hàng, cộng đồng.', ['Dịch vụ', 'Ngoại ngữ', 'Vận hành'], ['Học quy trình dịch vụ', 'Thiết kế hành trình', 'Thực hành chăm sóc khách hàng'], '6–20 triệu'],
-    N11: ['Truyền thông, Báo chí & MKT', 'Nghiên cứu công chúng và tạo nội dung có mục tiêu, dữ liệu và trách nhiệm.', ['Viết', 'Nghiên cứu công chúng', 'Đo lường'], ['Học kể chuyện', 'Làm một chiến dịch nhỏ', 'Theo dõi chỉ số và tối ưu'], '6–25 triệu'],
+    N11: ['Truyền thông, Báo chí & Marketing', 'Nghiên cứu công chúng và tạo nội dung có mục tiêu, dữ liệu và trách nhiệm.', ['Viết', 'Nghiên cứu công chúng', 'Đo lường'], ['Học kể chuyện', 'Làm một chiến dịch nhỏ', 'Theo dõi chỉ số và tối ưu'], '6–25 triệu'],
     N12: ['Tài chính - Ngân hàng - Bảo hiểm', 'Đánh giá rủi ro, dòng tiền và quyết định tài chính của cá nhân, tổ chức.', ['Toán tài chính', 'Kế toán', 'Phân tích rủi ro'], ['Học Excel và tài chính', 'Phân tích báo cáo', 'Mô phỏng ngân sách'], '7–30 triệu'],
     N13: ['Môi trường & Tài nguyên', 'Đo lường tác động lên hệ sinh thái và xây dựng giải pháp sử dụng tài nguyên bền vững.', ['Sinh thái', 'Hóa môi trường', 'Dữ liệu không gian'], ['Học khoa học môi trường', 'Đọc dữ liệu quan trắc', 'Đề xuất giải pháp địa phương'], '7–25 triệu'],
     N14: ['Bào chế & Công nghệ Sinh học', 'Khai thác hệ thống sống để nghiên cứu, sản xuất thuốc và sản phẩm sinh học.', ['Sinh học phân tử', 'Hóa sinh', 'Phòng thí nghiệm'], ['Học sinh học tế bào', 'Đọc quy trình thí nghiệm', 'Tìm hiểu kiểm soát chất lượng'], '8–30 triệu'],
@@ -204,7 +153,7 @@
     N20: ['Hàng không & Hàng hải', 'Vận hành hệ thống vận tải phức tạp với yêu cầu cao về an toàn và phối hợp.', ['Vật lý', 'An toàn', 'Tiếng Anh chuyên ngành'], ['Học nguyên lý vận tải', 'Tìm hiểu tiêu chuẩn an toàn', 'Thực hành mô phỏng quy trình'], '8–30 triệu'],
     N21: ['Toán học & Khoa học Dữ liệu', 'Dùng mô hình toán, xác suất và tính toán để hiểu dữ liệu và dự đoán.', ['Giải tích', 'Xác suất', 'Lập trình'], ['Học Python và đại số', 'Phân tích bộ dữ liệu', 'Đánh giá một mô hình'], '8–32 triệu'],
     N22: ['Vật lý & Khoa học Vũ trụ', 'Khám phá quy luật tự nhiên qua thí nghiệm, mô hình và thiết bị đo.', ['Vật lý', 'Toán', 'Thực nghiệm'], ['Học cơ học và điện từ', 'Làm thí nghiệm nhỏ', 'Đọc dữ liệu đo hoặc mô phỏng'], '8–30 triệu'],
-    N23: ['Thể dục, Thể thao & Quản lý TDTT', 'Phát triển sức khỏe, thành tích và hoạt động thể thao dựa trên khoa học vận động.', ['Sinh lý học', 'Huấn luyện', 'Quản lý sự kiện'], ['Theo dõi chỉ số tập luyện', 'Thiết kế giáo án', 'Tổ chức một hoạt động thể thao'], '6–22 triệu'],
+    N23: ['Thể dục, Thể thao & Quản lý Thể dục Thể thao', 'Phát triển sức khỏe, thành tích và hoạt động thể thao dựa trên khoa học vận động.', ['Sinh lý học', 'Huấn luyện', 'Quản lý sự kiện'], ['Theo dõi chỉ số tập luyện', 'Thiết kế giáo án', 'Tổ chức một hoạt động thể thao'], '6–22 triệu'],
     N24: ['Quản lý Nhà nước & Công tác Xã hội', 'Thiết kế chính sách và chương trình hỗ trợ cộng đồng dựa trên nhu cầu và bằng chứng.', ['Chính sách công', 'Xã hội học', 'Phân tích chương trình'], ['Tìm hiểu một vấn đề địa phương', 'Phỏng vấn các bên liên quan', 'Viết đề xuất can thiệp'], '6–24 triệu']
   };
 
@@ -216,14 +165,14 @@
       description: item[1] + ' Công việc thường kết hợp kiến thức chuyên môn, công cụ số và khả năng phối hợp với nhiều vai trò khác nhau. Người học nên bắt đầu từ bài tập nhỏ, ghi lại sản phẩm và chủ động xin phản hồi để hiểu mình phù hợp với nhánh nào trong ngành.',
       skills: item[2],
       roadmap: item[3],
-      salary: item[4],
+      salary: null,
       workProfile: 'Các vị trí trong ' + item[0].toLowerCase() + ' thường làm việc theo dự án, phối hợp với đồng đội và điều chỉnh giải pháp dựa trên dữ liệu hoặc phản hồi thực tế. Môi trường có thể là doanh nghiệp, trường học, phòng thí nghiệm, cơ quan công hoặc tổ chức xã hội tùy chuyên môn.',
       projects: [
         'Chọn một vấn đề thực tế liên quan đến ' + item[0].toLowerCase() + ' và viết bản mô tả mục tiêu, đối tượng hưởng lợi cùng tiêu chí đánh giá.',
         'Tạo một sản phẩm thử nghiệm nhỏ bằng công cụ phù hợp, lưu lại quy trình, giả định và kết quả thay vì chỉ trình bày sản phẩm cuối.',
         'Trình bày sản phẩm cho ít nhất một người có kinh nghiệm để nhận góp ý, sau đó cập nhật portfolio hoặc nhật ký học tập.'
       ],
-      sources: [sourceMap[code]]
+      sources: officialSources
     };
     return result;
   }, {});
@@ -247,12 +196,12 @@
 
   const heroImage = document.querySelector('.career-detail-hero-image');
   const heroImageElement = document.getElementById('careerHeroImage');
-  const imageUrl = coverImages[matchedCode];
+  const imageUrl = '../assets/hero-1.webp';
   if (heroImage && heroImageElement && imageUrl) {
     heroImageElement.src = imageUrl;
     heroImageElement.alt = 'Hình ảnh minh họa cho ngành ' + item.title;
     heroImageElement.addEventListener('error', function () {
-      heroImageElement.src = '../assets/hero-1.png';
+      heroImageElement.src = '../assets/hero-1.webp';
     }, { once: true });
     heroImage.setAttribute('aria-label', 'Hình ảnh minh họa cho ngành ' + item.title);
   }
@@ -315,10 +264,6 @@
     });
   }
 
-  // Update salary
-  const salaryEl = document.querySelector('.score-value');
-  if (salaryEl) salaryEl.textContent = item.salary;
-
   const addToPlanButton = document.querySelector('.career-detail-page .add-to-plan');
   if (addToPlanButton) addToPlanButton.addEventListener('click', async function () {
     if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) {
@@ -343,7 +288,8 @@
       addToPlanButton.disabled = false;
     }
   });
-  if (addToPlanButton && window.AxisAuth && window.AxisAuth.isSignedIn()) {
+  function syncSavedCareerGoal() {
+    if (!addToPlanButton || !window.AxisAuth || !window.AxisAuth.isSignedIn()) return;
     window.AxisAuth.apiRequest('/goals').then(function (goals) {
       const alreadyAdded = goals.some(function (goal) {
         return goal.category === 'career' && goal.career_code === matchedCode;
@@ -356,8 +302,12 @@
       console.warn('Không thể kiểm tra trạng thái ngành trong lộ trình.', error);
     });
   }
+  document.addEventListener('DOMContentLoaded', syncSavedCareerGoal, { once: true });
+  document.addEventListener('axis:auth-state', syncSavedCareerGoal);
 
-  window.AxisAuth.fetchWithTimeout('/api/v1/axis/benchmarks', {}, 8000).then(function (response) { return response.ok ? response.json() : []; }).then(function (benchmarks) {
+  function loadCareerBenchmarks() {
+    if (!window.AxisAuth) return;
+    window.AxisAuth.fetchWithTimeout('/api/v1/axis/benchmarks', {}, 8000).then(function (response) { return response.ok ? response.json() : []; }).then(function (benchmarks) {
     const benchmark = benchmarks.find(function (entry) { return entry.name === careerName || entry.name === item.title; });
     if (!benchmark) return;
     const subjects = (benchmark.subjects || []).join(' và ');
@@ -365,7 +315,9 @@
     const description = document.querySelector('.summary-body');
     if (overview) overview.textContent = item.overview + ' Trên AXIS, nhóm ngành này được đối chiếu với nền tảng ' + (subjects || 'kiến thức liên ngành') + ' và các tín hiệu sở thích RIASEC để bạn có thêm cơ sở tham khảo.';
     if (description) description.textContent = 'Trong thực tế, người học có thể đi từ nền tảng học thuật đến các bài tập mô phỏng, dự án cá nhân và trải nghiệm nhóm. Hãy chú ý cách ngành tạo ra giá trị, môi trường làm việc, yêu cầu đầu vào và cơ hội học tiếp thay vì chỉ nhìn vào một chức danh.';
-  }).catch(function () {});
+    }).catch(function () {});
+  }
+  document.addEventListener('DOMContentLoaded', loadCareerBenchmarks, { once: true });
 
   // Keep the shared careers tab active while viewing a career detail.
   document.querySelectorAll('.header-nav .nav-item').forEach(function(n){ n.classList.remove('active'); });

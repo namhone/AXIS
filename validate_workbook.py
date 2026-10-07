@@ -43,7 +43,13 @@ SUBJECT_SUFFIXES = {
     "Sinh học": "Biology",
     "Địa lý": "Geography",
     "Giáo dục kinh tế và pháp luật": "Civics",
+    "Giáo dục công dân": "Civics",
     "Tin học": "Informatics",
+}
+GPA_ONLY_GRADE_9_SUBJECTS = {
+    "Khoa học tự nhiên",
+    "Lịch sử và Địa lý",
+    "Công nghệ",
 }
 REQUIRED_SHEETS = ("Tổng hợp", "Môn học", "Hồ sơ")
 RECOMMENDATION_PATTERN = re.compile(r"^(?P<name>.+) - (?P<score>\d+(?:\.\d+)?)%$")
@@ -156,8 +162,31 @@ def _parse_achievement(value: Any) -> dict[str, Any] | None:
     }
 
 
+def _parse_riasec_scores(value: Any) -> dict[str, float] | None:
+    if not isinstance(value, str) or value.strip() in {"", "—", "-"}:
+        return None
+    scores: dict[str, float] = {}
+    for part in value.split(";"):
+        match = re.fullmatch(
+            r"\s*([RIASEC])\s*=\s*(-?\d+(?:[.,]\d+)?)\s*",
+            part,
+            re.I,
+        )
+        if match is None:
+            raise ValueError(f"Invalid RIASEC score component: {part!r}")
+        code = match.group(1).upper()
+        if code in scores:
+            raise ValueError(f"Duplicate RIASEC score component: {code}")
+        scores[code] = float(match.group(2).replace(",", "."))
+    if set(scores) != set("RIASEC"):
+        raise ValueError(f"Incomplete RIASEC scores: {value!r}")
+    return scores
+
+
 def reconstruct_profile(workbook, student_id: str) -> tuple[dict[str, Any], list[str]]:
-    summary, academics, details = workbook.worksheets
+    summary = workbook["Tổng hợp"]
+    academics = workbook["Môn học"]
+    details = workbook["Hồ sơ"]
     summary_headers = _headers(summary)
     academic_headers = _headers(academics)
     detail_headers = _headers(details)
@@ -178,6 +207,8 @@ def reconstruct_profile(workbook, student_id: str) -> tuple[dict[str, Any], list
             continue
         suffix = SUBJECT_SUFFIXES.get(label)
         if suffix is None:
+            if year == 9 and label in GPA_ONLY_GRADE_9_SUBJECTS:
+                continue
             raise ValueError(f"Unknown academic subject column: {header}")
         value = _number(academics.cell(academic_row, column).value)
         if value is not None:
@@ -207,19 +238,38 @@ def reconstruct_profile(workbook, student_id: str) -> tuple[dict[str, Any], list
     if achievement:
         profile.update(achievement)
 
-    interests = details.cell(detail_row, detail_headers["Sở thích"]).value
-    if isinstance(interests, str) and interests.strip():
-        profile["interests"] = interests.strip()
+    interest_fields = (
+        "Sở thích",
+        "Môn học yêu thích",
+        "Lĩnh vực quan tâm",
+        "Định hướng nghề nghiệp",
+    )
+    interest_values = [
+        str(details.cell(detail_row, detail_headers[field]).value).strip()
+        for field in interest_fields
+        if details.cell(detail_row, detail_headers[field]).value
+        and str(details.cell(detail_row, detail_headers[field]).value).strip()
+        not in {"—", "-"}
+    ]
+    if interest_values:
+        profile["interests"] = "; ".join(interest_values)
 
-    # The workbook stores only a Holland code, not the numeric group scores.
-    # Do not manufacture riasecScores from that code.
+    riasec_scores = _parse_riasec_scores(
+        details.cell(detail_row, detail_headers["Điểm tính cách (RIASEC)"]).value
+    )
+    if riasec_scores:
+        profile["riasecScores"] = riasec_scores
+
     if not any(key.startswith("score") for key in profile):
         missing_inputs.append("no numeric academic subject scores")
     if not any(key.startswith("gpa") for key in profile):
         missing_inputs.append("no GPA values")
-    if not isinstance(details.cell(detail_row, detail_headers["Mã RIASEC"]).value, str):
+    riasec_code = details.cell(detail_row, detail_headers["Mã RIASEC"]).value
+    if not isinstance(riasec_code, str) or riasec_code.strip() in {"", "—", "-"}:
         missing_inputs.append("no Holland code")
-    missing_inputs.extend(("numeric RIASEC scores not present in workbook", "skills/activity fields not present in workbook"))
+    if not riasec_scores:
+        missing_inputs.append("numeric RIASEC scores not present in workbook")
+    missing_inputs.append("skills/activity fields not present in workbook")
     return profile, missing_inputs
 
 

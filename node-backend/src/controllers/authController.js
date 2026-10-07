@@ -21,7 +21,9 @@ function cookieOptions() {
 }
 
 function clearRefreshCookie(res) {
-  res.clearCookie(COOKIE_NAME, cookieOptions());
+  const options = cookieOptions();
+  delete options.maxAge;
+  res.clearCookie(COOKIE_NAME, options);
 }
 
 function setRefreshCookie(res, token) {

@@ -420,7 +420,7 @@
           generateRoadmapBtn.disabled = true;
           if (roadmapStatus) roadmapStatus.textContent = 'AI đang xây dựng lộ trình...';
           try {
-            const steps = await window.AXISAuth.apiRequest('/ai/roadmap', { method: 'POST' });
+            const steps = await window.AXISAuth.apiRequest('/ai/roadmap', { method: 'POST' }, 65000);
             renderRoadmapSteps(steps);
             if (roadmapStatus) roadmapStatus.textContent = 'Đã tạo và lưu lộ trình mới.';
           } catch (error) {
@@ -730,7 +730,7 @@
           const selectedContainer = document.getElementById('careerSelectedGoals');
           if (!container || !selectedContainer) return;
           const recommended = focus && Array.isArray(focus.recommended) ? focus.recommended.slice(0, 3) : [];
-          container.innerHTML = (recommended.length ? recommended.map(function (career, index) {
+          container.innerHTML = recommended.length ? recommended.map(function (career, index) {
             const score = Math.max(0, Math.min(100, Number(career.score) || 0));
             return '<article class="stat-card career-focus-card">' +
               '<div class="career-focus-heading"><span class="career-focus-rank">Top ' + (index + 1) + '</span><span class="career-focus-score">' + score.toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + '%</span></div>' +
@@ -790,7 +790,7 @@
         async function saveSkillOrder(order) {
           if (!window.AXISAuth || !window.AXISAuth.requireAuth()) return;
           try {
-            const plan = await window.AXISAuth.accountRequest('/skill-plan/order', {
+            const plan = await window.AXISAuth.apiRequest('/skill-plan/order', {
               method: 'PUT',
               body: JSON.stringify({ skill_order: order })
             });
@@ -808,7 +808,7 @@
             return;
           }
           try {
-            const plan = await window.AXISAuth.accountRequest('/skill-plan');
+            const plan = await window.AXISAuth.apiRequest('/skill-plan');
             renderSkillPlan(plan);
           } catch (error) {
             if (skillPlanSummary) skillPlanSummary.textContent = 'Chưa thể tải bản đồ kỹ năng';

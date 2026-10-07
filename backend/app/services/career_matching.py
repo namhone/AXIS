@@ -19,7 +19,7 @@ class Industry:
 
 
 INDUSTRIES = (
-    Industry("N01", "Máy tính & CNTT", ("Toán", "Tin"), ("I", "R"), ("S1", "S2", "S3", "S4", "S5")),
+    Industry("N01", "Máy tính & Công nghệ thông tin", ("Toán", "Tin"), ("I", "R"), ("S1", "S2", "S3", "S4", "S5")),
     Industry("N02", "Kinh doanh & Quản lý", ("Toán", "Anh"), ("E", "C"), ("S1", "S2", "S4", "S5", "S3")),
     Industry("N03", "Y dược & Khoa học Sức khỏe", ("Sinh", "Hóa"), ("I", "S"), ("S1", "S3", "S4", "S2", "S5")),
     Industry("N04", "Ngôn ngữ, Văn hóa & Ngoại ngữ", ("Anh", "Văn"), ("A", "S"), ("S2", "S1", "S4", "S5", "S3")),
@@ -29,7 +29,7 @@ INDUSTRIES = (
     Industry("N08", "Luật & An ninh - Quốc phòng", ("Văn", "GDKT&PL"), ("E", "C"), ("S1", "S4", "S2", "S3", "S5")),
     Industry("N09", "Sư phạm & Giáo dục", ("Văn", "Anh"), ("S", "A"), ("S1", "S4", "S3", "S2", "S5")),
     Industry("N10", "Du lịch, Khách sạn & Nhà hàng", ("Anh", "Địa"), ("S", "E"), ("S2", "S4", "S5", "S1", "S3")),
-    Industry("N11", "Truyền thông, Báo chí & MKT", ("Văn", "Anh"), ("A", "E"), ("S1", "S2", "S4", "S5", "S3")),
+    Industry("N11", "Truyền thông, Báo chí & Marketing", ("Văn", "Anh"), ("A", "E"), ("S1", "S2", "S4", "S5", "S3")),
     Industry("N12", "Tài chính - Ngân hàng - Bảo hiểm", ("Toán", "Anh"), ("C", "E"), ("S1", "S2", "S4", "S3", "S5")),
     Industry("N13", "Môi trường & Tài nguyên", ("Sinh", "Hóa"), ("I", "R"), ("S1", "S3", "S4", "S2", "S5")),
     Industry("N14", "Bào chế & Công nghệ Sinh học", ("Sinh", "Hóa"), ("I", "R"), ("S1", "S3", "S2", "S4", "S5")),
@@ -41,7 +41,7 @@ INDUSTRIES = (
     Industry("N20", "Hàng không & Hàng hải", ("Lý", "Anh"), ("R", "E"), ("S1", "S2", "S4", "S3", "S5")),
     Industry("N21", "Toán học & Khoa học Dữ liệu", ("Toán", "Tin"), ("I", "C"), ("S1", "S3", "S2", "S4", "S5")),
     Industry("N22", "Vật lý & Khoa học Vũ trụ", ("Lý", "Toán"), ("I", "R"), ("S1", "S3", "S2", "S4", "S5")),
-    Industry("N23", "Thể dục, Thể thao & Quản lý TDTT", ("Sinh", "GDKT&PL"), ("R", "S"), ("S3", "S1", "S4", "S5", "S2")),
+    Industry("N23", "Thể dục, Thể thao & Quản lý Thể dục Thể thao", ("Sinh", "GDKT&PL"), ("R", "S"), ("S3", "S1", "S4", "S5", "S2")),
     Industry("N24", "Quản lý Nhà nước & Công tác Xã hội", ("GDKT&PL", "Văn"), ("S", "C"), ("S1", "S4", "S5", "S3", "S2")),
 )
 

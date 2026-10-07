@@ -1,4 +1,5 @@
 import logging
+import re
 from time import perf_counter
 from uuid import uuid4
 
@@ -17,7 +18,8 @@ logger = logging.getLogger("axis.api")
 
 @app.middleware("http")
 async def request_observability(request: Request, call_next):
-    request_id = request.headers.get("X-Request-ID") or uuid4().hex
+    supplied_request_id = request.headers.get("X-Request-ID", "")
+    request_id = supplied_request_id if re.fullmatch(r"[A-Za-z0-9._:-]{1,64}", supplied_request_id) else uuid4().hex
     request.state.request_id = request_id
     started = perf_counter()
     response = await call_next(request)
@@ -85,12 +87,12 @@ async def validation_exception_handler(
 
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
-    logger.exception(
-        "unhandled_exception method=%s path=%s request_id=%s",
+    logger.error(
+        "unhandled_exception method=%s path=%s error_type=%s request_id=%s",
         request.method,
         request.url.path,
+        type(exc).__name__,
         getattr(request.state, "request_id", "unknown"),
-        exc_info=exc,
     )
     return _error_response(500, "internal_server_error", "An unexpected error occurred")
 

@@ -1,3 +1,5 @@
+import json
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from openai import OpenAIError
 from pydantic import BaseModel, Field, model_validator
@@ -26,6 +28,12 @@ class CVRequest(BaseModel):
     data: dict[str, object] = Field(...)
     language: str = Field(pattern="^(vi|en)$")
     operation: str = Field(default="translate", pattern="^(translate|normalize)$")
+
+    @model_validator(mode="after")
+    def validate_data_size(self):
+        if len(json.dumps(self.data, ensure_ascii=False)) > 16000:
+            raise ValueError("CV content is too large")
+        return self
 
 
 class CVResponse(BaseModel):

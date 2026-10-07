@@ -949,6 +949,7 @@
     if (!isFinite(scale) || scale <= 0) scale = 1;
     preview.style.setProperty('--cv-preview-scale', String(scale));
     preview.style.height = String(pageHeight) + 'px';
+    preview.style.marginBottom = String(pageHeight * (scale - 1)) + 'px';
   }
 
   function setAgent(name, state) {
@@ -1251,7 +1252,7 @@
     return window.AxisAuth.apiRequest('/ai/cv', {
       method: 'POST',
       body: JSON.stringify({ data: data, language: language, operation: operation })
-    }).then(function (payload) {
+    }, 65000).then(function (payload) {
       if (!payload || !payload.data || typeof payload.data !== 'object') {
         throw new Error('AI trả về dữ liệu CV không hợp lệ.');
       }

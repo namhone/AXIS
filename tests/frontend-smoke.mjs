@@ -31,6 +31,21 @@ test("career library exposes pagination and stable detail links", async () => {
   }
 });
 
+test("AXIS career catalog has official-source caveats and no unsupported salary claim", async () => {
+  const catalog = JSON.parse(await read("data/career-catalog.v1.json"));
+  const detail = await read("pages/career-detail.html");
+  const careers = await read("pages/careers.html");
+
+  assert.equal(catalog.groups.length, 24);
+  assert.equal(catalog.newVocationalPrograms.length, 12);
+  assert.equal(catalog.matchingFormulaChanged, false);
+  assert.ok(catalog.newVocationalPrograms.every((item) => item.mappingStatus === "proposed_only_unverified"));
+  assert.match(detail, /không xác nhận riêng kỹ năng, lộ trình, RIASEC, tiêu chí matching hoặc mức lương/);
+  assert.match(detail, /vanban\.chinhphu\.vn/);
+  assert.doesNotMatch(detail, /MIT OpenCourseWare|Harvard Kennedy School/);
+  assert.match(careers, /Máy tính & Công nghệ thông tin/);
+});
+
 test("RIASEC layout includes responsive controls", async () => {
   const html = await read("pages/riasec.html");
   const css = await read("css/global.css");
@@ -57,12 +72,24 @@ test("RIASEC assessment samples 60 questions and renders structured AI evaluatio
   assert.match(script, /result\.aspects\[code\]\[aspect\]\.converted/);
 });
 
+test("completed RIASEC results restore from account-scoped storage after refresh", async () => {
+  const script = await read("js/riasec.js");
+  assert.match(script, /function readSavedResult\(\)/);
+  assert.match(script, /axis_riasec_result:' \+ signedInId\(\)/);
+  assert.match(script, /function restoreSavedResult\(\)/);
+  assert.match(script, /renderResult\(savedResult\)/);
+  assert.match(script, /axis:auth-state', restoreSavedResult/);
+  assert.match(script, /axis:profile-hydrated', restoreSavedResult/);
+});
+
 test("dashboard renders the backend ranking and surfaces evaluation failures", async () => {
   const dashboard = await read("js/dashboard.js");
 
   assert.match(dashboard, /render\(response\.results\)/);
   assert.match(dashboard, /result\.match_score/);
   assert.match(dashboard, /result\.gap_risk/);
+  assert.match(dashboard, /result\.explanation/);
+  assert.match(dashboard, /contribution/);
   assert.match(dashboard, /Không thể tính kết quả từ máy chủ AXIS/);
 });
 
@@ -152,6 +179,34 @@ test("page scripts defer parsing and PDF generation loads only on request", asyn
   assert.match(css, /@view-transition/);
 });
 
+test("critical-page scripts defer and the measured home LCP image uses the optimized asset", async () => {
+  const home = await read("index.html");
+  const profile = await read("pages/profile.html");
+  const dashboard = await read("pages/dashboard.html");
+  const careerDetail = await read("pages/career-detail.html");
+  const css = await read("css/global.css");
+
+  assert.match(home, /src="assets\/hero-2\.webp"[\s\S]*fetchpriority="high"/);
+  assert.match(home, /js\/auth\.js" defer/);
+  assert.match(profile, /js\/app\.js" defer/);
+  assert.match(profile, /js\/auth\.js[^>]+defer/);
+  assert.match(dashboard, /js\/app\.js" defer/);
+  assert.match(dashboard, /js\/auth\.js[^>]+defer/);
+  assert.match(careerDetail, /js\/auth\.js[^>]+defer/);
+  assert.match(careerDetail, /careerHeroImage" src="\.\.\/assets\/hero-1\.webp"[^>]+fetchpriority="high"/);
+  assert.doesNotMatch(careerDetail, /images\.unsplash\.com/);
+  assert.match(careerDetail, /DOMContentLoaded', loadCareerBenchmarks/);
+  assert.match(css, /url\('\.\.\/assets\/hero-2\.webp'\)/);
+});
+
+test("guide walkthrough defers its local optimized screenshots", async () => {
+  const guide = await read("pages/guide.html");
+
+  for (const image of ["hero-1", "hero-3", "hero-4", "hero-6"]) {
+    assert.match(guide, new RegExp(`assets/${image}\\.webp[^>]+loading="lazy"[^>]+decoding="async"`));
+  }
+});
+
 test("shared component loaders are deferred on every HTML page", async () => {
   const pages = ["index.html", ...["about", "assessment", "calendar", "career-detail", "careers", "cv-builder-editor", "dashboard", "development", "guide", "profile", "riasec"].map((name) => `pages/${name}.html`)];
 
@@ -220,6 +275,39 @@ test("registration validates required identity fields before requesting the API"
   assert.match(auth, /Thông tin đăng ký chưa hợp lệ/);
 });
 
+test("auth modal traps keyboard focus, reports errors inline, and prevents duplicate submissions", async () => {
+  const auth = await read("js/auth.js");
+  const css = await read("css/global.css");
+
+  assert.match(auth, /authReturnFocus/);
+  assert.match(auth, /modal\.contains\(document\.activeElement\)/);
+  assert.match(auth, /event\.key === 'Escape'/);
+  assert.match(auth, /authFormMessage/);
+  assert.match(auth, /form\.dataset\.submitting === 'true'/);
+  assert.match(auth, /aria-busy/);
+  assert.match(css, /@keyframes auth-panel-in/);
+  assert.match(css, /@keyframes auth-backdrop-in/);
+  assert.match(css, /prefers-reduced-motion: reduce/);
+  assert.match(css, /\.auth-field input:focus-visible/);
+});
+
+test("inline scripts in every page parse before the browser loads the app", async () => {
+  const pages = ["index.html", ...["about", "assessment", "calendar", "career-detail", "careers", "cv-builder-editor", "dashboard", "development", "guide", "profile", "riasec"].map((name) => `pages/${name}.html`)];
+
+  for (const page of pages) {
+    const html = await read(page);
+    let scriptIndex = 0;
+    for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+      if (/\bsrc\s*=/.test(match[1])) continue;
+      scriptIndex += 1;
+      assert.doesNotThrow(
+        () => new vm.Script(match[2], { filename: `${page}#inline-${scriptIndex}` }),
+        `${page} inline script ${scriptIndex}`,
+      );
+    }
+  }
+});
+
 test("CV list fields create editable rows and remove empty rows", async () => {
   const editor = await read("js/cv-builder-editor.js");
 
@@ -252,6 +340,7 @@ test("CV A4 preview scales to the available mobile width", async () => {
 
   assert.match(editor, /var availableWidth = Math\.max\(0, scroll\.clientWidth - 16\)/);
   assert.match(editor, /Math\.min\(1, availableWidth \/ pageWidth\)/);
+  assert.match(editor, /preview\.style\.marginBottom = String\(pageHeight \* \(scale - 1\)\) \+ 'px'/);
   assert.doesNotMatch(editor, /Math\.max\(scale,\s*0\.56\)/);
 });
 

@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 
 from app.api.deps import get_current_user
 from app.api.routes import ai as ai_routes
+from app.api.routes import auth as auth_routes
 from app.api.routes.ai import _ai_limiter, _cv_ai_limiter
 from app.core.database import get_db
 from app.main import app
@@ -52,6 +53,31 @@ def test_auth_and_profile_require_authentication() -> None:
     response = client.get("/api/v1/profile")
     assert response.status_code == 401
     assert response.json()["error"]["code"] == "http_error"
+
+
+def test_login_failures_are_rate_limited_before_password_verification(monkeypatch) -> None:
+    import hashlib
+
+    email = "limited@example.com"
+    key = hashlib.sha256(email.encode()).hexdigest()
+    old_limit = auth_routes._login_limiter.limit
+    auth_routes._login_limiter.reset(key)
+    auth_routes._login_limiter.limit = 1
+    app.dependency_overrides[get_db] = lambda: EmptySession()
+    monkeypatch.setattr(auth_routes, "authenticate_user", lambda *args: None)
+    try:
+        client = TestClient(app, raise_server_exceptions=False)
+        payload = {"email": email, "password": "wrong-password"}
+        first = client.post("/api/v1/auth/login", json=payload)
+        second = client.post("/api/v1/auth/login", json=payload)
+        assert first.status_code == 401
+        assert second.status_code == 429
+        assert second.headers["retry-after"]
+        assert second.json()["error"]["code"] == "rate_limited"
+    finally:
+        app.dependency_overrides.clear()
+        auth_routes._login_limiter.limit = old_limit
+        auth_routes._login_limiter.reset(key)
 
 
 def test_local_live_server_can_complete_cors_preflight() -> None:

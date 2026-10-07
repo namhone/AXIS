@@ -1,0 +1,16 @@
+# Keep Graphify focused on AXIS source and project documentation.
+.qa/
+.agents/
+.claude/
+data/
+graphify-out/
+screenshots/
+assets/
+**/.env
+**/.env.*
+*.xlsx
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg

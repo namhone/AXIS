@@ -197,7 +197,7 @@
   }
   function syncServerEvaluation() {
     if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) return;
-    var payload = JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) });
+    var payload = JSON.stringify({ scores: inputValues() });
     if (payload === lastEvaluationPayload || evaluationRequest) return;
     var status = document.getElementById('axisEvaluationStatus');
     if (status) status.textContent = 'Đang tính kết quả bằng hệ thống AXIS...';
@@ -208,19 +208,19 @@
         body: payload
       }).then(function (response) {
         lastEvaluationPayload = payload;
-        if (JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) !== payload) return;
+        if (JSON.stringify({ scores: inputValues() }) !== payload) return;
         if (status) status.textContent = 'Kết quả được tính từ máy chủ AXIS.';
         render(response.results);
       }).catch(function (error) {
         lastEvaluationPayload = payload;
-        if (JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) !== payload) return;
+        if (JSON.stringify({ scores: inputValues() }) !== payload) return;
         if (status) status.textContent = error.message || 'Không thể tính kết quả từ máy chủ AXIS.';
         document.getElementById('axisCareerResults').innerHTML = '';
         document.getElementById('axisGapResults').innerHTML = '';
         document.getElementById('axisOverallScore').textContent = '—';
       }).finally(function () {
         evaluationRequest = null;
-        if (JSON.stringify({ scores: inputValues(), benchmarks: benchmarks.slice(0, 24) }) !== lastEvaluationPayload) {
+        if (JSON.stringify({ scores: inputValues() }) !== lastEvaluationPayload) {
           syncServerEvaluation();
         }
       });
@@ -231,8 +231,8 @@
     var ranked = Array.isArray(serverResults)
       ? serverResults.map(function (result) {
         var benchmark = benchmarks.find(function (item) { return item.code === result.code; });
-        return benchmark ? { benchmark: benchmark, score: result.match_score, gap: result.gap_risk } : null;
-      }).filter(Boolean).sort(function (a, b) { return b.score - a.score; })
+        return benchmark ? { benchmark: benchmark, score: result.match_score, gap: result.gap_risk, explanation: result.explanation } : null;
+      }).filter(Boolean).sort(function (a, b) { return b.score - a.score || a.benchmark.code.localeCompare(b.benchmark.code); })
       : benchmarks.map(function (benchmark) { return { benchmark: benchmark, score: scoreFor(values, benchmark), gap: gapFor(values, benchmark) }; }).sort(function (a, b) { return b.score - a.score; });
     var average = ranked.length ? ranked.reduce(function (sum, item) { return sum + item.score; }, 0) / ranked.length : 0;
     document.getElementById('axisOverallScore').textContent = Math.round(average) + '%';
@@ -240,7 +240,11 @@
     var careerResults = document.getElementById('axisCareerResults');
     careerResults.innerHTML = ranked.map(function (item, index) {
       var score = Math.round(item.score);
-      return '<article class="axis-career-row' + (index >= 3 ? ' axis-career-row--extra' : '') + '"><div class="axis-rank">' + String(index + 1).padStart(2, '0') + '</div><div><span class="eyebrow">' + item.benchmark.code + '</span><h3>' + item.benchmark.name + '</h3><p>GAP rủi ro: ' + item.gap.toFixed(2) + '</p></div><div class="axis-match ' + scoreClass(score) + '"><strong>' + score + '%</strong><span>' + (score >= 80 ? 'Tương thích cao' : score >= 60 ? 'Có thể phát triển' : 'Cần bổ khuyết') + '</span></div></article>';
+      var explanation = item.explanation ? '<details class="axis-match-explanation"><summary>Vì sao đạt ' + Number(item.score).toFixed(2) + '%?</summary><p>Điểm tương thích là tổng đóng góp của năm tiêu chí sau khi chuẩn hóa.</p><ul>' + dimensions.map(function (dimension) {
+        var part = item.explanation[dimension.key];
+        return part ? '<li><span>' + dimension.key + ' · ' + dimension.label + ' (mục tiêu ' + Number(part.target).toFixed(1) + ')</span><strong>' + Number(part.score).toFixed(1) + '/10 → ' + (Number(part.normalized) * 100).toFixed(1) + '% × ' + (Number(part.weight) * 100).toFixed(1) + '% = ' + Number(part.contribution).toFixed(2) + ' điểm</strong></li>' : '';
+      }).join('') + '</ul></details>' : '';
+      return '<article class="axis-career-row' + (index >= 3 ? ' axis-career-row--extra' : '') + '"><div class="axis-rank">' + String(index + 1).padStart(2, '0') + '</div><div><span class="eyebrow">' + item.benchmark.code + '</span><h3>' + item.benchmark.name + '</h3><p>GAP rủi ro: ' + item.gap.toFixed(2) + '</p>' + explanation + '</div><div class="axis-match ' + scoreClass(score) + '"><strong>' + score + '%</strong><span>' + (score >= 80 ? 'Tương thích cao' : score >= 60 ? 'Có thể phát triển' : 'Cần bổ khuyết') + '</span></div></article>';
     }).join('');
     if (ranked.length > 3) {
       careerResults.insertAdjacentHTML('beforeend', '<button class="ghost-btn axis-career-toggle" type="button" aria-expanded="false">Xem thêm ngành <span aria-hidden="true">↓</span></button>');

@@ -1,0 +1,1193 @@
+{
+  "catalogVersion": "draft-2026-10-06",
+  "status": "draft_for_domain_review",
+  "matchingFormulaChanged": false,
+  "scopeNote": "N01-N24 are the AXIS product groupings supplied by the stakeholder. The catalog does not assert these 24 labels are the verbatim official statutory groups.",
+  "officialSources": [
+    {
+      "id": "HEI-74-2026",
+      "document": "Circular 74/2026/TT-BGD\u0110T",
+      "scope": "higher education training program taxonomy",
+      "effectiveDate": "2026-10-12",
+      "statusAsOf": "2026-10-06: promulgated, not yet effective",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160"
+    },
+    {
+      "id": "VET-77-2026",
+      "document": "Circular 77/2026/TT-BGD\u0110T",
+      "scope": "vocational education occupations and programs",
+      "effectiveDate": "2026-12-01",
+      "statusAsOf": "2026-10-06: promulgated, not yet effective",
+      "url": "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+    }
+  ],
+  "criteria": [
+    "S1 academic capability",
+    "S2 foreign language",
+    "S3 achievements",
+    "S4 interests/personality (RIASEC)",
+    "S5 extracurricular activities/soft skills"
+  ],
+  "groups": [
+    {
+      "code": "N01",
+      "name": "M\u00e1y t\u00ednh & C\u00f4ng ngh\u1ec7 th\u00f4ng tin",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "Tin"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "R"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S2": 0.2567,
+        "S3": 0.1567,
+        "S4": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N02",
+      "name": "Kinh doanh & Qu\u1ea3n l\u00fd",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "E",
+        "C"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S3"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S2": 0.2567,
+        "S4": 0.1567,
+        "S5": 0.09,
+        "S3": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N03",
+      "name": "Y d\u01b0\u1ee3c & Khoa h\u1ecdc S\u1ee9c kh\u1ecfe",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Sinh",
+        "H\u00f3a"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "S"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S4",
+        "S2",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S4": 0.1567,
+        "S2": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N04",
+      "name": "Ng\u00f4n ng\u1eef, V\u0103n h\u00f3a & Ngo\u1ea1i ng\u1eef",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Anh",
+        "V\u0103n"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "A",
+        "S"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S2",
+        "S1",
+        "S4",
+        "S5",
+        "S3"
+      ],
+      "currentRocWeights": {
+        "S2": 0.4567,
+        "S1": 0.2567,
+        "S4": 0.1567,
+        "S5": 0.09,
+        "S3": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N05",
+      "name": "Thi\u1ebft k\u1ebf, M\u1ef9 thu\u1eadt & Ngh\u1ec7 thu\u1eadt",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "V\u0103n",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "A",
+        "R"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S3",
+        "S4",
+        "S1",
+        "S5",
+        "S2"
+      ],
+      "currentRocWeights": {
+        "S3": 0.4567,
+        "S4": 0.2567,
+        "S1": 0.1567,
+        "S5": 0.09,
+        "S2": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N06",
+      "name": "K\u1ef9 thu\u1eadt & T\u1ef1 \u0111\u1ed9ng h\u00f3a",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "L\u00fd"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "R",
+        "I"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S4",
+        "S2",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S4": 0.1567,
+        "S2": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N07",
+      "name": "Ki\u1ebfn tr\u00fac & X\u00e2y d\u1ef1ng",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "L\u00fd"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "R",
+        "A"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S4",
+        "S2",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S4": 0.1567,
+        "S2": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N08",
+      "name": "Lu\u1eadt & An ninh - Qu\u1ed1c ph\u00f2ng",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "V\u0103n",
+        "GDKT&PL"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "E",
+        "C"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S4",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S4": 0.2567,
+        "S2": 0.1567,
+        "S3": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N09",
+      "name": "S\u01b0 ph\u1ea1m & Gi\u00e1o d\u1ee5c",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "V\u0103n",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "S",
+        "A"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S4",
+        "S3",
+        "S2",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S4": 0.2567,
+        "S3": 0.1567,
+        "S2": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N10",
+      "name": "Du l\u1ecbch, Kh\u00e1ch s\u1ea1n & Nh\u00e0 h\u00e0ng",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Anh",
+        "\u0110\u1ecba"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "S",
+        "E"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S2",
+        "S4",
+        "S5",
+        "S1",
+        "S3"
+      ],
+      "currentRocWeights": {
+        "S2": 0.4567,
+        "S4": 0.2567,
+        "S5": 0.1567,
+        "S1": 0.09,
+        "S3": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N11",
+      "name": "Truy\u1ec1n th\u00f4ng, B\u00e1o ch\u00ed & Marketing",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "V\u0103n",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "A",
+        "E"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S3"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S2": 0.2567,
+        "S4": 0.1567,
+        "S5": 0.09,
+        "S3": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N12",
+      "name": "T\u00e0i ch\u00ednh - Ng\u00e2n h\u00e0ng - B\u1ea3o hi\u1ec3m",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "C",
+        "E"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S2",
+        "S4",
+        "S3",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S2": 0.2567,
+        "S4": 0.1567,
+        "S3": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N13",
+      "name": "M\u00f4i tr\u01b0\u1eddng & T\u00e0i nguy\u00ean",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Sinh",
+        "H\u00f3a"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "R"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S4",
+        "S2",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S4": 0.1567,
+        "S2": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N14",
+      "name": "B\u00e0o ch\u1ebf & C\u00f4ng ngh\u1ec7 Sinh h\u1ecdc",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Sinh",
+        "H\u00f3a"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "R"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S2": 0.1567,
+        "S4": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N15",
+      "name": "H\u00f3a h\u1ecdc & C\u00f4ng ngh\u1ec7 V\u1eadt li\u1ec7u",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "H\u00f3a",
+        "L\u00fd"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "R"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S2": 0.1567,
+        "S4": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N16",
+      "name": "N\u00f4ng - L\u00e2m - Th\u1ee7y s\u1ea3n",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Sinh",
+        "H\u00f3a"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "R",
+        "I"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S2"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S4": 0.1567,
+        "S5": 0.09,
+        "S2": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N17",
+      "name": "Khoa h\u1ecdc X\u00e3 h\u1ed9i & Nh\u00e2n v\u0103n",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "V\u0103n",
+        "S\u1eed"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "S",
+        "I"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S4",
+        "S3",
+        "S2",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S4": 0.2567,
+        "S3": 0.1567,
+        "S2": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N18",
+      "name": "Quan h\u1ec7 Qu\u1ed1c t\u1ebf & Ngo\u1ea1i giao",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Anh",
+        "V\u0103n"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "E",
+        "S"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S2",
+        "S1",
+        "S4",
+        "S5",
+        "S3"
+      ],
+      "currentRocWeights": {
+        "S2": 0.4567,
+        "S1": 0.2567,
+        "S4": 0.1567,
+        "S5": 0.09,
+        "S3": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N19",
+      "name": "Logistics & Chu\u1ed7i cung \u1ee9ng",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "C",
+        "E"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S2",
+        "S4",
+        "S3",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S2": 0.2567,
+        "S4": 0.1567,
+        "S3": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N20",
+      "name": "H\u00e0ng kh\u00f4ng & H\u00e0ng h\u1ea3i",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "L\u00fd",
+        "Anh"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "R",
+        "E"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S2",
+        "S4",
+        "S3",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S2": 0.2567,
+        "S4": 0.1567,
+        "S3": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N21",
+      "name": "To\u00e1n h\u1ecdc & Khoa h\u1ecdc D\u1eef li\u1ec7u",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "To\u00e1n",
+        "Tin"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "C"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S2": 0.1567,
+        "S4": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N22",
+      "name": "V\u1eadt l\u00fd & Khoa h\u1ecdc V\u0169 tr\u1ee5",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "L\u00fd",
+        "To\u00e1n"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "I",
+        "R"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S3": 0.2567,
+        "S2": 0.1567,
+        "S4": 0.09,
+        "S5": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N23",
+      "name": "Th\u1ec3 d\u1ee5c, Th\u1ec3 thao & Qu\u1ea3n l\u00fd Th\u1ec3 d\u1ee5c Th\u1ec3 thao",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "Sinh",
+        "GDKT&PL"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "R",
+        "S"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S3",
+        "S1",
+        "S4",
+        "S5",
+        "S2"
+      ],
+      "currentRocWeights": {
+        "S3": 0.4567,
+        "S1": 0.2567,
+        "S4": 0.1567,
+        "S5": 0.09,
+        "S2": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    },
+    {
+      "code": "N24",
+      "name": "Qu\u1ea3n l\u00fd Nh\u00e0 n\u01b0\u1edbc & C\u00f4ng t\u00e1c X\u00e3 h\u1ed9i",
+      "nameSource": "stakeholder-provided AXIS product grouping; not claimed as exact statutory group name",
+      "relatedHighSchoolSubjects": [
+        "GDKT&PL",
+        "V\u0103n"
+      ],
+      "subjectMappingStatus": "existing AXIS heuristic; not an official admission requirement",
+      "riasec": [
+        "S",
+        "C"
+      ],
+      "riasecStatus": "existing AXIS heuristic; rationale and empirical validation not recorded",
+      "matchingCriteriaPriority": [
+        "S1",
+        "S4",
+        "S5",
+        "S3",
+        "S2"
+      ],
+      "currentRocWeights": {
+        "S1": 0.4567,
+        "S4": 0.2567,
+        "S5": 0.1567,
+        "S3": 0.09,
+        "S2": 0.04
+      },
+      "matchingStatus": "existing implementation retained; business validation pending",
+      "skillsAndRoadmap": {
+        "status": "existing static AXIS content; field-level sources not recorded"
+      },
+      "relatedHigherEducationPrograms": {
+        "status": "not normalized to official program codes; requires mapping to the full annex and verification against institution offerings"
+      },
+      "salary": {
+        "status": "not shown in career detail until Vietnamese source, survey date, region, and experience level are recorded"
+      },
+      "sources": [
+        "https://vanban.chinhphu.vn/?classid=1&docid=219455&orggroupid=4&pageid=27160",
+        "https://vanban.chinhphu.vn/?classid=1&docid=219658&orggroupid=4&pageid=27160"
+      ]
+    }
+  ],
+  "newVocationalPrograms": [
+    {
+      "name": "Tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N01",
+        "N21"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "Robot v\u00e0 tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N01",
+        "N06",
+        "N21"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "C\u00f4ng ngh\u1ec7 \u1ee9ng d\u1ee5ng tr\u00ed tu\u1ec7 nh\u00e2n t\u1ea1o",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N01",
+        "N21"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "K\u1ef9 thu\u1eadt robot c\u00f4ng nghi\u1ec7p",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N01"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "L\u1eafp \u0111\u1eb7t v\u00e0 b\u1ea3o tr\u00ec h\u1ec7 th\u1ed1ng th\u00f4ng tin t\u00edn hi\u1ec7u v\u00e0 AFC \u0111\u01b0\u1eddng s\u1eaft t\u1ed1c \u0111\u1ed9 d\u01b0\u1edbi 200 km/h",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N20"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "K\u1ef9 thu\u1eadt h\u1ec7 th\u1ed1ng \u0111i\u1ec7n \u0111\u01b0\u1eddng s\u1eaft t\u1ed1c \u0111\u1ed9 d\u01b0\u1edbi 200 km/h",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N20"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "L\u1eafp \u0111\u1eb7t v\u00e0 b\u1ea3o tr\u00ec h\u1ec7 th\u1ed1ng th\u00f4ng tin t\u00edn hi\u1ec7u v\u00e0 AFC \u0111\u01b0\u1eddng s\u1eaft t\u1ed1c \u0111\u1ed9 cao",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N20"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "K\u1ef9 thu\u1eadt h\u1ec7 th\u1ed1ng \u0111i\u1ec7n \u0111\u01b0\u1eddng s\u1eaft t\u1ed1c \u0111\u1ed9 cao",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N20"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "\u0110i\u1ec1u \u0111\u1ed9 \u0111i\u1ec7n s\u1ee9c k\u00e9o \u0111\u01b0\u1eddng s\u1eaft",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N20"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "Th\u00f4ng tin t\u00edn hi\u1ec7u \u0111\u01b0\u1eddng s\u1eaft \u0111\u00f4 th\u1ecb",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N20"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "L\u1eafp \u0111\u1eb7t v\u00e0 b\u1ea3o tr\u00ec h\u1ec7 th\u1ed1ng n\u0103ng l\u01b0\u1ee3ng t\u00e1i t\u1ea1o",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N13"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    },
+    {
+      "name": "V\u1eadn h\u00e0nh nh\u00e0 m\u00e1y \u0111i\u1ec7n gi\u00f3, \u0111i\u1ec7n m\u1eb7t tr\u1eddi",
+      "source": "VET-77-2026",
+      "effectiveDate": "2026-12-01",
+      "candidateAxisGroups": [
+        "N06",
+        "N13"
+      ],
+      "mappingStatus": "proposed_only_unverified"
+    }
+  ],
+  "riasecRouteAudit": {
+    "dashboardHybrid": "The request contains S4 as one scalar score, but the selected group RIASEC letters are not passed to calculate_hybrid. The five weights can still make S4 affect a score indirectly; group-specific RIASEC fit is not calculated.",
+    "assessmentHistoryLegacy": "career_matching.calculate_matches uses each group RIASEC tuple to derive its group-specific S4 criterion.",
+    "resolution": "No matching behavior changed. Reconcile route semantics and approve golden outputs before describing RIASEC as group-specific fit in the dashboard."
+  }
+}

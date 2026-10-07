@@ -1,18 +1,25 @@
 from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile, status
 from fastapi.responses import StreamingResponse
 from io import BytesIO
+from hashlib import sha256
 from sqlalchemy.orm import Session
 
 from ..deps import get_current_user
 from ...core.config import get_settings
 from ...core.database import get_db
 from ...core.security import create_access_token
+from ...core.rate_limit import AuthenticationFailureRateLimiter
 from ...models.user import User
 from ...schemas.auth import LoginRequest, RegisterRequest, UserUpdate
 from ...schemas.user import UserResponse
 from ...services.auth import authenticate_user, register_user
 
 router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
+_login_limiter = AuthenticationFailureRateLimiter(
+    limit=get_settings().auth_login_failure_limit,
+    window_seconds=get_settings().auth_login_window_seconds,
+    lockout_seconds=get_settings().auth_login_lockout_seconds,
+)
 MAX_AVATAR_BYTES = 5 * 1024 * 1024
 ALLOWED_AVATAR_TYPES = {"image/jpeg", "image/png", "image/webp"}
 
@@ -53,13 +60,17 @@ def login(
     response: Response,
     db: Session = Depends(get_db),
 ) -> User:
+    limiter_key = sha256(str(payload.email).strip().casefold().encode("utf-8")).hexdigest()
+    _login_limiter.check(limiter_key)
     user = authenticate_user(db, str(payload.email), payload.password)
     if user is None:
+        _login_limiter.record_failure(limiter_key)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    _login_limiter.reset(limiter_key)
     _set_auth_cookie(response, create_access_token(str(user.id)))
     return user
 

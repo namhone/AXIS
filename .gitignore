@@ -32,3 +32,13 @@ coverage/
 *.swo
 .vercel
 .neon
+# Generated audit artifacts can contain account or student records.
+.qa/
+graphify-out/
+data/validation_*.csv
+students_anonymized*.xlsx
+.claude/
+.python-version
+pyproject.toml
+uv.lock
+.vercel_python_packages/

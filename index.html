@@ -14,8 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" />
   <link rel="stylesheet" href="css/global.css?v=home-layout" />
-  <script src="js/axis-brand.js"></script>
-  <script src="js/auth.js"></script>
+  <script src="js/axis-brand.js" defer></script>
+  <script src="js/auth.js" defer></script>
   <script src="js/icons.js?v=lucide-index-20260925" defer></script>
   <script src="js/components.js?v=mobile-nav-2" defer></script>
 </head>
@@ -47,7 +47,10 @@
             <div class="hero-visual" aria-hidden="true">
               <img loading="eager" decoding="async"
                 class="hero-illustration"
-                src="assets/hero-2.png"
+                src="assets/hero-2.webp"
+                width="800"
+                height="800"
+                fetchpriority="high"
                 alt="Học sinh đang đọc sách — hero"
               />
             </div>
