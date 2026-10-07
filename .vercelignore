@@ -18,6 +18,7 @@
 !pages/**
 !index.html
 !cauhoi.txt
+!requirements.txt
 !sitemap.xml
 !robots.txt
 !vercel.json
