@@ -180,10 +180,10 @@
     var source = Object.assign({}, sampleMode ? SAMPLE_PROFILE : {}, profileData);
     var records = Array.isArray(source.certificateRecords) ? source.certificateRecords : [];
     var certificates = records.map(function (record) {
-      return [record.name, record.score, record.issueDate].filter(Boolean).join(' · ');
+      return [record.name, record.score, record.name === 'TOEIC' && record.speakingScore != null ? 'Speaking ' + record.speakingScore : '', record.name === 'TOEIC' && record.writingScore != null ? 'Writing ' + record.writingScore : '', record.issueDate].filter(Boolean).join(' · ');
     }).filter(Boolean);
     if (!certificates.length && (source.certificateName || source.certificateScore)) {
-      certificates.push([source.certificateName, source.certificateScore, source.certificateIssueDate].filter(Boolean).join(' · '));
+      certificates.push([source.certificateName, source.certificateScore, source.certificateName === 'TOEIC' && source.certificateSpeakingScore ? 'Speaking ' + source.certificateSpeakingScore : '', source.certificateName === 'TOEIC' && source.certificateWritingScore ? 'Writing ' + source.certificateWritingScore : '', source.certificateIssueDate].filter(Boolean).join(' · '));
     }
     var educationMeta = [source.className, source.birthYear].filter(Boolean).join(' · ');
     return {

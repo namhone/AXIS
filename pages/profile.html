@@ -69,7 +69,8 @@
                   <div class="profile-meta">
                     <div class="meta-field">
                       <label class="meta-label" for="profile-birth-year">Năm sinh</label>
-                      <input id="profile-birth-year" type="text" placeholder="2006" class="meta-input" data-profile-field="birthYear" />
+                      <input id="profile-birth-year" type="text" inputmode="numeric" maxlength="4" placeholder="2009" class="meta-input" data-profile-field="birthYear" aria-describedby="birthYearHelp" />
+                      <small class="form-help" id="birthYearHelp">Năm sinh sẽ ước tính khối lớp; bạn có thể đổi khối lớp nếu cần.</small>
                     </div>
                     <div class="meta-field">
                       <label class="meta-label" for="class-select">Khối lớp</label>
@@ -114,7 +115,7 @@
                       </div>
 
                       <div class="subsection-stack">
-                        <div class="mini-form">
+                        <div class="mini-form profile-academic-form">
                           <h3>Thành tích học tập xuất sắc</h3>
                           <div class="mini-grid">
                             <div class="field grade-detail-field" data-grade-field="entranceScore"><label for="entrance-score">Điểm tuyển sinh</label><input id="entrance-score" type="number" data-profile-field="entranceScore" placeholder="Tự tính" readonly /></div>
@@ -189,10 +190,19 @@
 
                         <div class="mini-form">
                           <h3>Chứng chỉ ngoại ngữ &amp; học thuật</h3>
-                          <div class="mini-grid">
+                          <div class="mini-grid certificate-identifiers">
                             <div class="field"><label for="certificateLanguage">Ngôn ngữ</label><select id="certificateLanguage" data-profile-field="certificateLanguage"><option value="">Chọn ngôn ngữ</option></select></div>
                             <div class="field"><label for="certificateName">Chứng chỉ</label><select id="certificateName" data-profile-field="certificateName"><option value="">Chọn ngôn ngữ trước</option></select></div>
-                            <div class="field"><label for="certificateScore">Điểm / cấp độ</label><input id="certificateScore" type="text" inputmode="decimal" data-profile-field="certificateScore" placeholder="Chọn chứng chỉ trước" disabled /></div>
+                          </div>
+                          <div class="certificate-score-group">
+                            <div class="field certificate-score-main"><label id="certificateScoreLabel" for="certificateScore">Điểm / cấp độ</label><input id="certificateScore" type="text" inputmode="decimal" data-profile-field="certificateScore" placeholder="Chọn chứng chỉ trước" disabled /></div>
+                            <div class="certificate-toeic-fields hidden" id="certificateToeicFields" aria-live="polite">
+                              <p class="form-help">Nhập riêng từng phần của bài thi TOEIC 4 kỹ năng.</p>
+                              <div class="mini-grid">
+                              <div class="field"><label for="certificateSpeakingScore">Speaking (0–200)</label><input id="certificateSpeakingScore" type="number" min="0" max="200" step="1" inputmode="numeric" aria-describedby="certificateHelp" data-profile-field="certificateSpeakingScore" disabled /></div>
+                              <div class="field"><label for="certificateWritingScore">Writing (0–200)</label><input id="certificateWritingScore" type="number" min="0" max="200" step="1" inputmode="numeric" aria-describedby="certificateHelp" data-profile-field="certificateWritingScore" disabled /></div>
+                              </div>
+                            </div>
                           </div>
                           <div class="field certificate-issue-date"><label for="certificateIssueDate">Ngày cấp chứng chỉ</label><input id="certificateIssueDate" type="date" data-profile-field="certificateIssueDate" /></div>
                           <div class="certificate-actions"><button class="ghost-btn" type="button" id="addCertificateBtn">Thêm chứng chỉ</button></div>
@@ -357,7 +367,7 @@
                         </div>
                         <a class="primary-btn profile-riasec-cta" href="riasec.html"><span data-lucide="sparkles" aria-hidden="true"></span> Làm trắc nghiệm tính cách</a>
                       </section>
-                      <div class="upload-box profile-completion-actions" style="margin-top: 18px;">
+                      <section class="profile-completion-actions content-panel" aria-labelledby="profileCompletionTitle">
                         <div class="mini-form profile-core-details">
                           <h3>Định hướng cá nhân</h3>
                           <div class="mini-grid profile-core-fields">
@@ -375,14 +385,14 @@
                             </div>
                           </div>
                         </div>
-                        <h3 style="margin: 0; color: var(--purple-deep);">Hoàn tất hồ sơ</h3>
+                        <h3 id="profileCompletionTitle">Hoàn tất hồ sơ</h3>
                         <p class="form-help">Lưu thông tin hiện tại hoặc chuyển sang trang chuẩn hóa để thiết kế hồ sơ chuyên nghiệp.</p>
                         <div class="profile-save-actions action-row">
                           <button class="primary-btn" type="button" id="saveProfileBtn">Lưu thông tin hồ sơ</button>
+                          <a class="ghost-btn" href="cv-builder-editor.html"><span data-lucide="sparkles" aria-hidden="true"></span> Chuẩn hóa hồ sơ <span data-lucide="arrow-right" aria-hidden="true"></span></a>
                           <span id="profileSaveStatus" role="status" aria-live="polite"></span>
-                          <a class="primary-btn" href="cv-builder-editor.html"><span data-lucide="sparkles" aria-hidden="true"></span> Chuẩn hóa hồ sơ <span data-lucide="arrow-right" aria-hidden="true"></span></a>
                         </div>
-                      </div>
+                      </section>
                     </div>
           </section>
 
@@ -626,12 +636,17 @@
       const provinceField = document.getElementById('provinceField');
       const examSelectionStatus = document.getElementById('examSelectionStatus');
       const gradeSelect = document.querySelector('[data-profile-field="className"]');
+      const birthYearInput = document.getElementById('profile-birth-year');
       const gradeFields = document.querySelectorAll('.grade-detail-field');
       const subjectScoreRows = document.querySelectorAll('[data-grade-year]');
       const portfolioTemplate = document.getElementById('portfolioTemplate');
       const certificateLanguage = document.getElementById('certificateLanguage');
       const certificateName = document.getElementById('certificateName');
       let certificateScore = document.getElementById('certificateScore');
+      const certificateScoreLabel = document.getElementById('certificateScoreLabel');
+      const certificateToeicFields = document.getElementById('certificateToeicFields');
+      const certificateSpeakingScore = document.getElementById('certificateSpeakingScore');
+      const certificateWritingScore = document.getElementById('certificateWritingScore');
       const certificateHelp = document.getElementById('certificateHelp');
       const certificateIssueDate = document.getElementById('certificateIssueDate');
       const certificateExpiryWarning = document.getElementById('certificateExpiryWarning');
@@ -648,6 +663,16 @@
         const value = currentProfile['score' + year + 'English'];
         highSchoolLanguageScore.value = value == null ? '' : value;
       }
+      function clearToeicScores() {
+        [[certificateSpeakingScore, 'certificateSpeakingScore'], [certificateWritingScore, 'certificateWritingScore']].forEach(function (entry) {
+          if (entry[0]) {
+            entry[0].value = '';
+            entry[0].setCustomValidity('');
+            entry[0].removeAttribute('aria-invalid');
+          }
+          if (window.AXISData) window.AXISData.setProfileValue(entry[1], '');
+        });
+      }
       function fillCertificateLanguages() {
         if (!certificateLanguage || !window.AxisCertificates) return;
         certificateLanguage.innerHTML = '<option value="">Chọn ngôn ngữ</option>' + window.AxisCertificates.LANGUAGES.map(function (item) {
@@ -662,6 +687,8 @@
         }).join('') : '');
         certificateName.disabled = !language;
         certificateScore.value = '';
+        if (certificateSpeakingScore) certificateSpeakingScore.value = '';
+        if (certificateWritingScore) certificateWritingScore.value = '';
         updateCertificateValidation();
       }
       function updateCertificateValidation() {
@@ -669,6 +696,7 @@
         const option = certificateName.options[certificateName.selectedIndex];
         const type = option && option.value;
         const numeric = window.AxisCertificates.NUMERIC[type];
+        if (certificateScoreLabel) certificateScoreLabel.textContent = type === 'TOEIC' ? 'TOEIC Listening & Reading' : 'Điểm / cấp độ';
         if (numeric && certificateScore.tagName === 'SELECT') {
           certificateScore.outerHTML = '<input id="certificateScore" type="text" inputmode="decimal" data-profile-field="certificateScore">';
           certificateScore = document.getElementById('certificateScore');
@@ -693,7 +721,9 @@
           certificateScore.max = String(numeric[1]);
           certificateScore.step = String(numeric[2]);
           certificateScore.placeholder = numeric[3];
-          certificateHelp.dataset.defaultMessage = numeric[2] === 0.5
+          certificateHelp.dataset.defaultMessage = type === 'TOEIC'
+            ? 'Listening & Reading: tổng 10–990, bước 5. Speaking và Writing: mỗi phần 0–200.'
+            : numeric[2] === 0.5
             ? 'Thang điểm ' + numeric[0] + '–' + numeric[1] + ', chỉ nhận bước 0,5. Có thể nhập 6,5 hoặc 6.5.'
             : 'Thang điểm ' + numeric[0] + '–' + numeric[1] + ', bước ' + numeric[2] + '. Không nhập phần lẻ.';
           certificateHelp.textContent = certificateHelp.dataset.defaultMessage;
@@ -713,6 +743,11 @@
           certificateHelp.textContent = certificateHelp.dataset.defaultMessage;
         }
         const useHighSchool = Boolean(certificateUseHighSchool && certificateUseHighSchool.checked);
+        const showToeicScores = type === 'TOEIC' && !useHighSchool;
+        if (certificateToeicFields) certificateToeicFields.classList.toggle('hidden', !showToeicScores);
+        [certificateSpeakingScore, certificateWritingScore].forEach(function (field) {
+          if (field) field.disabled = !showToeicScores;
+        });
         if (certificateName) certificateName.disabled = !certificateLanguage.value || useHighSchool;
         [certificateLanguage, certificateScore, certificateIssueDate].forEach(function (field) {
           if (field) field.disabled = useHighSchool;
@@ -721,6 +756,7 @@
         if (highSchoolLanguageScore) highSchoolLanguageScore.disabled = !useHighSchool;
         if (useHighSchool) {
           certificateScore.value = '';
+          clearToeicScores();
           if (certificateIssueDate) certificateIssueDate.value = '';
         }
       }
@@ -732,6 +768,8 @@
           language: certificateLanguage && certificateLanguage.value,
           name: certificateName && certificateName.value,
           score: certificateScore && certificateScore.value,
+          speakingScore: certificateSpeakingScore && certificateSpeakingScore.value,
+          writingScore: certificateWritingScore && certificateWritingScore.value,
           issueDate: certificateIssueDate && certificateIssueDate.value
         };
       }
@@ -741,6 +779,7 @@
           return '<div class="certificate-list-item"><div><strong>' +
             String(item.name || 'Chứng chỉ').replace(/[&<>"']/g, '') +
             '</strong><span>' + String(item.language || '') + ' · ' + String(item.score || 'Chưa có điểm') +
+            (item.name === 'TOEIC' && (item.speakingScore != null || item.writingScore != null) ? ' · Speaking ' + String(item.speakingScore == null ? '—' : item.speakingScore) + ' · Writing ' + String(item.writingScore == null ? '—' : item.writingScore) : '') +
             (item.issueDate ? ' · Cấp ngày ' + item.issueDate : '') +
             '</span></div><button type="button" class="ghost-btn certificate-remove" data-index="' + index + '">Xóa</button></div>';
         }).join('');
@@ -761,6 +800,21 @@
           if (window.AXISAuth && window.AXISAuth.showNotice) window.AXISAuth.showNotice('Hãy chọn ngôn ngữ, chứng chỉ và điểm trước khi thêm.');
           return;
         }
+        if (draft.name === 'TOEIC') {
+          const speakingInvalid = !certificateSpeakingScore || certificateSpeakingScore.value === '' || !certificateSpeakingScore.checkValidity();
+          const writingInvalid = !certificateWritingScore || certificateWritingScore.value === '' || !certificateWritingScore.checkValidity();
+          if (speakingInvalid || writingInvalid) {
+            certificateHelp.textContent = 'Nhập điểm Speaking và Writing, mỗi phần từ 0 đến 200.';
+            const invalidField = speakingInvalid ? certificateSpeakingScore : certificateWritingScore;
+            if (invalidField) {
+              invalidField.setCustomValidity('Nhập số nguyên từ 0 đến 200.');
+              invalidField.setAttribute('aria-invalid', 'true');
+              invalidField.focus();
+              invalidField.reportValidity();
+            }
+            return;
+          }
+        }
         const scoreError = window.AxisCertificates.validateScore(draft.name, draft.score);
         if (scoreError) {
           certificateScore.setCustomValidity(scoreError);
@@ -771,7 +825,17 @@
         }
         certificateScore.setCustomValidity('');
         certificateScore.removeAttribute('aria-invalid');
+        [certificateSpeakingScore, certificateWritingScore].forEach(function (field) {
+          if (field) {
+            field.setCustomValidity('');
+            field.removeAttribute('aria-invalid');
+          }
+        });
         draft.score = window.AxisCertificates.formatScore(draft.name, draft.score);
+        if (draft.name === 'TOEIC') {
+          draft.speakingScore = String(Number(draft.speakingScore));
+          draft.writingScore = String(Number(draft.writingScore));
+        }
         certificateRecords.push(draft);
         renderCertificateList();
         if (window.AXISData && window.AXISData.setProfileValue) {
@@ -779,20 +843,41 @@
         }
         if (window.AXISData && window.AXISData.markProfileDirty) window.AXISData.markProfileDirty();
         certificateScore.value = '';
+        if (certificateSpeakingScore) certificateSpeakingScore.value = '';
+        if (certificateWritingScore) certificateWritingScore.value = '';
         if (certificateIssueDate) certificateIssueDate.value = '';
       });
       fillCertificateLanguages();
-      if (certificateLanguage) certificateLanguage.addEventListener('change', fillCertificateTypes);
+      if (certificateLanguage) certificateLanguage.addEventListener('change', function () {
+        fillCertificateTypes();
+        clearToeicScores();
+      });
       if (certificateName) certificateName.addEventListener('change', function () {
         certificateScore.value = '';
+        clearToeicScores();
         updateCertificateValidation();
+      });
+      [certificateSpeakingScore, certificateWritingScore].forEach(function (field) {
+        if (field) field.addEventListener('input', function () {
+          field.setCustomValidity('');
+          field.removeAttribute('aria-invalid');
+          if (certificateHelp.dataset.tone === 'error') {
+            certificateHelp.textContent = certificateHelp.dataset.defaultMessage || '';
+            certificateHelp.dataset.tone = 'neutral';
+          }
+        });
       });
       if (certificateIssueDate) certificateIssueDate.addEventListener('change', updateCertificateExpiry);
       if (certificateUseHighSchool) certificateUseHighSchool.addEventListener('change', updateCertificateValidation);
       document.addEventListener('axis:profile-hydrated', function () {
-        fillCertificateLanguages();
-        fillCertificateTypes();
         const profile = window.AXISData && window.AXISData.getProfile ? window.AXISData.getProfile() : {};
+        fillCertificateLanguages();
+        if (certificateLanguage) certificateLanguage.value = profile.certificateLanguage || '';
+        fillCertificateTypes();
+        if (certificateName) certificateName.value = profile.certificateName || '';
+        if (certificateSpeakingScore) certificateSpeakingScore.value = profile.certificateSpeakingScore || '';
+        if (certificateWritingScore) certificateWritingScore.value = profile.certificateWritingScore || '';
+        updateCertificateValidation();
         certificateRecords = Array.isArray(profile.certificateRecords) ? profile.certificateRecords.slice() : [];
         renderCertificateList();
         updateCertificateExpiry();
@@ -821,6 +906,29 @@
         subjectScoreRows.forEach(function (row) {
           row.classList.toggle('hidden', years.indexOf(row.getAttribute('data-grade-year')) < 0);
         });
+      }
+
+      function estimateGradeFromBirthYear(value) {
+        if (!/^\d{4}$/.test(String(value || ''))) return '';
+        const grade = new Date().getFullYear() - Number(value) - 5;
+        return grade >= 10 && grade <= 12 ? 'Lớp ' + grade : '';
+      }
+
+      function estimateBirthYearFromGrade(value) {
+        const grade = Number(String(value || '').replace(/\D/g, ''));
+        return grade >= 10 && grade <= 12 ? String(new Date().getFullYear() - grade - 5) : '';
+      }
+
+      function updateMissingBirthYearOrGrade() {
+        if (!gradeSelect || !birthYearInput) return;
+        if (birthYearInput.value && !gradeSelect.value) {
+          gradeSelect.value = estimateGradeFromBirthYear(birthYearInput.value);
+          if (gradeSelect.value && window.AXISData) window.AXISData.setProfileValue('className', gradeSelect.value);
+        } else if (!birthYearInput.value && gradeSelect.value) {
+          birthYearInput.value = estimateBirthYearFromGrade(gradeSelect.value);
+          if (birthYearInput.value && window.AXISData) window.AXISData.setProfileValue('birthYear', birthYearInput.value);
+        }
+        updateAcademicGradeFields();
       }
 
       const examSubjects = {
@@ -1042,7 +1150,24 @@
       }
 
       if (gradeSelect) {
-        gradeSelect.addEventListener('change', updateAcademicGradeFields);
+        gradeSelect.addEventListener('change', function () {
+          updateAcademicGradeFields();
+          const year = estimateBirthYearFromGrade(gradeSelect.value);
+          if (year && birthYearInput && birthYearInput.value !== year) {
+            birthYearInput.value = year;
+            if (window.AXISData) window.AXISData.setProfileValue('birthYear', year);
+          }
+        });
+      }
+      if (birthYearInput) {
+        birthYearInput.addEventListener('input', function () {
+          const grade = estimateGradeFromBirthYear(birthYearInput.value);
+          if (grade && gradeSelect && gradeSelect.value !== grade) {
+            gradeSelect.value = grade;
+            updateAcademicGradeFields();
+            if (window.AXISData) window.AXISData.setProfileValue('className', grade);
+          }
+        });
       }
 
       if (examType) {
@@ -1059,7 +1184,7 @@
       }
       document.addEventListener('axis:profile-hydrated', function () {
         renderExamSubjects();
-        updateAcademicGradeFields();
+        updateMissingBirthYearOrGrade();
       });
       renderExamSubjects();
       updateAchievementFields();

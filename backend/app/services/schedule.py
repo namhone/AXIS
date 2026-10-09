@@ -5,6 +5,8 @@ import uuid
 from datetime import date, timedelta
 from typing import Any
 
+from ..core.time import local_today
+
 DAILY_LIMIT_MINUTES = 180
 DAILY_TASK_LIMIT = 4
 MAX_DEFERRALS = 3
@@ -27,7 +29,7 @@ def _is_complete(task: Any) -> bool:
 
 def reconcile_overdue_steps(steps: list[Any], today: date | None = None) -> bool:
     """Move incomplete tasks from past days toward today, mutating ORM steps."""
-    today = today or date.today()
+    today = today or local_today()
     changed = False
     for index, step in enumerate(steps):
         schedule = parse_step_content(step.content)
@@ -95,11 +97,14 @@ def _task(raw: Any, fallback_title: str) -> dict[str, Any]:
         if item_title:
             normalized_subtasks.append(item_title)
     subtasks = normalized_subtasks[:4]
+    minutes = raw.get("minutes", 0) if isinstance(raw, dict) else 0
+    minutes = int(minutes) if isinstance(minutes, (int, float)) and not isinstance(minutes, bool) else 0
     return {
         "task_id": str(raw.get("task_id") or uuid.uuid4()) if isinstance(raw, dict) else str(uuid.uuid4()),
         "title": title[:160],
+        "description": str(raw.get("description") or raw.get("content") or "")[:1000] if isinstance(raw, dict) else "",
         "subtasks": subtasks,
-        "minutes": 0,
+        "minutes": minutes,
         "completion_percent": int(raw.get("completion_percent", 0) or 0) if isinstance(raw, dict) else 0,
         "defer_count": int(raw.get("defer_count", 0) or 0) if isinstance(raw, dict) else 0,
         "status": str(raw.get("status", "pending")) if isinstance(raw, dict) else "pending",
@@ -122,7 +127,7 @@ def _expand_tasks(raw: Any, fallback_title: str) -> list[dict[str, Any]]:
         child_raw = raw_subtasks[index - 1] if index - 1 < len(raw_subtasks) else None
         if isinstance(child_raw, dict):
             child_task = _task(child_raw, task["title"])
-            for key in ("minutes", "status", "completion_percent", "defer_count", "resources"):
+            for key in ("minutes", "status", "completion_percent", "defer_count", "resources", "description"):
                 if child_task.get(key):
                     task[key] = child_task[key]
             nested = child_task.get("subtasks", [])
@@ -138,7 +143,7 @@ def normalize_week(
     previous_steps: list[dict[str, Any]] | None = None,
     start: date | None = None,
 ) -> list[dict[str, Any]]:
-    start = start or date.today()
+    start = start or local_today()
     days: list[list[dict[str, Any]]] = [[] for _ in range(7)]
 
     for index, goal in enumerate(goals):
@@ -197,10 +202,15 @@ def normalize_week(
     for index, tasks in enumerate(days):
         tasks = tasks[:DAILY_TASK_LIMIT]
         available = DAILY_LIMIT_MINUTES
-        if tasks:
-            minutes = max(1, available // len(tasks))
-            for task in tasks:
-                task["minutes"] = minutes
+        scheduled_tasks = []
+        for task in tasks:
+            if available <= 0:
+                break
+            minutes = max(1, int(task.get("minutes") or 45))
+            task["minutes"] = min(minutes, available)
+            available -= task["minutes"]
+            scheduled_tasks.append(task)
+        tasks = scheduled_tasks
         result.append(
             {
                 "step_number": index + 1,

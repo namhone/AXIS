@@ -3,6 +3,7 @@ import uuid
 
 from sqlalchemy.orm import Session
 
+from ..core.time import local_today
 from ..models.tasks import Task
 
 DAILY_TASK_LIMIT = 4
@@ -30,7 +31,7 @@ def _next_available_day(db: Session, user_id: uuid.UUID, start: date, minutes: i
 
 def reconcile_overdue_tasks(db: Session, user_id: uuid.UUID, today: date | None = None) -> list[uuid.UUID]:
     """Move active overdue work to today, then push conflicts to later capacity."""
-    today = today or date.today()
+    today = today or local_today()
     overdue = (
         db.query(Task)
         .filter(

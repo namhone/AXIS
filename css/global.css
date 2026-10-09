@@ -1093,6 +1093,7 @@ button, input {
 
  .career-card-cover {
    position: relative;
+   overflow: hidden;
    height: 164px;
    margin: 0 -18px 10px;
    border-radius: 15px 15px 0 0;
@@ -1107,7 +1108,7 @@ button, input {
    background: linear-gradient(180deg, rgba(6, 29, 51, .04), rgba(6, 29, 51, .72));
  }
 
- .career-card-cover span {
+ .career-card-cover-code {
    position: absolute;
    z-index: 1;
    right: 14px;
@@ -1766,7 +1767,8 @@ button, input {
 }
 
 .auth-modal-panel h3 {
-  margin: 0 0 8px;
+  max-width: calc(100% - 48px);
+  margin: 0 0 20px;
   color: var(--purple-deep);
 }
 
@@ -3701,7 +3703,7 @@ body.has-search .search-box { display: block !important; }
 
 .development-page .section-note {
   max-width: 760px;
-  margin: -6px 0 18px;
+  margin: 0 0 18px;
   color: var(--text-soft);
   line-height: 1.6;
 }
@@ -3804,7 +3806,8 @@ body.has-search .search-box { display: block !important; }
   background: var(--accent, #376fdb);
 }
 
-.career-focus-selected {
+.development-page .career-focus-selected {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 12px;
 }
 
@@ -3825,13 +3828,15 @@ body.has-search .search-box { display: block !important; }
 }
 
 @media (max-width: 760px) {
-  .career-focus-grid {
+  .career-focus-grid,
+  .development-page .career-focus-selected {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 520px) {
-  .career-focus-grid {
+  .career-focus-grid,
+  .development-page .career-focus-selected {
     grid-template-columns: minmax(0, 1fr);
   }
 }
@@ -4075,7 +4080,7 @@ body.has-search .search-box { display: block !important; }
   position: relative;
   z-index: 1;
   width: min(420px, calc(100vw - 32px));
-  padding: 28px;
+  padding: 54px 28px 28px;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--panel);
@@ -4368,6 +4373,10 @@ body.has-search .search-box { display: block !important; }
   color: var(--purple-deep);
 }
 
+.eyebrow + h2 {
+  margin-top: 8px;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4574,6 +4583,10 @@ body.has-search .search-box { display: block !important; }
   gap: 10px;
 }
 
+.career-card > p {
+  margin: 0;
+}
+
 .career-card .career-icon {
   width: 48px;
   height: 48px;
@@ -4589,23 +4602,27 @@ body.has-search .search-box { display: block !important; }
 .career-grid .career-card {
   color: inherit;
   text-decoration: none;
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
 }
 
-.career-grid .career-card:hover {
+.career-grid .career-card:hover,
+.career-grid .career-card:focus-within {
   border-color: rgba(var(--accent-rgb), 0.34);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 14px 28px rgba(80, 66, 150, 0.12);
-  transform: translateY(-4px);
-}
-
-.career-grid .career-card:hover .career-icon {
-  background: linear-gradient(135deg, var(--purple-soft), var(--panel));
-  transform: rotate(-3deg) scale(1.04);
+  box-shadow: 0 18px 32px rgba(11, 61, 102, 0.16);
+  transform: translateY(-2px);
 }
 
 .career-grid .career-card .career-icon {
-  transition: transform 180ms ease, background 180ms ease;
+  transition: none;
+}
+
+.career-grid .career-card-cover-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
 }
 
 .career-grid .career-card:focus-visible {
@@ -4937,6 +4954,30 @@ body.has-search .search-box { display: block !important; }
   margin: 0;
 }
 
+.career-detail-page .career-discovery {
+  padding: 18px;
+  border: 1px solid rgba(11, 61, 102, .12);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(51, 179, 214, .08), rgba(255, 255, 255, .82));
+}
+
+.career-detail-page .career-discovery .eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.career-detail-page .career-discovery .form-help {
+  margin-top: 10px;
+}
+
+.career-detail-page .career-discovery > a {
+  display: inline-flex;
+  margin-top: 10px;
+  color: var(--purple-deep);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
 .career-detail-page .career-requirements {
   margin-top: 0;
 }
@@ -5011,6 +5052,13 @@ body.has-search .search-box { display: block !important; }
   }
   .header-nav::-webkit-scrollbar { display: none; }
   .header-auth { flex: 0 0 auto; }
+}
+
+@media (min-width: 981px) and (max-width: 1600px) {
+  .topbar { padding-inline: 24px !important; }
+  .header-brand .brand-copy small { display: none; }
+  .header-nav { gap: 6px; padding-inline: 8px; }
+  .header-nav .nav-item { gap: 6px; padding-inline: 8px; }
 }
 
 /* Prevent body scroll when overlay open */
@@ -5443,6 +5491,22 @@ body.mobile-nav-open { overflow: hidden; }
   background: rgba(238, 246, 255, .58);
 }
 
+.profile-workspace .certificate-toeic-fields {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(11, 61, 102, .12);
+  border-radius: 12px;
+  background: rgba(238, 246, 255, .42);
+}
+
+.profile-workspace .certificate-toeic-fields > .form-help {
+  margin: 0 0 12px;
+}
+
+.profile-workspace .certificate-toeic-fields .mini-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .profile-workspace .certificate-fallback .checkbox-field {
   margin: 0;
   font-weight: 700;
@@ -5476,7 +5540,7 @@ body.mobile-nav-open { overflow: hidden; }
 }
 
 .profile-workspace .achievement-form > .form-help {
-  margin: -8px 0 16px;
+  margin: 0 0 16px;
   color: var(--text-soft);
 }
 
@@ -5619,7 +5683,7 @@ body.mobile-nav-open { overflow: hidden; }
   --purple-soft: #e8f3f8;
   --pink: #cfe5ee;
   --mint: #e6f4f3;
-  --mint-deep: #4fa7b8;
+  --mint-deep: #286c78;
   --cream: #f8fbfc;
   --line: #dce6ec;
   --text: #102333;
@@ -5649,7 +5713,6 @@ body {
 .content-panel:hover,
 .tool-card:hover,
 .mini-panel:hover,
-.career-card:hover,
 .guide-step:hover {
   border-color: rgba(11, 61, 102, .24);
   box-shadow: 0 16px 34px rgba(6, 29, 51, .1);
@@ -6476,4 +6539,165 @@ a.button-like:active {
   .riasec-option { padding: 10px 3px; }
   .riasec-option span { font-size: .62rem; }
   .riasec-result-grid { grid-template-columns: 1fr; }
+}
+
+@keyframes axis-list-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:is(.header-nav.is-mobile-open, .career-grid, .career-focus-grid, .skill-plan-list, .roadmap-list, .certificate-list, .documents-list, .calendar-grid, .riasec-career-match-list) > *,
+.user-menu:not(.hidden),
+details[open] > :not(summary) {
+  animation: axis-list-enter 240ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.header-nav.is-mobile-open, .career-grid, .career-focus-grid, .skill-plan-list, .roadmap-list, .certificate-list, .documents-list, .calendar-grid, .riasec-career-match-list) > *,
+  .user-menu:not(.hidden),
+  details[open] > :not(summary) {
+    animation: none;
+  }
+}
+
+/* Profile forms use a steady two-column rhythm while keeping the grade table wide. */
+.profile-workspace .subsection-stack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+}
+
+.profile-workspace .profile-academic-form {
+  grid-column: 1 / -1;
+}
+
+.profile-workspace .mini-form {
+  height: 100%;
+  padding: 20px;
+  border-radius: 18px;
+}
+
+.profile-workspace .mini-form h3 {
+  margin: 0 0 14px;
+  line-height: 1.35;
+}
+
+.profile-workspace .certificate-identifiers {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profile-workspace .certificate-score-group {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid rgba(11, 61, 102, .14);
+  border-radius: 14px;
+  background: rgba(238, 246, 255, .44);
+}
+
+.profile-workspace .certificate-score-main {
+  max-width: none;
+}
+
+.profile-workspace .certificate-toeic-fields {
+  margin: 0;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(11, 61, 102, .12);
+  border-radius: 0;
+  background: transparent;
+}
+
+.profile-workspace .certificate-toeic-fields .mini-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.profile-workspace .profile-completion-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid rgba(11, 61, 102, .12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .72);
+}
+
+.profile-workspace .profile-core-details {
+  height: auto;
+  padding: 0 !important;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.profile-workspace #profileCompletionTitle {
+  margin: 4px 0 0;
+  color: var(--purple-deep);
+  line-height: 1.35;
+}
+
+.profile-workspace .profile-completion-actions > .form-help {
+  margin: 0;
+}
+
+.profile-workspace .profile-save-actions {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.profile-workspace .profile-save-actions #profileSaveStatus {
+  grid-column: 1 / -1;
+  min-height: 0;
+  margin: 0;
+}
+
+.profile-workspace .profile-save-actions #profileSaveStatus:empty {
+  display: none;
+}
+
+.profile-workspace .profile-save-actions > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+
+@media (max-width: 900px) {
+  .profile-workspace .subsection-stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-workspace .profile-academic-form {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-workspace .certificate-identifiers,
+  .profile-workspace .certificate-toeic-fields .mini-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-workspace .profile-save-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-workspace .profile-save-actions > *,
+  .profile-workspace .profile-save-actions #profileSaveStatus {
+    grid-column: 1;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-grid .career-card {
+    transition: none;
+  }
 }

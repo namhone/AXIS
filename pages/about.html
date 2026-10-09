@@ -164,10 +164,23 @@
         const closeModal = document.getElementById('closeSettingsModal');
         const saveSettings = document.getElementById('saveSettings');
         const closeTriggers = document.querySelectorAll('[data-close-settings="true"]');
+        const settingInputs = modal ? Array.from(modal.querySelectorAll('input[type="checkbox"]')) : [];
+        let settingsDraft = [];
+        function openSettings() {
+          settingsDraft = settingInputs.map(function (input) { return input.checked; });
+          if (modal) { modal.classList.remove('hidden'); modal.setAttribute('aria-hidden', 'false'); }
+        }
+        function cancelSettings() {
+          settingInputs.forEach(function (input, index) { input.checked = Boolean(settingsDraft[index]); });
+          if (modal) { modal.classList.add('hidden'); modal.setAttribute('aria-hidden', 'true'); }
+        }
+        menuButtons.forEach(function (button) {
+          if (button.getAttribute('data-menu-action') === 'settings') button.addEventListener('click', openSettings);
+        });
 
-        closeModal && closeModal.addEventListener('click', function () { modal && modal.classList.add('hidden'); });
-        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', function () { modal && modal.classList.add('hidden'); }); });
-        saveSettings && saveSettings.addEventListener('click', function () { alert('Cài đặt đã được lưu thành công.'); modal && modal.classList.add('hidden'); });
+        closeModal && closeModal.addEventListener('click', cancelSettings);
+        closeTriggers.forEach(function (trigger) { trigger.addEventListener('click', cancelSettings); });
+        saveSettings && saveSettings.addEventListener('click', function () { alert('Tùy chọn chưa được lưu trong bản demo này.'); });
 
         document.addEventListener('click', function (event) {
           if (!userMenu || !userChip) return;

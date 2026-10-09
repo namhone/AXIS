@@ -1,6 +1,7 @@
 import json
 import re
 from typing import Any
+from urllib.parse import urlsplit
 
 from openai import OpenAI
 
@@ -65,17 +66,41 @@ class AIService:
             for resource in resources
             if isinstance(resource, dict) and isinstance(resource.get("url"), str)
         ]
-        if has_school_signal and not urls:
-            raise ValueError("School tasks must include at least one valid source URL")
+        if has_school_signal and not any(
+            parsed.scheme == "https"
+            and parsed.hostname
+            and (parsed.hostname == "vietjack.com" or parsed.hostname.endswith(".vietjack.com"))
+            and parsed.path not in ("", "/")
+            for parsed in (urlsplit(url) for url in urls)
+        ):
+            raise ValueError("School tasks must link to a specific VietJack lesson")
         if any(term in title for term in ["cộng", "trừ", "nhân", "chia"]) and "lớp 9" in title:
             raise ValueError("Unsupported Grade 9 arithmetic lesson content")
 
     @staticmethod
     def _validate_steps(steps: list[dict[str, Any]]) -> None:
-        for step in steps:
-            for task in step.get("tasks") or []:
-                if isinstance(task, dict):
-                    AIService._validate_school_task(task)
+        for index, step in enumerate(steps, start=1):
+            if not isinstance(step, dict):
+                raise ValueError("OpenAI returned an invalid roadmap step")
+            title = step.get("title")
+            tasks = step.get("tasks")
+            if not isinstance(title, str) or not title.strip().lower().startswith(f"ngày {index}"):
+                raise ValueError("Roadmap days must be titled in order")
+            if not isinstance(tasks, list) or not 1 <= len(tasks) <= 4:
+                raise ValueError("Each roadmap day must contain 1 to 4 tasks")
+            total_minutes = 0
+            for task in tasks:
+                if not isinstance(task, dict) or not isinstance(task.get("title"), str) or not task["title"].strip():
+                    raise ValueError("Roadmap tasks must have a title")
+                if task.get("subtasks"):
+                    raise ValueError("Roadmap tasks must be independently actionable")
+                minutes = task.get("minutes")
+                if isinstance(minutes, bool) or not isinstance(minutes, (int, float)) or not 1 <= minutes <= 180:
+                    raise ValueError("Roadmap tasks must include a valid duration")
+                total_minutes += minutes
+                AIService._validate_school_task(task)
+            if total_minutes > 180:
+                raise ValueError("A roadmap day cannot exceed 180 minutes")
 
     def __init__(self, settings: Settings) -> None:
         self._client = None
@@ -267,27 +292,24 @@ class AIService:
         steps = payload.get("steps") if isinstance(payload, dict) else None
         if not isinstance(steps, list) or len(steps) != 7:
             raise ValueError("AI returned an invalid 7-day roadmap")
+        self._validate_steps(steps)
 
         normalized: list[dict[str, Any]] = []
         for index, step in enumerate(steps, start=1):
             if not isinstance(step, dict):
                 raise ValueError("OpenAI returned an invalid roadmap step")
             title = step.get("title")
-            content = step.get("content")
             tasks = step.get("tasks")
             if not isinstance(title, str) or not title.strip():
                 raise ValueError("Roadmap step title is missing")
-            if not isinstance(content, str) and not isinstance(tasks, list):
-                raise ValueError("Roadmap step content is missing")
-            normalized_task_list = tasks if isinstance(tasks, list) else []
-            self._validate_steps([
-                {"tasks": normalized_task_list}
-            ])
+            if not isinstance(tasks, list):
+                raise ValueError("Roadmap step tasks are missing")
+            normalized_task_list = tasks
             normalized.append(
                 {
                     "step_number": index,
                     "title": title.strip()[:255],
-                    "content": content.strip() if isinstance(content, str) else "",
+                    "content": "",
                     "tasks": normalized_task_list,
                 }
             )

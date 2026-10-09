@@ -110,6 +110,14 @@ test("profile exposes private document management", async () => {
   assert.match(html, /deleteDocument/);
 });
 
+test("calendar shows its empty month while signed out or offline", async () => {
+  const script = await read("js/calendar.js");
+  const init = script.slice(script.indexOf("function init()"));
+
+  assert.ok(init.indexOf("renderCalendar();") < init.indexOf("if (!window.AxisAuth)"));
+  assert.ok(init.indexOf("renderTasks();") < init.indexOf("if (!window.AxisAuth)"));
+});
+
 test("development page shows ranked career matches and careers saved to the roadmap", async () => {
   const html = await read("pages/development.html");
   const css = await read("css/global.css");
@@ -124,10 +132,10 @@ test("development page shows ranked career matches and careers saved to the road
   assert.doesNotMatch(html, /<h3>Python<\/h3>/);
   assert.doesNotMatch(html, /<h3>Tiếng Anh<\/h3>/);
   assert.match(css, /\.career-focus-grid/);
-  assert.match(html, /Chưa có nhiệm vụ\. Hãy tạo lộ trình để bắt đầu/);
+  assert.match(html, /Chưa có nhiệm vụ\. Hãy tạo kế hoạch hoặc thêm task trong trang Lịch\./);
   assert.doesNotMatch(html, /Python: biến và kiểu dữ liệu|C\+\+: cú pháp nền tảng/);
-  assert.match(html, /function renderRoadmapSteps\(steps\)/);
-  assert.match(css, /roadmap-item > \.roadmap-task-list > \.roadmap-task-card/);
+  assert.match(html, /function renderRoadmapSteps\(tasks\)/);
+  assert.match(css, /\.roadmap-task-card/);
   assert.match(css, /grid-template-columns: minmax\(0, 1fr\) !important/);
 });
 
