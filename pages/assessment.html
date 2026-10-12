@@ -374,13 +374,13 @@
         }
 
         async function loadAssessmentHistory() {
-          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return;
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) return false;
           if (historyLoadRequest) return historyLoadRequest;
           const requestAccountId = String((window.AXISAuth.getCurrentUser() || {}).id || '');
           historyLoadRequest = (async function () {
           try {
             const history = await window.AXISAuth.apiRequest('/assessments');
-            if (String((window.AXISAuth.getCurrentUser() || {}).id || '') !== requestAccountId) return;
+            if (String((window.AXISAuth.getCurrentUser() || {}).id || '') !== requestAccountId) return false;
             assessmentHistory = history;
             if (!Array.isArray(assessmentHistory)) assessmentHistory = [];
             runBtn.textContent = assessmentHistory.length || latestResult ? 'Đánh giá lại' : 'Chạy đánh giá';
@@ -407,8 +407,10 @@
               document.getElementById('careerRecommendationSection').hidden = true;
               document.getElementById('progressSummary').textContent = 'Chưa có lịch sử đánh giá.';
             }
+            return true;
           } catch (error) {
             document.getElementById('progressSummary').textContent = 'Không thể tải lịch sử đánh giá.';
+            return false;
           } finally {
             historyLoadRequest = null;
           }
@@ -433,11 +435,13 @@
             [saveBtn, exportBtn, exportJsonBtn].forEach(function (button) { if (button) button.disabled = false; });
             document.getElementById('assessmentEmptyState').hidden = true;
             skillChart.hidden = false;
-            await loadAssessmentHistory();
+            const historyLoaded = await loadAssessmentHistory();
             updateStats(latestResult);
             renderResults(latestResult);
             drawChart(latestResult);
-            if (actionStatus) actionStatus.textContent = 'Đã chạy đánh giá và lưu mốc tiến bộ.';
+            if (actionStatus) actionStatus.textContent = historyLoaded
+              ? 'Đã chạy đánh giá và lưu mốc tiến bộ.'
+              : 'Đã lưu kết quả, nhưng không thể tải lịch sử đánh giá.';
             return latestResult;
           } catch (error) {
             if (actionStatus) actionStatus.textContent = error.message || 'Không thể chạy đánh giá.';

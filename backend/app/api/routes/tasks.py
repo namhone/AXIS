@@ -1,11 +1,18 @@
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
+import json
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from openai import OpenAIError
 from sqlalchemy.orm import Session, selectinload
 
+from .ai import enforce_ai_rate_limit
+from ...core.config import get_settings
+from ...core.time import local_today
 from ..deps import get_current_user
 from ...core.database import get_db
+from ...models.learning import Assessment, Goal
+from ...models.profile import Profile
 from ...models.tasks import CustomTag, Task
 from ...models.user import User
 from ...schemas.tasks import (
@@ -21,6 +28,9 @@ from ...services.task_planner import (
     DAILY_TASK_LIMIT,
     reconcile_overdue_tasks,
 )
+from ...services.ai import AIService
+from ...services.schedule import normalize_week
+from ...services.skill_planner import assessment_career_matches, build_skill_plan, selected_career_context
 
 router = APIRouter(prefix="/api/v1", tags=["tasks"])
 AI_TAG_COLOR = "#8B5CF6"
@@ -106,6 +116,7 @@ def generate_plan(
     payload: GeneratePlanPayload | None = None,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
+    _: None = Depends(enforce_ai_rate_limit),
 ) -> dict:
     _reconcile(db, user.id)
     latest_batch = (
@@ -119,35 +130,89 @@ def generate_plan(
         if batch_tasks and any(task.status != "COMPLETED" for task in batch_tasks):
             raise HTTPException(status_code=409, detail="Complete the current 3-day AI plan before generating another")
 
+    _ensure_capacity(db, user.id, local_today(), 1)
+
     now = datetime.now(timezone.utc)
     batch_id = uuid.uuid4()
-    names = (payload.task_names if payload else []) or [
-        "Ôn tập kiến thức trọng tâm",
-        "Luyện tập kỹ năng theo mục tiêu",
-        "Đọc và ghi chú tài liệu chuyên ngành",
-        "Hoàn thiện một sản phẩm nhỏ",
-        "Tự đánh giá tiến độ",
-        "Lập bước tiếp theo",
-    ]
-    created: list[Task] = []
-    for index, name in enumerate(names[:12]):
-        day = date.today() + timedelta(days=index // 2)
-        _ensure_capacity(db, user.id, day, 45)
-        task = Task(
-            user_id=user.id,
-            task_name=name.strip() or f"Nhiệm vụ ngày {index // 2 + 1}",
-            description="Thực hiện nội dung theo mục tiêu cá nhân trong ngày. Hoàn thành và ghi lại kết quả đạt được.",
-            estimated_time_minutes=45,
-            scheduled_date=day,
-            status="PENDING",
-            is_ai_generated=True,
-            batch_id=batch_id,
-            generated_at=now,
+    is_ai_generated = not bool(payload and payload.task_names)
+    if is_ai_generated:
+        profile = db.query(Profile).filter(Profile.user_id == user.id).first()
+        goals = db.query(Goal).filter(Goal.user_id == user.id).order_by(Goal.target_date, Goal.title).all()
+        latest_assessment = (
+            db.query(Assessment).filter(Assessment.user_id == user.id)
+            .order_by(Assessment.created_at.desc()).first()
         )
-        created.append(task)
-        db.add(task)
-        db.flush()
-    db.commit()
+        profile_data = dict(profile.data) if profile else {}
+        profile_data.pop("customCareerFocus", None)
+        career_matches = assessment_career_matches(latest_assessment)
+        profile_data["career_matches"] = career_matches
+        profile_data["career_focus"] = {
+            "recommended": career_matches,
+            "selected": selected_career_context(goals),
+        }
+        profile_data["skill_plan"] = build_skill_plan(profile_data)
+        try:
+            ai_steps = AIService(get_settings()).generate_roadmap(
+                profile_data,
+                [{"title": goal.title, "target_date": goal.target_date, "status": goal.status,
+                  "minutes_per_day": goal.minutes_per_day, "note": goal.note, "category": goal.category}
+                 for goal in goals],
+            )
+            plan = normalize_week(ai_steps, [
+                {"title": goal.title, "target_date": goal.target_date, "status": goal.status, "note": goal.note}
+                for goal in goals
+            ])
+        except RuntimeError as exc:
+            raise HTTPException(status_code=503, detail={"code": "ai_unavailable", "message": str(exc)}) from exc
+        except ValueError as exc:
+            raise HTTPException(status_code=502, detail={"code": "ai_invalid_response", "message": "AI returned an invalid roadmap"}) from exc
+        except OpenAIError as exc:
+            raise HTTPException(status_code=502, detail={"code": "ai_provider_error", "message": "AI roadmap generation failed"}) from exc
+        days = [(date.fromisoformat(json.loads(step["content"])["date"]), json.loads(step["content"]).get("tasks", [])) for step in plan[:3]]
+    else:
+        names = [name.strip() or f"Nhiệm vụ ngày {index // 2 + 1}" for index, name in enumerate(payload.task_names[:12])]
+        days = [
+            (local_today() + timedelta(days=index // 2), [{"title": name, "minutes": 45}])
+            for index, name in enumerate(names)
+        ]
+
+    created: list[Task] = []
+    try:
+        for day, day_tasks in days:
+            for item in day_tasks:
+                minutes = max(1, min(180, int(item.get("minutes") or 45)))
+                _ensure_capacity(db, user.id, day, minutes)
+                description = str(item.get("description") or "Nhiệm vụ trong lộ trình AI cá nhân hóa.")
+                resources = item.get("resources") if isinstance(item.get("resources"), list) else []
+                resource_lines = [
+                    f"Nguồn: {str(resource.get('title') or 'Tài liệu tham khảo')[:120]} — {resource['url']}"
+                    for resource in resources
+                    if isinstance(resource, dict)
+                    and isinstance(resource.get("url"), str)
+                    and resource["url"].startswith("https://")
+                ][:2]
+                if resource_lines:
+                    description += "\n" + "\n".join(resource_lines)
+                task = Task(
+                    user_id=user.id,
+                    task_name=str(item.get("title") or "Nhiệm vụ học tập")[:255],
+                    description=description[:2000] if is_ai_generated else "Nhiệm vụ theo kế hoạch bạn cung cấp.",
+                    estimated_time_minutes=minutes,
+                    scheduled_date=day,
+                    status="PENDING",
+                    is_ai_generated=is_ai_generated,
+                    batch_id=batch_id,
+                    generated_at=now,
+                )
+                created.append(task)
+                db.add(task)
+                db.flush()
+        if not created:
+            raise HTTPException(status_code=502, detail="AI did not return tasks for the next 3 days")
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
     for task in created:
         db.refresh(task)
     return {

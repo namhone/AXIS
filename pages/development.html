@@ -37,7 +37,7 @@
             <p class="section-note">Top 3 được xếp theo điểm phù hợp gần nhất. Hai vị trí cuối hiển thị ngành em đã thêm vào lộ trình từ trang Ngành; AI sẽ dùng các lựa chọn đó để cá nhân hóa nhiệm vụ.</p>
             <div id="careerGoalsCurrent" class="info-grid current-goals-grid career-focus-grid" aria-live="polite"></div>
             <div id="careerSelectedGoals" class="info-grid current-goals-grid career-focus-grid career-focus-selected" aria-label="Ngành đã thêm vào lộ trình"></div>
-            <a class="ghost-btn career-focus-browse" href="careers.html">Khám phá ngành để thêm vào lộ trình</a>
+            <a class="primary-btn career-focus-browse" href="careers.html">Khám phá ngành để thêm vào lộ trình</a>
           </section>
 
           <section class="content-panel development-progress-panel">
@@ -48,7 +48,7 @@
               </div>
               <span class="plan-progress" id="developmentProgressSummary">Chưa có dữ liệu</span>
             </div>
-            <div class="development-progress-chart-wrap">
+            <div class="development-progress-chart-wrap" hidden>
               <canvas id="developmentProgressChart" width="900" height="280" aria-label="Biểu đồ tiến bộ theo thời gian"></canvas>
             </div>
             <p class="section-note development-progress-note" id="developmentProgressNote">Chạy đánh giá ở trang Đánh giá &amp; Gợi ý để bắt đầu lưu lịch sử tiến bộ.</p>
@@ -71,49 +71,14 @@
           <section class="content-panel">
             <h2 id="todayRoadmapHeading">04 · Nhiệm vụ ngày hôm nay</h2>
             <div class="action-row">
-              <button class="primary-btn" id="generateRoadmapBtn" type="button">Tạo lộ trình bằng AI</button>
+              <button class="primary-btn" id="generateRoadmapBtn" type="button">Tạo kế hoạch AI 3 ngày</button>
+              <a class="ghost-btn" href="calendar.html">Quản lý nhiệm vụ</a>
               <span id="roadmapStatus" role="status" aria-live="polite"></span>
             </div>
-            <p class="section-note">Mỗi ngày gồm kỹ năng ngành, bài tập có đầu ra và một hoạt động bổ trợ. Hãy đánh dấu sau khi hoàn thành đủ nhiệm vụ.</p>
+            <p class="section-note">Kế hoạch và nhiệm vụ bạn tự thêm được lưu chung. Cập nhật trạng thái tại đây hoặc trong Lịch.</p>
             <div class="timeline roadmap-list" aria-live="polite">
-              <div class="timeline-item"><em>Chưa có nhiệm vụ. Hãy tạo lộ trình để bắt đầu.</em></div>
+              <div class="timeline-item"><em>Đang tải nhiệm vụ...</em></div>
             </div>
-          </section>
-
-          <section class="content-panel" id="developmentWorkspace">
-            <h2>05 · Kế hoạch &amp; Mục tiêu (Nhật ký hành động)</h2>
-            <div class="plan-progress" id="planProgress">Tiến độ kế hoạch: 0%</div>
-
-            <div class="controls-row plan-input-row plan-primary-row">
-              <label class="sr-only" for="goalTitle">Mục tiêu hoặc nhiệm vụ</label>
-              <input type="text" id="goalTitle" class="input-compact" placeholder="Mục tiêu / Nhiệm vụ (ví dụ: Hoàn thành bài tập Python)" />
-              <input type="date" id="goalDate" class="input-compact input-compact--fixed" aria-label="Ngày thực hiện" />
-              <input type="number" id="goalMinutes" class="input-compact input-compact--fixed" min="1" max="1440" placeholder="Phút mỗi ngày" aria-label="Số phút mỗi ngày" />
-              <select id="goalCategory" class="input-compact input-compact--select">
-                <option value="general">Chung</option>
-                <option value="study">Học tập</option>
-                <option value="project">Dự án</option>
-                <option value="skill">Kỹ năng</option>
-              </select>
-            </div>
-
-            <div class="controls-row plan-note-row">
-              <label class="sr-only" for="goalNote">Ghi chú ngắn</label>
-              <input type="text" id="goalNote" class="input-compact" placeholder="Ghi chú ngắn (ví dụ: xem kênh học, trang tập)" />
-            </div>
-
-            <div class="controls-row plan-actions-row">
-              <button class="primary-btn" id="addGoal">Thêm</button>
-              <button class="ghost-btn" id="savePlan">Lưu kế hoạch</button>
-              <button class="ghost-btn" id="exportPlan">Xuất kế hoạch (PDF)</button>
-              <button class="ghost-btn" id="clearPlan">Xóa toàn bộ (demo)</button>
-            </div>
-
-            <div id="goalsList" class="timeline" aria-live="polite">
-              <!-- goals rendered here -->
-            </div>
-
-            <p class="muted">Kế hoạch được lưu an toàn theo tài khoản của bạn.</p>
           </section>
         </main>
       </div>
@@ -289,6 +254,7 @@
 
         function render() {
           const goals = loadGoals();
+          if (!listEl) return;
           listEl.innerHTML = '';
           if (!goals.length) {
             listEl.innerHTML = '<div class="timeline-item"><div><em>Chưa có mục tiêu nào. Thêm mục tiêu phía trên để bắt đầu.</em></div></div>';
@@ -328,103 +294,74 @@
           updateProgressFills();
         }
 
-        function roadmapState() { return window.__axisRoadmap || {}; }
-        function renderRoadmapSteps(steps) {
+        function taskDescriptionMarkup(value) {
+          return escapeHtml(value).replace(/https:\/\/[^\s<]+/g, function (url) {
+            return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+          });
+        }
+        function renderRoadmapSteps(tasks) {
           const list = document.querySelector('.roadmap-list');
           if (!list) return;
-          if (!steps.length) {
-            list.innerHTML = '<div class="timeline-item"><em>Chưa có nhiệm vụ. Hãy tạo lộ trình để bắt đầu.</em></div>';
+          if (!tasks.length) {
+            list.innerHTML = '<div class="timeline-item"><em>Chưa có nhiệm vụ. Hãy tạo kế hoạch hoặc thêm task trong trang Lịch.</em></div>';
             return;
           }
-          const today = new Date().toISOString().slice(0, 10);
-          const visibleSteps = steps.filter(function (step) {
-            try { return JSON.parse(step.content).date === today; } catch (error) { return false; }
-          });
-          const displaySteps = visibleSteps.length ? visibleSteps : steps.slice(0, 1);
-          const todaySchedule = displaySteps[0] ? (function () {
-            try { return JSON.parse(displaySteps[0].content); } catch (error) { return null; }
-          })() : null;
+          const today = new Date();
+          const todayKey = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-');
+          const todayTasks = tasks.filter(function (task) { return task.scheduled_date === todayKey; });
+          const visibleTasks = todayTasks.length ? todayTasks : tasks.slice(0, 4);
           const heading = document.getElementById('todayRoadmapHeading');
-          if (heading) {
-            const label = todaySchedule && todaySchedule.date
-              ? new Date(todaySchedule.date + 'T00:00:00').toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })
-              : new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
-            heading.textContent = '04 · Nhiệm vụ ngày hôm nay — ' + label;
-          }
-          let taskNumber = 0;
-          list.innerHTML = displaySteps.map(function (step, index) {
-            const id = 'step-' + (index + 1);
-            const completed = Boolean(step.is_completed);
-            let schedule = null;
-            try { schedule = JSON.parse(step.content); } catch (error) { schedule = null; }
-            const tasks = schedule && Array.isArray(schedule.tasks) ? schedule.tasks : [];
-            const displayTasks = [];
-            tasks.forEach(function (task, sourceIndex) {
-              const subtasks = Array.isArray(task.subtasks) && task.subtasks.length
-                ? task.subtasks.map(function (subtask) {
-                  return typeof subtask === 'object'
-                    ? (subtask.title || subtask.name || '')
-                    : String(subtask || '');
-                }).filter(Boolean)
-                : [task.title];
-              subtasks.forEach(function (title) {
-                displayTasks.push({ task: task, sourceIndex: sourceIndex, title: title });
-              });
-            });
-            const taskMarkup = displayTasks.length
-              ? '<div class="roadmap-task-list">' + displayTasks.map(function (entry) {
-                const task = entry.task;
-                const resources = Array.isArray(task.resources) ? task.resources.filter(function (resource) {
-                  return resource && typeof resource === 'object' &&
-                    typeof resource.url === 'string' &&
-                    /^https:\/\//i.test(resource.url);
-                }).slice(0, 2) : [];
-                const resourceMarkup = resources.length
-                  ? '<div class="roadmap-task-resources">' + resources.map(function (resource) {
-                    return '<a href="' + escapeHtml(resource.url) + '" target="_blank" rel="noopener noreferrer">' +
-                      escapeHtml(resource.title || 'Nguồn tham khảo') + '</a>';
-                  }).join('') + '</div>'
-                  : '';
-                taskNumber += 1;
-                const statusLabel = task.status === 'completed' ? 'Đã học' : 'Chưa học';
-                return '<article class="roadmap-task-card ' + (task.status === 'completed' ? 'is-completed' : '') + '">' +
-                  '<div class="roadmap-task-heading"><span class="roadmap-task-number">' + String(taskNumber).padStart(2, '0') + '</span>' +
-                  '<strong>Nhiệm vụ ' + taskNumber + ' - ' + escapeHtml(task.subject || task.category || 'Kỹ năng') + ': ' + escapeHtml(entry.title) + '</strong></div>' +
-                  '<div class="roadmap-task-description">' + escapeHtml(task.description || task.content || 'Hoàn thành nội dung học tập và tạo đầu ra cụ thể cho nhiệm vụ này.') + '</div>' +
-                  '<div class="roadmap-task-meta"><span class="status' + (task.status === 'completed' ? '' : ' pending') + '">' + statusLabel + '</span>' +
-                  (task.minutes ? '<span>Thời lượng: ' + task.minutes + ' phút</span>' : '') + '</div>' +
-                  '<div class="roadmap-task-actions"><button type="button" class="ghost-btn roadmap-task-start" data-task-index="' + entry.sourceIndex + '">Bắt đầu</button>' +
-                  '<button type="button" class="ghost-btn roadmap-task-done" data-task-index="' + entry.sourceIndex + '"' + (task.status === 'completed' ? ' disabled' : '') + '>' +
-                  (task.status === 'completed' ? 'Đã học' : 'Đánh dấu đã học') + '</button></div>' + resourceMarkup + '</article>';
-              }).join('') + '</div>'
-              : '<p>' + escapeHtml(step.content) + '</p>';
-            return `
-              <div class="timeline-item roadmap-item${completed ? '' : ' roadmap-pending'}"
-                   data-roadmap-id="step-${step.step_number || index + 1}" data-content="${escapeHtml(step.content)}" data-task-count="${tasks.length}" data-default-state="${completed ? 'done' : 'pending'}">
-                <div>
-                  ${taskMarkup}
-                </div>
-              </div>
-            `;
+          if (heading) heading.textContent = todayTasks.length ? '04 · Nhiệm vụ hôm nay' : '04 · Nhiệm vụ sắp tới';
+          list.innerHTML = visibleTasks.map(function (task) {
+            const completed = task.status === 'COMPLETED';
+            const date = new Date(task.scheduled_date + 'T00:00:00').toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
+            return '<article class="roadmap-task-card' + (completed ? ' is-completed' : '') + '">' +
+              '<div class="roadmap-task-heading"><strong>' + escapeHtml(task.task_name) + '</strong></div>' +
+              (task.description ? '<p class="roadmap-task-description">' + taskDescriptionMarkup(task.description) + '</p>' : '') +
+              '<div class="roadmap-task-meta"><span class="status' + (completed ? '' : ' pending') + '">' + (completed ? 'Hoàn thành' : 'Chưa hoàn thành') + '</span>' +
+              '<span>' + date + ' · ' + task.estimated_time_minutes + ' phút</span><span>' + (task.is_ai_generated ? 'AI' : 'Thủ công') + '</span></div>' +
+              '<div class="roadmap-task-actions"><button type="button" class="ghost-btn" data-task-status="' + task.task_id + '" data-completed="' + completed + '"' + (completed ? ' disabled' : '') + '>' + (completed ? 'Đã xong' : 'Đánh dấu hoàn thành') + '</button></div></article>';
           }).join('');
-          window.__axisRoadmap = {};
-          displaySteps.forEach(function (step, index) {
-            window.__axisRoadmap['step-' + (step.step_number || index + 1)] = step.is_completed ? 'done' : 'pending';
+          list.querySelectorAll('[data-task-status]').forEach(function (button) {
+            button.addEventListener('click', async function () {
+              button.disabled = true;
+              try {
+                await window.AXISAuth.apiRequest('/tasks/' + button.dataset.taskStatus + '/status', {
+                  method: 'PATCH', body: JSON.stringify({ status: button.dataset.completed === 'true' ? 'PENDING' : 'COMPLETED' })
+                });
+                await loadTasks();
+              } catch (error) {
+                button.disabled = false;
+                if (roadmapStatus) roadmapStatus.textContent = error.message || 'Không thể cập nhật nhiệm vụ.';
+              }
+            });
           });
-          initRoadmap();
+        }
+        async function loadTasks() {
+          const list = document.querySelector('.roadmap-list');
+          if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
+            if (list) list.innerHTML = '<div class="timeline-item"><em>Đăng nhập để xem và đồng bộ nhiệm vụ của bạn.</em></div>';
+            return;
+          }
+          try {
+            const result = await window.AXISAuth.apiRequest('/tasks');
+            renderRoadmapSteps(Array.isArray(result.tasks) ? result.tasks : []);
+          } catch (error) {
+            if (list) list.innerHTML = '<div class="timeline-item"><em>Không thể tải nhiệm vụ. Hãy thử tải lại trang.</em></div>';
+          }
         }
         async function generateRoadmap() {
           if (!window.AXISAuth) return;
           await window.AXISAuth.checkSession();
           if (!window.AXISAuth.requireAuth()) return;
           generateRoadmapBtn.disabled = true;
-          if (roadmapStatus) roadmapStatus.textContent = 'AI đang xây dựng lộ trình...';
+          if (roadmapStatus) roadmapStatus.textContent = 'Đang tạo kế hoạch 3 ngày...';
           try {
-            const steps = await window.AXISAuth.apiRequest('/ai/roadmap', { method: 'POST' }, 65000);
-            renderRoadmapSteps(steps);
-            if (roadmapStatus) roadmapStatus.textContent = 'Đã tạo và lưu lộ trình mới.';
+            await window.AXISAuth.apiRequest('/tasks/generate', { method: 'POST', body: '{}' });
+            await loadTasks();
+            if (roadmapStatus) roadmapStatus.textContent = 'Kế hoạch đã được lưu và đồng bộ với Lịch.';
           } catch (error) {
-            if (roadmapStatus) roadmapStatus.textContent = error.message || 'Không thể tạo lộ trình AI.';
+            if (roadmapStatus) roadmapStatus.textContent = error.message || 'Không thể tạo kế hoạch.';
           } finally {
             generateRoadmapBtn.disabled = false;
           }
@@ -584,9 +521,7 @@
           });
           const completed = dueGoals.filter(function (goal) { return goal.done; }).length;
           const baseValue = dueGoals.length ? Math.round((completed / dueGoals.length) * 100) : 0;
-          const roadmap = roadmapState();
-          const roadmapBonus = Object.keys(roadmap).filter(function (key) { return roadmap[key] === 'done'; }).length * 3;
-          const value = Math.min(100, baseValue + roadmapBonus);
+          const value = baseValue;
           const overdue = goals.filter(function (goal) {
             return goal.date && !goal.done && new Date(goal.date + 'T00:00:00') < today;
           }).length;
@@ -624,6 +559,8 @@
           }).filter(function (item) {
             return Number.isFinite(item.date.getTime());
           });
+          const chartWrap = developmentProgressChart.parentElement;
+          if (chartWrap) chartWrap.hidden = !entries.length;
           const width = developmentProgressChart.width;
           const height = developmentProgressChart.height;
           ctx.clearRect(0, 0, width, height);
@@ -672,6 +609,8 @@
 
         async function loadDevelopmentProgress() {
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
+            const chartWrap = developmentProgressChart && developmentProgressChart.parentElement;
+            if (chartWrap) chartWrap.hidden = true;
             if (developmentProgressSummary) developmentProgressSummary.textContent = 'Đăng nhập để theo dõi';
             if (developmentProgressNote) developmentProgressNote.textContent = 'Đăng nhập và chạy đánh giá ở trang Đánh giá & Gợi ý để lưu lịch sử tiến bộ.';
             return;
@@ -897,23 +836,10 @@
           if (!window.AXISAuth || !window.AXISAuth.isSignedIn()) {
             renderRoadmapSteps([]);
             render();
-            initRoadmap();
             return;
           }
           try {
-            goalsCache = (await window.AXISAuth.apiRequest('/goals')).map(function (goal) {
-              return Object.assign({}, goal, {
-                date: goal.target_date || '',
-                minutes: goal.minutes_per_day || '',
-                done: goal.status === 'completed'
-              });
-            });
-            const steps = await window.AXISAuth.apiRequest('/roadmap');
-            window.__axisRoadmap = {};
-            steps.forEach(function (step) {
-              window.__axisRoadmap['step-' + step.step_number] = step.is_completed ? 'done' : 'pending';
-            });
-            renderRoadmapSteps(steps);
+            await loadTasks();
             accountPlanReady = true;
             render();
           } catch (error) {
@@ -937,7 +863,6 @@
           }
         });
         loadAccountPlan();
-        initRoadmap();
         loadSkillPlan();
         loadDevelopmentProgress();
       })();

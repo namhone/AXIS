@@ -12,6 +12,7 @@
     ].join('-');
   }
   function setMessage(text, error) { var node = document.getElementById('calendarMessage'); node.textContent = text || ''; node.className = error ? 'calendar-error' : 'calendar-success'; }
+  function descriptionMarkup(value) { return escapeHtml(value).replace(/https:\/\/[^\s<]+/g, function (url) { return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'; }); }
   function tasksFor(day) { return state.tasks.filter(function (task) { return task.scheduled_date === day; }); }
   function renderTasks() {
     var day = dateKey(state.selected), tasks = tasksFor(day), list = document.getElementById('taskList');
@@ -19,7 +20,7 @@
     list.innerHTML = tasks.length ? tasks.map(function (task) {
       var tag = task.is_ai_generated ? '<span class="task-tag ai">AI Task</span>' : '<span class="task-tag">Thủ công</span>';
       var done = task.status === 'COMPLETED' ? ' checked' : '';
-      return '<article class="task-row"><div><strong>' + escapeHtml(task.task_name) + '</strong><p>' + escapeHtml(task.description) + '</p><small>' + task.estimated_time_minutes + ' phút ' + tag + '</small></div><label class="task-status"><input type="checkbox" data-task-id="' + task.task_id + '"' + done + '> Xong</label></article>';
+      return '<article class="task-row"><div><strong>' + escapeHtml(task.task_name) + '</strong><p>' + descriptionMarkup(task.description) + '</p><small>' + task.estimated_time_minutes + ' phút ' + tag + '</small></div><label class="task-status"><input type="checkbox" data-task-id="' + task.task_id + '"' + done + '> Xong</label></article>';
     }).join('') : '<p class="muted">Chưa có task trong ngày này.</p>';
     list.querySelectorAll('[data-task-id]').forEach(function (input) { input.addEventListener('change', function () { updateStatus(input.dataset.taskId, input.checked); }); });
   }
@@ -39,6 +40,7 @@
   }
   function load() {
     return api('/tasks').then(function (data) {
+      setMessage('', false);
       state.tasks = Array.isArray(data.tasks) ? data.tasks : [];
       renderCalendar();
       renderTasks();
@@ -53,10 +55,29 @@
     document.getElementById('previousMonth').onclick = function () { state.month.setMonth(state.month.getMonth() - 1); renderCalendar(); };
     document.getElementById('nextMonth').onclick = function () { state.month.setMonth(state.month.getMonth() + 1); renderCalendar(); };
     document.getElementById('refreshCalendar').onclick = function () { load().catch(function (error) { setMessage(error.message, true); }); };
-    document.getElementById('generatePlan').onclick = function () { api('/tasks/generate', { method: 'POST', body: '{}' }).then(function () { setMessage('Đã tạo kế hoạch 3 ngày.'); return load(); }).catch(function (error) { setMessage(error.message, true); }); };
+    document.getElementById('generatePlan').onclick = function () {
+      var button = document.getElementById('generatePlan');
+      button.disabled = true;
+      setMessage('Đang tạo kế hoạch 3 ngày...');
+      api('/tasks/generate', { method: 'POST', body: '{}' })
+        .then(function () { setMessage('Kế hoạch đã lưu và đồng bộ với Phát triển bản thân.'); return load(); })
+        .catch(function (error) { setMessage(error.message, true); })
+        .finally(function () { button.disabled = false; });
+    };
     form.scheduled_date.value = dateKey(new Date());
     form.onsubmit = function (event) { event.preventDefault(); var data = Object.fromEntries(new FormData(form)); data.estimated_time_minutes = Number(data.estimated_time_minutes); api('/tasks', { method: 'POST', body: JSON.stringify(data) }).then(function () { form.reset(); form.scheduled_date.value = dateKey(new Date()); setMessage('Đã thêm task thủ công.'); return load(); }).catch(function (error) { setMessage(error.message, true); }); };
-    if (!window.AxisAuth || !window.AxisAuth.isSignedIn()) { setMessage('Vui lòng đăng nhập để sử dụng lịch.', true); return; }
+    renderCalendar();
+    renderTasks();
+    if (!window.AxisAuth) { setMessage('Không thể kiểm tra phiên đăng nhập.', true); return; }
+    if (!window.AxisAuth.isSignedIn()) {
+      setMessage('Đang kiểm tra phiên đăng nhập...');
+      document.addEventListener('axis:auth-state', function onAuthState(event) {
+        if (!event.detail || !event.detail.signedIn) { setMessage('Vui lòng đăng nhập để sử dụng lịch.', true); return; }
+        document.removeEventListener('axis:auth-state', onAuthState);
+        load().catch(function (error) { setMessage(error.message, true); });
+      });
+      return;
+    }
     load().catch(function (error) { setMessage(error.message, true); });
   }
   window.AxisCalendar = { init: init };

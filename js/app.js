@@ -68,6 +68,8 @@
   function isDecimalScoreField(key, field) {
     return isSubjectScoreKey(key) ||
       key === 'highSchoolLanguageScore' ||
+      key === 'certificateSpeakingScore' ||
+      key === 'certificateWritingScore' ||
       (key === 'certificateScore' && field.tagName !== 'SELECT');
   }
 
@@ -203,8 +205,12 @@
       accountId !== expectedAccountId ||
       !window.AxisAuth.isSignedIn()
     ) return;
+    var editedKeys = Object.keys(userEditedFields);
+    editedKeys.forEach(function (key) {
+      serverProfile[key] = profile[key];
+    });
     profile = serverProfile;
-    hasUnsavedChanges = false;
+    hasUnsavedChanges = editedKeys.length > 0;
     persistLocalProfile();
     document.dispatchEvent(new CustomEvent('axis:profile-changed'));
     initProfile();

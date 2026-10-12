@@ -110,6 +110,16 @@ test("profile exposes private document management", async () => {
   assert.match(html, /deleteDocument/);
 });
 
+test("calendar shows its empty month while signed out or offline", async () => {
+  const script = await read("js/calendar.js");
+  const init = script.slice(script.indexOf("function init()"));
+  const load = script.slice(script.indexOf("function load()"), script.indexOf("function updateStatus"));
+
+  assert.ok(init.indexOf("renderCalendar();") < init.indexOf("if (!window.AxisAuth)"));
+  assert.ok(init.indexOf("renderTasks();") < init.indexOf("if (!window.AxisAuth)"));
+  assert.match(load, /setMessage\('', false\);/);
+});
+
 test("development page shows ranked career matches and careers saved to the roadmap", async () => {
   const html = await read("pages/development.html");
   const css = await read("css/global.css");
@@ -124,10 +134,10 @@ test("development page shows ranked career matches and careers saved to the road
   assert.doesNotMatch(html, /<h3>Python<\/h3>/);
   assert.doesNotMatch(html, /<h3>Tiếng Anh<\/h3>/);
   assert.match(css, /\.career-focus-grid/);
-  assert.match(html, /Chưa có nhiệm vụ\. Hãy tạo lộ trình để bắt đầu/);
+  assert.match(html, /Chưa có nhiệm vụ\. Hãy tạo kế hoạch hoặc thêm task trong trang Lịch\./);
   assert.doesNotMatch(html, /Python: biến và kiểu dữ liệu|C\+\+: cú pháp nền tảng/);
-  assert.match(html, /function renderRoadmapSteps\(steps\)/);
-  assert.match(css, /roadmap-item > \.roadmap-task-list > \.roadmap-task-card/);
+  assert.match(html, /function renderRoadmapSteps\(tasks\)/);
+  assert.match(css, /\.roadmap-task-card/);
   assert.match(css, /grid-template-columns: minmax\(0, 1fr\) !important/);
 });
 
@@ -141,7 +151,10 @@ test("development progress and assessment use persisted evaluation history", asy
   assert.match(assessment, /id="runAssessment"/);
   assert.match(assessment, /apiRequest\('\/assessments\/run'/);
   assert.match(assessment, /id="assessmentActionStatus"/);
-  assert.match(assessment, /Đã chạy đánh giá và lưu mốc tiến bộ/);
+  assert.match(assessment, /Đã lưu kết quả, nhưng không thể tải lịch sử đánh giá/);
+  assert.match(assessment, /const historyLoaded = await loadAssessmentHistory\(\)/);
+  assert.match(assessment, /return false;[\s\S]*Không thể tải lịch sử đánh giá/);
+  assert.match(assessment, /historyLoaded\s*\?\s*'Đã chạy đánh giá và lưu mốc tiến bộ\.'\s*:\s*'Đã lưu kết quả, nhưng không thể tải lịch sử đánh giá\.'/);
 });
 
 test("shared shell is semantic and every page exposes basic SEO metadata", async () => {
@@ -149,7 +162,7 @@ test("shared shell is semantic and every page exposes basic SEO metadata", async
   const footer = await read("components/footer.html");
   assert.match(header, /^<header class="site-header"/);
   assert.match(header, /<nav class="header-nav"/);
-  assert.match(header, /data-path="pages\/calendar\.html"/);
+  assert.doesNotMatch(header, /data-path="pages\/calendar\.html"/);
   assert.match(footer, /^<footer class="site-footer-content"/);
   assert.match(footer, /for="contactEmail"/);
 

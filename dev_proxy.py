@@ -83,6 +83,9 @@ class GatewayHandler(BaseHTTPRequestHandler):
     def do_PUT(self):
         self._proxy_api()
 
+    def do_PATCH(self):
+        self._proxy_api()
+
     def do_DELETE(self):
         self._proxy_api()
 

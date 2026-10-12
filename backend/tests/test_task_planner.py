@@ -16,9 +16,10 @@ from app.models.learning import RoadmapStep
 from app.models.tasks import Task
 from app.schemas.tasks import TaskPayload
 from app.services.ai import AIService
-from app.services.schedule import _expand_tasks
+from app.services.schedule import _expand_tasks, normalize_week
 from app.services.task_planner import reconcile_overdue_tasks
 from app.models.user import User
+from app.core.time import local_today
 
 
 def _session() -> Session:
@@ -98,6 +99,35 @@ def test_expand_tasks_keeps_subtasks_as_independent_titles():
     assert all(task["task_id"] for task in expanded)
 
 
+def test_normalize_week_preserves_ai_durations_and_resources_within_daily_limits():
+    ai_steps = [
+        {
+            "title": f"Ngày {day}",
+            "tasks": [
+                {"title": "Ôn bài", "minutes": 25, "description": "Làm 5 câu luyện tập.",
+                 "resources": [{"title": "Tài liệu", "url": "https://example.org/lesson"}]},
+                {"title": "Tự kiểm tra", "minutes": 35},
+            ],
+        }
+        for day in range(1, 8)
+    ]
+
+    week = normalize_week(ai_steps, [], start=date(2026, 10, 8))
+    first_day = json.loads(week[0]["content"])
+
+    assert [task["minutes"] for task in first_day["tasks"]] == [25, 35]
+    assert first_day["tasks"][0]["description"] == "Làm 5 câu luyện tập."
+    assert first_day["tasks"][0]["resources"][0]["url"] == "https://example.org/lesson"
+    assert len(first_day["tasks"]) <= 4
+    assert sum(task["minutes"] for task in first_day["tasks"]) <= 180
+
+
+def test_local_today_uses_vietnam_date_near_utc_midnight():
+    from datetime import datetime, timezone
+
+    assert local_today(datetime(2026, 10, 8, 17, 0, tzinfo=timezone.utc)) == date(2026, 10, 9)
+
+
 def test_ai_service_accepts_vietjack_reference_tasks(monkeypatch):
     calls = []
 
@@ -114,16 +144,18 @@ def test_ai_service_accepts_vietjack_reference_tasks(monkeypatch):
                                 "title": "Làm bài mục 1 của Bài 1 Hệ thức lượng trong tam giác vuông",
                                 "minutes": 45,
                                 "status": "pending",
-                                "resources": [{"title": "VietJack", "url": "https://vietjack.com"}],
+                                "resources": [{"title": "VietJack", "url": "https://vietjack.com/toan-lop-9/he-thuc-luong"}],
                             }
                         ],
                     },
-                    {"step_number": 2, "title": "Ngày 2", "tasks": []},
-                    {"step_number": 3, "title": "Ngày 3", "tasks": []},
-                    {"step_number": 4, "title": "Ngày 4", "tasks": []},
-                    {"step_number": 5, "title": "Ngày 5", "tasks": []},
-                    {"step_number": 6, "title": "Ngày 6", "tasks": []},
-                    {"step_number": 7, "title": "Ngày 7", "tasks": []},
+                    *[
+                        {
+                            "step_number": day,
+                            "title": f"Ngày {day}",
+                            "tasks": [{"title": f"Thực hành kỹ năng ngày {day}", "minutes": 45}],
+                        }
+                        for day in range(2, 8)
+                    ],
                 ]
             }
             return SimpleNamespace(
@@ -157,6 +189,46 @@ def test_ai_service_accepts_vietjack_reference_tasks(monkeypatch):
     assert input_payload["profile"]["career_focus"]["selected"][0]["name"] == "Thiết kế đồ họa"
     assert "career_focus.selected" in prompt[0]["content"]
     assert "career_focus.recommended" in prompt[0]["content"]
+
+
+def test_ai_roadmap_rejects_unusable_task_shapes_and_daily_overload():
+    valid_steps = [
+        {"title": f"Ngày {day}", "tasks": [{"title": "Thực hành kỹ năng", "minutes": 45}]}
+        for day in range(1, 8)
+    ]
+
+    malformed = [dict(step) for step in valid_steps]
+    malformed[2] = {"title": "Ngày 3", "tasks": [None]}
+    try:
+        AIService._validate_steps(malformed)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Malformed AI tasks must be rejected")
+
+    overloaded = [dict(step) for step in valid_steps]
+    overloaded[0] = {
+        "title": "Ngày 1",
+        "tasks": [{"title": "Task A", "minutes": 100}, {"title": "Task B", "minutes": 100}],
+    }
+    try:
+        AIService._validate_steps(overloaded)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("AI days over 180 minutes must be rejected")
+
+
+def test_ai_school_task_requires_a_specific_vietjack_lesson_url():
+    for url in ("https://example.org/toan", "http://vietjack.com/toan", "https://vietjack.com"):
+        try:
+            AIService._validate_school_task({
+                "title": "Làm bài Toán lớp 10",
+                "resources": [{"url": url}],
+            })
+        except ValueError:
+            continue
+        raise AssertionError(f"Invalid school resource was accepted: {url}")
 
 
 def _client_with_tasks():
@@ -207,6 +279,43 @@ def test_generate_plan_rejects_when_today_has_no_capacity():
 
         assert response.status_code == 409
         assert db.query(Task).count() == 4
+    finally:
+        _close_task_client(db, engine)
+
+
+def test_generate_plan_saves_ai_output_as_shared_calendar_tasks(monkeypatch):
+    client, db, engine, user = _client_with_tasks()
+
+    class FakeAIService:
+        def __init__(self, settings):
+            pass
+
+        def generate_roadmap(self, profile, goals):
+            return [
+                {
+                    "title": f"Ngày {day}",
+                    "tasks": [
+                        {"title": f"Thực hành kỹ năng {day}", "minutes": 25,
+                         "description": "Hoàn thành 5 câu.",
+                         "resources": [{"title": "Hướng dẫn", "url": "https://example.org/lesson"}]},
+                        {"title": f"Tự kiểm tra {day}", "minutes": 35},
+                    ],
+                }
+                for day in range(1, 8)
+            ]
+
+    monkeypatch.setattr("app.api.routes.tasks.AIService", FakeAIService)
+    try:
+        response = client.post("/api/v1/tasks/generate", json={})
+
+        assert response.status_code == 200
+        tasks = response.json()["tasks"]
+        assert len(tasks) == 6
+        assert [task["estimated_time_minutes"] for task in tasks[:2]] == [25, 35]
+        assert all(task["is_ai_generated"] for task in tasks)
+        assert "https://example.org/lesson" in tasks[0]["description"]
+        assert len({task["scheduled_date"] for task in tasks}) == 3
+        assert db.query(Task).count() == 6
     finally:
         _close_task_client(db, engine)
 

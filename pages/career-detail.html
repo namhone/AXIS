@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap">
   <link rel="stylesheet" href="../css/global.css?v=career-images-1">
+  <script src="../js/career-images.js?v=20261008"></script>
   <script src="../js/axis-brand.js" defer></script>
   <script src="../js/app.js" defer></script>
   <script src="../js/auth.js?v=session-cookie-fix-20260921" defer></script>
@@ -80,6 +81,14 @@
             <section class="career-section">
               <h3>Dự án khởi đầu nên thử</h3>
               <ul class="checklist" id="careerProjects"></ul>
+            </section>
+
+            <section class="career-section career-discovery" aria-labelledby="careerDiscoveryTitle">
+              <span class="eyebrow">THỬ NHANH 15 PHÚT</span>
+              <h3 id="careerDiscoveryTitle">Thử làm như người trong ngành</h3>
+              <p id="careerDiscoveryChallenge"></p>
+              <p class="form-help">Đây là hoạt động mô phỏng của AXIS; công việc thực tế thay đổi theo vị trí và nơi làm việc.</p>
+              <a href="https://www.onetonline.org/" target="_blank" rel="noopener noreferrer">Khám phá nhiệm vụ và kỹ năng nghề trên O*NET</a>
             </section>
 
             <section class="career-section academic-sources">
@@ -193,17 +202,46 @@
     return;
   }
   const item = data[matchedCode];
+  const discoveryChallenges = {
+    N01: 'Phác giao diện cho một ứng dụng giúp lớp theo dõi việc cần làm. Chọn 3 chức năng, vẽ màn hình và ghi cách người dùng sẽ thao tác.',
+    N02: 'Mở một quầy đồ uống giả lập: chọn 3 món, tính chi phí và đặt giá sao cho dễ hiểu vì sao khách sẽ chọn quầy của bạn.',
+    N03: 'Dùng một bộ số liệu sức khỏe giả lập để vẽ biểu đồ đơn giản, rồi viết 2 câu giải thích điều dữ liệu cho thấy và điều chưa thể kết luận.',
+    N04: 'Chọn một câu đùa hoặc câu slogan, thử chuyển ngữ cho hai nhóm độc giả khác nhau và giải thích vì sao bạn đổi cách diễn đạt.',
+    N05: 'Chọn một thông báo ở trường và thiết kế lại thành poster dễ đọc trong 5 giây; thử cho bạn bè xem để nhận góp ý.',
+    N06: 'Dùng giấy và băng dính làm một cây cầu mini chịu được vài đồng xu. Thử thay đổi một chi tiết rồi so sánh kết quả.',
+    N07: 'Vẽ lại góc học tập hoặc căn phòng mơ ước trên giấy ô vuông, ghi kích thước và thêm lối đi thuận tiện.',
+    N08: 'Tạo một tình huống giả định có hai phía tranh luận, tìm quy tắc liên quan và viết lập luận công bằng cho mỗi phía.',
+    N09: 'Chọn một kiến thức bạn vừa học và thử giải thích trong 60 giây bằng ví dụ, hình vẽ hoặc trò chơi hỏi đáp.',
+    N10: 'Lên lịch một chuyến đi trong ngày với ngân sách giả định: chọn điểm đến, thời gian di chuyển và một phương án dự phòng.',
+    N11: 'Tạo một video quảng bá 15 giây cho câu lạc bộ hoặc sự kiện tưởng tượng: một thông điệp, một hình ảnh chính và một lời kêu gọi.',
+    N12: 'Chia ngân sách giả lập cho một tháng thành các khoản cần thiết, tiết kiệm và vui chơi; thử xử lý một khoản phát sinh.',
+    N13: 'Quan sát một góc quanh trường và lập bản đồ nhỏ về cây xanh, rác hoặc tiếng ồn; đề xuất một thay đổi có thể đo lại.',
+    N14: 'Chọn một sản phẩm quen thuộc như sữa chua hoặc men bánh mì, tìm hiểu vai trò của vi sinh vật và làm một infographic dễ hiểu.',
+    N15: 'Thiết kế bao bì cho món đồ nhỏ bằng vật liệu dễ tái chế; vẽ cấu tạo và giải thích cách bảo vệ sản phẩm khi vận chuyển.',
+    N16: 'Lên kế hoạch trồng một loại rau thơm ở ban công: chọn chậu, lịch tưới và cách theo dõi cây phát triển trong hai tuần.',
+    N17: 'Tạo một khảo sát 3 câu về thói quen đọc sách, dùng dữ liệu giả lập để rút ra một nhận xét và nêu giới hạn của khảo sát.',
+    N18: 'Mô phỏng một cuộc họp quốc tế về nguồn nước: mỗi nhóm đại diện một bên và cùng đề xuất thỏa thuận có thể chấp nhận.',
+    N19: 'Vẽ hành trình của một đơn hàng từ cửa hàng đến người nhận, rồi tìm một cách giảm một chặng hoặc thời gian chờ.',
+    N20: 'Lập checklist cho một chuyến đi giả định bằng máy bay hoặc tàu biển: lịch trình, giấy tờ cần nhớ và phương án khi trễ chuyến.',
+    N21: 'Dùng 10 con số giả lập để tạo biểu đồ, tìm một xu hướng thú vị và nói rõ dữ liệu chưa đủ để khẳng định điều gì.',
+    N22: 'Chọn một bức ảnh thiên văn công khai, ghi lại 3 điều quan sát được và 2 câu hỏi bạn muốn kiểm chứng bằng vật lý hoặc toán học.',
+    N23: 'Soạn phần khởi động thể thao 10 phút cho người mới bắt đầu, có lựa chọn nhẹ hơn và nhắc cách tập an toàn.',
+    N24: 'Chọn một vấn đề nhỏ trong trường hoặc khu phố, vẽ sơ đồ ai bị ảnh hưởng và đề xuất một hoạt động hỗ trợ có thể thử.'
+  };
+  const discoveryChallenge = document.getElementById('careerDiscoveryChallenge');
+  if (discoveryChallenge) discoveryChallenge.textContent = discoveryChallenges[matchedCode] || 'Chọn một vấn đề thực tế trong lĩnh vực này, phác một giải pháp nhỏ và hỏi người khác góp ý.';
 
   const heroImage = document.querySelector('.career-detail-hero-image');
   const heroImageElement = document.getElementById('careerHeroImage');
-  const imageUrl = '../assets/hero-1.webp';
+  const imageUrl = window.AXISCareerImages && window.AXISCareerImages[matchedCode];
   if (heroImage && heroImageElement && imageUrl) {
     heroImageElement.src = imageUrl;
-    heroImageElement.alt = 'Hình ảnh minh họa cho ngành ' + item.title;
+    heroImageElement.alt = 'Hình ảnh đại diện cho ngành ' + item.title;
     heroImageElement.addEventListener('error', function () {
-      heroImageElement.src = '../assets/hero-1.webp';
+      heroImageElement.hidden = true;
+      heroImage.setAttribute('aria-hidden', 'true');
     }, { once: true });
-    heroImage.setAttribute('aria-label', 'Hình ảnh minh họa cho ngành ' + item.title);
+    heroImage.setAttribute('aria-label', 'Hình ảnh đại diện cho ngành ' + item.title);
   }
 
   // Update headings

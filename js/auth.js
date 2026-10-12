@@ -11,7 +11,7 @@
   const USE_SAME_ORIGIN_API = !['localhost', '127.0.0.1'].includes(pageHost) || window.location.port === '8787';
   let activeApiHost = API_HOSTS[0];
   function apiBase(host) { return configuredApiBase || (USE_SAME_ORIGIN_API ? '/api/v1/auth' : 'http://' + host + ':8000/api/v1/auth'); }
-  function accountApiBase(host) { return configuredApiBase ? configuredApiBase + '/account' : (USE_SAME_ORIGIN_API ? '/api/v1/account' : 'http://' + host + ':8000/api/v1/account'); }
+  function accountApiBase(host) { return configuredApiBase ? configuredApiBase.replace(/\/auth$/, '') + '/account' : (USE_SAME_ORIGIN_API ? '/api/v1/account' : 'http://' + host + ':8000/api/v1/account'); }
   function rootApiBase(host) { return configuredApiBase ? configuredApiBase.replace(/\/auth$/, '') : (USE_SAME_ORIGIN_API ? '/api/v1' : 'http://' + host + ':8000/api/v1'); }
   const AUTH_AREA_SELECTOR = '#authArea';
   let currentUser = null;

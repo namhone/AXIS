@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap">
-    <link rel="stylesheet" href="../css/global.css?v=axis-calendar">
+    <link rel="stylesheet" href="../css/global.css?v=axis-calendar-compact-20261012">
     <script src="../js/auth.js?v=session-cookie-fix-20260921"></script>
     <script defer src="../js/calendar.js"></script>
       <script src="../js/components.js?v=mobile-nav-2" defer></script>
@@ -25,15 +25,16 @@
         <main class="main-column calendar-layout">
           <section class="page-hero axis-hero">
             <span class="eyebrow">PERSONAL TASK PLANNER</span>
-            <h1>Lịch học tập của bạn</h1>
+            <h1>Quản lý nhiệm vụ</h1>
             <p class="lead">Mỗi ngày tối đa 4 task và 180 phút. Task quá hạn sẽ được đưa về hôm nay rồi tự động dời phần xung đột.</p>
+            <a class="ghost-btn" href="development.html">← Trở về Phát triển bản thân</a>
           </section>
           <section class="content-panel calendar-toolbar">
-            <button class="primary-btn" id="generatePlan" type="button">Tạo kế hoạch 3 ngày</button>
+            <button class="primary-btn" id="generatePlan" type="button">Tạo kế hoạch AI 3 ngày</button>
             <button class="ghost-btn" id="refreshCalendar" type="button">Làm mới</button>
             <span id="calendarMessage" role="status"></span>
           </section>
-          <section class="content-panel">
+          <section class="content-panel calendar-month-panel">
             <div class="calendar-heading"><button id="previousMonth" type="button" aria-label="Tháng trước"><span data-lucide="arrow-left" aria-hidden="true"></span></button><h2 id="calendarMonth"></h2><button id="nextMonth" type="button" aria-label="Tháng sau"><span data-lucide="arrow-right" aria-hidden="true"></span></button></div>
             <div class="calendar-weekdays"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div>
             <div class="calendar-grid" id="calendarGrid"></div>
