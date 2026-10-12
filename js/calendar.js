@@ -40,6 +40,7 @@
   }
   function load() {
     return api('/tasks').then(function (data) {
+      setMessage('', false);
       state.tasks = Array.isArray(data.tasks) ? data.tasks : [];
       renderCalendar();
       renderTasks();

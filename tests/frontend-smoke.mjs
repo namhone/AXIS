@@ -113,9 +113,11 @@ test("profile exposes private document management", async () => {
 test("calendar shows its empty month while signed out or offline", async () => {
   const script = await read("js/calendar.js");
   const init = script.slice(script.indexOf("function init()"));
+  const load = script.slice(script.indexOf("function load()"), script.indexOf("function updateStatus"));
 
   assert.ok(init.indexOf("renderCalendar();") < init.indexOf("if (!window.AxisAuth)"));
   assert.ok(init.indexOf("renderTasks();") < init.indexOf("if (!window.AxisAuth)"));
+  assert.match(load, /setMessage\('', false\);/);
 });
 
 test("development page shows ranked career matches and careers saved to the roadmap", async () => {
@@ -149,7 +151,10 @@ test("development progress and assessment use persisted evaluation history", asy
   assert.match(assessment, /id="runAssessment"/);
   assert.match(assessment, /apiRequest\('\/assessments\/run'/);
   assert.match(assessment, /id="assessmentActionStatus"/);
-  assert.match(assessment, /Đã chạy đánh giá và lưu mốc tiến bộ/);
+  assert.match(assessment, /Đã lưu kết quả, nhưng không thể tải lịch sử đánh giá/);
+  assert.match(assessment, /const historyLoaded = await loadAssessmentHistory\(\)/);
+  assert.match(assessment, /return false;[\s\S]*Không thể tải lịch sử đánh giá/);
+  assert.match(assessment, /historyLoaded\s*\?\s*'Đã chạy đánh giá và lưu mốc tiến bộ\.'\s*:\s*'Đã lưu kết quả, nhưng không thể tải lịch sử đánh giá\.'/);
 });
 
 test("shared shell is semantic and every page exposes basic SEO metadata", async () => {
