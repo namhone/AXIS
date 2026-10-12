@@ -92,8 +92,10 @@ textarea,
   flex-wrap: wrap;
 }
 
-.calendar-layout {
-  max-width: 960px;
+.calendar-month-panel {
+  width: 100%;
+  max-width: 840px;
+  margin-inline: auto;
 }
 
 .calendar-success {
