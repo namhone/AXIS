@@ -157,7 +157,7 @@ test("shared shell is semantic and every page exposes basic SEO metadata", async
   const footer = await read("components/footer.html");
   assert.match(header, /^<header class="site-header"/);
   assert.match(header, /<nav class="header-nav"/);
-  assert.match(header, /data-path="pages\/calendar\.html"/);
+  assert.doesNotMatch(header, /data-path="pages\/calendar\.html"/);
   assert.match(footer, /^<footer class="site-footer-content"/);
   assert.match(footer, /for="contactEmail"/);
 

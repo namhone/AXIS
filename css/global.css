@@ -92,6 +92,10 @@ textarea,
   flex-wrap: wrap;
 }
 
+.calendar-layout {
+  max-width: 960px;
+}
+
 .calendar-success {
   color: #047857;
 }
@@ -225,8 +229,8 @@ textarea,
   border-radius: 0.75rem;
   color: inherit;
   cursor: pointer;
-  min-height: 5rem;
-  padding: 0.65rem;
+  min-height: 3.5rem;
+  padding: 0.5rem;
   position: relative;
   text-align: left;
 }
@@ -330,8 +334,8 @@ textarea,
   }
 
   .calendar-day {
-    min-height: 4.25rem;
-    padding: 0.4rem;
+    min-height: 3.25rem;
+    padding: 0.35rem;
   }
 
   .calendar-day small {

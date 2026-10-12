@@ -21,12 +21,19 @@
 !requirements.txt
 !sitemap.xml
 !robots.txt
+!vercel-build.cjs
 !vercel.json
 
 # Never put account/student data or tooling in a public deployment.
 /backend/tests
 /backend/tests/**
 /backend/**/*.md
+# Keep local credentials out even though backend source is allowlisted above.
+/.vercel
+/.vercel/**
+/.env*
+/backend/.env*
+/backend/**/.env*
 /.agents
 /.agents/**
 /.claude
@@ -57,3 +64,28 @@
 /skills-lock.json
 /.graphifyignore
 /.gitignore
+
+# Local Python environments and generated files are not deployment inputs.
+/backend/.venv
+/backend/.venv/**
+/backend/**/.venv
+/backend/**/.venv/**
+/backend/.pytest_cache
+/backend/.pytest_cache/**
+/backend/**/.pytest_cache/**
+/backend/**/__pycache__/**
+/backend/**/*.pyc
+/backend/**/*.db
+/backend/**/*.sqlite
+/backend/**/*.sqlite3
+!package.json
+!package-lock.json
+!src/
+!src/constants/
+!src/constants/icons.ts
+!src/components/
+!src/components/common/
+!src/components/common/CareerIcon.tsx
+!src/components/common/MenuIcon.tsx
+!src
+!src/**
